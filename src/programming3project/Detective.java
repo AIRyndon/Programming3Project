@@ -13,6 +13,7 @@ public class Detective {
     
     private String name;
     private String background;
+    public Actions playerActions;
     
     public Detective(){
     
