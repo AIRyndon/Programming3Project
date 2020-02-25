@@ -8,6 +8,8 @@ package programming3project;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.Random;
+import java.util.Arrays;
 
 /**
  *
@@ -31,27 +33,7 @@ public class Programming3Project {
             file.createNewFile();
         }catch (IOException e){
         
-        }
-        
-        //Scanner
-        Scanner scan = new Scanner(System.in);
-        
-        //Promt user input
-        //Need to check those inputs (InputException - try catch)
-        System.out.println("Welcome to the game\n");
-        System.out.print("Please enter a name: ");
-        String userName = scan.nextLine();
-        System.out.print("Please enter a gender(M/F): ");
-        char userGender = scan.next().charAt(0);
-        
-        //Detective Taylor = new Detective(userName);
-        Detective detective = new Detective(userName, userGender);
-        Relatives wife = new Relatives(userName, "Wife", "Female", "not yet");
-        Relatives daughter = new Relatives(userName, "Daughter", "Female", "not yet");
-        Relatives butler = new Relatives(userName, "Butler", "Male", "not yet");
-        Relatives assistant = new Relatives(userName, "Assistant", "Male", "not yet");
-        
-        
+        }                
         /*
             The detective is working in his room.
             A police officer runs to him and announces that there was a death of a milionare.
@@ -69,6 +51,38 @@ public class Programming3Project {
             Create some evidences or some hints in each rooms
         */
         
+        //Scanner and Random
+        Scanner scan = new Scanner(System.in);
+        Random rand = new Random();
+        
+        //Promt user input
+        //Need to check those inputs (InputException - try catch)
+        System.out.println("Welcome to the game\n");
+        System.out.print("Please enter a name: ");
+        String userName = scan.nextLine();
+        System.out.print("Please enter a gender(M/F): ");
+        char userGender = scan.next().charAt(0);
+        
+        //Detective Taylor = new Detective(userName);
+        //Declare all characters
+        Detective detective = new Detective(userName, userGender);
+        Victim victim = new Victim("Bosh", "President of KPI Cooperation", 55);
+        Relatives[] people = {
+        new Relatives("Belinda", "Wife", 50, "not yet"),
+        new Relatives("Calista", "Daughter", 25, "not yet"),
+        new Relatives("Marcello", "Butler", 63, "not yet"),
+        new Relatives("Ashton", "Assistant", 34, "not yet")};
+        
+        //Set killer to random
+        Relatives killer = people[rand.nextInt(4)];
+        
+        //Declare rooms
+        Room[] rooms = {
+            new Ground(),
+            new House(),
+            new LockedArea(), //The area where the victim died
+        };
+        
         //System.out.println("Outside the house...");
         //Intro the detective
         System.out.println("\nThe main character's information...");
@@ -76,17 +90,30 @@ public class Programming3Project {
         
         //Tell the story
         System.out.println("\n17/6/2031");//Do we need to set date?
-        System.out.println(detective.getName() + " is working in his office and reading some news.");
-        System.out.println("\"" + (detective.getGender() == 'M' ? "Mr. " : "Mrs. ") + "\" " 
+        System.out.println("You - " + detective.getName() + " is working in your office and reading some news.");
+        System.out.println("\"" + (detective.getGender() == 'M' ? "Mr. " : "Mrs. ")
                 + detective.getName() + "!");
-        System.out.println("A police officer runs to him:");
+        System.out.println("A police officer runs to you:");
         System.out.println("\"There was a murder at Royal Street! Please come there now!\"");
         
         //May ask if the player wanna go 
             //If he goes => Then continue
             //Else => Make some impacts to persue him to go
-        //Make some changes from his office to the scene
-
+        
+        System.out.println("Do you want to go now? (Y/N)");
+        boolean wannaGo = "Y".equalsIgnoreCase(scan.nextLine());
+        
+        if(wannaGo)
+        {
+            //Make some changes from his office to the scene
+            System.out.println(printQuestions());
+        }
+        else
+        {
+             //Else => Make some impacts to persue him to go
+        }
+        
+        
         //if (Taylor.playerActions.MOVE) 
         {
             
@@ -102,4 +129,18 @@ public class Programming3Project {
               
     }
     
+    /**
+     * @return the questions
+     */
+    public static String printQuestions()
+    {
+        String s = "";
+        
+        s += "1. Do you want to walk around the house?\n";
+        s += "2. Do you want to come inside the house?\n";
+        s += "3. Do you want to talk with the relatives (suspicious)?\n";
+        s += "4. Do you want to see the victim immediately?\n";
+        
+        return s;
+    }
 }

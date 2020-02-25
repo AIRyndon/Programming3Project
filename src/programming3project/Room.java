@@ -11,24 +11,15 @@ package programming3project;
  */
 public class Room //Room could be interface for now
 {
-    private String location;
     private int width;
     private int height;
     
-    public Room()
-    {
-        
+    public Room(int width, int height) {
+        this.setWidth(width);
+        this.setHeight(height);
     }
     
     //Getters and setters
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public int getWidth() {
         return width;
     }

@@ -14,8 +14,8 @@ public class Victim
     private String name;
     private String role;
     private int age;
-    private String injures; //think
-    private String body;    //think   
+    private String injures; //not yet
+    private String body;    //not yet   
     
     public Victim(String name, String role, int age)
     {
