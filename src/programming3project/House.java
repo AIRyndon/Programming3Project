@@ -7,12 +7,9 @@ package programming3project;
 
 /**
  *
- * @author airyn
+ * @author pc
  */
-public enum Actions 
-{    
-    GRAB,
-    MOVE,
-    SPEAK,
-    ARREST,   
+public class House extends Room
+{
+    
 }
