@@ -68,19 +68,20 @@ public class Programming3Project {
         Detective detective = new Detective(userName, userGender);
         Victim victim = new Victim("Bosh", "President of KPI Cooperation", 55);
         Relatives[] people = {
-        new Relatives("Belinda", "Wife", 50, "not yet"),
-        new Relatives("Calista", "Daughter", 25, "not yet"),
-        new Relatives("Marcello", "Butler", 63, "not yet"),
-        new Relatives("Ashton", "Assistant", 34, "not yet")};
+            new Relatives("Belinda", "Wife", 50, "not yet"),
+            new Relatives("Calista", "Daughter", 25, "not yet"),
+            new Relatives("Marcello", "Butler", 63, "not yet"),
+            new Relatives("Ashton", "Assistant", 34, "not yet"),
+        };
         
         //Set killer to random
         Relatives killer = people[rand.nextInt(4)];
         
         //Declare rooms
         Room[] rooms = {
-            new Ground(),
-            new House(),
-            new LockedArea(), //The area where the victim died
+            new Ground(10, 10),
+            new House(5, 5),
+            new LockedArea(1, 2), //The area where the victim died
         };
         
         //System.out.println("Outside the house...");
@@ -89,10 +90,10 @@ public class Programming3Project {
         System.out.println(detective);
         
         //Tell the story
-        System.out.println("\n17/6/2031");//Do we need to set date?
+        System.out.println("17/6/2031");//Do we need to set date?
         System.out.println("You - " + detective.getName() + " is working in your office and reading some news.");
         System.out.println("\"" + (detective.getGender() == 'M' ? "Mr. " : "Mrs. ")
-                + detective.getName() + "!");
+                + detective.getName() + "!\"");
         System.out.println("A police officer runs to you:");
         System.out.println("\"There was a murder at Royal Street! Please come there now!\"");
         
@@ -100,13 +101,51 @@ public class Programming3Project {
             //If he goes => Then continue
             //Else => Make some impacts to persue him to go
         
+        scan.nextLine();
         System.out.println("Do you want to go now? (Y/N)");
         boolean wannaGo = "Y".equalsIgnoreCase(scan.nextLine());
         
         if(wannaGo)
         {
             //Make some changes from his office to the scene
-            System.out.println(printQuestions());
+            //Asking four questions
+            //Create a class for room and its subclasses
+            //Create class for relatives (we may create an interface name Person to 
+            //handle basic info - name, gender, age, role)
+            
+            //Using loop to reaccess those rooms            
+            boolean getOut = true;
+            
+            //while(getOut)
+            {
+                //Display four questions
+                System.out.println("\nWhich action do you want do next? (1 - 4)");
+                System.out.println(printQuestions());
+                int action = scan.nextInt(); 
+                
+                if(action == 1)
+                {
+                    //access ground => print ground
+                    rooms[0].printRoom();
+                }
+
+                if(action == 2)
+                {
+                    //access house => print house
+                     rooms[1].printRoom();
+                }
+
+                if(action == 3)
+                {
+                    //Display conersations
+                }
+
+                if(action == 4)
+                {
+                    //print lockedArea and victim's body
+                    rooms[2].printRoom();
+                }
+            }
         }
         else
         {
@@ -118,15 +157,6 @@ public class Programming3Project {
         {
             
         }
-
-        //Asking four questions
-        //Create a class for room and its subclasses
-        //Create class for relatives (we may create an interface name Person to 
-            //handle basic info - name, gender, age, role)
-        
-        
-        
-              
     }
     
     /**
@@ -139,7 +169,7 @@ public class Programming3Project {
         s += "1. Do you want to walk around the house?\n";
         s += "2. Do you want to come inside the house?\n";
         s += "3. Do you want to talk with the relatives (suspicious)?\n";
-        s += "4. Do you want to see the victim immediately?\n";
+        s += "4. Do you want to see the victim immediately? (go to locked area)";
         
         return s;
     }

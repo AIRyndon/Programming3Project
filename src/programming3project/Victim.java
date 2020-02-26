@@ -76,8 +76,6 @@ public class Victim
         this.body = body;
     }
     
-    
-    
     @Override
     public String toString()
     {

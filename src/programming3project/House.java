@@ -11,5 +11,35 @@ package programming3project;
  */
 public class House extends Room
 {
+    public House(int width, int height)
+    {
+        super(width, height);
+    }
     
+    /**
+     * Printing the house
+     */
+    public void printHouse() 
+    {
+        //Loops for height
+        for (int i = 0; i < this.getHeight(); i++)
+        {
+            for (int j = 0; j < this.getWidth(); j++)
+            {
+                if(j == 0 || j == this.getWidth() - 1)
+                {
+                    System.out.print("|");
+                }
+                else if(i == 0 || i == this.getHeight() - 1)
+                {
+                    System.out.print("----");
+                }
+                else
+                {
+                    System.out.print("    ");
+                }
+            }
+            
+            System.out.println("");
+    }
 }

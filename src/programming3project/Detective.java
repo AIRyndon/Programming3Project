@@ -20,6 +20,7 @@ public class Detective {
     public Detective(String name, char gender)
     {
         this.setName(name);
+        this.setGender(gender);
         this.setBackground("Detective - Cautious, Smart, and Immensely Knowledgable");
     }
     
@@ -82,9 +83,9 @@ public class Detective {
         String s = "";
         
         s += "Name: " + this.getName() + "\n";
-        s += "Gender: " + (this.getGender() == 'M' ? "Male" : "Female");
+        s += "Gender: " + (this.getGender() == 'M' ? "Male" : "Female") + "\n";
         s += "Age: UNKNOWN" + "\n";//Do we need to create another attribute for age? => Then ask user
-        s += "Job: " + this.getBackground() + "\n\n";
+        s += "Job: " + this.getBackground() + "\n";
         
         return s;
     }

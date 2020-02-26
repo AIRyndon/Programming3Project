@@ -76,5 +76,4 @@ public class Relatives
     {
         return "";
     }
-    }
 }

@@ -11,8 +11,8 @@ package programming3project;
  */
 public class Room //Room could be interface for now
 {
-    private int width;
-    private int height;
+    protected int width;
+    protected int height;
     
     public Room(int width, int height) {
         this.setWidth(width);
@@ -34,6 +34,12 @@ public class Room //Room could be interface for now
 
     public void setHeight(int height) {
         this.height = height;
+    }
+    
+    //print room
+    public void printRoom()
+    {
+        
     }
     
 }
