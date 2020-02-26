@@ -9,7 +9,7 @@ package programming3project;
  *
  * @author pc
  */
-public class LockedArea extends House
+interface LockedArea
 {
-    
+    public boolean unlock(int key);
 }

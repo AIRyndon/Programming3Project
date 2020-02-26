@@ -11,5 +11,7 @@ package programming3project;
  */
 public class Ground extends Room
 {
-    
+    public Ground(int width,int height){
+        super(width,height);
+    }
 }

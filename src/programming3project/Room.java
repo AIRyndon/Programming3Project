@@ -9,31 +9,21 @@ package programming3project;
  *
  * @author pc
  */
-public class Room //Room could be interface for now
+public abstract class Room //Room could be interface for now
 {
-    private int width;
-    private int height;
+    private final int width;
+    private final int height;
     
     public Room(int width, int height) {
-        this.setWidth(width);
-        this.setHeight(height);
+        this.width = width;
+        this.height = height;
     }
     
-    //Getters and setters
     public int getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
     public int getHeight() {
         return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-    
+    }  
 }

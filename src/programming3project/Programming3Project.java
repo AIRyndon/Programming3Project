@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.Random;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -17,23 +19,21 @@ import java.util.Arrays;
  */
 public class Programming3Project {
 
+    private static Scanner systemInput = new Scanner(System.in);
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) 
-    {
+    public static void main(String[] args) {
+
+        //todo - gonna refactor these guys later
         //FILE 
         String workingDir = System.getProperty("user.dir");
-        System.out.println("Present Project Directory : "+ System.getProperty("user.dir"));
+        System.out.println("Present Project Directory : " + System.getProperty("user.dir"));
         new File(workingDir + "/FileDB/").mkdir();
-        
+
         File file = new File(workingDir + "/FileDB/" + "game-state.txt");
-        
-        try{
-            file.createNewFile();
-        }catch (IOException e){
-        
-        }                
+
         /*
             The detective is working in his room.
             A police officer runs to him and announces that there was a death of a milionare.
@@ -49,45 +49,57 @@ public class Programming3Project {
             => Save in file and change the location
         
             Create some evidences or some hints in each rooms
-        */
-        
-        //Scanner and Random
-        Scanner scan = new Scanner(System.in);
+         */
         Random rand = new Random();
-        
+
         //Promt user input
         //Need to check those inputs (InputException - try catch)
         System.out.println("Welcome to the game\n");
         System.out.print("Please enter a name: ");
-        String userName = scan.nextLine();
-        System.out.print("Please enter a gender(M/F): ");
-        char userGender = scan.next().charAt(0);
-        
-        //Detective Taylor = new Detective(userName);
+        String userName = systemInput.nextLine();
+
+        char userGender = '\0';
+        while (!(userGender == 'M' || userGender == 'm' || userGender == 'F' || userGender == 'f')) {
+            System.out.print("Please enter a gender(M/F): ");
+            userGender = systemInput.next().charAt(0);
+        }
+
         //Declare all characters
-        Detective detective = new Detective(userName, userGender);
+        Detective detective = new Detective(userName, userGender, 50);
+
+        char giveDetails = '\0';
+        while (!(giveDetails == 'Y' || giveDetails == 'y' || giveDetails == 'N' || giveDetails == 'n')) {
+            System.out.println("Can we get more details about you?(Y/N)");
+        }
+
+        if (giveDetails == 'Y') {
+            //call method to get origin, background, etc.
+        } else {
+            detective.setBackground("Mysterious fellow");
+        }
+
         Victim victim = new Victim("Bosh", "President of KPI Cooperation", 55);
-        Relatives[] people = {
-        new Relatives("Belinda", "Wife", 50, "not yet"),
-        new Relatives("Calista", "Daughter", 25, "not yet"),
-        new Relatives("Marcello", "Butler", 63, "not yet"),
-        new Relatives("Ashton", "Assistant", 34, "not yet")};
-        
+        Relative[] people = {
+            new Relative("Belinda",'F', 50, "Wife"),
+            new Relative("Calista", 'F', 25, "Daughter"),
+            new Relative("Marcello", 'M', 63, "Butler"),
+            new Relative("Ashton", 'M', 34, "Assistant")
+        };
+
         //Set killer to random
-        Relatives killer = people[rand.nextInt(4)];
-        
+        Relative killer = people[rand.nextInt(4)];
+
         //Declare rooms
         Room[] rooms = {
-            new Ground(),
-            new House(),
-            new LockedArea(), //The area where the victim died
+            new Ground(50, 50),
+            new House(20, 20)
         };
-        
+
         //System.out.println("Outside the house...");
         //Intro the detective
         System.out.println("\nThe main character's information...");
         System.out.println(detective);
-        
+
         //Tell the story
         System.out.println("\n17/6/2031");//Do we need to set date?
         System.out.println("You - " + detective.getName() + " is working in your office and reading some news.");
@@ -95,52 +107,35 @@ public class Programming3Project {
                 + detective.getName() + "!");
         System.out.println("A police officer runs to you:");
         System.out.println("\"There was a murder at Royal Street! Please come there now!\"");
-        
+
         //May ask if the player wanna go 
-            //If he goes => Then continue
-            //Else => Make some impacts to persue him to go
-        
+        //If he goes => Then continue
+        //Else => Make some impacts to persue him to go
         System.out.println("Do you want to go now? (Y/N)");
-        boolean wannaGo = "Y".equalsIgnoreCase(scan.nextLine());
-        
-        if(wannaGo)
-        {
+        boolean wannaGo = "Y".equalsIgnoreCase(systemInput.nextLine());
+
+        if (wannaGo) {
             //Make some changes from his office to the scene
             System.out.println(printQuestions());
-        }
-        else
-        {
-             //Else => Make some impacts to persue him to go
-        }
-        
-        
-        //if (Taylor.playerActions.MOVE) 
-        {
-            
+        } else {
+            //Else => Make some impacts to persue him to go
         }
 
         //Asking four questions
-        //Create a class for room and its subclasses
-        //Create class for relatives (we may create an interface name Person to 
-            //handle basic info - name, gender, age, role)
-        
-        
-        
-              
+        //Create a class for room and its subclasses     
     }
-    
+
     /**
      * @return the questions
      */
-    public static String printQuestions()
-    {
-        String s = "";
-        
-        s += "1. Do you want to walk around the house?\n";
-        s += "2. Do you want to come inside the house?\n";
-        s += "3. Do you want to talk with the relatives (suspicious)?\n";
-        s += "4. Do you want to see the victim immediately?\n";
-        
-        return s;
+    public static String printQuestions() {
+        String questions = "";
+
+        questions += "1. Do you want to walk around the house?\n";
+        questions += "2. Do you want to come inside the house?\n";
+        questions += "3. Do you want to talk with the relatives (suspicious)?\n";
+        questions += "4. Do you want to see the victim immediately?\n";
+
+        return questions;
     }
 }
