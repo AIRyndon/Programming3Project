@@ -79,7 +79,7 @@ public class Programming3Project {
         
         //Declare rooms
         Room[] rooms = {
-            new Ground(10, 10),
+            new Ground(),
             new House(5, 5),
             new LockedArea(1, 2), //The area where the victim died
         };
@@ -102,7 +102,7 @@ public class Programming3Project {
             //Else => Make some impacts to persue him to go
         
         scan.nextLine();
-        System.out.println("Do you want to go now? (Y/N)");
+        System.out.print("Do you want to go now? (Y/N)");
         boolean wannaGo = "Y".equalsIgnoreCase(scan.nextLine());
         
         if(wannaGo)
@@ -166,10 +166,10 @@ public class Programming3Project {
     {
         String s = "";
         
-        s += "1. Do you want to walk around the house?\n";
-        s += "2. Do you want to come inside the house?\n";
-        s += "3. Do you want to talk with the relatives (suspicious)?\n";
-        s += "4. Do you want to see the victim immediately? (go to locked area)";
+        s += "1. Walk around the house\n";
+        s += "2. Come inside the house\n";
+        s += "3. Talk with the relatives (suspicious)\n";
+        s += "4. See the victim immediately (go to locked area)";
         
         return s;
     }

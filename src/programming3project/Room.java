@@ -7,39 +7,15 @@ package programming3project;
 
 /**
  *
- * @author pc
+ * @author group
  */
-public class Room //Room could be interface for now
+public abstract class Room //Room could be interface for now
 {
     protected int width;
     protected int height;
-    
-    public Room(int width, int height) {
-        this.setWidth(width);
-        this.setHeight(height);
-    }
-    
-    //Getters and setters
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
+    protected char[][] movingArea;
     
     //print room
-    public void printRoom()
-    {
-        
-    }
-    
+    abstract protected void initiliseMovingArea();
+    abstract protected void printRoom();
 }
