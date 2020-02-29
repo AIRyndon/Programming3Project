@@ -15,7 +15,7 @@ public class Ground extends Room
     public Ground(int width,int height){
         super(width,height);
          
-        initiliseMovingArea();
+        initializeMovingArea();
         printRoom();     
     }
     
@@ -25,7 +25,7 @@ public class Ground extends Room
      * to allow and show moving
      */
     @Override
-    protected void initiliseMovingArea()
+    protected void initializeMovingArea()
     {
         this.movingArea = new char[height - 1][width];
         

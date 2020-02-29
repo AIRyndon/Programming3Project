@@ -93,8 +93,8 @@ public class Programming3Project {
 
         //Declare rooms
         Room[] rooms = {
-            new Ground(50, 50),
-            new House(20, 20)
+            
+            new House(52, 24)
         };
 
         //System.out.println("Outside the house...");

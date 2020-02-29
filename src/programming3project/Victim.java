@@ -14,7 +14,7 @@ public class Victim
     private String name;
     private String role;
     private int age;
-    private String injures; //not yet
+    private String injuries; //not yet
     private String body;    //not yet   
     
     public Victim(String name, String role, int age)
@@ -61,11 +61,11 @@ public class Victim
     }
 
     public String getInjures() {
-        return injures;
+        return injuries;
     }
 
     public void setInjures(String injures) {
-        this.injures = injures;
+        this.injuries = injures;
     }
 
     public String getBody() {

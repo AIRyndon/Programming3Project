@@ -29,7 +29,7 @@ public abstract class Room //Room could be interface for now
     }  
     
    //print room
-    abstract protected void initiliseMovingArea();
+    abstract protected void initializeMovingArea();
     abstract protected void printRoom();
 
 }
