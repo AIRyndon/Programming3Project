@@ -9,22 +9,23 @@ package programming3project;
  *
  * @author pc
  */
-public class Victim 
+public class Relatives
 {
     private String name;
     private String role;
     private int age;
-    private String injures; //not yet
-    private String body;    //not yet   
-    
-    public Victim(String name, String role, int age)
+    private String speak;
+    //private String why; //Why they want to kill him?
+
+    public Relatives(String name, String role, int age, String speak)
     {
         this.setName(name);
         this.setRole(role);
         this.setAge(age);
+        this.setSpeak(speak);
     }
     
-    public Victim()
+    public Relatives()
     {
         
     }
@@ -60,20 +61,14 @@ public class Victim
         this.age = age;
     }
 
-    public String getInjures() {
-        return injures;
+    public String getSpeak() 
+    {
+        return speak;
     }
 
-    public void setInjures(String injures) {
-        this.injures = injures;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
+    public void setSpeak(String speak)
+    {
+        this.speak = speak;
     }
     
     @Override
@@ -82,4 +77,3 @@ public class Victim
         return "";
     }
 }
-

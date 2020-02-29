@@ -7,12 +7,13 @@ package programming3project;
 
 /**
  *
- * @author pc
+ * @author group
  */
 public abstract class Room //Room could be interface for now
 {
-    private final int width;
-    private final int height;
+    protected final int width;
+    protected final int height;
+    protected char[][] movingArea;
     
     public Room(int width, int height) {
         this.width = width;
@@ -26,4 +27,9 @@ public abstract class Room //Room could be interface for now
     public int getHeight() {
         return height;
     }  
+    
+   //print room
+    abstract protected void initiliseMovingArea();
+    abstract protected void printRoom();
+
 }

@@ -67,18 +67,20 @@ public class Programming3Project {
         //Declare all characters
         Detective detective = new Detective(userName, userGender, 50);
 
-        char giveDetails = '\0';
-        while (!(giveDetails == 'Y' || giveDetails == 'y' || giveDetails == 'N' || giveDetails == 'n')) {
+        char userDetails = '\0';
+        while (!(userDetails == 'Y' || userDetails == 'y' || userDetails == 'N' || userDetails == 'n')) {
             System.out.println("Can we get more details about you?(Y/N)");
+            userDetails = systemInput.next().charAt(0);
         }
 
-        if (giveDetails == 'Y') {
+        if (userDetails == 'Y') {
             //call method to get origin, background, etc.
         } else {
             detective.setBackground("Mysterious fellow");
         }
 
         Victim victim = new Victim("Bosh", "President of KPI Cooperation", 55);
+
         Relative[] people = {
             new Relative("Belinda",'F', 50, "Wife"),
             new Relative("Calista", 'F', 25, "Daughter"),
@@ -101,28 +103,67 @@ public class Programming3Project {
         System.out.println(detective);
 
         //Tell the story
-        System.out.println("\n17/6/2031");//Do we need to set date?
+        System.out.println("17/6/2031");//Do we need to set date?
         System.out.println("You - " + detective.getName() + " is working in your office and reading some news.");
         System.out.println("\"" + (detective.getGender() == 'M' ? "Mr. " : "Mrs. ")
-                + detective.getName() + "!");
+                + detective.getName() + "!\"");
         System.out.println("A police officer runs to you:");
         System.out.println("\"There was a murder at Royal Street! Please come there now!\"");
 
         //May ask if the player wanna go 
+
         //If he goes => Then continue
         //Else => Make some impacts to persue him to go
         System.out.println("Do you want to go now? (Y/N)");
         boolean wannaGo = "Y".equalsIgnoreCase(systemInput.nextLine());
-
-        if (wannaGo) {
+    
+        if(wannaGo)
+        {
             //Make some changes from his office to the scene
-            System.out.println(printQuestions());
-        } else {
-            //Else => Make some impacts to persue him to go
-        }
+            //Asking four questions
+            //Create a class for room and its subclasses
+            //Create class for relatives (we may create an interface name Person to 
+            //handle basic info - name, gender, age, role)
+            
+            //Using loop to reaccess those rooms            
+            boolean getOut = true;
+            
+            while(getOut)
+            {
+                //Display four questions
+                System.out.println("\nWhich action do you want do next? (1 - 4)");
+                System.out.println(printQuestions());
+                int action = systemInput.nextInt(); 
+                
+                if(action == 1)
+                {
+                    //access ground => print ground
+                    rooms[0].printRoom();
+                    getOut = false;
+                }
 
-        //Asking four questions
-        //Create a class for room and its subclasses     
+                if(action == 2)
+                {
+                    //access house => print house
+                     rooms[1].printRoom();
+                }
+
+                if(action == 3)
+                {
+                    //Display conersations
+                }
+
+                if(action == 4)
+                {
+                    //print lockedArea and victim's body
+                    rooms[2].printRoom();
+                }
+            }
+        }
+        else
+        {
+             //Else => Make some impacts to persue him to go
+        }
     }
 
     /**
