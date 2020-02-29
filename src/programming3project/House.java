@@ -70,7 +70,9 @@ public class House extends Room implements LockedArea {
      * Printing the house
      */
     public void printRoom() {
-          //Loops for movingArea  
+          
+        printEntrance("House");
+        
         for (int i = 0; i < this.height - 2; i++)
         {
             for (int j = 0; j < this.width; j++)
@@ -80,6 +82,7 @@ public class House extends Room implements LockedArea {
             
             System.out.println("");
         }
+        printWall();
     }
         
     public void printLockedArea() {

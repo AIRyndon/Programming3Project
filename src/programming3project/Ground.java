@@ -20,7 +20,7 @@ public class Ground extends Room
     }
     
     /**
-     * initialise MovingArea
+     * initialize MovingArea
      * Create a 2D array representing for hints(X), space( ), and player(P)
      * to allow and show moving
      */
@@ -136,7 +136,7 @@ public class Ground extends Room
     protected void printRoom()  
     {
         //Print first line
-        printGate();
+        printEntrance("GATE");
         
         //Loops for movingArea  
         for (int i = 0; i < this.height - 2; i++)
@@ -150,47 +150,5 @@ public class Ground extends Room
         }
         
         printWall();    
-    }
-    
-    /**
-     * Print gate and wall (first row)
-     */
-    public void printGate()  
-    {
-        //Print left side
-        for (int wid = 0; wid < this.width / 2 - 3; wid++)
-        {
-            System.out.print("_");
-        }
-        
-        //Printing the word "GATE" in the middle
-        System.out.print("|GATE|");
-        
-        //Printing right side
-        for (int wid = this.width / 2 + 4; wid <= this.width; wid++)
-        {
-            System.out.print("_");
-        }   
-        
-        System.out.println("");
-    }
-    
-    /**
-     * Print wall (last row)
-     */
-    public void printWall()  
-    {
-        //Print gate and wall (first row)
-        for (int wid = 0; wid < this.width; wid++)
-        {
-            if(wid == 0 || wid == width - 1)
-            {
-                System.out.print("|");
-            }
-            else
-            {
-                System.out.print("_");            
-            }
-        }
     }
 }
