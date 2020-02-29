@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package programming3project;
 
 import java.util.Random;
@@ -22,7 +17,6 @@ public class House extends Room implements LockedArea {
     public House(int width, int height) {
         super(width, height);
         initializeMovingArea();
-        printRoom();
     }
 
     public boolean unlock(int key) {

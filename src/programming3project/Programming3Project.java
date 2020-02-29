@@ -27,7 +27,7 @@ public class Programming3Project {
     public static void main(String[] args) {
 
         //todo - gonna refactor these guys later
-        //FILE 
+        //creating a FILE for game state later 
         String workingDir = System.getProperty("user.dir");
         System.out.println("Present Project Directory : " + System.getProperty("user.dir"));
         new File(workingDir + "/FileDB/").mkdir();
@@ -93,7 +93,7 @@ public class Programming3Project {
 
         //Declare rooms
         Room[] rooms = {
-            
+            new Ground(52,24),
             new House(52, 24)
         };
 
@@ -110,14 +110,16 @@ public class Programming3Project {
         System.out.println("A police officer runs to you:");
         System.out.println("\"There was a murder at Royal Street! Please come there now!\"");
 
-        //May ask if the player wanna go 
 
-        //If he goes => Then continue
-        //Else => Make some impacts to persue him to go
-        System.out.println("Do you want to go now? (Y/N)");
-        boolean wannaGo = "Y".equalsIgnoreCase(systemInput.nextLine());
-    
-        if(wannaGo)
+
+        //Ask the player to enter the game area
+        char enterPremises = '\0';
+        while (!(enterPremises == 'Y' || enterPremises == 'y' || enterPremises == 'N' || enterPremises == 'n')) {
+            System.out.println("Do you want to enter the compound?(Y/N)");
+            enterPremises = systemInput.next().charAt(0);
+        }
+         
+        if(enterPremises == 'Y' || enterPremises == 'y')
         {
             //Make some changes from his office to the scene
             //Asking four questions
@@ -125,10 +127,10 @@ public class Programming3Project {
             //Create class for relatives (we may create an interface name Person to 
             //handle basic info - name, gender, age, role)
             
-            //Using loop to reaccess those rooms            
-            boolean getOut = true;
+            //todo - Using loop to reaccess those rooms            
+            boolean stayInside = true;
             
-            while(getOut)
+            while(stayInside)
             {
                 //Display four questions
                 System.out.println("\nWhich action do you want do next? (1 - 4)");
@@ -139,24 +141,24 @@ public class Programming3Project {
                 {
                     //access ground => print ground
                     rooms[0].printRoom();
-                    getOut = false;
+                    stayInside = false;
                 }
 
                 if(action == 2)
                 {
                     //access house => print house
                      rooms[1].printRoom();
+                     stayInside = false;
                 }
 
                 if(action == 3)
                 {
-                    //Display conersations
+                    //Display conversations
                 }
 
                 if(action == 4)
                 {
                     //print lockedArea and victim's body
-                    rooms[2].printRoom();
                 }
             }
         }
@@ -172,7 +174,7 @@ public class Programming3Project {
     public static String printQuestions() {
         String questions = "";
 
-        questions += "1. Do you want to walk around the house?\n";
+        questions += "1. Do you want to walk around the grounds?\n";
         questions += "2. Do you want to come inside the house?\n";
         questions += "3. Do you want to talk with the relatives (suspicious)?\n";
         questions += "4. Do you want to see the victim immediately?\n";
