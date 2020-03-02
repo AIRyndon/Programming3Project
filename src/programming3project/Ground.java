@@ -25,32 +25,11 @@ public class Ground extends Room
     @Override
     protected void initializeMovingArea()
     {
-        this.movingArea = new char[height - 1][width];
-        
-        //Loops for empty movingArea (ground with wall and gate only)
-        for (int i = 0; i < this.height - 2; i++)
-        {
-            for (int j = 0; j < this.width; j++)
-            {
-                if(j == 0 || j == width - 1)
-                {
-                    movingArea[i][j] = '|';
-                }
-                else if(i == 0 && j == width / 2)
-                {
-                     movingArea[i][j] = 'P';
-                }
-                else
-                {
-                     movingArea[i][j] = ' ';
-                }
-            }
-        }
+        super.initializeMovingArea();
         
         //Assign dog's place
         movingArea[0][width - 15] = '|';
         movingArea[0][width - 14] = '_';
-        movingArea[0][width - 3] = 'X';
         movingArea[1][width - 14] = '_';
         movingArea[1][width - 9] = 'D';
         movingArea[1][width - 8] = 'O';
@@ -65,8 +44,6 @@ public class Ground extends Room
         /**
         * Assign HouseArea (because the house is on the ground)
         * Player cannot move in this area, just access through the door 
-        * P/S: We may change the loop to satisfy all height and weight, 
-        *   not just for specific numbers
         */
         for (int i = 7; i <= 14; i++) 
         {
@@ -113,18 +90,66 @@ public class Ground extends Room
         }
         
         //Printing the word "HOUSE" - not good because it is made in manual way
-        movingArea[18][23] = 'H';
-        movingArea[18][24] = 'O';
-        movingArea[18][25] = 'U';
-        movingArea[18][26] = 'S';
-        movingArea[18][27] = 'E';
+        movingArea[11][24] = 'H';
+        movingArea[11][25] = 'O';
+        movingArea[11][26] = 'U';
+        movingArea[11][27] = 'S';
+        movingArea[11][28] = 'E';
         
+        hints();
+    }
+    
+    /**
+     * create random hints
+     */
+    protected void hints()
+    {
         //Randomly assign some hint positions in the ground 
         Random rand = new Random();
         
-        //Need to check if those two have the same position
-        movingArea[rand.nextInt(height - 2)][rand.nextInt(width - 2)] = 'X';
-        movingArea[rand.nextInt(height - 2)][rand.nextInt(width - 2)] = 'X';
+        int firstHei = rand.nextInt(height - 2);
+        int firstWid = rand.nextInt(width - 2);
+        int secondHei = rand.nextInt(height - 2);
+        int secondWid = rand.nextInt(width - 2);
+        
+        //Check if those two hints are in the same position
+        //Hints replace space only
+        //Hints cannot be inside the house and dog's house
+        boolean checkedFirst = false;
+        boolean checkedSecond = false;
+        while(!(checkedFirst && checkedSecond))
+        {
+            if(firstHei != secondHei || firstWid != secondWid) 
+            {
+                if(movingArea[firstHei][firstWid] == ' ' &&  movingArea[secondHei][secondWid] == ' ')
+                {
+                    if(firstHei >= 7 && firstHei <= 14 && firstWid >= 17 && firstWid <= 35)
+                    {
+                        firstHei = rand.nextInt(height - 2);
+                        firstWid = rand.nextInt(width - 2);
+                    }
+                    else
+                    {
+                        checkedFirst = true;
+                    }
+                    
+                    if(secondHei >= 7 && secondHei <= 14 && secondWid >= 17 && secondWid <= 35)
+                    {
+                        secondHei = rand.nextInt(height - 2);
+                        secondWid = rand.nextInt(width - 2);
+                    }
+                    else
+                    {
+                        checkedSecond = true;
+                    }
+                }
+            }
+        }
+        
+        //Assign hints 
+        movingArea[firstHei][firstWid] = 'X';
+        movingArea[secondHei][secondWid] = 'X';
+        movingArea[0][width - 3] = 'X'; //One hint inside the dog's house
     }
     
     /**
@@ -148,5 +173,151 @@ public class Ground extends Room
         }
         
         printWall();    
+    }
+    
+    @Override
+    protected void moving(char move)
+    {
+        //Invalid input
+        if(move != 'a' && move != 's' && move != 'd' && move != 'w')           
+        {
+            System.out.println("Invalid Input!");
+        }
+        else if (move == 'a') 
+        {
+            for (int i = 0; i < height - 1; i++)
+            {
+                for (int j = 0; j < width; j++) 
+                {
+                    //If player wants to get out of the dog's house
+                    if(i == 1 && j == width - 13 && movingArea[i][j] == 'P')
+                    {
+                        System.out.println("Get out of the dog's house");
+                        
+                        movingArea[i][j] = ' ';
+                        movingArea[i][j - 2] = 'P';
+                        
+                        return;
+                    }
+                    //change player's location
+                    else if(movingArea[i][j] == 'P' && movingArea[i][j - 1] == ' ')
+                    {
+                        movingArea[i][j] = ' ';
+                        movingArea[i][j - 1] = 'P';
+                        
+                        return;
+                    }
+                    //If player gots 'X'
+                    else if(movingArea[i][j] == 'P' && movingArea[i][j - 1] == 'X')
+                    {
+                        System.out.println("Hint: ");
+                        
+                        movingArea[i][j] = ' ';
+                        movingArea[i][j - 1] = 'P';
+                        
+                        return;
+                    }
+                }
+            }
+        } 
+        else if (move == 'd') 
+        {
+            for (int i = 0; i < height - 1; i++)
+            {
+                for (int j = 0; j < width; j++) 
+                {
+                    //If player wants to access the dog's house
+                    if(movingArea[i][j] == 'P' && i == 1 && j == width - 15)
+                    {
+                        System.out.println("Access the dog's house");
+                        
+                        movingArea[i][j] = ' ';
+                        movingArea[i][j + 2] = 'P';
+                        
+                        return;
+                    }
+                    //change player's location
+                    else if(movingArea[i][j] == 'P' && movingArea[i][j + 1] == ' ')
+                    {
+                        movingArea[i][j] = ' ';
+                        movingArea[i][j + 1] = 'P';
+                        
+                        return;
+                    }
+                    //If player gots 'X'
+                    else if(movingArea[i][j] == 'P' && movingArea[i][j + 1] == 'X')
+                    {
+                        System.out.println("Hint: ");
+                        
+                        movingArea[i][j] = ' ';
+                        movingArea[i][j + 1] = 'P';
+                        
+                        return;
+                    }
+                }
+            }
+        }
+        else if (move == 's')
+        {
+            for (int i = 0; i < height - 1; i++)
+            {
+                for (int j = 0; j < width; j++) 
+                {
+                    //If player wants to access the house
+                    
+                    if(i == 6 && (j == 25 || j == 26 || j == 27) && movingArea[i][j] == 'P')
+                    {
+                        System.out.println("If you want to access the house, please enter 'q'");
+                        
+                        return;
+                    }
+                    //change player's location
+                    else if(movingArea[i][j] == 'P' && movingArea[i + 1][j] == ' ')
+                    {
+                        movingArea[i][j] = ' ';
+                        movingArea[i + 1][j] = 'P';
+                        
+                        return;
+                    }
+                    //If player gots 'X'
+                    else if(movingArea[i][j] == 'P' && movingArea[i + 1][j] == 'X')
+                    {
+                        System.out.println("Hint: ");
+                        
+                        movingArea[i][j] = ' ';
+                        movingArea[i + 1][j] = 'P';
+                        
+                        return;
+                    }
+                }
+            }
+        }
+        else if (move == 'w') 
+        {
+            for (int i = 1; i < height - 1; i++)
+            {
+                for (int j = 0; j < width; j++) 
+                {
+                    //change player's location
+                    if(movingArea[i][j] == 'P' && movingArea[i - 1][j] == ' ')
+                    {
+                        movingArea[i][j] = ' ';
+                        movingArea[i - 1][j] = 'P';
+                        
+                        return;
+                    }             
+                    //If player gots 'X'                    
+                    else if(movingArea[i][j] == 'P' && movingArea[i - 1][j] == 'X')
+                    {
+                        System.out.println("Hint: ");
+                        
+                        movingArea[i][j] = ' ';
+                        movingArea[i - 1][j] = 'P';
+                        
+                        return;
+                    }
+                }
+            }
+        }
     }
 }

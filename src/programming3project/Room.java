@@ -11,34 +11,62 @@ package programming3project;
  */
 public abstract class Room //Room could be interface for now
 {
-
-    abstract protected void initializeMovingArea();
-
+    abstract protected void hints();
+    abstract protected void moving(char move);
     abstract protected void printRoom();
 
     protected final int width;
     protected final int height;
     protected char[][] movingArea;
 
-    public Room(int width, int height) {
+    public Room(int width, int height) 
+    {
         this.width = width;
         this.height = height;
     }
 
-    public int getWidth() {
+    protected void initializeMovingArea()
+    {
+        this.movingArea = new char[height - 1][width];
+        
+        //Loops for empty movingArea (ground with wall and gate only)
+        for (int i = 0; i < this.height - 2; i++)
+        {
+            for (int j = 0; j < this.width; j++)
+            {
+                if(j == 0 || j == width - 1)
+                {
+                    movingArea[i][j] = '|';
+                }
+                else if(i == 0 && j == width / 2)
+                {
+                     movingArea[i][j] = 'P';
+                }
+                else
+                {
+                     movingArea[i][j] = ' ';
+                }
+            }
+        }
+    }
+    
+    public int getWidth() 
+    {
         return width;
     }
 
-    public int getHeight() {
+    public int getHeight()
+    {
         return height;
     }
 
-    public void printEntrance(String roomName) {
-
+    public void printEntrance(String roomName)
+    {
         //Print left side
         //Divide the width and roomName length in half to print in the middle
         //The +1 is for the | character
-        for (int pos = 0; pos < this.width / 2 - (roomName.length() / 2 + 1); pos++) {
+        for (int pos = 0; pos < this.width / 2 - (roomName.length() / 2 + 1); pos++) 
+        {
             System.out.print("_");
         }
 
@@ -47,14 +75,16 @@ public abstract class Room //Room could be interface for now
 
         //Print right side
         //The +2 is for the | character and the next position
-        for (int pos = this.width / 2 + (roomName.length() / 2 + 2); pos < this.width; pos++) {
+        for (int pos = this.width / 2 + (roomName.length() / 2 + 2); pos < this.width; pos++) 
+        {
             System.out.print("_");
         }
 
         System.out.println("");
     }
 
-    public void printWall() {
+    public void printWall() 
+    {
         //Print gate and wall (first row)
         for (int wid = 0; wid < this.width; wid++) {
             if (wid == 0 || wid == width - 1) {
@@ -63,5 +93,23 @@ public abstract class Room //Room could be interface for now
                 System.out.print("_");
             }
         }
+        
+        System.out.println();
+    }
+    
+    protected void resetPlayerPosition()
+    {
+        for(int i = 0; i < this.height - 2; i++)
+        {
+            for (int j = 0; j < this.width; j++)
+            {
+                if(movingArea[i][j] == 'P')
+                {
+                    movingArea[i][j] = ' ';
+                }
+            }
+        }
+            
+        movingArea[0][width / 2] = 'P';
     }
 }

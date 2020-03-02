@@ -37,7 +37,7 @@ public class Detective extends Person {
         String output = "";
 
         output += "Name: " + this.getName() + "\n";
-        output += "Gender: " + (this.getGender() == 'M' ? "Male" : "Female");
+        output += "Gender: " + (this.getGender() == 'M' ? "Male\n" : "Female\n");
         output += "Age: " + this.getAge() + "\n";//Do we need to create another attribute for age? => Then ask user
         output += "Job: " + this.getBackground() + "\n\n";
 
