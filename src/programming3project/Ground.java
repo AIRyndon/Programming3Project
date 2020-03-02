@@ -114,7 +114,7 @@ public class Ground extends Room
         
         //Check if those two hints are in the same position
         //Hints replace space only
-        //Hints cannot be inside the house and dog's house
+        //Hints cannot be inside the house
         boolean checkedFirst = false;
         boolean checkedSecond = false;
         while(!(checkedFirst && checkedSecond))
