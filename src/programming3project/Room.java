@@ -75,7 +75,7 @@ public abstract class Room //Room could be interface for now
 
         //Print right side
         //The +2 is for the | character and the next position
-        for (int pos = this.width / 2 + (roomName.length() / 2 + 2); pos < this.width; pos++) 
+        for (int pos = this.width / 2 + (roomName.length() / 2 + 1); pos < this.width; pos++) 
         {
             System.out.print("_");
         }

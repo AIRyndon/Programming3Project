@@ -35,6 +35,7 @@ public class House extends Room implements LockedArea
         super.initializeMovingArea();
         
         
+        
     }
     
     /**

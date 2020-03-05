@@ -159,7 +159,7 @@ public class Ground extends Room
     protected void printRoom()  
     {
         //Print first line
-        printEntrance("GATE");
+        printEntrance("Gate");
         
         //Loops for movingArea  
         for (int i = 0; i < this.height - 2; i++)

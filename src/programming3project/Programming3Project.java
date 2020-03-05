@@ -57,10 +57,10 @@ public class Programming3Project {
         System.out.println("Welcome to the game\n");
         System.out.print("Please enter a name: ");
         String userName = systemInput.nextLine();
+        systemInput = new Scanner(System.in);
 
         char userGender = '\0';
-        while (!(userGender == 'M' || userGender == 'm' || userGender == 'F' || userGender == 'f')) 
-        
+        while (!(userGender == 'M' || userGender == 'm' || userGender == 'F' || userGender == 'f'))     
         {
             System.out.print("Please enter a gender(M/F): ");
             userGender = systemInput.next().charAt(0);
@@ -97,7 +97,7 @@ public class Programming3Project {
         
         //Declare rooms
         Room[] rooms = new Room[]{
-            new Ground(52, 24),
+            new Ground(55, 30),
             new House(52, 24)
         };
 
