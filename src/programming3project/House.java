@@ -9,8 +9,8 @@ import java.util.Random;
 public class House extends Room implements LockedArea {
 
     /*we match the key passed to Unlock in the class that uses House
-    * the key could come from clues. I made it an interface so we can show that we
-    * are using interfaces :). And a house can be composed of a lockedRoom, so it kinda makes sense
+     * the key could come from clues. I made it an interface so we can show that we
+     * are using interfaces :). And a house can be composed of a lockedRoom, so it kinda makes sense
      */
     private int lockedAreaKey;
 
@@ -30,10 +30,13 @@ public class House extends Room implements LockedArea {
     protected void initializeMovingArea() {
         super.initializeMovingArea();
 
-        for (int row = 0; row < 15; row++) {
-            
+        for (int row = 0; row < height - 1; row++) {
+
             if (row == 2) {
-                
+
+                movingArea[row][width / 2 - 3] = '|';
+                movingArea[row][width / 2 + 3] = '|';
+
                 movingArea[row][width / 2 - 18] = 'B';
                 movingArea[row][width / 2 - 17] = 'E';
                 movingArea[row][width / 2 - 16] = 'D';
@@ -41,17 +44,20 @@ public class House extends Room implements LockedArea {
                 movingArea[row][width / 2 - 14] = 'O';
                 movingArea[row][width / 2 - 13] = 'O';
                 movingArea[row][width / 2 - 12] = 'M';
-                
+
                 movingArea[row][width / 2 + 10] = 'K';
                 movingArea[row][width / 2 + 11] = 'I';
                 movingArea[row][width / 2 + 12] = 'T';
                 movingArea[row][width / 2 + 13] = 'C';
                 movingArea[row][width / 2 + 14] = 'H';
                 movingArea[row][width / 2 + 15] = 'E';
-                movingArea[row][width / 2 + 16] = 'N';                                        
-            }
-            
-            if (row == 7) {
+                movingArea[row][width / 2 + 16] = 'N';
+
+            } else if (row == 7) {
+
+                movingArea[row][width / 2 - 3] = '|';
+                movingArea[row][width / 2 + 3] = '|';
+
                 movingArea[row][width / 2 - 18] = 'B';
                 movingArea[row][width / 2 - 17] = 'A';
                 movingArea[row][width / 2 - 16] = 'T';
@@ -60,7 +66,7 @@ public class House extends Room implements LockedArea {
                 movingArea[row][width / 2 - 13] = 'O';
                 movingArea[row][width / 2 - 12] = 'O';
                 movingArea[row][width / 2 - 11] = 'M';
-                
+
                 movingArea[row][width / 2 + 10] = 'L';
                 movingArea[row][width / 2 + 11] = 'I';
                 movingArea[row][width / 2 + 12] = 'V';
@@ -72,9 +78,12 @@ public class House extends Room implements LockedArea {
                 movingArea[row][width / 2 + 18] = 'O';
                 movingArea[row][width / 2 + 19] = 'O';
                 movingArea[row][width / 2 + 20] = 'M';
-            }
-            
-            if (row == 12) {
+
+            } else if (row == 12) {
+
+                movingArea[row][width / 2 - 3] = '|';
+                movingArea[row][width / 2 + 3] = '|';
+
                 movingArea[row][width / 2 - 18] = 'B';
                 movingArea[row][width / 2 - 17] = 'E';
                 movingArea[row][width / 2 - 16] = 'D';
@@ -82,7 +91,7 @@ public class House extends Room implements LockedArea {
                 movingArea[row][width / 2 - 14] = 'O';
                 movingArea[row][width / 2 - 13] = 'O';
                 movingArea[row][width / 2 - 12] = 'M';
-                
+
                 movingArea[row][width / 2 + 10] = 'B';
                 movingArea[row][width / 2 + 11] = 'E';
                 movingArea[row][width / 2 + 12] = 'D';
@@ -90,9 +99,8 @@ public class House extends Room implements LockedArea {
                 movingArea[row][width / 2 + 14] = 'O';
                 movingArea[row][width / 2 + 15] = 'O';
                 movingArea[row][width / 2 + 16] = 'M';
-            }
-                    
-            if (row == 4 || row == 9 || row == 14) {
+
+            } else if (row == 4 || row == 9 || row == 14) {
 
                 movingArea[row][width / 2 - 3] = ' ';
                 movingArea[row][width / 2 + 3] = ' ';
@@ -104,7 +112,42 @@ public class House extends Room implements LockedArea {
                 for (int col = width / 2 + 4; col < width - 1; col++) {
                     movingArea[row][col] = '_';
                 }
-                
+
+            } else if (row == 18) {
+
+                movingArea[row][width / 2 - 3] = '*';
+                movingArea[row][width / 2 + 3] = ' ';
+
+                movingArea[row][width / 2 - 18] = 'L';
+                movingArea[row][width / 2 - 17] = 'O';
+                movingArea[row][width / 2 - 16] = 'C';
+                movingArea[row][width / 2 - 15] = 'K';
+                movingArea[row][width / 2 - 14] = 'E';
+                movingArea[row][width / 2 - 13] = 'D';
+
+                movingArea[row][width / 2 + 10] = 'W';
+                movingArea[row][width / 2 + 11] = 'O';
+                movingArea[row][width / 2 + 12] = 'R';
+                movingArea[row][width / 2 + 13] = 'K';
+                movingArea[row][width / 2 + 14] = 'I';
+                movingArea[row][width / 2 + 15] = 'N';
+                movingArea[row][width / 2 + 16] = 'G';
+
+            } else if (row == 19) {
+
+                movingArea[row][width / 2 - 3] = '|';
+                movingArea[row][width / 2 + 3] = '|';
+
+                movingArea[row][width / 2 - 18] = 'A';
+                movingArea[row][width / 2 - 17] = 'R';
+                movingArea[row][width / 2 - 16] = 'E';
+                movingArea[row][width / 2 - 15] = 'A';
+
+                movingArea[row][width / 2 + 10] = 'A';
+                movingArea[row][width / 2 + 11] = 'R';
+                movingArea[row][width / 2 + 12] = 'E';
+                movingArea[row][width / 2 + 13] = 'A';
+
             } else {
                 movingArea[row][width / 2 - 3] = '|';
                 movingArea[row][width / 2 + 3] = '|';
