@@ -14,25 +14,30 @@ public class House extends Room implements LockedArea {
      */
     private int lockedAreaKey;
 
-    public House(int width, int height) {
+    public House(int width, int height)
+    {
         super(width, height);
         initializeMovingArea();
     }
 
-    public boolean unlock(int key) {
-        if (key == lockedAreaKey) {
+    public boolean unlock(int key) 
+    {
+        if (key == lockedAreaKey)
+        {
             return true;
         }
 
         return false;
     }
 
-    protected void initializeMovingArea() {
+    protected void initializeMovingArea()
+    {
         super.initializeMovingArea();
 
-        for (int row = 0; row < height - 1; row++) {
-
-            if (row == 2) {
+        for (int row = 0; row < height - 1; row++) 
+        {
+            if (row == 2)
+            {
 
                 movingArea[row][width / 2 - 3] = '|';
                 movingArea[row][width / 2 + 3] = '|';
@@ -52,9 +57,9 @@ public class House extends Room implements LockedArea {
                 movingArea[row][width / 2 + 14] = 'H';
                 movingArea[row][width / 2 + 15] = 'E';
                 movingArea[row][width / 2 + 16] = 'N';
-
-            } else if (row == 7) {
-
+            } 
+            else if (row == 7) 
+            {
                 movingArea[row][width / 2 - 3] = '|';
                 movingArea[row][width / 2 + 3] = '|';
 
@@ -78,9 +83,9 @@ public class House extends Room implements LockedArea {
                 movingArea[row][width / 2 + 18] = 'O';
                 movingArea[row][width / 2 + 19] = 'O';
                 movingArea[row][width / 2 + 20] = 'M';
-
-            } else if (row == 12) {
-
+            } 
+            else if (row == 12) 
+            {
                 movingArea[row][width / 2 - 3] = '|';
                 movingArea[row][width / 2 + 3] = '|';
 
@@ -100,20 +105,26 @@ public class House extends Room implements LockedArea {
                 movingArea[row][width / 2 + 15] = 'O';
                 movingArea[row][width / 2 + 16] = 'M';
 
-            } else if (row == 4 || row == 9 || row == 14) {
+            }
+            else if (row == 4 || row == 9 || row == 14)
+            {
 
                 movingArea[row][width / 2 - 3] = ' ';
                 movingArea[row][width / 2 + 3] = ' ';
 
-                for (int col = 1; col < width / 2 - 3; col++) {
+                for (int col = 1; col < width / 2 - 3; col++) 
+                {
                     movingArea[row][col] = '_';
                 }
 
-                for (int col = width / 2 + 4; col < width - 1; col++) {
+                for (int col = width / 2 + 4; col < width - 1; col++)
+                {
                     movingArea[row][col] = '_';
                 }
 
-            } else if (row == 18) {
+            }
+            else if (row == 18)
+            {
 
                 movingArea[row][width / 2 - 3] = '*';
                 movingArea[row][width / 2 + 3] = ' ';
@@ -133,8 +144,9 @@ public class House extends Room implements LockedArea {
                 movingArea[row][width / 2 + 15] = 'N';
                 movingArea[row][width / 2 + 16] = 'G';
 
-            } else if (row == 19) {
-
+            } 
+            else if (row == 19) 
+            {
                 movingArea[row][width / 2 - 3] = '|';
                 movingArea[row][width / 2 + 3] = '|';
 
@@ -147,8 +159,9 @@ public class House extends Room implements LockedArea {
                 movingArea[row][width / 2 + 11] = 'R';
                 movingArea[row][width / 2 + 12] = 'E';
                 movingArea[row][width / 2 + 13] = 'A';
-
-            } else {
+            } 
+            else
+            {
                 movingArea[row][width / 2 - 3] = '|';
                 movingArea[row][width / 2 + 3] = '|';
             }
@@ -159,29 +172,40 @@ public class House extends Room implements LockedArea {
      * Printing the house
      */
     @Override
-    protected void printRoom() {
-
+    protected void printRoom() 
+    {
         printEntrance("House");
 
-        for (int i = 0; i < this.height - 2; i++) {
-            for (int j = 0; j < this.width; j++) {
+        for (int i = 0; i < this.height - 2; i++) 
+        {
+            for (int j = 0; j < this.width; j++) 
+            {
                 System.out.print(movingArea[i][j]);
             }
 
             System.out.println("");
         }
+        
         printWall();
     }
 
-    public void printLockedArea() {
+    public void printLockedArea()
+    {
         //Loops for height
-        for (int i = 0; i < this.getHeight(); i++) {
-            for (int j = 0; j < this.getWidth(); j++) {
-                if (j == 0 || j == this.getWidth() - 1) {
+        for (int i = 0; i < this.getHeight(); i++) 
+        {
+            for (int j = 0; j < this.getWidth(); j++) 
+            {
+                if (j == 0 || j == this.getWidth() - 1)
+                {
                     System.out.print("|");
-                } else if (i == 0 || i == this.getHeight() - 1) {
+                } 
+                else if (i == 0 || i == this.getHeight() - 1)
+                {
                     System.out.print("----");
-                } else {
+                } 
+                else 
+                {
                     System.out.print("    ");
                 }
             }
@@ -190,14 +214,16 @@ public class House extends Room implements LockedArea {
         }
     }
 
-    protected void moving(char move) {
+    protected void moving(char move)
+    {
 
     }
 
     /**
      * create random hints
      */
-    protected void hints() {
+    protected void hints()
+    {
         //Randomly assign some hint positions in the ground 
         Random rand = new Random();
 

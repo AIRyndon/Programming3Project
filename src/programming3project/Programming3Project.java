@@ -7,9 +7,11 @@ package programming3project;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
-import java.util.Random;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,36 +35,21 @@ public class Programming3Project {
 
         File file = new File(workingDir + "/FileDB/" + "game-state.txt");
 
-        /*
-         The detective is working in his room.
-         A police officer runs to him and announces that there was a death of a milionare.
-            
-         The detective come with the police officer
-        
-         First four questions:
-         - Do you want to walk around the house?
-         - Do you want to come in the house?
-         - Do you want to talk with the relatives (suspicious)?
-         - Do you want to see the body immediately?
-        
-         => Save in file and change the location
-        
-         Create some evidences or some hints in each rooms
-         */
-        Random rand = new Random();
+        System.out.println("Welcome to the game\n");
 
         //Promt user input
         //Need to check those inputs (InputException - try catch)
-        System.out.println("Welcome to the game\n");
         System.out.print("Please enter a name: ");
         String userName = systemInput.nextLine();
-        systemInput = new Scanner(System.in);
 
         char userGender = '\0';
         while (!(userGender == 'M' || userGender == 'm' || userGender == 'F' || userGender == 'f')) {
             System.out.print("Please enter a gender(M/F): ");
             userGender = systemInput.next().charAt(0);
         }
+        
+        System.out.print("Please enter an age: ");
+        int userAge = systemInput.nextInt();
         
         //Declare rooms
         Room[] rooms = new Room[]{
@@ -72,9 +59,8 @@ public class Programming3Project {
              
         //Declare all characters
         //char[][] playArea = new char[24][52];
-        Detective detective = new Detective(userName, userGender, 50,
+        Detective detective = new Detective(userName, userGender, userAge,
                     rooms[0].movingArea,rooms[0]);
-        //What if we just declare "Mysterious fellow"?
         detective.setBackground("Mysterious fellow");
 
         Victim victim = new Victim("Bosh", "President of KPI Cooperation", 55);
@@ -83,33 +69,20 @@ public class Programming3Project {
             new Relative("Belinda", 'F', 50, "Wife"),
             new Relative("Calista", 'F', 25, "Daughter"),
             new Relative("Marcello", 'M', 63, "Butler"),
-            new Relative("Ashton", 'M', 34, "Assistant")
+            new Relative("Ashton", 'M', 34, "Assistant"),
+            new Relative("Cindel", 'F', 20, "Maid"),
         };
-
-        //Set killer to random
-        Relative killer = people[rand.nextInt(4)];
-
-        /*char userDetails = '\0';
-         while (!(userDetails == 'Y' || userDetails == 'y' || userDetails == 'N' || userDetails == 'n')) {
-         System.out.println("Can we get more details about you?(Y/N)");
-         userDetails = systemInput.next().charAt(0);
-         }
-
-         if (userDetails == 'Y') {
-         //call method to get origin, background, etc.
-         } else {
-         detective.setBackground("Mysterious fellow");
-         } */
-        
-        
-        
 
         //Intro the detective
         System.out.println("\nThe main character's information...");
         System.out.println(detective);
 
         //Tell the story
-        System.out.println("17/6/2031");//Do we need to set date?
+            //Printing current day
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        System.out.println(dateFormat.format(new Date()));
+        
+            //Story begins
         System.out.println("You - " + detective.getName() + " is working in your office and reading some news.");
         System.out.println("\"" + (detective.getGender() == 'M' ? "Mr. " : "Mrs. ")
                 + detective.getName() + "!\"");
@@ -118,7 +91,8 @@ public class Programming3Project {
 
         //Ask the player to enter the game area
         char enterPremises = '\0';
-        while (!(enterPremises == 'Y' || enterPremises == 'y' || enterPremises == 'N' || enterPremises == 'n')) {
+        while (!(enterPremises == 'Y' || enterPremises == 'y' || enterPremises == 'N' || enterPremises == 'n'))
+        {
             System.out.println("Do you want to enter the compound?(Y/N)");
             enterPremises = systemInput.next().charAt(0);
         }
@@ -129,27 +103,20 @@ public class Programming3Project {
                     + "- a bilionaire names " + victim.getName() + ".");
             System.out.println("Coincidentally, your customer is the victim who was mentioned by the police");
         }
-
-        //Asking four questions
-        //Create a class for room and its subclasses
-        //Create class for relatives (we may create an interface name Person to 
-        //handle basic info - name, gender, age, role)
-        //todo - Using loop to reaccess those rooms            
+         
+        //Check if user want to continue the game
         boolean stayInside = true;
-
-        while (stayInside) {
-            //Display four questions
-            System.out.println("\nWhich action do you want to do next? (1 - 4)");
-            System.out.println(printQuestions());
+        while (stayInside) 
+        {
+            System.out.println("\nNow, press 1 to enter the gate...");
             int action = systemInput.nextInt();
 
+            //Enter the ground
             if (action == 1) {
                 //access ground => print ground
                 detective.setCurrentRoom(rooms[0]);
                 detective.setPlayArea(rooms[0].movingArea);
                 rooms[0].printRoom();
-                
-                
 
                 //Moving
                 System.out.println("Moving by a, s, d, w, quit by q");
@@ -165,7 +132,7 @@ public class Programming3Project {
 
                 rooms[0].resetPlayerPosition();
             }
-
+            //Enter the house
             if (action == 2) {
                 //access house => print house
                 detective.setCurrentRoom(rooms[1]);
@@ -201,20 +168,6 @@ public class Programming3Project {
         }
 
         System.out.println("Thank you for playing!\n");
-    }
-
-    /**
-     * @return the questions
-     */
-    public static String printQuestions() {
-        String questions = "";
-
-        questions += "1. Walk around the ground\n";
-        questions += "2. Come inside the house\n";
-        questions += "3. Talk with the relatives (suspicious)\n";
-        questions += "4. See the victim immediately\n";
-
-        return questions;
     }
 
     /**

@@ -147,8 +147,8 @@ public class Ground extends Room
         }
         
         //Assign hints 
-        movingArea[firstHei][firstWid] = 'X';
-        movingArea[secondHei][secondWid] = 'X';
+        movingArea[firstHei][firstWid] = 'B';
+        movingArea[secondHei][secondWid] = 'W';
         movingArea[0][width - 3] = 'X'; //One hint inside the dog's house
     }
     
