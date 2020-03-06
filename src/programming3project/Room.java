@@ -17,7 +17,7 @@ public abstract class Room //Room could be interface for now
 
     protected final int width;
     protected final int height;
-    protected char[][] movingArea;
+    public char[][] movingArea;
 
     public Room(int width, int height) 
     {
