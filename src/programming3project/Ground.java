@@ -6,6 +6,7 @@
 package programming3project;
 
 import java.util.Random;
+import java.util.Scanner;
 /**
  *
  * @author pc
@@ -184,10 +185,14 @@ public class Ground extends Room
     protected void printWall() 
     {
         //Print gate and wall (first row)
-        for (int wid = 0; wid < this.width; wid++) {
-            if (wid == 0 || wid == width - 1) {
+        for (int wid = 0; wid < this.width; wid++)
+        {
+            if (wid == 0 || wid == width - 1) 
+            {
                 System.out.print("|");
-            } else {
+            } 
+            else
+            {
                 System.out.print("_");
             }
         }
@@ -196,7 +201,7 @@ public class Ground extends Room
     }
         
     @Override
-    protected void moving(char move)
+    protected int moving(char move)
     {
         //Invalid input
         if(move != 'a' && move != 's' && move != 'd' && move != 'w')           
@@ -217,7 +222,7 @@ public class Ground extends Room
                         movingArea[i][j] = ' ';
                         movingArea[i][j - 2] = 'P';
                         
-                        return;
+                        return 1;
                     }
                     //change player's location
                     else if(movingArea[i][j] == 'P' && movingArea[i][j - 1] == ' ')
@@ -225,7 +230,7 @@ public class Ground extends Room
                         movingArea[i][j] = ' ';
                         movingArea[i][j - 1] = 'P';
                         
-                        return;
+                        return 1;
                     }
                     //If player gots 'X'
                     else if(movingArea[i][j] == 'P' && movingArea[i][j - 1] == 'X')
@@ -235,7 +240,7 @@ public class Ground extends Room
                         movingArea[i][j] = ' ';
                         movingArea[i][j - 1] = 'P';
                         
-                        return;
+                        return 1;
                     }
                 }
             }
@@ -254,7 +259,7 @@ public class Ground extends Room
                         movingArea[i][j] = ' ';
                         movingArea[i][j + 2] = 'P';
                         
-                        return;
+                        return 1;
                     }
                     //change player's location
                     else if(movingArea[i][j] == 'P' && movingArea[i][j + 1] == ' ')
@@ -262,7 +267,7 @@ public class Ground extends Room
                         movingArea[i][j] = ' ';
                         movingArea[i][j + 1] = 'P';
                         
-                        return;
+                        return 1;
                     }
                     //If player gots 'X'
                     else if(movingArea[i][j] == 'P' && movingArea[i][j + 1] == 'X')
@@ -272,7 +277,7 @@ public class Ground extends Room
                         movingArea[i][j] = ' ';
                         movingArea[i][j + 1] = 'P';
                         
-                        return;
+                        return 1;
                     }
                 }
             }
@@ -284,12 +289,22 @@ public class Ground extends Room
                 for (int j = 0; j < width; j++) 
                 {
                     //If player wants to access the house
-                    
                     if(i == 6 && (j == 25 || j == 26 || j == 27) && movingArea[i][j] == 'P')
                     {
-                        System.out.println("If you want to access the house, please enter 'q'");
-                        
-                        return;
+                        Scanner scan = new Scanner(System.in);
+                        System.out.println("Press 'y' to access the house");
+                        boolean accessPlace = "y".equalsIgnoreCase(scan.nextLine()); 
+                        //Using throw - catch to test user input
+
+                        //Check if player wants to access the house
+                        if(accessPlace)
+                        {
+                            return 2;
+                        }
+                        else
+                        {
+                            return 1;
+                        }
                     }
                     //change player's location
                     else if(movingArea[i][j] == 'P' && movingArea[i + 1][j] == ' ')
@@ -297,7 +312,7 @@ public class Ground extends Room
                         movingArea[i][j] = ' ';
                         movingArea[i + 1][j] = 'P';
                         
-                        return;
+                        return 1;
                     }
                     //If player gots 'X'
                     else if(movingArea[i][j] == 'P' && movingArea[i + 1][j] == 'X')
@@ -307,7 +322,7 @@ public class Ground extends Room
                         movingArea[i][j] = ' ';
                         movingArea[i + 1][j] = 'P';
                         
-                        return;
+                        return 1;
                     }
                 }
             }
@@ -324,7 +339,7 @@ public class Ground extends Room
                         movingArea[i][j] = ' ';
                         movingArea[i - 1][j] = 'P';
                         
-                        return;
+                        return 1;
                     }             
                     //If player gots 'X'                    
                     else if(movingArea[i][j] == 'P' && movingArea[i - 1][j] == 'X')
@@ -334,10 +349,12 @@ public class Ground extends Room
                         movingArea[i][j] = ' ';
                         movingArea[i - 1][j] = 'P';
                         
-                        return;
+                        return 1;
                     }
                 }
             }
         }
+        
+        return 1;
     }
 }

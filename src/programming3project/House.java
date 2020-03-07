@@ -1,6 +1,7 @@
 package programming3project;
 
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  *
@@ -164,7 +165,7 @@ public class House extends Room implements LockedArea
                 {
                     movingArea[i][12] = '|';        
                     movingArea[i][width / 2 + 9] = '|';
-                    movingArea[i][width / 2 + 10] = '/';
+                    movingArea[i][width / 2 + 10] = '\\';
                 }
                 else if(i == 15)
                 {
@@ -307,9 +308,182 @@ public class House extends Room implements LockedArea
         }
     }
 
-    protected void moving(char move)
+    @Override
+    protected int moving(char move)
     {
+        //Invalid input
+        if(move != 'a' && move != 's' && move != 'd' && move != 'w')           
+        {
+            System.out.println("Invalid Input!");
+        }
+        else if (move == 'a') 
+        {
+            for (int i = 0; i < height - 1; i++)
+            {
+                for (int j = 0; j < width; j++) 
+                {
+                    //If player wants to access MAID'S ROOM
+                    if(i == 2 && j == width / 2 - 2 && movingArea[i][j] == 'P')
+                    {
+                        Scanner scan = new Scanner(System.in);
+                        System.out.println("Press 'y' to access the maid's room");
+                        boolean accessPlace = "y".equalsIgnoreCase(scan.nextLine()); 
+                        //Using throw - catch to test user input
 
+                        //Check if player wants to access the house
+                        if(accessPlace)
+                        {
+                            return 3;
+                        }
+                        else
+                        {
+                            return 2;
+                        }
+                    }
+                    //If player wants to access BUTLER'S ROOM
+                    if(i == 5 && j == width / 2 - 2 && movingArea[i][j] == 'P')
+                    {
+                        Scanner scan = new Scanner(System.in);
+                        System.out.println("Press 'y' to access the butler's room");
+                        boolean accessPlace = "y".equalsIgnoreCase(scan.nextLine()); 
+                        //Using throw - catch to test user input
+
+                        //Check if player wants to access the house
+                        if(accessPlace)
+                        {
+                            return 4;
+                        }
+                        else
+                        {
+                            return 2;
+                        }
+                    }
+                    //If player wants to access WIFE'S ROOM 
+                    if(i == 9 && j == width / 2 - 2 && movingArea[i][j] == 'P')
+                    {
+                        Scanner scan = new Scanner(System.in);
+                        System.out.println("Press 'y' to access the wife's room");
+                        boolean accessPlace = "y".equalsIgnoreCase(scan.nextLine()); 
+                        //Using throw - catch to test user input
+
+                        //Check if player wants to access the house
+                        if(accessPlace)
+                        {
+                            return 5;
+                        }
+                        else
+                        {
+                            return 2;
+                        }
+                    }
+                    //change player's location
+                    else if(movingArea[i][j] == 'P' && movingArea[i][j - 1] == ' ')
+                    {
+                        movingArea[i][j] = ' ';
+                        movingArea[i][j - 1] = 'P';
+                        
+                        return 2;
+                    }
+                }
+            }
+        } 
+        else if (move == 'd') 
+        {
+            for (int i = 0; i < height - 1; i++)
+            {
+                for (int j = 0; j < width; j++) 
+                {
+                    //If player hits '='
+                    if(movingArea[i][j] == 'P' && movingArea[i][j + 1] == '=')
+                    {
+                        System.out.println("That is a window!");
+                        
+                        return 2;
+                    }
+                    
+                    //change player's location
+                    if(movingArea[i][j] == 'P' && movingArea[i][j + 1] == ' ')
+                    {
+                        movingArea[i][j] = ' ';
+                        movingArea[i][j + 1] = 'P';
+                        
+                        return 2;
+                    }
+                }
+            }
+        }
+        else if (move == 's')
+        {
+            for (int i = 0; i < height - 1; i++)
+            {
+                for (int j = 0; j < width; j++) 
+                {
+                    //If player wants to access WORKING ROOM
+                    if(i == 11 && j == width / 2 - 2 && movingArea[i][j] == 'P')
+                    {
+                        Scanner scan = new Scanner(System.in);
+                        System.out.println("Press 'y' to access the working room");
+                        boolean accessPlace = "y".equalsIgnoreCase(scan.nextLine()); 
+                        //Using throw - catch to test user input
+
+                        //Check if player wants to access the house
+                        if(accessPlace)
+                        {
+                            return 6;
+                        }
+                        else
+                        {
+                            return 2;
+                        }
+                    }
+                    //change player's location
+                    else if(movingArea[i][j] == 'P' && movingArea[i + 1][j] == ' ')
+                    {
+                        movingArea[i][j] = ' ';
+                        movingArea[i + 1][j] = 'P';
+                        
+                        return 2;
+                    }
+                }
+            }
+        }
+        else if (move == 'w') 
+        {
+            for (int i = 0; i < height - 1; i++)
+            {
+                for (int j = 0; j < width; j++) 
+                {
+                    //Get out of the house
+                    if(i == 0 && j >= width / 2 - 2 && j <= width / 2 + 2 && movingArea[i][j] == 'P')
+                    {
+                        Scanner scan = new Scanner(System.in);
+                        System.out.println("Press 'y' to get out of the house");
+                        boolean accessPlace = "y".equalsIgnoreCase(scan.nextLine()); 
+                        //Using throw - catch to test user input
+
+                        //Check if player wants to access the house
+                        if(accessPlace)
+                        {
+                            return 1;
+                        }
+                        else
+                        {
+                            return 2;
+                        }
+                    }
+                    //change player's location
+                    else if(movingArea[i][j] == 'P' && movingArea[i - 1][j] == ' ')
+                    {
+                        movingArea[i][j] = ' ';
+                        movingArea[i - 1][j] = 'P';
+                        
+                        return 2;
+                    }
+                }
+            }
+        }
+        
+        return 2;
     }
 
     /**

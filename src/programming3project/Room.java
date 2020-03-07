@@ -12,10 +12,12 @@ package programming3project;
 public abstract class Room 
 {
     abstract protected void hints();
-    abstract protected void moving(char move);
+    abstract protected int moving(char move);
     abstract protected void printRoom();
     abstract protected void printWall();
 
+    private int xCoord;
+    private int yCoord;
     protected int width;
     protected int height;
     public char[][] movingArea;
@@ -83,19 +85,21 @@ public abstract class Room
         System.out.println("");
     }
     
-    protected void resetPlayerPosition()
-    {
-        for(int i = 0; i < this.height - 2; i++)
-        {
-            for (int j = 0; j < this.width; j++)
-            {
-                if(movingArea[i][j] == 'P')
-                {
-                    movingArea[i][j] = ' ';
-                }
-            }
-        }
-            
-        movingArea[0][width / 2] = 'P';
-    }
+    //We do not need it because when the detective accesses the house from ground, we need to 
+        //save the position
+//    protected void resetPlayerPosition()
+//    {
+//        for(int i = 0; i < this.height - 2; i++)
+//        {
+//            for (int j = 0; j < this.width; j++)
+//            {
+//                if(movingArea[i][j] == 'P')
+//                {
+//                    movingArea[i][j] = ' ';
+//                }
+//            }
+//        }
+//            
+//        movingArea[0][width / 2] = 'P';
+//    }
 }

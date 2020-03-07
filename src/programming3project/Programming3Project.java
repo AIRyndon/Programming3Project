@@ -19,14 +19,16 @@ import java.util.Set;
  *
  * @author airyn
  */
-public class Programming3Project {
+public class Programming3Project 
+{
 
     private static Scanner systemInput = new Scanner(System.in);
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         //todo - gonna refactor these guys later
         //creating a FILE for game state later 
         String workingDir = System.getProperty("user.dir");
@@ -101,7 +103,8 @@ public class Programming3Project {
         }
         
         //If player does not want to enter the compound
-        if (enterPremises != 'Y' && enterPremises != 'y') {
+        if (enterPremises != 'Y' && enterPremises != 'y') 
+        {
             System.out.println("\n\"Sorry I do not have time at the moment...\"");
             System.out.println("Right then, you came to one of your customers' house "
                     + "- a bilionaire names " + victim.getName() + ".");
@@ -126,17 +129,22 @@ public class Programming3Project {
                 //Moving
                 System.out.println("Moving by a, s, d, w, quit by q");
                 char move = systemInput.next().charAt(0);
-
-                while (move != 'q')
+            
+                while (action == 1)
                 {
-                    //Check Coordination
-                    //Ground has 4 items: Butler, Wife, Dog's house, house
-                    
                     //Todo: refactor moving and resetPlayerPosition method inside Room class
-                    detective.move(move);
-                    
-                    System.out.println("Moving by a, s, d, w, quit by q");
-                    move = systemInput.next().charAt(0);
+                    action = detective.getCurrentRoom().moving(move);
+                    detective.getCurrentRoom().printRoom();
+
+                    if(action == 1)
+                    {
+                        System.out.println("Moving by a, s, d, w, quit by q");
+                        move = systemInput.next().charAt(0);
+                    }
+                    else
+                    {
+                        System.out.println("\n");
+                    }
                 }
 
                 //rooms[0].resetPlayerPosition();
@@ -153,21 +161,32 @@ public class Programming3Project {
                 System.out.println("Moving by a, s, d, w, quit by q");
                 char move = systemInput.next().charAt(0);
 
-                while (move != 'q') {
+                while (action == 2)
+                {
                     //Todo: refactor moving and resetPlayerPosition method inside Room class
-                    detective.move(move);
+                    action = detective.getCurrentRoom().moving(move);
+                    detective.getCurrentRoom().printRoom();
 
-                    System.out.println("Moving by a, s, d, w, quit by q");
-                    move = systemInput.next().charAt(0);
+                    if(action == 2)
+                    {
+                        System.out.println("Moving by a, s, d, w, quit by q");
+                        move = systemInput.next().charAt(0);
+                    }
+                    else
+                    {
+                        System.out.println("\n");
+                    }
                 }
-                rooms[1].resetPlayerPosition();
+                //rooms[1].resetPlayerPosition();
             }
-
-            if (action == 3) {
+                
+            if (action == 3) 
+            {
                 //Display conversations
             }
-
-            if (action == 4) {
+            
+            if (action == 4)
+            {
                 //print lockedArea and victim's body
             }
 
@@ -183,12 +202,14 @@ public class Programming3Project {
     /**
      * @return char (Y/N)
      */
-    public static boolean continueGame() {
+    public static boolean continueGame()
+    {
         System.out.println("\nDo you want to continue the game? (Y/N)");
         char continueGame = systemInput.next().charAt(0);
 
         //Check if it is invalid input
-        while (!(continueGame == 'Y' || continueGame == 'y' || continueGame == 'N' || continueGame == 'n')) {
+        while (!(continueGame == 'Y' || continueGame == 'y' || continueGame == 'N' || continueGame == 'n'))
+        {
             System.out.println("Invalid input!");
             System.out.println("Do you want to continue the game? (Y/N)");
             continueGame = systemInput.next().charAt(0);
