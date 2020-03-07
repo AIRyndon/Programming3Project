@@ -12,8 +12,10 @@ import java.util.Random;
  */
 public class Ground extends Room
 {
-    public Ground(int width,int height){
-        super(width,height);      
+    public Ground()
+    {
+        this.height = 24;
+        this.width = 52;
         initializeMovingArea();     
     }
     

@@ -9,21 +9,20 @@ package programming3project;
  *
  * @author group
  */
-public abstract class Room //Room could be interface for now
+public abstract class Room 
 {
     abstract protected void hints();
     abstract protected void moving(char move);
     abstract protected void printRoom();
     abstract protected void printWall();
 
-    protected final int width;
-    protected final int height;
+    protected int width;
+    protected int height;
     public char[][] movingArea;
 
-    public Room(int width, int height) 
+    public Room() 
     {
-        this.width = width;
-        this.height = height;
+        
     }
 
     protected void initializeMovingArea()
@@ -83,7 +82,6 @@ public abstract class Room //Room could be interface for now
 
         System.out.println("");
     }
-
     
     protected void resetPlayerPosition()
     {

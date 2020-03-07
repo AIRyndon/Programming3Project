@@ -6,18 +6,19 @@ import java.util.Random;
  *
  * @author pc
  */
-public class House extends Room implements LockedArea {
-
+public class House extends Room implements LockedArea 
+{
     /*we match the key passed to Unlock in the class that uses House
      * the key could come from clues. I made it an interface so we can show that we
      * are using interfaces :). And a house can be composed of a lockedRoom, so it kinda makes sense
      */
     private int lockedAreaKey;
 
-    public House(int width, int height)
+    public House()
     {
-        super(width, height);
-        initializeMovingArea();
+        this.height = 20;
+        this.width = 52;
+        initializeMovingArea(); 
     }
 
     public boolean unlock(int key) 
@@ -161,9 +162,9 @@ public class House extends Room implements LockedArea {
                 }
                 else if(i == 14)
                 {
-                    movingArea[i][width / 2 - 3] = '|';        
+                    movingArea[i][12] = '|';        
                     movingArea[i][width / 2 + 9] = '|';
-                    movingArea[i][width / 2 + 10] = '\\';
+                    movingArea[i][width / 2 + 10] = '/';
                 }
                 else if(i == 15)
                 {

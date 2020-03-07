@@ -56,8 +56,8 @@ public class Programming3Project {
         
         //Declare rooms
         Room[] rooms = new Room[]{
-            new Ground(52, 24),
-            new House(52, 20)
+            new Ground(),
+            new House()
         };
              
         //Declare all characters
@@ -129,9 +129,12 @@ public class Programming3Project {
 
                 while (move != 'q')
                 {
+                    //Check Coordination
+                    //Ground has 4 items: Butler, Wife, Dog's house, house
+                    
                     //Todo: refactor moving and resetPlayerPosition method inside Room class
                     detective.move(move);
-
+                    
                     System.out.println("Moving by a, s, d, w, quit by q");
                     move = systemInput.next().charAt(0);
                 }
