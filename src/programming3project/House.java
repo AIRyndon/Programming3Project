@@ -242,20 +242,9 @@ public class House extends Room implements LockedArea
     /**
      * Printing the house
      */
-    @Override
-    protected void printRoom() 
+    protected void printRoom(String door) 
     {
-        printEntrance("House");
-
-        for (int i = 0; i < this.height - 2; i++) 
-        {
-            for (int j = 0; j < this.width; j++) 
-            {
-                System.out.print(movingArea[i][j]);
-            }
-
-            System.out.println("");
-        }
+        super.printRoom(door);
         
         printWall();
     }

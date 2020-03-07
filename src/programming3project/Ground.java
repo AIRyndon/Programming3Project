@@ -159,45 +159,11 @@ public class Ground extends Room
      * Printing the ground
      */
     @Override
-    protected void printRoom()  
+    public void printRoom(String door)  
     {
-        //Print first line
-        printEntrance("Gate");
-        
-        //Loops for movingArea  
-        for (int i = 0; i < this.height - 2; i++)
-        {
-            for (int j = 0; j < this.width; j++)
-            {
-                System.out.print(movingArea[i][j]);
-            }
-            
-            System.out.println("");
-        }
+        super.printRoom(door);
         
         printWall();    
-    }
-    
-    /**
-    * Printing the wall
-    */
-    @Override
-    protected void printWall() 
-    {
-        //Print gate and wall (first row)
-        for (int wid = 0; wid < this.width; wid++)
-        {
-            if (wid == 0 || wid == width - 1) 
-            {
-                System.out.print("|");
-            } 
-            else
-            {
-                System.out.print("_");
-            }
-        }
-        
-        System.out.println();
     }
         
     @Override

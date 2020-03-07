@@ -13,8 +13,6 @@ public abstract class Room
 {
     abstract protected void hints();
     abstract protected int moving(char move);
-    abstract protected void printRoom();
-    abstract protected void printWall();
 
     private int xCoord;
     private int yCoord;
@@ -62,6 +60,25 @@ public abstract class Room
         return height;
     }
 
+    protected void printRoom(String door)
+    {
+        //Print first line
+        printEntrance(door);
+        
+        //Loops for movingArea  
+        for (int i = 0; i < this.height - 2; i++)
+        {
+            for (int j = 0; j < this.width; j++)
+            {
+                System.out.print(movingArea[i][j]);
+            }
+            
+            System.out.println("");
+        }
+        
+        printWall();
+    }
+    
     public void printEntrance(String roomName)
     {
         //Print left side
@@ -85,8 +102,26 @@ public abstract class Room
         System.out.println("");
     }
     
-    //We do not need it because when the detective accesses the house from ground, we need to 
-        //save the position
+    protected void printWall() 
+    {
+        //Print gate and wall (first row)
+        for (int wid = 0; wid < this.width; wid++)
+        {
+            if (wid == 0 || wid == width - 1) 
+            {
+                System.out.print("|");
+            } 
+            else
+            {
+                System.out.print("_");
+            }
+        }
+        
+        System.out.println();
+    }
+    
+//    We do not need it because when the detective accesses the house from ground, we need to 
+//    save the position
 //    protected void resetPlayerPosition()
 //    {
 //        for(int i = 0; i < this.height - 2; i++)
