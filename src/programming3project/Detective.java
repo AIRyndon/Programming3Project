@@ -15,7 +15,7 @@ public class Detective extends Person {
     private int xCoord;
     private int yCoord;
     private String background;
-    public Actions playerActions;
+    private Relative currentTarget;
     private char[][] playArea;
     private Room currentRoom;
 
@@ -34,32 +34,30 @@ public class Detective extends Person {
          //pass the movingArea back to the area you are in, and let it redraw
          */
     }
+      
+    public char move(char keyPress) {
 
-    public void move(char keyPress) {
-        
         char item = '\0';
 
         switch (keyPress) {
             case 'a':
 
                 if (yCoord == 0) {
-                    return;
+                    return ' ';
                 }
 
                 item = playArea[xCoord][yCoord - 1];
-                if (item == ' ') {
+                if (item == ' ') {                  
                     playArea[xCoord][yCoord] = ' ';
                     yCoord -= 1;
                     playArea[xCoord][yCoord] = 'P';
-                } else {
-
                 }
                 break;
 
             case 'd':
 
                 if (yCoord == playArea[0].length - 1) {
-                    return;
+                    return ' ';
                 }
 
                 item = playArea[xCoord][yCoord + 1];
@@ -73,7 +71,7 @@ public class Detective extends Person {
             case 'w':
 
                 if (xCoord == 0) {
-                    return;
+                    return ' ';
                 }
 
                 item = playArea[xCoord - 1][yCoord];
@@ -88,7 +86,7 @@ public class Detective extends Person {
             case 's':
 
                 if (xCoord == playArea.length - 1) {
-                    return;
+                    return ' ';
                 }
 
                 item = playArea[xCoord + 1][yCoord];
@@ -103,8 +101,11 @@ public class Detective extends Person {
                 break;
         }
 
-        getCurrentRoom().printRoom("Room");
+        currentRoom.printRoom(currentRoom.getName());
+        
+        return item;
     }
+
 
     /**
      * @return the background
@@ -152,5 +153,19 @@ public class Detective extends Person {
         output += "Background: " + this.getBackground() + "\n\n";
 
         return output;
+    }
+
+    /**
+     * @return the currentTarget
+     */
+    public Relative getCurrentTarget() {
+        return currentTarget;
+    }
+
+    /**
+     * @param currentTarget the currentTarget to set
+     */
+    public void setCurrentTarget(Relative currentTarget) {
+        this.currentTarget = currentTarget;
     }
 }

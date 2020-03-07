@@ -59,12 +59,12 @@ public class Programming3Project
         //Declare rooms
         Room[] rooms = new Room[]
         {
-            new Ground(),
-            new House(),
-            new RoomMaid(),
-            new RoomButler(),
-            new RoomWife(),
-            new RoomWorking()
+            new Ground("Ground"),
+            new House("House"),
+            new RoomMaid("Maid's Room"),
+            new RoomButler("Butler's Room"),
+            new RoomWife("Wife's Room"),
+            new RoomWorking("Work Room")
         };
              
         //Declare all characters
@@ -130,7 +130,7 @@ public class Programming3Project
                 //access ground => print ground
                 detective.setCurrentRoom(rooms[0]);
                 detective.setPlayArea(rooms[0].movingArea);
-                rooms[0].printRoom("Gate");
+                //rooms[0].printRoom(rooms[0].getName());
 
                 //Moving
                 while(!(keyPress == 'a' || keyPress == 'd' || keyPress == 's' || keyPress == 'w')){
@@ -138,8 +138,16 @@ public class Programming3Project
                     System.out.println("Press a, s, d, w then enter to move. Press q then enter to quit.");
                     keyPress = systemInput.next().charAt(0);
                 }
-                           
-                detective.move(keyPress);
+                
+                char landedArea = detective.move(keyPress);
+                
+                if (landedArea == 'B') {
+                    System.out.println(people[0].toString());
+                }else if (landedArea == 'W'){
+                    System.out.println(people[1].toString());
+                }
+                    
+                        
                 keyPress = '\0';              
             }
             //Enter the house

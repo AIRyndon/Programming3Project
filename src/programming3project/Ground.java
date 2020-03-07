@@ -13,10 +13,11 @@ import java.util.Scanner;
  */
 public class Ground extends Room
 {
-    public Ground()
+    public Ground(String name)
     {
-        this.height = 24;
-        this.width = 52;
+        setName(name);
+        setHeight(24);
+        setWidth(52);
         initializeMovingArea();     
     }
     
@@ -31,15 +32,15 @@ public class Ground extends Room
         super.initializeMovingArea();
         
         //Assign dog's place
-        movingArea[0][width - 15] = '|';
-        movingArea[0][width - 14] = '_';
-        movingArea[1][width - 14] = '_';
-        movingArea[1][width - 9] = 'D';
-        movingArea[1][width - 8] = 'O';
-        movingArea[1][width - 7] = 'G';
-        movingArea[2][width - 15] = '|';
+        movingArea[0][getWidth() - 15] = '|';
+        movingArea[0][getWidth() - 14] = '_';
+        movingArea[1][getWidth() - 14] = '_';
+        movingArea[1][getWidth() - 9] = 'D';
+        movingArea[1][getWidth() - 8] = 'O';
+        movingArea[1][getWidth() - 7] = 'G';
+        movingArea[2][getWidth() - 15] = '|';
         
-        for (int i = width - 14; i < width - 1; i++)
+        for (int i = getWidth() - 14; i < getWidth() - 1; i++)
         {
             movingArea[2][i] = '_';
         }
@@ -100,7 +101,7 @@ public class Ground extends Room
         movingArea[11][28] = 'E';
         
         //One hint inside the dog's house
-        movingArea[0][width - 3] = 'X'; 
+        movingArea[0][getWidth() - 3] = 'X'; 
 
         //The butler is in the ground
         relativePosition();
@@ -114,10 +115,10 @@ public class Ground extends Room
         //Randomly assign some hint positions in the ground 
         Random rand = new Random();
         
-        int firstHei = rand.nextInt(height - 2);
-        int firstWid = rand.nextInt(width - 2);
-        int secondHei = rand.nextInt(height - 2);
-        int secondWid = rand.nextInt(width - 2);
+        int firstHei = rand.nextInt(getHeight() - 2);
+        int firstWid = rand.nextInt(getWidth() - 2);
+        int secondHei = rand.nextInt(getHeight() - 2);
+        int secondWid = rand.nextInt(getWidth() - 2);
         
         //Check if those two positions are in the same position
         //Position replace space only
@@ -131,8 +132,8 @@ public class Ground extends Room
                 {
                     if(firstHei >= 7 && firstHei <= 14 && firstWid >= 17 && firstWid <= 35)
                     {
-                        firstHei = rand.nextInt(height - 2);
-                        firstWid = rand.nextInt(width - 2);
+                        firstHei = rand.nextInt(getHeight() - 2);
+                        firstWid = rand.nextInt(getWidth() - 2);
                     }
                     else
                     {
@@ -141,8 +142,8 @@ public class Ground extends Room
                     
                     if(secondHei >= 7 && secondHei <= 14 && secondWid >= 17 && secondWid <= 35)
                     {
-                        secondHei = rand.nextInt(height - 2);
-                        secondWid = rand.nextInt(width - 2);
+                        secondHei = rand.nextInt(getHeight() - 2);
+                        secondWid = rand.nextInt(getWidth() - 2);
                     }
                     else
                     {
@@ -178,12 +179,12 @@ public class Ground extends Room
         }
         else if (move == 'a') 
         {
-            for (int i = 0; i < height - 1; i++)
+            for (int i = 0; i < getHeight() - 1; i++)
             {
-                for (int j = 0; j < width; j++) 
+                for (int j = 0; j < getWidth(); j++) 
                 {
                     //If player wants to get out of the dog's house
-                    if(i == 1 && j == width - 13 && movingArea[i][j] == 'P')
+                    if(i == 1 && j == getWidth() - 13 && movingArea[i][j] == 'P')
                     {
                         System.out.println("Get out of the dog's house");
                         
@@ -239,12 +240,12 @@ public class Ground extends Room
         } 
         else if (move == 'd') 
         {
-            for (int i = 0; i < height - 1; i++)
+            for (int i = 0; i < getHeight() - 1; i++)
             {
-                for (int j = 0; j < width; j++) 
+                for (int j = 0; j < getWidth(); j++) 
                 {
                     //If player wants to access the dog's house
-                    if(movingArea[i][j] == 'P' && i == 1 && j == width - 15)
+                    if(movingArea[i][j] == 'P' && i == 1 && j == getWidth() - 15)
                     {
                         System.out.println("Access the dog's house");
                         
@@ -290,9 +291,9 @@ public class Ground extends Room
         }
         else if (move == 's')
         {
-            for (int i = 0; i < height - 1; i++)
+            for (int i = 0; i < getHeight() - 1; i++)
             {
-                for (int j = 0; j < width; j++) 
+                for (int j = 0; j < getWidth(); j++) 
                 {
                     //If player wants to access the house
                     if(i == 6 && (j == 25 || j == 26 || j == 27) && movingArea[i][j] == 'P')
@@ -349,9 +350,9 @@ public class Ground extends Room
         }
         else if (move == 'w') 
         {
-            for (int i = 1; i < height - 1; i++)
+            for (int i = 1; i < getHeight() - 1; i++)
             {
-                for (int j = 0; j < width; j++) 
+                for (int j = 0; j < getWidth(); j++) 
                 {
                     //change player's location
                     if(movingArea[i][j] == 'P' && movingArea[i - 1][j] == ' ')

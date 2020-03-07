@@ -11,10 +11,11 @@ package programming3project;
  */
 public class RoomWife extends Room
 {
-    public RoomWife()
+    public RoomWife(String name)
     {
-        this.height = 14;
-        this.width = 48;
+        setName(name);
+        setHeight(14);
+        setWidth(48);
         
         initializeMovingArea();
     }
@@ -29,9 +30,9 @@ public class RoomWife extends Room
         }
         else if (move == 'a') 
         {
-            for (int i = 0; i < height - 1; i++)
+            for (int i = 0; i < getHeight() - 1; i++)
             {
-                for (int j = 0; j < width; j++) 
+                for (int j = 0; j < getWidth(); j++) 
                 {
                     //change player's location
                     if(movingArea[i][j] == 'P' && movingArea[i][j - 1] == ' ')
@@ -46,9 +47,9 @@ public class RoomWife extends Room
         } 
         else if (move == 'd') 
         {
-            for (int i = 0; i < height - 1; i++)
+            for (int i = 0; i < getHeight() - 1; i++)
             {
-                for (int j = 0; j < width; j++) 
+                for (int j = 0; j < getWidth(); j++) 
                 {
                     //change player's location
                     if(movingArea[i][j] == 'P' && movingArea[i][j + 1] == ' ')
@@ -63,9 +64,9 @@ public class RoomWife extends Room
         }
         else if (move == 's')
         {
-            for (int i = 0; i < height - 1; i++)
+            for (int i = 0; i < getHeight() - 1; i++)
             {
-                for (int j = 0; j < width; j++) 
+                for (int j = 0; j < getWidth(); j++) 
                 {
                     //change player's location
                     if(movingArea[i][j] == 'P' && movingArea[i + 1][j] == ' ')
@@ -80,9 +81,9 @@ public class RoomWife extends Room
         }
         else if (move == 'w') 
         {
-            for (int i = 1; i < height - 1; i++)
+            for (int i = 1; i < getHeight() - 1; i++)
             {
-                for (int j = 0; j < width; j++) 
+                for (int j = 0; j < getWidth(); j++) 
                 {
                     //change player's location
                     if(movingArea[i][j] == 'P' && movingArea[i - 1][j] == ' ')
