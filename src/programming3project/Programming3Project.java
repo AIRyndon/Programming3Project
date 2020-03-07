@@ -48,13 +48,16 @@ public class Programming3Project {
             userGender = systemInput.next().charAt(0);
         }
         
+        //Clear buffer
+        systemInput.nextLine();
+
         System.out.print("Please enter an age: ");
         int userAge = systemInput.nextInt();
         
         //Declare rooms
         Room[] rooms = new Room[]{
             new Ground(52, 24),
-            new House(52, 24)
+            new House(52, 20)
         };
              
         //Declare all characters
@@ -96,7 +99,8 @@ public class Programming3Project {
             System.out.println("Do you want to enter the compound?(Y/N)");
             enterPremises = systemInput.next().charAt(0);
         }
-
+        
+        //If player does not want to enter the compound
         if (enterPremises != 'Y' && enterPremises != 'y') {
             System.out.println("\n\"Sorry I do not have time at the moment...\"");
             System.out.println("Right then, you came to one of your customers' house "
@@ -112,7 +116,8 @@ public class Programming3Project {
             int action = systemInput.nextInt();
 
             //Enter the ground
-            if (action == 1) {
+            if (action == 1)
+            {
                 //access ground => print ground
                 detective.setCurrentRoom(rooms[0]);
                 detective.setPlayArea(rooms[0].movingArea);
@@ -122,7 +127,8 @@ public class Programming3Project {
                 System.out.println("Moving by a, s, d, w, quit by q");
                 char move = systemInput.next().charAt(0);
 
-                while (move != 'q') {
+                while (move != 'q')
+                {
                     //Todo: refactor moving and resetPlayerPosition method inside Room class
                     detective.move(move);
 
@@ -130,16 +136,15 @@ public class Programming3Project {
                     move = systemInput.next().charAt(0);
                 }
 
-                rooms[0].resetPlayerPosition();
+                //rooms[0].resetPlayerPosition();
             }
             //Enter the house
-            if (action == 2) {
+            if (action == 2) 
+            {
                 //access house => print house
                 detective.setCurrentRoom(rooms[1]);
                 detective.setPlayArea(rooms[1].movingArea);
                 rooms[1].printRoom();
-                
-                
 
                 //Moving
                 System.out.println("Moving by a, s, d, w, quit by q");
@@ -168,6 +173,8 @@ public class Programming3Project {
         }
 
         System.out.println("Thank you for playing!\n");
+        
+        systemInput.close();
     }
 
     /**

@@ -19,7 +19,8 @@ public class Detective extends Person {
     private char[][] playArea;
     private Room currentRoom;
 
-    public Detective(String name, char gender, int age, char[][] playArea, Room currentRoom) {
+    public Detective(String name, char gender, int age, char[][] playArea, Room currentRoom)
+    {
         super(name, gender, age);
         this.playArea = playArea;
         this.currentRoom = currentRoom;
@@ -32,56 +33,55 @@ public class Detective extends Person {
          after pressing w,a,s,d check content of movingArea, if its a wall, don't change position else, change position or grab an item if available
         
          //pass the movingArea back to the area you are in, and let it redraw
-        
-        
-         x=0
-         y=26
-         y -1 = 25
-         item =  movingArea[0][25];
-         if item is F movingArea[x][y] = ' '
-         *
-         */
+        */
     }
 
-    public void move(char keyPress) {
-
+    public void move(char keyPress) 
+    {
         char item = '\0';
 
-        if ((yCoord > 0 && yCoord < playArea[0].length - 1) || (xCoord > 0 && xCoord < playArea.length - 2)) {
-
-            if (keyPress == 'a') {
-
+        if ((yCoord > 0 && yCoord < playArea[0].length - 1) || (xCoord > 0 && xCoord < playArea.length - 2)) 
+        {
+            if (keyPress == 'a') 
+            {
                 item = playArea[xCoord][yCoord - 1];
-                if (item == ' ') {
-
+               
+                if (item == ' ')
+                {
                     playArea[xCoord][yCoord] = ' ';
                     yCoord -= 1;
                     playArea[xCoord][yCoord] = 'P';
                 }
-
-            } else if (keyPress == 'd') {
-
+            }
+            else if (keyPress == 'd')
+            {
                 item = playArea[xCoord][yCoord + 1];
-                if (item == ' ') {
-
+                
+                if (item == ' ') 
+                {
                     playArea[xCoord][yCoord] = ' ';
                     yCoord += 1;
                     playArea[xCoord][yCoord] = 'P';
                 }
-            } else if (keyPress == 'w') {
-
+            } 
+            else if (keyPress == 'w') 
+            {
                 item = playArea[xCoord - 1][yCoord];
-                if (item == ' ') {
+                
+                if (item == ' ') 
+                {
 
                     playArea[xCoord][yCoord] = ' ';
                     xCoord -= 1;
                     playArea[xCoord][yCoord] = 'P';
                 }
-            } else if (keyPress == 's') {
-
+            } 
+            else if (keyPress == 's') 
+            {
                 item = playArea[xCoord + 1][yCoord];
-                if (item == ' ') {
-
+                
+                if (item == ' ') 
+                {
                     playArea[xCoord][yCoord] = ' ';
                     xCoord += 1;
                     playArea[xCoord][yCoord] = 'P';
@@ -95,25 +95,28 @@ public class Detective extends Person {
     /**
      * @return the background
      */
-    public String getBackground() {
+    public String getBackground() 
+    {
         return background;
     }
 
     /**
      * @param background the background to set
      */
-    public void setBackground(String background) {
+    public void setBackground(String background) 
+    {
         this.background = background;
     }
 
     @Override
-    public String toString() {
+    public String toString() 
+    {
         String output = "";
 
         output += "Name: " + this.getName() + "\n";
         output += "Gender: " + (this.getGender() == 'M' ? "Male\n" : "Female\n");
         output += "Age: " + this.getAge() + "\n";//Do we need to create another attribute for age? => Then ask user
-        output += "Job: " + this.getBackground() + "\n\n";
+        output += "Background: " + this.getBackground() + "\n\n";
 
         return output;
     }
@@ -121,22 +124,26 @@ public class Detective extends Person {
     /**
      * @return the currentRoom
      */
-    public Room getCurrentRoom() {
+    public Room getCurrentRoom()
+    {
         return currentRoom;
     }
 
     /**
      * @param currentRoom the currentRoom to set
      */
-    public void setCurrentRoom(Room currentRoom) {
+    public void setCurrentRoom(Room currentRoom) 
+    {
         this.currentRoom = currentRoom;
     }
     
-    public char[][] getPlayArea(){
+    public char[][] getPlayArea()
+    {
         return playArea;
     }
     
-    public void setPlayArea(char[][] playArea){
+    public void setPlayArea(char[][] playArea)
+    {
         this.playArea = playArea;
     }
 }

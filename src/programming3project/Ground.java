@@ -89,7 +89,7 @@ public class Ground extends Room
             }
         }
         
-        //Printing the word "HOUSE" - not good because it is made in manual way
+        //Printing the word "HOUSE"
         movingArea[11][24] = 'H';
         movingArea[11][25] = 'O';
         movingArea[11][26] = 'U';
@@ -175,6 +175,24 @@ public class Ground extends Room
         printWall();    
     }
     
+    /**
+    * Printing the wall
+    */
+    @Override
+    protected void printWall() 
+    {
+        //Print gate and wall (first row)
+        for (int wid = 0; wid < this.width; wid++) {
+            if (wid == 0 || wid == width - 1) {
+                System.out.print("|");
+            } else {
+                System.out.print("_");
+            }
+        }
+        
+        System.out.println();
+    }
+        
     @Override
     protected void moving(char move)
     {

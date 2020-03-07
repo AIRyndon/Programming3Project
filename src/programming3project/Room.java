@@ -14,6 +14,7 @@ public abstract class Room //Room could be interface for now
     abstract protected void hints();
     abstract protected void moving(char move);
     abstract protected void printRoom();
+    abstract protected void printWall();
 
     protected final int width;
     protected final int height;
@@ -83,19 +84,6 @@ public abstract class Room //Room could be interface for now
         System.out.println("");
     }
 
-    public void printWall() 
-    {
-        //Print gate and wall (first row)
-        for (int wid = 0; wid < this.width; wid++) {
-            if (wid == 0 || wid == width - 1) {
-                System.out.print("|");
-            } else {
-                System.out.print("_");
-            }
-        }
-        
-        System.out.println();
-    }
     
     protected void resetPlayerPosition()
     {
