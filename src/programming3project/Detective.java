@@ -9,8 +9,8 @@ package programming3project;
  *
  * @author airyn
  */
-public class Detective extends Person 
-{
+public class Detective extends Person {
+
     //player position in the grid
     private int xCoord;
     private int yCoord;
@@ -19,8 +19,7 @@ public class Detective extends Person
     private char[][] playArea;
     private Room currentRoom;
 
-    public Detective(String name, char gender, int age, char[][] playArea, Room currentRoom)
-    {
+    public Detective(String name, char gender, int age, char[][] playArea, Room currentRoom) {
         super(name, gender, age);
         this.playArea = playArea;
         this.currentRoom = currentRoom;
@@ -33,60 +32,75 @@ public class Detective extends Person
          after pressing w,a,s,d check content of movingArea, if its a wall, don't change position else, change position or grab an item if available
         
          //pass the movingArea back to the area you are in, and let it redraw
-        */
+         */
     }
 
-    public void move(char keyPress) 
-    {
+    public void move(char keyPress) {
+        
         char item = '\0';
 
-        if ((yCoord > 0 && yCoord < playArea[0].length - 1) || (xCoord > 0 && xCoord < playArea.length - 2)) 
-        {
-            if (keyPress == 'a') 
-            {
+        switch (keyPress) {
+            case 'a':
+
+                if (yCoord == 0) {
+                    return;
+                }
+
                 item = playArea[xCoord][yCoord - 1];
-               
-                if (item == ' ')
-                {
+                if (item == ' ') {
                     playArea[xCoord][yCoord] = ' ';
                     yCoord -= 1;
                     playArea[xCoord][yCoord] = 'P';
+                } else {
+
                 }
-            }
-            else if (keyPress == 'd')
-            {
+                break;
+
+            case 'd':
+
+                if (yCoord == playArea[0].length - 1) {
+                    return;
+                }
+
                 item = playArea[xCoord][yCoord + 1];
-                
-                if (item == ' ') 
-                {
+                if (item == ' ') {
                     playArea[xCoord][yCoord] = ' ';
                     yCoord += 1;
                     playArea[xCoord][yCoord] = 'P';
                 }
-            } 
-            else if (keyPress == 'w') 
-            {
+                break;
+
+            case 'w':
+
+                if (xCoord == 0) {
+                    return;
+                }
+
                 item = playArea[xCoord - 1][yCoord];
-                
-                if (item == ' ') 
-                {
+                if (item == ' ') {
 
                     playArea[xCoord][yCoord] = ' ';
                     xCoord -= 1;
                     playArea[xCoord][yCoord] = 'P';
                 }
-            } 
-            else if (keyPress == 's') 
-            {
+                break;
+
+            case 's':
+
+                if (xCoord == playArea.length - 1) {
+                    return;
+                }
+
                 item = playArea[xCoord + 1][yCoord];
-                
-                if (item == ' ') 
-                {
+                if (item == ' ') {
                     playArea[xCoord][yCoord] = ' ';
                     xCoord += 1;
                     playArea[xCoord][yCoord] = 'P';
                 }
-            }
+                break;
+
+            default:
+                break;
         }
 
         getCurrentRoom().printRoom("Room");
@@ -95,48 +109,41 @@ public class Detective extends Person
     /**
      * @return the background
      */
-    public String getBackground() 
-    {
+    public String getBackground() {
         return background;
     }
 
     /**
      * @param background the background to set
      */
-    public void setBackground(String background) 
-    {
+    public void setBackground(String background) {
         this.background = background;
     }
 
     /**
      * @return the currentRoom
      */
-    public Room getCurrentRoom()
-    {
+    public Room getCurrentRoom() {
         return currentRoom;
     }
 
     /**
      * @param currentRoom the currentRoom to set
      */
-    public void setCurrentRoom(Room currentRoom) 
-    {
+    public void setCurrentRoom(Room currentRoom) {
         this.currentRoom = currentRoom;
     }
-    
-    public char[][] getPlayArea()
-    {
+
+    public char[][] getPlayArea() {
         return playArea;
     }
-    
-    public void setPlayArea(char[][] playArea)
-    {
+
+    public void setPlayArea(char[][] playArea) {
         this.playArea = playArea;
     }
-    
+
     @Override
-    public String toString() 
-    {
+    public String toString() {
         String output = "";
 
         output += "Name: " + this.getName() + "\n";

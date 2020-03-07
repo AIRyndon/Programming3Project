@@ -93,8 +93,8 @@ public class Programming3Project
         System.out.println(dateFormat.format(new Date()));
         
             //Story begins
-        System.out.println("You - " + detective.getName() + " is working in your office and reading some news.");
-        System.out.println("\"" + (detective.getGender() == 'M' ? "Mr. " : "Mrs. ")
+        System.out.println(detective.getName() + " is working in" + (detective.getGender() == 'M' ? "his " : "her ") +  "office and reading some news.");
+        System.out.println("\"" + (detective.getGender() == 'M' ? "Sir " : "Madam ")
                 + detective.getName() + "!\"");
         System.out.println("A police officer runs to you:");
         System.out.println("\"There was a murder at Royal Street! Please come there now!\"");
@@ -121,7 +121,7 @@ public class Programming3Project
         //Check if user want to continue the game
         
         boolean stayInside = true;
-        char move = '\0';
+        char keyPress = '\0';
         while (stayInside) 
         {
             //Enter the ground
@@ -133,27 +133,14 @@ public class Programming3Project
                 rooms[0].printRoom("Gate");
 
                 //Moving
-                System.out.println("Moving by a, s, d, w, quit by q");
-                move = systemInput.next().charAt(0);
-            
-                while (action == 1 && move != 'q')
-                {
-                    //Todo: refactor moving and resetPlayerPosition method inside Room class
-                    action = detective.getCurrentRoom().moving(move);
-                    detective.getCurrentRoom().printRoom("Gate");
-
-                    if(action == 1)
-                    {
-                        System.out.println("Moving by a, s, d, w, quit by q");
-                        move = systemInput.next().charAt(0);
-                    }
-                    else
-                    {
-                        System.out.println("\n");
-                    }
+                while(!(keyPress == 'a' || keyPress == 'd' || keyPress == 's' || keyPress == 'w')){
+                    
+                    System.out.println("Press a, s, d, w then enter to move. Press q then enter to quit.");
+                    keyPress = systemInput.next().charAt(0);
                 }
-
-                //rooms[0].resetPlayerPosition();
+                           
+                detective.move(keyPress);
+                keyPress = '\0';              
             }
             //Enter the house
             if (action == 2) 
@@ -165,18 +152,18 @@ public class Programming3Project
 
                 //Moving
                 System.out.println("Moving by a, s, d, w, quit by q");
-                move = systemInput.next().charAt(0);
+                keyPress = systemInput.next().charAt(0);
 
-                while (action == 2 && move != 'q')
+                while (action == 2 && keyPress != 'q')
                 {
                     //Todo: refactor moving and resetPlayerPosition method inside Room class
-                    action = detective.getCurrentRoom().moving(move);
+                    action = detective.getCurrentRoom().moving(keyPress);
                     detective.getCurrentRoom().printRoom("House");
 
                     if(action == 2)
                     {
                         System.out.println("Moving by a, s, d, w, quit by q");
-                        move = systemInput.next().charAt(0);
+                        keyPress = systemInput.next().charAt(0);
                     }
                     else
                     {
@@ -194,17 +181,17 @@ public class Programming3Project
 
                 //Moving
                 System.out.println("Moving by a, s, d, w, quit by q");
-                move = systemInput.next().charAt(0);
+                keyPress = systemInput.next().charAt(0);
 
-                while (action == 3 && move != 'q')
+                while (action == 3 && keyPress != 'q')
                 {
-                    action = detective.getCurrentRoom().moving(move);
+                    action = detective.getCurrentRoom().moving(keyPress);
                     detective.getCurrentRoom().printRoom("Maid");
 
                     if(action == 3)
                     {
                         System.out.println("Moving by a, s, d, w, quit by q");
-                        move = systemInput.next().charAt(0);
+                        keyPress = systemInput.next().charAt(0);
                     }
                     else
                     {
@@ -221,18 +208,18 @@ public class Programming3Project
 
                 //Moving
                 System.out.println("Moving by a, s, d, w, quit by q");
-                move = systemInput.next().charAt(0);
+                keyPress = systemInput.next().charAt(0);
 
-                while (action == 4 && move != 'q')
+                while (action == 4 && keyPress != 'q')
                 {
                     //Todo: refactor moving and resetPlayerPosition method inside Room class
-                    action = detective.getCurrentRoom().moving(move);
+                    action = detective.getCurrentRoom().moving(keyPress);
                     detective.getCurrentRoom().printRoom("Butler");
 
                     if(action == 4)
                     {
                         System.out.println("Moving by a, s, d, w, quit by q");
-                        move = systemInput.next().charAt(0);
+                        keyPress = systemInput.next().charAt(0);
                     }
                     else
                     {
@@ -250,18 +237,18 @@ public class Programming3Project
 
                 //Moving
                 System.out.println("Moving by a, s, d, w, quit by q");
-                move = systemInput.next().charAt(0);
+                keyPress = systemInput.next().charAt(0);
 
-                while (action == 5 && move != 'q')
+                while (action == 5 && keyPress != 'q')
                 {
                     //Todo: refactor moving and resetPlayerPosition method inside Room class
-                    action = detective.getCurrentRoom().moving(move);
+                    action = detective.getCurrentRoom().moving(keyPress);
                     detective.getCurrentRoom().printRoom("Wife");
 
                     if(action == 5)
                     {
                         System.out.println("Moving by a, s, d, w, quit by q");
-                        move = systemInput.next().charAt(0);
+                        keyPress = systemInput.next().charAt(0);
                     }
                     else
                     {
@@ -279,18 +266,18 @@ public class Programming3Project
 
                 //Moving
                 System.out.println("Moving by a, s, d, w, quit by q");
-                move = systemInput.next().charAt(0);
+                keyPress = systemInput.next().charAt(0);
 
-                while (action == 6 && move != 'q')
+                while (action == 6 && keyPress != 'q')
                 {
                     //Todo: refactor moving and resetPlayerPosition method inside Room class
-                    action = detective.getCurrentRoom().moving(move);
+                    action = detective.getCurrentRoom().moving(keyPress);
                     detective.getCurrentRoom().printRoom("Working");
 
                     if(action == 6)
                     {
                         System.out.println("Moving by a, s, d, w, quit by q");
-                        move = systemInput.next().charAt(0);
+                        keyPress = systemInput.next().charAt(0);
                     }
                     else
                     {
@@ -306,7 +293,7 @@ public class Programming3Project
                 action = systemInput.nextInt();
             }
                 
-            if(move == 'q')
+            if(keyPress == 'q')
             {
                 systemInput.nextLine();
                 stayInside = continueGame();
