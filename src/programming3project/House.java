@@ -474,17 +474,4 @@ public class House extends Room implements LockedArea
         
         return 2;
     }
-
-    /**
-     * create random hints
-     */
-    protected void hints()
-    {
-        //Randomly assign some hint positions in the ground 
-        Random rand = new Random();
-
-        //Need to check if those two have the same position
-        movingArea[rand.nextInt(height - 2)][rand.nextInt(width - 2)] = 'X';
-        movingArea[rand.nextInt(height - 2)][rand.nextInt(width - 2)] = 'X';
-    }
 }

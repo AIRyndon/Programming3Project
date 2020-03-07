@@ -11,11 +11,8 @@ package programming3project;
  */
 public abstract class Room 
 {
-    abstract protected void hints();
     abstract protected int moving(char move);
 
-    private int xCoord;
-    private int yCoord;
     protected int width;
     protected int height;
     public char[][] movingArea;
@@ -75,8 +72,6 @@ public abstract class Room
             
             System.out.println("");
         }
-        
-        printWall();
     }
     
     public void printEntrance(String roomName)

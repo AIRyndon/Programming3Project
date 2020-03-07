@@ -28,12 +28,6 @@ public class RoomMaid extends Room
     }
 
     @Override
-    protected void hints() 
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     protected int moving(char move) 
     {
         //Invalid input

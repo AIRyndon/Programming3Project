@@ -99,13 +99,17 @@ public class Ground extends Room
         movingArea[11][27] = 'S';
         movingArea[11][28] = 'E';
         
-        hints();
+        //One hint inside the dog's house
+        movingArea[0][width - 3] = 'X'; 
+
+        //The butler is in the ground
+        relativePosition();
     }
     
     /**
-     * create random hints
+     * create random relative position
      */
-    protected void hints()
+    protected void relativePosition()
     {
         //Randomly assign some hint positions in the ground 
         Random rand = new Random();
@@ -115,9 +119,8 @@ public class Ground extends Room
         int secondHei = rand.nextInt(height - 2);
         int secondWid = rand.nextInt(width - 2);
         
-        //Check if those two hints are in the same position
-        //Hints replace space only
-        //Hints cannot be inside the house
+        //Check if those two positions are in the same position
+        //Position replace space only
         boolean checkedFirst = false;
         boolean checkedSecond = false;
         while(!(checkedFirst && checkedSecond))
@@ -149,10 +152,9 @@ public class Ground extends Room
             }
         }
         
-        //Assign hints 
+        //Assign position 
         movingArea[firstHei][firstWid] = 'B';
         movingArea[secondHei][secondWid] = 'W';
-        movingArea[0][width - 3] = 'X'; //One hint inside the dog's house
     }
     
     /**
@@ -201,7 +203,31 @@ public class Ground extends Room
                     //If player gots 'X'
                     else if(movingArea[i][j] == 'P' && movingArea[i][j - 1] == 'X')
                     {
-                        System.out.println("Hint: ");
+                        System.out.println("Small pieces of cheesecake");
+                        
+                        movingArea[i][j] = ' ';
+                        movingArea[i][j - 1] = 'P';
+                        
+                        return 1;
+                    }
+                    //If player hits 'B' - the Butler
+                    else if(movingArea[i][j] == 'P' && movingArea[i][j - 1] == 'B')
+                    {
+                        Scanner scan = new Scanner(System.in);
+                        System.out.println("Press 'y' to get some information from the Butler.");
+                        boolean butlerInfo = "y".equalsIgnoreCase(scan.nextLine());
+                        
+                        if(butlerInfo)
+                        {
+                            return 7;
+                        }
+                        
+                        return 1;
+                    }
+                    //If player hits 'W' - the Wife
+                    else if(movingArea[i][j] == 'P' && movingArea[i][j - 1] == 'W')
+                    {
+                        System.out.println("Press 'y' to get some information from the Wife.");
                         
                         movingArea[i][j] = ' ';
                         movingArea[i][j - 1] = 'P';
@@ -238,10 +264,24 @@ public class Ground extends Room
                     //If player gots 'X'
                     else if(movingArea[i][j] == 'P' && movingArea[i][j + 1] == 'X')
                     {
-                        System.out.println("Hint: ");
+                        System.out.println("Small pieces of cheesecake");
                         
                         movingArea[i][j] = ' ';
                         movingArea[i][j + 1] = 'P';
+                        
+                        return 1;
+                    }
+                    //If player hits 'B' - the Bulter
+                    else if(movingArea[i][j] == 'P' && movingArea[i][j + 1] == 'B')
+                    {
+                        Scanner scan = new Scanner(System.in);
+                        System.out.println("Press 'y' to get some information from the Butler.");
+                        boolean butlerInfo = "y".equalsIgnoreCase(scan.nextLine());
+                        
+                        if(butlerInfo)
+                        {
+                            return 7;
+                        }
                         
                         return 1;
                     }
@@ -283,10 +323,24 @@ public class Ground extends Room
                     //If player gots 'X'
                     else if(movingArea[i][j] == 'P' && movingArea[i + 1][j] == 'X')
                     {
-                        System.out.println("Hint: ");
+                        System.out.println("Small pieces of cheesecake");
                         
                         movingArea[i][j] = ' ';
                         movingArea[i + 1][j] = 'P';
+                        
+                        return 1;
+                    }
+                    //If player hits 'B' - the Butler
+                    else if(movingArea[i][j] == 'P' && movingArea[i + 1][j] == 'B')
+                    {
+                        Scanner scan = new Scanner(System.in);
+                        System.out.println("Press 'y' to get some information from the Butler.");
+                        boolean butlerInfo = "y".equalsIgnoreCase(scan.nextLine());
+                        
+                        if(butlerInfo)
+                        {
+                            return 7;
+                        }
                         
                         return 1;
                     }
@@ -310,10 +364,24 @@ public class Ground extends Room
                     //If player gots 'X'                    
                     else if(movingArea[i][j] == 'P' && movingArea[i - 1][j] == 'X')
                     {
-                        System.out.println("Hint: ");
+                        System.out.println("Small piece of cheesecake");
                         
                         movingArea[i][j] = ' ';
                         movingArea[i - 1][j] = 'P';
+                        
+                        return 1;
+                    }
+                    //If player gots 'X'                    
+                    else if(movingArea[i][j] == 'P' && movingArea[i - 1][j] == 'B')
+                    {
+                        Scanner scan = new Scanner(System.in);
+                        System.out.println("Press 'y' to get some information from the Butler.");
+                        boolean butlerInfo = "y".equalsIgnoreCase(scan.nextLine());
+                        
+                        if(butlerInfo)
+                        {
+                            return 7;
+                        }
                         
                         return 1;
                     }

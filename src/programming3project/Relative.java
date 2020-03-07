@@ -20,9 +20,9 @@ public class Relative extends Person
     
     public Relative(String name, char gender, int age, String role)
     {
-        super(name,gender,age);
+        super(name, gender, age);
+        
         this.role = role;
- 
     }
     
     public String getRole() 
@@ -41,8 +41,15 @@ public class Relative extends Person
     }
     
     @Override
-    public String toString()
+    public String toString() 
     {
-        return "";
+        String output = "";
+
+        output += "Name: " + this.getName() + "\n";
+        output += "Gender: " + (this.getGender() == 'M' ? "Male\n" : "Female\n");
+        output += "Age: " + this.getAge() + "\n";
+        output += "Comments\n";
+        
+        return output;
     }
 }

@@ -9,8 +9,8 @@ package programming3project;
  *
  * @author airyn
  */
-public class Detective extends Person {
-
+public class Detective extends Person 
+{
     //player position in the grid
     private int xCoord;
     private int yCoord;
@@ -89,7 +89,7 @@ public class Detective extends Person {
             }
         }
 
-        getCurrentRoom().printRoom();
+        getCurrentRoom().printRoom("Room");
     }
 
     /**
@@ -106,19 +106,6 @@ public class Detective extends Person {
     public void setBackground(String background) 
     {
         this.background = background;
-    }
-
-    @Override
-    public String toString() 
-    {
-        String output = "";
-
-        output += "Name: " + this.getName() + "\n";
-        output += "Gender: " + (this.getGender() == 'M' ? "Male\n" : "Female\n");
-        output += "Age: " + this.getAge() + "\n";//Do we need to create another attribute for age? => Then ask user
-        output += "Background: " + this.getBackground() + "\n\n";
-
-        return output;
     }
 
     /**
@@ -145,5 +132,18 @@ public class Detective extends Person {
     public void setPlayArea(char[][] playArea)
     {
         this.playArea = playArea;
+    }
+    
+    @Override
+    public String toString() 
+    {
+        String output = "";
+
+        output += "Name: " + this.getName() + "\n";
+        output += "Gender: " + (this.getGender() == 'M' ? "Male\n" : "Female\n");
+        output += "Age: " + this.getAge() + "\n";//Do we need to create another attribute for age? => Then ask user
+        output += "Background: " + this.getBackground() + "\n\n";
+
+        return output;
     }
 }

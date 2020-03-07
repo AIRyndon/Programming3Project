@@ -10,8 +10,8 @@ package programming3project;
  * @author angel
  */
 
-public abstract class Person {
-    
+public abstract class Person 
+{
     private final String name;
     private final char gender;
     private final int age;
@@ -42,4 +42,6 @@ public abstract class Person {
     public int getAge() {
         return age;
     }  
+    
+    
 }

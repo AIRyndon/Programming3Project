@@ -76,9 +76,9 @@ public class Programming3Project
         Victim victim = new Victim("Bosh", "President of KPI Cooperation", 55);
 
         Relative[] people = {
+            new Relative("Marcello", 'M', 63, "Butler"),
             new Relative("Belinda", 'F', 50, "Wife"),
             new Relative("Calista", 'F', 25, "Daughter"),
-            new Relative("Marcello", 'M', 63, "Butler"),
             new Relative("Ashton", 'M', 34, "Assistant"),
             new Relative("Cindel", 'F', 20, "Maid"),
         };
@@ -116,7 +116,7 @@ public class Programming3Project
             System.out.println("Coincidentally, your customer is the victim who was mentioned by the police");
         }
          
-        System.out.println("\nNow, press 1 to enter the gate...");
+        System.out.println("\nNow, press \'1\' to enter the gate...");
         int action = systemInput.nextInt();
         //Check if user want to continue the game
         
@@ -140,7 +140,7 @@ public class Programming3Project
                 {
                     //Todo: refactor moving and resetPlayerPosition method inside Room class
                     action = detective.getCurrentRoom().moving(move);
-                    detective.getCurrentRoom().printRoom("House");
+                    detective.getCurrentRoom().printRoom("Gate");
 
                     if(action == 1)
                     {
@@ -298,7 +298,14 @@ public class Programming3Project
                     }
                 }
             }
-
+            //Talk with the Butler
+            if(action == 7)
+            {
+                System.out.println(people[0].toString());
+                System.out.println("Now, press \'1\' to return the ground...");
+                action = systemInput.nextInt();
+            }
+                
             if(move == 'q')
             {
                 systemInput.nextLine();
