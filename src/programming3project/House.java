@@ -151,7 +151,7 @@ public class House extends Room implements LockedArea
                         }
                         
                         movingArea[i][getWidth() / 2 - 3] = '|';                        
-                        movingArea[i][getWidth() / 2 - 2] = '\\';                        
+                        movingArea[i][getWidth() / 2 - 2] = '/';                        
                     }
                     else if(j == getWidth() / 2 - 3)
                     {

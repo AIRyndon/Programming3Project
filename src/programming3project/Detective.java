@@ -12,29 +12,30 @@ package programming3project;
 public class Detective extends Person {
 
     //player position in the grid
+    private int xInitial;
+    private int yInitial;
+    private int xPrevious;
+    private int yPrevious;
     private int xCoord;
     private int yCoord;
     private String background;
     private Relative currentTarget;
     private char[][] playArea;
     private Room currentRoom;
+    private Room previousRoom;
 
-    public Detective(String name, char gender, int age, char[][] playArea, Room currentRoom) {
+    public Detective(String name, char gender, int age, char[][] playArea) {
         super(name, gender, age);
-        this.playArea = playArea;
-        this.currentRoom = currentRoom;
 
         //set initial position
-        xCoord = 0;
-        yCoord = playArea[0].length / 2;
-
-        /*
-         after pressing w,a,s,d check content of movingArea, if its a wall, don't change position else, change position or grab an item if available
-        
-         //pass the movingArea back to the area you are in, and let it redraw
-         */
+        xInitial = 0;
+        yInitial = playArea[0].length / 2;
+        xCoord = xInitial;
+        yCoord = yInitial;
+        xPrevious = xInitial;
+        yPrevious = yInitial;
     }
-      
+
     public char move(char keyPress) {
 
         char item = '\0';
@@ -47,7 +48,18 @@ public class Detective extends Person {
                 }
 
                 item = playArea[xCoord][yCoord - 1];
-                if (item == ' ') {                  
+                if (item == ' ') {
+
+                    if (xCoord == getxInitial() && yCoord == getyInitial()) {
+                        playArea[xCoord][yCoord] = '*';
+                        yCoord -= 1;
+                        playArea[xCoord][yCoord] = 'P';
+                    } else {
+                        playArea[xCoord][yCoord] = ' ';
+                        yCoord -= 1;
+                        playArea[xCoord][yCoord] = 'P';
+                    }
+                } else if (item == '*') {
                     playArea[xCoord][yCoord] = ' ';
                     yCoord -= 1;
                     playArea[xCoord][yCoord] = 'P';
@@ -62,6 +74,18 @@ public class Detective extends Person {
 
                 item = playArea[xCoord][yCoord + 1];
                 if (item == ' ') {
+
+                    //if at starting location, print the item used to get back
+                    if (xCoord == getxInitial() && yCoord == getyInitial()) {
+                        playArea[xCoord][yCoord] = '*';
+                        yCoord += 1;
+                        playArea[xCoord][yCoord] = 'P';
+                    } else {
+                        playArea[xCoord][yCoord] = ' ';
+                        yCoord += 1;
+                        playArea[xCoord][yCoord] = 'P';
+                    }
+                } else if (item == '*') {
                     playArea[xCoord][yCoord] = ' ';
                     yCoord += 1;
                     playArea[xCoord][yCoord] = 'P';
@@ -76,7 +100,17 @@ public class Detective extends Person {
 
                 item = playArea[xCoord - 1][yCoord];
                 if (item == ' ') {
+                    if (xCoord == getxInitial() && yCoord == getyInitial()) {
+                        playArea[xCoord][yCoord] = '*';
+                        xCoord -= 1;
+                        playArea[xCoord][yCoord] = 'P';
+                    } else {
+                        playArea[xCoord][yCoord] = ' ';
+                        xCoord -= 1;
+                        playArea[xCoord][yCoord] = 'P';
+                    }
 
+                } else if (item == '*') {
                     playArea[xCoord][yCoord] = ' ';
                     xCoord -= 1;
                     playArea[xCoord][yCoord] = 'P';
@@ -91,6 +125,16 @@ public class Detective extends Person {
 
                 item = playArea[xCoord + 1][yCoord];
                 if (item == ' ') {
+                    if (xCoord == getxInitial() && yCoord == getyInitial()) {
+                        playArea[xCoord][yCoord] = '*';
+                        xCoord += 1;
+                        playArea[xCoord][yCoord] = 'P';
+                    } else {
+                        playArea[xCoord][yCoord] = ' ';
+                        xCoord += 1;
+                        playArea[xCoord][yCoord] = 'P';
+                    }
+                } else if (item == '*') {
                     playArea[xCoord][yCoord] = ' ';
                     xCoord += 1;
                     playArea[xCoord][yCoord] = 'P';
@@ -102,10 +146,9 @@ public class Detective extends Person {
         }
 
         currentRoom.printRoom(currentRoom.getName());
-        
+
         return item;
     }
-
 
     /**
      * @return the background
@@ -167,5 +210,103 @@ public class Detective extends Person {
      */
     public void setCurrentTarget(Relative currentTarget) {
         this.currentTarget = currentTarget;
+    }
+
+    /**
+     * @return the previousRoom
+     */
+    public Room getPreviousRoom() {
+        return previousRoom;
+    }
+
+    /**
+     * @param previousRoom the previousRoom to set
+     */
+    public void setPreviousRoom(Room previousRoom) {
+        this.previousRoom = previousRoom;
+    }
+
+    /**
+     * @return the xPrevious
+     */
+    public int getxPrevious() {
+        return xPrevious;
+    }
+
+    /**
+     * @param xPrevious the xPrevious to set
+     */
+    public void setxPrevious(int xPrevious) {
+        this.xPrevious = xPrevious;
+    }
+
+    /**
+     * @return the yPrevious
+     */
+    public int getyPrevious() {
+        return yPrevious;
+    }
+
+    /**
+     * @param yPrevious the yPrevious to set
+     */
+    public void setyPrevious(int yPrevious) {
+        this.yPrevious = yPrevious;
+    }
+
+    /**
+     * @return the xCoord
+     */
+    public int getxCoord() {
+        return xCoord;
+    }
+
+    /**
+     * @param xCoord the xCoord to set
+     */
+    public void setxCoord(int xCoord) {
+        this.xCoord = xCoord;
+    }
+
+    /**
+     * @return the yPrevious
+     */
+    public int getyCoord() {
+        return yCoord;
+    }
+
+    /**
+     * @param yCoord the yCoord to set
+     */
+    public void setyCoord(int yCoord) {
+        this.yCoord = yCoord;
+    }
+
+    /**
+     * @return the xInitial
+     */
+    public int getxInitial() {
+        return xInitial;
+    }
+
+    /**
+     * @param xInitial the xInitial to set
+     */
+    public void setxInitial(int xInitial) {
+        this.xInitial = xInitial;
+    }
+
+    /**
+     * @return the yInitial
+     */
+    public int getyInitial() {
+        return yInitial;
+    }
+
+    /**
+     * @param yInitial the yInitial to set
+     */
+    public void setyInitial(int yInitial) {
+        this.yInitial = yInitial;
     }
 }
