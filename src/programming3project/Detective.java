@@ -24,16 +24,14 @@ public class Detective extends Person {
     private Room currentRoom;
     private Room previousRoom;
 
-    public Detective(String name, char gender, int age, char[][] playArea) {
+    public Detective(String name, char gender, int age, Room room) {
         super(name, gender, age);
 
         //set initial position
-        xInitial = 0;
-        yInitial = playArea[0].length / 2;
+        xInitial = room.xInitial;
+        yInitial = room.yInitial;
         xCoord = xInitial;
         yCoord = yInitial;
-        xPrevious = xInitial;
-        yPrevious = yInitial;
     }
 
     public char move(char keyPress) {
@@ -50,7 +48,7 @@ public class Detective extends Person {
                 item = playArea[xCoord][yCoord - 1];
                 if (item == ' ') {
 
-                    if (xCoord == getxInitial() && yCoord == getyInitial()) {
+                    if (xCoord == getCurrentRoom().xInitial && yCoord == getCurrentRoom().yInitial) {
                         playArea[xCoord][yCoord] = '*';
                         yCoord -= 1;
                         playArea[xCoord][yCoord] = 'P';
@@ -76,7 +74,7 @@ public class Detective extends Person {
                 if (item == ' ') {
 
                     //if at starting location, print the item used to get back
-                    if (xCoord == getxInitial() && yCoord == getyInitial()) {
+                    if (xCoord == getCurrentRoom().xInitial && yCoord == getCurrentRoom().yInitial) {
                         playArea[xCoord][yCoord] = '*';
                         yCoord += 1;
                         playArea[xCoord][yCoord] = 'P';
@@ -100,7 +98,7 @@ public class Detective extends Person {
 
                 item = playArea[xCoord - 1][yCoord];
                 if (item == ' ') {
-                    if (xCoord == getxInitial() && yCoord == getyInitial()) {
+                    if (xCoord == getCurrentRoom().xInitial && yCoord == getCurrentRoom().yInitial) {
                         playArea[xCoord][yCoord] = '*';
                         xCoord -= 1;
                         playArea[xCoord][yCoord] = 'P';
@@ -125,7 +123,7 @@ public class Detective extends Person {
 
                 item = playArea[xCoord + 1][yCoord];
                 if (item == ' ') {
-                    if (xCoord == getxInitial() && yCoord == getyInitial()) {
+                    if (xCoord == getCurrentRoom().xInitial && yCoord == getCurrentRoom().yInitial) {
                         playArea[xCoord][yCoord] = '*';
                         xCoord += 1;
                         playArea[xCoord][yCoord] = 'P';
@@ -148,6 +146,33 @@ public class Detective extends Person {
         currentRoom.printRoom(currentRoom.getName());
 
         return item;
+    }
+
+    public void moveToAnotherRoom(Room newRoom) {
+
+        setPlayArea(newRoom.movingArea);
+        setPreviousRoom(getCurrentRoom());
+        setCurrentRoom(newRoom);
+
+        getCurrentRoom().printRoom(getCurrentRoom().getName());
+    }
+
+    public void setLocationToPreviousRoom() {
+
+        int xTemp = getxCoord();
+        int yTemp = getyCoord();
+        setxCoord(getxPrevious());
+        setyCoord(getyPrevious());
+        setxPrevious(xTemp);
+        setyPrevious(yTemp);
+    }
+
+    public void setLocationToNewRoom() {
+        
+        setxPrevious(getxCoord());
+        setyPrevious(getyCoord());
+        setxCoord(getCurrentRoom().xInitial);
+        setyCoord(getCurrentRoom().yInitial);
     }
 
     /**
@@ -183,6 +208,8 @@ public class Detective extends Person {
     }
 
     public void setPlayArea(char[][] playArea) {
+
+        this.playArea = null;
         this.playArea = playArea;
     }
 

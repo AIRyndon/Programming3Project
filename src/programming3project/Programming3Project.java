@@ -66,7 +66,7 @@ public class Programming3Project {
 
         //Declare all characters
         Detective detective = new Detective(userName, userGender, userAge,
-                rooms[0].movingArea);
+                rooms[0]);
 
         detective.setCurrentRoom(rooms[0]);
         detective.setPreviousRoom(null);
@@ -113,215 +113,91 @@ public class Programming3Project {
             System.out.println("Coincidentally, your customer is the victim who was mentioned by the police");
         }
 
-        System.out.println("\nNow, press \'1\' to enter the gate...");
-        int action = systemInput.nextInt();
-
         rooms[0].printRoom(rooms[0].getName());
 
         //Check if user want to continue the game
         boolean stayInside = true;
-        char keyPress = '\0';
+
         while (stayInside) {
-            //Enter the ground
 
-            if (action == 1) {
-                //access ground => print ground
+            char keyPress = '\0';
 
-                //Moving
-                while (!(keyPress == 'a' || keyPress == 'd' || keyPress == 's' || keyPress == 'w')) {
+            //access ground => print ground
+            //Moving
+            while (!(keyPress == 'a' || keyPress == 'd' || keyPress == 's' || keyPress == 'w')) {
 
-                    System.out.println("Press a, s, d, w then enter to move. Press q then enter to quit.");
-                    keyPress = systemInput.next().charAt(0);
+                System.out.println("Press a, s, d, w then enter to move. Press q then enter to quit.");
+                keyPress = systemInput.next().charAt(0);
+            }
+
+            char landedSquare = detective.move(keyPress);
+
+            switch (landedSquare) {
+                case 'B': {
+                    System.out.println(people[0].toString());
+                    break;
                 }
+                case 'W': {
+                    System.out.println(people[1].toString());
+                    break;
+                }
+                case '*': {
 
-                char landedSquare = detective.move(keyPress);
+                    //check if you are in the ground
+                    if (detective.getPreviousRoom() != null
+                            && detective.getCurrentRoom().getClass()
+                            != rooms[0].getClass()) {
 
-                switch (landedSquare) {
-                    case 'B': {
-                        System.out.println(people[0].toString());
-                        break;
+                        detective.moveToAnotherRoom(detective.getPreviousRoom());
+                        detective.setLocationToPreviousRoom();
                     }
-                    case 'W': {
-                        System.out.println(people[1].toString());
-                        break;
-                    }
-                    case '*': {
 
-                        if (detective.getPreviousRoom() != null
-                                && detective.getCurrentRoom().getClass()
-                                != rooms[0].getClass()) {
-                            
-                            int xTemp = detective.getxCoord();
-                            int yTemp = detective.getyCoord();
-                            detective.setxCoord(detective.getxPrevious());
-                            detective.setyCoord(detective.getyPrevious());
-                            detective.setxPrevious(xTemp);
-                            detective.setyPrevious(yTemp);
+                    break;
+                }
+                case '/': {
 
-                            Room temp = detective.getPreviousRoom();
-                            detective.setPlayArea(temp.movingArea);
-                            detective.setPreviousRoom(detective.getCurrentRoom());
-                            detective.setCurrentRoom(temp);
+                    //check if at ground area
+                    if (detective.getCurrentRoom().getClass() == rooms[0].getClass()) {
 
-                            detective.getCurrentRoom().printRoom(
-                                    detective.getCurrentRoom().getName());
+                        //check if in front of the house
+                        if ((detective.getyCoord() >= 25 && detective.getyCoord() <= 27)
+                                && detective.getxCoord() == 6) {
+
+                            detective.moveToAnotherRoom(rooms[1]);
+                            detective.setLocationToNewRoom();
                         }
 
-                        break;
-                    }
-                    case '/': {
+                        //check if inside the House
+                    } else if (detective.getCurrentRoom().getClass() == rooms[1].getClass()) {
+                        System.out.println(detective.getxCoord());
+                        System.out.println(detective.getyCoord());
 
-                        //check if at ground area
-                        if (detective.getCurrentRoom().getClass() == rooms[0].getClass()) {
+//in front of maid's room
+                        if (detective.getxCoord() == 2 && detective.getyCoord() == 24) {
+                            detective.moveToAnotherRoom(rooms[2]);
+                            detective.setLocationToNewRoom();
 
-                            //check if in front of the house
-                            if ((detective.getyCoord() >= 25 && detective.getyCoord() <= 27)
-                                    && detective.getxCoord() == 6) {
+//in front of butler's room
+                        } else if (detective.getxCoord() == 5 && detective.getyCoord() == 24) {
+                            detective.moveToAnotherRoom(rooms[3]);
+                            detective.setLocationToNewRoom();
 
-                                detective.setxPrevious(detective.getxCoord());
-                                detective.setyPrevious(detective.getyCoord());
-                                detective.setxCoord(detective.getxInitial());
-                                detective.setyCoord(detective.getyInitial());
+//in front of wife's room
+                        } else if (detective.getxCoord() == 9 && detective.getyCoord() == 24) {
+                            detective.moveToAnotherRoom(rooms[4]);
+                            detective.setLocationToNewRoom();
 
-                                detective.setPlayArea(rooms[1].movingArea);
-                                detective.setPreviousRoom(detective.getCurrentRoom());
-                                detective.setCurrentRoom(rooms[1]);
-                                detective.getCurrentRoom().printRoom(
-                                        detective.getCurrentRoom().getName());
-                            }
+//in front of working area
+                        } else if (detective.getxCoord() == 11 && detective.getyCoord() == 24) {
+                            detective.moveToAnotherRoom(rooms[5]);
+                            detective.setLocationToNewRoom();
                         }
-
-                        break;
                     }
-                    default:
-                        break;
+
+                    break;
                 }
-
-                keyPress = '\0';
-            }
-            //Enter the house
-            if (action == 2) {
-                //access house => print house
-                detective.setCurrentRoom(rooms[1]);
-                detective.setPlayArea(rooms[1].movingArea);
-                rooms[1].printRoom("House");
-
-                //Moving
-                System.out.println("Moving by a, s, d, w, quit by q");
-                keyPress = systemInput.next().charAt(0);
-
-                while (action == 2 && keyPress != 'q') {
-                    //Todo: refactor moving and resetPlayerPosition method inside Room class
-                    action = detective.getCurrentRoom().moving(keyPress);
-                    detective.getCurrentRoom().printRoom("House");
-
-                    if (action == 2) {
-                        System.out.println("Moving by a, s, d, w, quit by q");
-                        keyPress = systemInput.next().charAt(0);
-                    } else {
-                        System.out.println("\n");
-                    }
-                }
-                //rooms[1].resetPlayerPosition();
-            }
-            //Access Maid's room
-            if (action == 3) {
-                detective.setCurrentRoom(rooms[2]);
-                detective.setPlayArea(rooms[2].movingArea);
-                rooms[2].printRoom("Maid");
-
-                //Moving
-                System.out.println("Moving by a, s, d, w, quit by q");
-                keyPress = systemInput.next().charAt(0);
-
-                while (action == 3 && keyPress != 'q') {
-                    action = detective.getCurrentRoom().moving(keyPress);
-                    detective.getCurrentRoom().printRoom("Maid");
-
-                    if (action == 3) {
-                        System.out.println("Moving by a, s, d, w, quit by q");
-                        keyPress = systemInput.next().charAt(0);
-                    } else {
-                        System.out.println("\n");
-                    }
-                }
-            }
-            //Access Butler's room
-            if (action == 4) {
-                detective.setCurrentRoom(rooms[3]);
-                detective.setPlayArea(rooms[3].movingArea);
-                rooms[3].printRoom("Butler");
-
-                //Moving
-                System.out.println("Moving by a, s, d, w, quit by q");
-                keyPress = systemInput.next().charAt(0);
-
-                while (action == 4 && keyPress != 'q') {
-                    //Todo: refactor moving and resetPlayerPosition method inside Room class
-                    action = detective.getCurrentRoom().moving(keyPress);
-                    detective.getCurrentRoom().printRoom("Butler");
-
-                    if (action == 4) {
-                        System.out.println("Moving by a, s, d, w, quit by q");
-                        keyPress = systemInput.next().charAt(0);
-                    } else {
-                        System.out.println("\n");
-                    }
-                }
-            }
-            //Access Wife's room
-            if (action == 5) {
-                //access house => print house
-                detective.setCurrentRoom(rooms[4]);
-                detective.setPlayArea(rooms[4].movingArea);
-                rooms[4].printRoom("Wife");
-
-                //Moving
-                System.out.println("Moving by a, s, d, w, quit by q");
-                keyPress = systemInput.next().charAt(0);
-
-                while (action == 5 && keyPress != 'q') {
-                    //Todo: refactor moving and resetPlayerPosition method inside Room class
-                    action = detective.getCurrentRoom().moving(keyPress);
-                    detective.getCurrentRoom().printRoom("Wife");
-
-                    if (action == 5) {
-                        System.out.println("Moving by a, s, d, w, quit by q");
-                        keyPress = systemInput.next().charAt(0);
-                    } else {
-                        System.out.println("\n");
-                    }
-                }
-            }
-            //Access working room
-            if (action == 6) {
-                //access house => print house
-                detective.setCurrentRoom(rooms[5]);
-                detective.setPlayArea(rooms[5].movingArea);
-                rooms[5].printRoom("Working");
-
-                //Moving
-                System.out.println("Moving by a, s, d, w, quit by q");
-                keyPress = systemInput.next().charAt(0);
-
-                while (action == 6 && keyPress != 'q') {
-                    //Todo: refactor moving and resetPlayerPosition method inside Room class
-                    action = detective.getCurrentRoom().moving(keyPress);
-                    detective.getCurrentRoom().printRoom("Working");
-
-                    if (action == 6) {
-                        System.out.println("Moving by a, s, d, w, quit by q");
-                        keyPress = systemInput.next().charAt(0);
-                    } else {
-                        System.out.println("\n");
-                    }
-                }
-            }
-            //Talk with the Butler
-            if (action == 7) {
-                System.out.println(people[0].toString());
-                System.out.println("Now, press \'1\' to return the ground...");
-                action = systemInput.nextInt();
+                default:
+                    break;
             }
 
             if (keyPress == 'q') {
