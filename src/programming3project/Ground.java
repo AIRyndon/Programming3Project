@@ -136,7 +136,8 @@ public class Ground extends Room {
      * Printing the ground
      */
     @Override
-    public void printRoom(String door) {
+    public void printRoom(String door) 
+    {
         super.printRoom(door);
 
         printWall();
