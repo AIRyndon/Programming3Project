@@ -11,19 +11,21 @@ package programming3project;
  */
 public class RoomWife extends Room
 {
-    public RoomWife(String name)
+
+    public RoomWife(String name, Room previous)
     {
+        super(previous);
         setName(name);
         setHeight(14);
         setWidth(48);
-        
+
         initializeMovingArea();
     }
 
     @Override
-    protected void printRoom(String door) 
+    protected void printRoom(String door)
     {
         super.printRoom(door);
-        printWall();    
+        printWall();
     }
 }

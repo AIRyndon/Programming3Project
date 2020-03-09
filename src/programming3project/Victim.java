@@ -9,38 +9,39 @@ package programming3project;
  *
  * @author pc
  */
-public class Victim 
+public class Victim
 {
+
     private String name;
     private String role;
     private int age;
     private String injuries; //not yet
     private String body;    //not yet   
-    
+
     public Victim(String name, String role, int age)
     {
         this.setName(name);
         this.setRole(role);
         this.setAge(age);
     }
-    
+
     public Victim()
     {
-        
+
     }
-    
+
     //Getters and setters
     public String getName()
     {
         return name;
     }
 
-    public void setName(String name) 
+    public void setName(String name)
     {
         this.name = name;
     }
 
-    public String getRole() 
+    public String getRole()
     {
         return role;
     }
@@ -55,31 +56,34 @@ public class Victim
         return age;
     }
 
-    public void setAge(int age) 
+    public void setAge(int age)
     {
         this.age = age;
     }
 
-    public String getInjures() {
+    public String getInjures()
+    {
         return injuries;
     }
 
-    public void setInjures(String injures) {
+    public void setInjures(String injures)
+    {
         this.injuries = injures;
     }
 
-    public String getBody() {
+    public String getBody()
+    {
         return body;
     }
 
-    public void setBody(String body) {
+    public void setBody(String body)
+    {
         this.body = body;
     }
-    
+
     @Override
     public String toString()
     {
         return "";
     }
 }
-

@@ -9,11 +9,10 @@ package programming3project;
  *
  * @author airyn
  */
-public class Detective extends Person {
+public class Detective extends Person
+{
 
     //player position in the grid
-    private int xInitial;
-    private int yInitial;
     private int xPrevious;
     private int yPrevious;
     private int xCoord;
@@ -24,40 +23,45 @@ public class Detective extends Person {
     private Room currentRoom;
     private Room previousRoom;
 
-    public Detective(String name, char gender, int age, Room room) {
+    public Detective(String name, char gender, int age, Room room)
+    {
         super(name, gender, age);
 
         //set initial position
-        xInitial = room.xInitial;
-        yInitial = room.yInitial;
-        xCoord = xInitial;
-        yCoord = yInitial;
+        xCoord = room.xInitial;
+        yCoord = room.yInitial;
     }
 
-    public char move(char keyPress) {
-
+    public char move(char keyPress)
+    {
         char item = '\0';
 
-        switch (keyPress) {
+        switch (keyPress)
+        {
             case 'a':
 
-                if (yCoord == 0) {
+                if (yCoord == 0)
+                {
                     return ' ';
                 }
 
                 item = playArea[xCoord][yCoord - 1];
-                if (item == ' ') {
+                if (item == ' ')
+                {
 
-                    if (xCoord == getCurrentRoom().xInitial && yCoord == getCurrentRoom().yInitial) {
+                    if (startingInsideHouse())
+                    {
                         playArea[xCoord][yCoord] = '*';
                         yCoord -= 1;
                         playArea[xCoord][yCoord] = 'P';
-                    } else {
+                    } else
+                    {
                         playArea[xCoord][yCoord] = ' ';
                         yCoord -= 1;
                         playArea[xCoord][yCoord] = 'P';
                     }
-                } else if (item == '*') {
+                } else if (item == '*')
+                {
                     playArea[xCoord][yCoord] = ' ';
                     yCoord -= 1;
                     playArea[xCoord][yCoord] = 'P';
@@ -66,24 +70,29 @@ public class Detective extends Person {
 
             case 'd':
 
-                if (yCoord == playArea[0].length - 1) {
+                if (yCoord == playArea[0].length - 1)
+                {
                     return ' ';
                 }
 
                 item = playArea[xCoord][yCoord + 1];
-                if (item == ' ') {
+                if (item == ' ')
+                {
 
                     //if at starting location, print the item used to get back
-                    if (xCoord == getCurrentRoom().xInitial && yCoord == getCurrentRoom().yInitial) {
+                    if (startingInsideHouse())
+                    {
                         playArea[xCoord][yCoord] = '*';
                         yCoord += 1;
                         playArea[xCoord][yCoord] = 'P';
-                    } else {
+                    } else
+                    {
                         playArea[xCoord][yCoord] = ' ';
                         yCoord += 1;
                         playArea[xCoord][yCoord] = 'P';
                     }
-                } else if (item == '*') {
+                } else if (item == '*')
+                {
                     playArea[xCoord][yCoord] = ' ';
                     yCoord += 1;
                     playArea[xCoord][yCoord] = 'P';
@@ -92,23 +101,28 @@ public class Detective extends Person {
 
             case 'w':
 
-                if (xCoord == 0) {
+                if (xCoord == 0)
+                {
                     return ' ';
                 }
 
                 item = playArea[xCoord - 1][yCoord];
-                if (item == ' ') {
-                    if (xCoord == getCurrentRoom().xInitial && yCoord == getCurrentRoom().yInitial) {
+                if (item == ' ')
+                {
+                    if (startingInsideHouse())
+                    {
                         playArea[xCoord][yCoord] = '*';
                         xCoord -= 1;
                         playArea[xCoord][yCoord] = 'P';
-                    } else {
+                    } else
+                    {
                         playArea[xCoord][yCoord] = ' ';
                         xCoord -= 1;
                         playArea[xCoord][yCoord] = 'P';
                     }
 
-                } else if (item == '*') {
+                } else if (item == '*')
+                {
                     playArea[xCoord][yCoord] = ' ';
                     xCoord -= 1;
                     playArea[xCoord][yCoord] = 'P';
@@ -117,22 +131,27 @@ public class Detective extends Person {
 
             case 's':
 
-                if (xCoord == playArea.length - 1) {
+                if (xCoord == playArea.length - 1)
+                {
                     return ' ';
                 }
 
                 item = playArea[xCoord + 1][yCoord];
-                if (item == ' ') {
-                    if (xCoord == getCurrentRoom().xInitial && yCoord == getCurrentRoom().yInitial) {
+                if (item == ' ')
+                {
+                    if (startingInsideHouse())
+                    {
                         playArea[xCoord][yCoord] = '*';
                         xCoord += 1;
                         playArea[xCoord][yCoord] = 'P';
-                    } else {
+                    } else
+                    {
                         playArea[xCoord][yCoord] = ' ';
                         xCoord += 1;
                         playArea[xCoord][yCoord] = 'P';
                     }
-                } else if (item == '*') {
+                } else if (item == '*')
+                {
                     playArea[xCoord][yCoord] = ' ';
                     xCoord += 1;
                     playArea[xCoord][yCoord] = 'P';
@@ -148,73 +167,93 @@ public class Detective extends Person {
         return item;
     }
 
-    public void moveToAnotherRoom(Room newRoom) {
-
+    public void moveToAnotherRoom(Room newRoom)
+    {
+        getCurrentRoom().xCurrent = getxCoord();
+        getCurrentRoom().yCurrent = getyCoord();
         setPlayArea(newRoom.movingArea);
-        setPreviousRoom(getCurrentRoom());
+        
+        if (newRoom.previousRoom != null)
+        {
+            setPreviousRoom(newRoom.previousRoom);
+        }
+
         setCurrentRoom(newRoom);
 
         getCurrentRoom().printRoom(getCurrentRoom().getName());
     }
 
-    public void setLocationToPreviousRoom() {
-
-        int xTemp = getxCoord();
-        int yTemp = getyCoord();
-        setxCoord(getxPrevious());
-        setyCoord(getyPrevious());
-        setxPrevious(xTemp);
-        setyPrevious(yTemp);
+    public void setLocationToPreviousRoom()
+    {
+        setxCoord(getCurrentRoom().xCurrent);
+        setyCoord(getCurrentRoom().yCurrent);
+        setxPrevious(getPreviousRoom().xCurrent);
+        setyPrevious(getPreviousRoom().yCurrent);
     }
 
-    public void setLocationToNewRoom() {
-        
-        setxPrevious(getxCoord());
-        setyPrevious(getyCoord());
+    public void setLocationToNewRoom()
+    {
+
+        setxPrevious(getPreviousRoom().xCurrent);
+        setyPrevious(getPreviousRoom().yCurrent);
         setxCoord(getCurrentRoom().xInitial);
         setyCoord(getCurrentRoom().yInitial);
+    }
+
+    private boolean startingInsideHouse()
+    {
+        return (xCoord == getCurrentRoom().xInitial
+                && yCoord == getCurrentRoom().yInitial
+                && getCurrentRoom().getName() != "Ground");
     }
 
     /**
      * @return the background
      */
-    public String getBackground() {
+    public String getBackground()
+    {
         return background;
     }
 
     /**
      * @param background the background to set
      */
-    public void setBackground(String background) {
+    public void setBackground(String background)
+    {
         this.background = background;
     }
 
     /**
      * @return the currentRoom
      */
-    public Room getCurrentRoom() {
+    public Room getCurrentRoom()
+    {
         return currentRoom;
     }
 
     /**
      * @param currentRoom the currentRoom to set
      */
-    public void setCurrentRoom(Room currentRoom) {
+    public void setCurrentRoom(Room currentRoom)
+    {
         this.currentRoom = currentRoom;
     }
 
-    public char[][] getPlayArea() {
+    public char[][] getPlayArea()
+    {
         return playArea;
     }
 
-    public void setPlayArea(char[][] playArea) {
+    public void setPlayArea(char[][] playArea)
+    {
 
         this.playArea = null;
         this.playArea = playArea;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         String output = "";
 
         output += "Name: " + this.getName() + "\n";
@@ -228,112 +267,96 @@ public class Detective extends Person {
     /**
      * @return the currentTarget
      */
-    public Relative getCurrentTarget() {
+    public Relative getCurrentTarget()
+    {
         return currentTarget;
     }
 
     /**
      * @param currentTarget the currentTarget to set
      */
-    public void setCurrentTarget(Relative currentTarget) {
+    public void setCurrentTarget(Relative currentTarget)
+    {
         this.currentTarget = currentTarget;
     }
 
     /**
      * @return the previousRoom
      */
-    public Room getPreviousRoom() {
+    public Room getPreviousRoom()
+    {
         return previousRoom;
     }
 
     /**
      * @param previousRoom the previousRoom to set
      */
-    public void setPreviousRoom(Room previousRoom) {
+    public void setPreviousRoom(Room previousRoom)
+    {
         this.previousRoom = previousRoom;
     }
 
     /**
      * @return the xPrevious
      */
-    public int getxPrevious() {
+    public int getxPrevious()
+    {
         return xPrevious;
     }
 
     /**
      * @param xPrevious the xPrevious to set
      */
-    public void setxPrevious(int xPrevious) {
+    public void setxPrevious(int xPrevious)
+    {
         this.xPrevious = xPrevious;
     }
 
     /**
      * @return the yPrevious
      */
-    public int getyPrevious() {
+    public int getyPrevious()
+    {
         return yPrevious;
     }
 
     /**
      * @param yPrevious the yPrevious to set
      */
-    public void setyPrevious(int yPrevious) {
+    public void setyPrevious(int yPrevious)
+    {
         this.yPrevious = yPrevious;
     }
 
     /**
      * @return the xCoord
      */
-    public int getxCoord() {
+    public int getxCoord()
+    {
         return xCoord;
     }
 
     /**
      * @param xCoord the xCoord to set
      */
-    public void setxCoord(int xCoord) {
+    public void setxCoord(int xCoord)
+    {
         this.xCoord = xCoord;
     }
 
     /**
      * @return the yPrevious
      */
-    public int getyCoord() {
+    public int getyCoord()
+    {
         return yCoord;
     }
 
     /**
      * @param yCoord the yCoord to set
      */
-    public void setyCoord(int yCoord) {
+    public void setyCoord(int yCoord)
+    {
         this.yCoord = yCoord;
-    }
-
-    /**
-     * @return the xInitial
-     */
-    public int getxInitial() {
-        return xInitial;
-    }
-
-    /**
-     * @param xInitial the xInitial to set
-     */
-    public void setxInitial(int xInitial) {
-        this.xInitial = xInitial;
-    }
-
-    /**
-     * @return the yInitial
-     */
-    public int getyInitial() {
-        return yInitial;
-    }
-
-    /**
-     * @param yInitial the yInitial to set
-     */
-    public void setyInitial(int yInitial) {
-        this.yInitial = yInitial;
     }
 }

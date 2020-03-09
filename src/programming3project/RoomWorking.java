@@ -12,12 +12,13 @@ package programming3project;
 public class RoomWorking extends Room
 {
 
-    public RoomWorking(String name)
+    public RoomWorking(String name, Room previous)
     {
+        super(previous);
         setName(name);
         setHeight(12);
         setWidth(72);
-        
+
         initializeMovingArea();
     }
 
@@ -26,5 +27,5 @@ public class RoomWorking extends Room
     {
         super.printRoom(door);
         printWall();
-    }    
+    }
 }

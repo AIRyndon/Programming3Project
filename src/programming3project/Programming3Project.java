@@ -19,14 +19,16 @@ import java.util.Set;
  *
  * @author airyn
  */
-public class Programming3Project {
+public class Programming3Project
+{
 
     private static Scanner systemInput = new Scanner(System.in);
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         //todo - gonna refactor these guys later
         //creating a FILE for game state later 
         String workingDir = System.getProperty("user.dir");
@@ -43,7 +45,8 @@ public class Programming3Project {
         String userName = systemInput.nextLine();
 
         char userGender = '\0';
-        while (!(userGender == 'M' || userGender == 'm' || userGender == 'F' || userGender == 'f')) {
+        while (!(userGender == 'M' || userGender == 'm' || userGender == 'F' || userGender == 'f'))
+        {
             System.out.print("Please enter a gender(M/F): ");
             userGender = systemInput.next().charAt(0);
         }
@@ -55,32 +58,32 @@ public class Programming3Project {
         int userAge = systemInput.nextInt();
 
         //Declare rooms
-        Room[] rooms = new Room[]{
-            new Ground("Ground"),
-            new House("House"),
-            new RoomMaid("Maid's Room"),
-            new RoomButler("Butler's Room"),
-            new RoomWife("Wife's Room"),
-            new RoomWorking("Work Room")
-        };
+        Ground ground = new Ground("Ground", null);
+        House house = new House("House", ground);
+        RoomMaid roomMaid = new RoomMaid("Maid's Room", house);
+        RoomButler roomButler = new RoomButler("Butler's Room", house);
+        RoomWife roomWife = new RoomWife("Wife's Room", house);
+        RoomWorking roomWorking = new RoomWorking("Work Room", house);
 
         //Declare all characters
         Detective detective = new Detective(userName, userGender, userAge,
-                rooms[0]);
+                ground);
 
-        detective.setCurrentRoom(rooms[0]);
+        detective.setCurrentRoom(ground);
         detective.setPreviousRoom(null);
-        detective.setPlayArea(rooms[0].movingArea);
+        detective.setPlayArea(ground.movingArea);
         detective.setBackground("Mysterious fellow");
 
         Victim victim = new Victim("Bosh", "President of KPI Cooperation", 55);
 
-        Relative[] people = {
+        Relative[] people =
+        {
             new Relative("Marcello", 'M', 63, "Butler"),
             new Relative("Belinda", 'F', 50, "Wife"),
             new Relative("Calista", 'F', 25, "Daughter"),
             new Relative("Ashton", 'M', 34, "Assistant"),
-            new Relative("Cindel", 'F', 20, "Maid"),};
+            new Relative("Cindel", 'F', 20, "Maid"),
+        };
 
         //Intro the detective
         System.out.println("\nThe main character's information...");
@@ -100,96 +103,105 @@ public class Programming3Project {
 
         //Ask the player to enter the game area
         char enterPremises = '\0';
-        while (!(enterPremises == 'Y' || enterPremises == 'y' || enterPremises == 'N' || enterPremises == 'n')) {
+        while (!(enterPremises == 'Y' || enterPremises == 'y' || enterPremises == 'N' || enterPremises == 'n'))
+        {
             System.out.println("Do you want to enter the compound?(Y/N)");
             enterPremises = systemInput.next().charAt(0);
         }
 
         //If player does not want to enter the compound
-        if (enterPremises != 'Y' && enterPremises != 'y') {
+        if (enterPremises != 'Y' && enterPremises != 'y')
+        {
             System.out.println("\n\"Sorry I do not have time at the moment...\"");
             System.out.println("Right then, you came to one of your customers' house "
                     + "- a bilionaire names " + victim.getName() + ".");
             System.out.println("Coincidentally, your customer is the victim who was mentioned by the police");
         }
 
-        rooms[0].printRoom(rooms[0].getName());
+        ground.printRoom(ground.getName());
 
         //Check if user want to continue the game
         boolean stayInside = true;
 
-        while (stayInside) {
+        while (stayInside)
+        {
 
             char keyPress = '\0';
 
             //access ground => print ground
             //Moving
-            while (!(keyPress == 'a' || keyPress == 'd' || keyPress == 's' || keyPress == 'w')) {
-
+            while (!(keyPress == 'a' || keyPress == 'd' || keyPress == 's' || keyPress == 'w'))
+            {
                 System.out.println("Press a, s, d, w then enter to move. Press q then enter to quit.");
                 keyPress = systemInput.next().charAt(0);
             }
 
             char landedSquare = detective.move(keyPress);
 
-            switch (landedSquare) {
-                case 'B': {
+            switch (landedSquare)
+            {
+                case 'B':
+                {
                     System.out.println(people[0].toString());
                     break;
                 }
-                case 'W': {
+                case 'W':
+                {
                     System.out.println(people[1].toString());
                     break;
                 }
-                case '*': {
-
-                    //check if you are in the ground
-                    if (detective.getPreviousRoom() != null
-                            && detective.getCurrentRoom().getClass()
-                            != rooms[0].getClass()) {
-
-                        detective.moveToAnotherRoom(detective.getPreviousRoom());
+                case '*':
+                {
+                    if (detective.getCurrentRoom().previousRoom != null)
+                    {
+                        detective.moveToAnotherRoom(detective.getCurrentRoom().previousRoom);
                         detective.setLocationToPreviousRoom();
                     }
 
                     break;
                 }
-                case '/': {
+                case '/':
+                {
 
                     //check if at ground area
-                    if (detective.getCurrentRoom().getClass() == rooms[0].getClass()) {
-
+                    if (detective.getCurrentRoom().getClass() == ground.getClass())
+                    {
                         //check if in front of the house
                         if ((detective.getyCoord() >= 25 && detective.getyCoord() <= 27)
-                                && detective.getxCoord() == 6) {
-
-                            detective.moveToAnotherRoom(rooms[1]);
+                                && detective.getxCoord() == 6)
+                        {
+                            detective.moveToAnotherRoom(house);
                             detective.setLocationToNewRoom();
                         }
 
                         //check if inside the House
-                    } else if (detective.getCurrentRoom().getClass() == rooms[1].getClass()) {
+                    } else if (detective.getCurrentRoom().getClass() == house.getClass())
+                    {
                         System.out.println(detective.getxCoord());
                         System.out.println(detective.getyCoord());
 
-//in front of maid's room
-                        if (detective.getxCoord() == 2 && detective.getyCoord() == 24) {
-                            detective.moveToAnotherRoom(rooms[2]);
+                        //in front of maid's room
+                        if (detective.getxCoord() == 2 && detective.getyCoord() == 24)
+                        {
+                            detective.moveToAnotherRoom(roomMaid);
                             detective.setLocationToNewRoom();
 
-//in front of butler's room
-                        } else if (detective.getxCoord() == 5 && detective.getyCoord() == 24) {
-                            detective.moveToAnotherRoom(rooms[3]);
+                            //in front of butler's room
+                        } else if (detective.getxCoord() == 5 && detective.getyCoord() == 24)
+                        {
+                            detective.moveToAnotherRoom(roomButler);
                             detective.setLocationToNewRoom();
 
-//in front of wife's room
-                        } else if (detective.getxCoord() == 9 && detective.getyCoord() == 24) {
-                            detective.moveToAnotherRoom(rooms[4]);
+                            //in front of wife's room
+                        } else if (detective.getxCoord() == 9 && detective.getyCoord() == 24)
+                        {
+                            detective.moveToAnotherRoom(roomWife);
                             detective.setLocationToNewRoom();
 
-//in front of working area
-                        } else if (detective.getxCoord() == 11 && detective.getyCoord() == 24) {
-                            detective.moveToAnotherRoom(rooms[5]);
+                            //in front of working area
+                        } else if (detective.getxCoord() == 11 && detective.getyCoord() == 24)
+                        {
+                            detective.moveToAnotherRoom(roomWorking);
                             detective.setLocationToNewRoom();
                         }
                     }
@@ -200,7 +212,8 @@ public class Programming3Project {
                     break;
             }
 
-            if (keyPress == 'q') {
+            if (keyPress == 'q')
+            {
                 systemInput.nextLine();
                 stayInside = continueGame();
             }
@@ -214,12 +227,14 @@ public class Programming3Project {
     /**
      * @return char (Y/N)
      */
-    public static boolean continueGame() {
+    public static boolean continueGame()
+    {
         System.out.println("Do you want to continue the game? (Y/N)");
         char continueGame = systemInput.next().charAt(0);
 
         //Check if it is invalid input
-        while (!(continueGame == 'Y' || continueGame == 'y' || continueGame == 'N' || continueGame == 'n')) {
+        while (!(continueGame == 'Y' || continueGame == 'y' || continueGame == 'N' || continueGame == 'n'))
+        {
             System.out.println("Invalid input!");
             System.out.println("Do you want to continue the game? (Y/N)");
             continueGame = systemInput.next().charAt(0);

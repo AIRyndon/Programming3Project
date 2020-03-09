@@ -13,15 +13,17 @@ import java.util.Scanner;
  */
 public class RoomMaid extends Room
 {
-    public RoomMaid(String name)
+
+    public RoomMaid(String name, Room previous)
     {
+        super(previous);
         setName(name);
         setHeight(6);
         setWidth(48);
-        
+
         initializeMovingArea();
     }
-    
+
     @Override
     protected void initializeMovingArea()
     {
@@ -29,7 +31,7 @@ public class RoomMaid extends Room
     }
 
     @Override
-    protected void printRoom(String door) 
+    protected void printRoom(String door)
     {
         super.printRoom(door);
         printWall();

@@ -9,10 +9,11 @@ package programming3project;
  *
  * @author pc
  */
-public class Story 
+public class Story
 {
-    public Story() 
+
+    public Story()
     {
-        
-    } 
+
+    }
 }

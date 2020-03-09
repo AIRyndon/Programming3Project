@@ -14,23 +14,24 @@ package programming3project;
  * @author pc
  */
 public class Relative extends Person
-{ 
+{
+
     private final String role;
     private String comment;
-    
+
     public Relative(String name, char gender, int age, String role)
     {
         super(name, gender, age);
-        
+
         this.role = role;
     }
-    
-    public String getRole() 
+
+    public String getRole()
     {
         return role;
     }
 
-    public String getComment() 
+    public String getComment()
     {
         return comment;
     }
@@ -39,9 +40,9 @@ public class Relative extends Person
     {
         this.comment = comment;
     }
-    
+
     @Override
-    public String toString() 
+    public String toString()
     {
         String output = "";
 
@@ -49,7 +50,7 @@ public class Relative extends Person
         output += "Gender: " + (this.getGender() == 'M' ? "Male\n" : "Female\n");
         output += "Age: " + this.getAge() + "\n";
         output += "Comments\n";
-        
+
         return output;
     }
 }

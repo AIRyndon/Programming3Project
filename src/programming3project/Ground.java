@@ -12,10 +12,13 @@ import java.util.Scanner;
  *
  * @author pc
  */
-public class Ground extends Room {
+public class Ground extends Room
+{
 
-    public Ground(String name) {
-              
+    public Ground(String name, Room previous)
+    {
+        super(previous);
+
         setName(name);
         setHeight(24);
         setWidth(52);
@@ -27,7 +30,8 @@ public class Ground extends Room {
      * ), and player(P) to allow and show moving
      */
     @Override
-    protected void initializeMovingArea() {
+    protected void initializeMovingArea()
+    {
         super.initializeMovingArea();
 
         //Assign dog's place
@@ -39,7 +43,8 @@ public class Ground extends Room {
         movingArea[1][getWidth() - 7] = 'G';
         movingArea[2][getWidth() - 15] = '|';
 
-        for (int i = getWidth() - 14; i < getWidth() - 1; i++) {
+        for (int i = getWidth() - 14; i < getWidth() - 1; i++)
+        {
             movingArea[2][i] = '_';
         }
 
@@ -47,21 +52,29 @@ public class Ground extends Room {
          * Assign HouseArea (because the house is on the ground) Player cannot
          * move in this area, just access through the door
          */
-        for (int i = 7; i <= 14; i++) {
-            for (int j = 17; j < 35; j++) {
+        for (int i = 7; i <= 14; i++)
+        {
+            for (int j = 17; j < 35; j++)
+            {
                 if (i == 7) //House's door
                 {
-                    if (j <= 17 + 6 || j >= 17 + 12) {
+                    if (j <= 17 + 6 || j >= 17 + 12)
+                    {
                         movingArea[i][j] = '_';
-                    } else if (j == (17 + 7) || j == (17 + 11)) {
+                    } else if (j == (17 + 7) || j == (17 + 11))
+                    {
                         movingArea[i][j] = '|';
-                    } else {
+                    } else
+                    {
                         movingArea[i][j] = '/';
                     }
-                } else if (i == 14) {
-                    if (j == 17 || j == 34) {
+                } else if (i == 14)
+                {
+                    if (j == 17 || j == 34)
+                    {
                         movingArea[i][j] = '|';
-                    } else {
+                    } else
+                    {
                         movingArea[i][j] = '_';
                     }
                 } else //House's area
@@ -94,7 +107,8 @@ public class Ground extends Room {
     /**
      * create random relative position
      */
-    protected void relativePosition() {
+    protected void relativePosition()
+    {
         //Randomly assign some hint positions in the ground 
         Random rand = new Random();
 
@@ -107,20 +121,27 @@ public class Ground extends Room {
         //Position replace space only
         boolean checkedFirst = false;
         boolean checkedSecond = false;
-        while (!(checkedFirst && checkedSecond)) {
-            if (firstHei != secondHei || firstWid != secondWid) {
-                if (movingArea[firstHei][firstWid] == ' ' && movingArea[secondHei][secondWid] == ' ') {
-                    if (firstHei >= 7 && firstHei <= 14 && firstWid >= 17 && firstWid <= 35) {
+        while (!(checkedFirst && checkedSecond))
+        {
+            if (firstHei != secondHei || firstWid != secondWid)
+            {
+                if (movingArea[firstHei][firstWid] == ' ' && movingArea[secondHei][secondWid] == ' ')
+                {
+                    if (firstHei >= 7 && firstHei <= 14 && firstWid >= 17 && firstWid <= 35)
+                    {
                         firstHei = rand.nextInt(getHeight() - 2);
                         firstWid = rand.nextInt(getWidth() - 2);
-                    } else {
+                    } else
+                    {
                         checkedFirst = true;
                     }
 
-                    if (secondHei >= 7 && secondHei <= 14 && secondWid >= 17 && secondWid <= 35) {
+                    if (secondHei >= 7 && secondHei <= 14 && secondWid >= 17 && secondWid <= 35)
+                    {
                         secondHei = rand.nextInt(getHeight() - 2);
                         secondWid = rand.nextInt(getWidth() - 2);
-                    } else {
+                    } else
+                    {
                         checkedSecond = true;
                     }
                 }
@@ -136,7 +157,8 @@ public class Ground extends Room {
      * Printing the ground
      */
     @Override
-    public void printRoom(String door) {
+    public void printRoom(String door)
+    {
         super.printRoom(door);
 
         printWall();

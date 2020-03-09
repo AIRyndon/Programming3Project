@@ -12,19 +12,20 @@ package programming3project;
 public class RoomButler extends Room
 {
 
-    public RoomButler(String name)
+    public RoomButler(String name, Room previous)
     {
+        super(previous);
         setName(name);
         setHeight(6);
         setWidth(48);
-        
+
         initializeMovingArea();
     }
-    
+
     @Override
-    protected void printRoom(String door) 
+    protected void printRoom(String door)
     {
         super.printRoom(door);
         printWall();
-    }    
+    }
 }

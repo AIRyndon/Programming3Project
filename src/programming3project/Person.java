@@ -9,14 +9,15 @@ package programming3project;
  *
  * @author angel
  */
-
-public abstract class Person 
+public abstract class Person
 {
+
     private final String name;
     private final char gender;
     private final int age;
-    
-    public Person(String name, char gender, int age){
+
+    public Person(String name, char gender, int age)
+    {
         this.name = name;
         this.gender = gender;
         this.age = age;
@@ -25,23 +26,25 @@ public abstract class Person
     /**
      * @return the name
      */
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
     /**
      * @return the gender
      */
-    public char getGender() {
+    public char getGender()
+    {
         return gender;
     }
 
     /**
      * @return the age
      */
-    public int getAge() {
+    public int getAge()
+    {
         return age;
-    }  
-    
-    
+    }
+
 }
