@@ -177,9 +177,6 @@ public class Programming3Project
                         //check if inside the House
                     } else if (detective.getCurrentRoom().getClass() == house.getClass())
                     {
-                        System.out.println(detective.getxCoord());
-                        System.out.println(detective.getyCoord());
-
                         //in front of maid's room
                         if (detective.getxCoord() == 2 && detective.getyCoord() == 24)
                         {
