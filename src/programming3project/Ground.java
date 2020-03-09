@@ -36,8 +36,7 @@ public class Ground extends Room
 
         //Assign dog's place
         movingArea[0][getWidth() - 15] = '|';
-        movingArea[0][getWidth() - 14] = '_';
-        movingArea[1][getWidth() - 14] = '/';
+        movingArea[1][getWidth() - 14] = ' ';
         movingArea[1][getWidth() - 9] = 'D';
         movingArea[1][getWidth() - 8] = 'O';
         movingArea[1][getWidth() - 7] = 'G';
