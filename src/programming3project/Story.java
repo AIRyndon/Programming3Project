@@ -9,11 +9,7 @@ package programming3project;
  *
  * @author pc
  */
-public class Story
+public interface Story 
 {
-
-    public Story()
-    {
-
-    }
+    //Todo: prinf file
 }

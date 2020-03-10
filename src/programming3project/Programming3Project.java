@@ -5,7 +5,10 @@
  */
 package programming3project;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -14,6 +17,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -27,7 +32,7 @@ public class Programming3Project
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
         //todo - gonna refactor these guys later
         //creating a FILE for game state later 
@@ -130,24 +135,55 @@ public class Programming3Project
 
             //access ground => print ground
             //Moving
-            while (!(keyPress == 'a' || keyPress == 'd' || keyPress == 's' || keyPress == 'w'))
+            while (!(keyPress == 'a' || keyPress == 'd' || keyPress == 's' || keyPress == 'w' ||  keyPress == 'q'))
             {
                 System.out.println("Press a, s, d, w then enter to move. Press q then enter to quit.");
                 keyPress = systemInput.next().charAt(0);
             }
-
+            
             char landedSquare = detective.move(keyPress);
-
-            switch (landedSquare)
+            boolean listen = false;
+            
+            switch (landedSquare) 
             {
                 case 'B':
                 {
+                    //Clear the buffer
+                    systemInput.nextLine();
                     System.out.println(people[0].toString());
+                    System.out.println("Do you want to talk to the Butler?");
+                    listen = "Y".equalsIgnoreCase(systemInput.nextLine());
+                    
                     break;
                 }
-                case 'W':
+                case 'W': 
                 {
+                    //Clear the buffer
+                    systemInput.nextLine();
                     System.out.println(people[1].toString());
+                    System.out.println("Do you want to talk to the Wife?");                    
+                    listen = "Y".equalsIgnoreCase(systemInput.nextLine());
+
+                    break;
+                }
+                case 'A': 
+                {
+                    //Clear the buffer
+                    systemInput.nextLine();
+                    System.out.println(people[0].toString());
+                    System.out.println("Do you want to talk to the Assistant?");
+                    listen = "Y".equalsIgnoreCase(systemInput.nextLine());
+
+                    break;
+                }
+                case 'M':
+                {
+                    //Clear the buffer
+                    systemInput.nextLine();
+                    System.out.println(people[1].toString());
+                    System.out.println("Do you want to talk to the Maid?");
+                    listen = "Y".equalsIgnoreCase(systemInput.nextLine());
+
                     break;
                 }
                 case '*':
@@ -155,6 +191,24 @@ public class Programming3Project
                     if (detective.getCurrentRoom().previousRoom != null)
                     {
                         detective.moveToAnotherRoom(detective.getCurrentRoom().previousRoom);
+                case 'D': 
+                {
+                    //Clear the buffer
+                    systemInput.nextLine();
+                    System.out.println(people[0].toString());                    
+                    System.out.println("Do you want to talk to the Daughter?");
+                    listen = "Y".equalsIgnoreCase(systemInput.nextLine());
+
+                    break;
+                }
+                case '*': 
+                {
+                    //check if you are in the ground
+                    if (detective.getPreviousRoom() != null
+                            && detective.getCurrentRoom().getClass()
+                            != rooms[0].getClass()) {
+
+                        detective.moveToAnotherRoom(detective.getPreviousRoom());
                         detective.setLocationToPreviousRoom();
                     }
 
@@ -209,6 +263,11 @@ public class Programming3Project
                     break;
             }
 
+            if(listen)
+            {
+                printTalk(landedSquare);
+            }
+            
             if (keyPress == 'q')
             {
                 systemInput.nextLine();
@@ -238,5 +297,30 @@ public class Programming3Project
         }
 
         return (continueGame == 'Y' || continueGame == 'y') ? true : false;
+    }
+    
+    public static void printTalk(char people) throws IOException //throw exception
+    {
+        try 
+        {
+            BufferedReader br = new BufferedReader(new FileReader(people + ".txt"));
+            
+            //Just the first talk
+            String line = br.readLine();
+            System.out.println(line);
+            
+            System.out.println("Press 'q' to quit the talk.");
+            boolean quitTalk = "q".equalsIgnoreCase(systemInput.nextLine());
+            
+            while(!quitTalk)
+            {
+                System.out.println("Invalid input! Press 'q' to quit the talk.");
+                quitTalk = "q".equalsIgnoreCase(systemInput.nextLine());
+            }
+        } 
+        catch (FileNotFoundException ex)
+        {
+            Logger.getLogger(Programming3Project.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

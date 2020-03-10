@@ -13,9 +13,8 @@ package programming3project;
  *
  * @author pc
  */
-public class Relative extends Person
-{
-
+public class Relative extends Person implements Story
+{ 
     private final String role;
     private String comment;
 
