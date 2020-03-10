@@ -298,8 +298,31 @@ public class Programming3Project
             BufferedReader br = new BufferedReader(new FileReader(people + ".txt"));
             
             //Just the first talk
-            String line = br.readLine();
-            System.out.println(line);
+            String line = " ";
+            String outPut1 = "";//First talk
+            String outPut2 = "";//Second talk, after unlocked something
+           
+            while((line = br.readLine()) != null)
+            {
+                if(!line.isEmpty())
+                {
+                    outPut1 += line + "\n";
+                }
+                else
+                {
+                    outPut2 += line;
+                    
+                    while((line = br.readLine()) != null)
+                    {
+                        outPut2 += line + "\n";
+                    }
+                    
+                    break;
+                }
+            }
+            
+            //System.out.println(outPut1);
+            System.out.println(outPut2);
             
             System.out.println("Press 'q' to quit the talk.");
             boolean quitTalk = "q".equalsIgnoreCase(systemInput.nextLine());
