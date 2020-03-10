@@ -191,6 +191,10 @@ public class Programming3Project
                     if (detective.getCurrentRoom().previousRoom != null)
                     {
                         detective.moveToAnotherRoom(detective.getCurrentRoom().previousRoom);
+                    }
+                    
+                    break;
+                }
                 case 'D': 
                 {
                     //Clear the buffer
@@ -201,19 +205,7 @@ public class Programming3Project
 
                     break;
                 }
-                case '*': 
-                {
-                    //check if you are in the ground
-                    if (detective.getPreviousRoom() != null
-                            && detective.getCurrentRoom().getClass()
-                            != rooms[0].getClass()) {
-
-                        detective.moveToAnotherRoom(detective.getPreviousRoom());
-                        detective.setLocationToPreviousRoom();
-                    }
-
-                    break;
-                }
+               
                 case '/':
                 {
 
