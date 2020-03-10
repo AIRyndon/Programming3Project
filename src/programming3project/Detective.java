@@ -18,7 +18,7 @@ public class Detective extends Person
     private int xCoord;
     private int yCoord;
     private String background;
-    private Relative currentTarget;
+    private NPC currentTarget;
     private char[][] playArea;
     private Room currentRoom;
     private Room previousRoom;
@@ -193,11 +193,10 @@ public class Detective extends Person
 
     public void setLocationToNewRoom()
     {
-
-        setxPrevious(getPreviousRoom().xCurrent);
-        setyPrevious(getPreviousRoom().yCurrent);
         setxCoord(getCurrentRoom().xInitial);
         setyCoord(getCurrentRoom().yInitial);
+        setxPrevious(getPreviousRoom().xCurrent);
+        setyPrevious(getPreviousRoom().yCurrent);
     }
 
     private boolean startingInsideHouse()
@@ -259,7 +258,7 @@ public class Detective extends Person
         output += "Name: " + this.getName() + "\n";
         output += "Gender: " + (this.getGender() == 'M' ? "Male\n" : "Female\n");
         output += "Age: " + this.getAge() + "\n";//Do we need to create another attribute for age? => Then ask user
-        output += "Background: " + this.getBackground() + "\n\n";
+        output += "Background: " + this.getBackground() + "\n";
 
         return output;
     }
@@ -267,7 +266,7 @@ public class Detective extends Person
     /**
      * @return the currentTarget
      */
-    public Relative getCurrentTarget()
+    public NPC getCurrentTarget()
     {
         return currentTarget;
     }
@@ -275,7 +274,7 @@ public class Detective extends Person
     /**
      * @param currentTarget the currentTarget to set
      */
-    public void setCurrentTarget(Relative currentTarget)
+    public void setCurrentTarget(NPC currentTarget)
     {
         this.currentTarget = currentTarget;
     }

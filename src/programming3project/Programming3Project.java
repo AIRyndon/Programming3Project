@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -73,7 +72,7 @@ public class Programming3Project
         //Declare all characters
         Detective detective = new Detective(userName, userGender, userAge,
                 ground);
-
+        
         detective.setCurrentRoom(ground);
         detective.setPreviousRoom(null);
         detective.setPlayArea(ground.movingArea);
@@ -81,14 +80,11 @@ public class Programming3Project
 
         Victim victim = new Victim("Bosh", "President of KPI Cooperation", 55);
 
-        Relative[] people =
-        {
-            new Relative("Marcello", 'M', 63, "Butler"),
-            new Relative("Belinda", 'F', 50, "Wife"),
-            new Relative("Calista", 'F', 25, "Daughter"),
-            new Relative("Ashton", 'M', 34, "Assistant"),
-            new Relative("Cindel", 'F', 20, "Maid"),
-        };
+        NPC daughter = new NPC("Calista", 'F', 25, "Daughter", "");
+        NPC wife = new NPC("Belinda", 'F', 50, "Wife", "");
+        NPC maid = new NPC("Cindel", 'F', 20, "Maid", daughter.getRole());
+        NPC bulter = new NPC("Marcello", 'M', 63, "Butler", maid.getRole());
+        NPC assistant = new NPC("Ashton", 'M', 34, "Assistant", wife.getRole());
 
         //Intro the detective
         System.out.println("\nThe main character's information...");
@@ -100,7 +96,7 @@ public class Programming3Project
         System.out.println(dateFormat.format(new Date()));
 
         //Story begins
-        System.out.println(detective.getName() + " is working in" + (detective.getGender() == 'M' ? "his " : "her ") + "office and reading some news.");
+        System.out.println(detective.getName() + " - you are working in your office and reading some news.");
         System.out.println("\"" + (detective.getGender() == 'M' ? "Sir " : "Madam ")
                 + detective.getName() + "!\"");
         System.out.println("A police officer runs to you:");
@@ -115,100 +111,86 @@ public class Programming3Project
         }
 
         //If player does not want to enter the compound
-        if (enterPremises != 'Y' && enterPremises != 'y')
+        if (enterPremises == 'N' && enterPremises == 'n')
         {
             System.out.println("\n\"Sorry I do not have time at the moment...\"");
             System.out.println("Right then, you came to one of your customers' house "
                     + "- a bilionaire names " + victim.getName() + ".");
             System.out.println("Coincidentally, your customer is the victim who was mentioned by the police");
+            System.out.println("Now, you are accessing the the victim's house througth gate...");
         }
 
         ground.printRoom(ground.getName());
-
+        int countUnlock = 0;
         //Check if user want to continue the game
         boolean stayInside = true;
-
         while (stayInside)
         {
-
             char keyPress = '\0';
 
-            //access ground => print ground
             //Moving
             while (!(keyPress == 'a' || keyPress == 'd' || keyPress == 's' || keyPress == 'w' ||  keyPress == 'q'))
             {
-                System.out.println("Press a, s, d, w then enter to move. Press q then enter to quit.");
+                System.out.println("Press a, s, d, w then enter to move. Press 'q' then enter to quit.");
                 keyPress = systemInput.next().charAt(0);
             }
             
             char landedSquare = detective.move(keyPress);
-            boolean listen = false;
-            
+            String unlockNPC = "";
             switch (landedSquare) 
             {
                 case 'B':
                 {
-                    //Clear the buffer
-                    systemInput.nextLine();
-                    System.out.println(people[0].toString());
-                    System.out.println("Do you want to talk to the Butler?");
-                    listen = "Y".equalsIgnoreCase(systemInput.nextLine());
+                    System.out.println(bulter.toString());                    
+                    bulter.getTalk().talk();
+                    unlockNPC = bulter.getUnlockNPC();
                     
                     break;
                 }
                 case 'W': 
                 {
-                    //Clear the buffer
-                    systemInput.nextLine();
-                    System.out.println(people[1].toString());
-                    System.out.println("Do you want to talk to the Wife?");                    
-                    listen = "Y".equalsIgnoreCase(systemInput.nextLine());
+                    System.out.println(wife.toString());                    
+                    wife.getTalk().talk();
+                    unlockNPC = wife.getUnlockNPC();
 
                     break;
                 }
                 case 'A': 
                 {
-                    //Clear the buffer
-                    systemInput.nextLine();
-                    System.out.println(people[0].toString());
-                    System.out.println("Do you want to talk to the Assistant?");
-                    listen = "Y".equalsIgnoreCase(systemInput.nextLine());
+                    System.out.println(assistant.toString());                    
+                    assistant.getTalk().talk();
+                    unlockNPC = assistant.getUnlockNPC();
 
                     break;
                 }
                 case 'M':
                 {
-                    //Clear the buffer
-                    systemInput.nextLine();
-                    System.out.println(people[1].toString());
-                    System.out.println("Do you want to talk to the Maid?");
-                    listen = "Y".equalsIgnoreCase(systemInput.nextLine());
+                    System.out.println(maid.toString());                    
+                    maid.getTalk().talk();
+                    unlockNPC = maid.getUnlockNPC();
 
                     break;
+                }
+                case 'D': 
+                {
+                    System.out.println(daughter.toString());                    
+                    daughter.getTalk().talk();
+                    unlockNPC = daughter.getUnlockNPC();
+
+                    break; 
                 }
                 case '*':
                 {
                     if (detective.getCurrentRoom().previousRoom != null)
                     {
                         detective.moveToAnotherRoom(detective.getCurrentRoom().previousRoom);
+                        detective.setLocationToPreviousRoom();  
                     }
                     
                     break;
                 }
-                case 'D': 
-                {
-                    //Clear the buffer
-                    systemInput.nextLine();
-                    System.out.println(people[0].toString());                    
-                    System.out.println("Do you want to talk to the Daughter?");
-                    listen = "Y".equalsIgnoreCase(systemInput.nextLine());
-
-                    break;
-                }
-               
                 case '/':
                 {
-
                     //check if at ground area
                     if (detective.getCurrentRoom().getClass() == ground.getClass())
                     {
@@ -221,7 +203,8 @@ public class Programming3Project
                         }
 
                         //check if inside the House
-                    } else if (detective.getCurrentRoom().getClass() == house.getClass())
+                    } 
+                    else if (detective.getCurrentRoom().getClass() == house.getClass())
                     {
                         //in front of maid's room
                         if (detective.getxCoord() == 2 && detective.getyCoord() == 24)
@@ -230,19 +213,22 @@ public class Programming3Project
                             detective.setLocationToNewRoom();
 
                             //in front of butler's room
-                        } else if (detective.getxCoord() == 5 && detective.getyCoord() == 24)
+                        } 
+                        else if (detective.getxCoord() == 5 && detective.getyCoord() == 24)
                         {
                             detective.moveToAnotherRoom(roomButler);
                             detective.setLocationToNewRoom();
 
                             //in front of wife's room
-                        } else if (detective.getxCoord() == 9 && detective.getyCoord() == 24)
+                        } 
+                        else if (detective.getxCoord() == 9 && detective.getyCoord() == 24)
                         {
                             detective.moveToAnotherRoom(roomWife);
                             detective.setLocationToNewRoom();
 
                             //in front of working area
-                        } else if (detective.getxCoord() == 11 && detective.getyCoord() == 24)
+                        } 
+                        else if (detective.getxCoord() == 11 && detective.getyCoord() == 24)
                         {
                             detective.moveToAnotherRoom(roomWorking);
                             detective.setLocationToNewRoom();
@@ -254,12 +240,35 @@ public class Programming3Project
                 default:
                     break;
             }
-
-            if(listen)
-            {
-                printTalk(landedSquare);
-            }
             
+            if(bulter.getTalk().isHasTalk() && wife.getTalk().isHasTalk() && 
+                    daughter.getTalk().isHasTalk() && assistant.getTalk().isHasTalk() && 
+                    maid.getTalk().isHasTalk() && countUnlock == 0)
+            {
+                assistant.unlockTalk();
+                countUnlock++;
+            }
+
+            else if(countUnlock == 1)
+            {
+                if(bulter.getRole() == unlockNPC)
+                {
+                    bulter.unlockTalk();
+                }
+                else if(wife.getRole() == unlockNPC)
+                {
+                    wife.unlockTalk();
+                }
+                else if(maid.getRole() == unlockNPC)
+                {
+                    maid.unlockTalk();
+                }
+                else if(daughter.getRole() == unlockNPC)
+                {
+                    daughter.unlockTalk();
+                }
+            }
+
             if (keyPress == 'q')
             {
                 systemInput.nextLine();
@@ -273,7 +282,7 @@ public class Programming3Project
     }
 
     /**
-     * @return char (Y/N)
+     * @return boolean (Y/N)
      */
     public static boolean continueGame()
     {
@@ -289,53 +298,5 @@ public class Programming3Project
         }
 
         return (continueGame == 'Y' || continueGame == 'y') ? true : false;
-    }
-    
-    public static void printTalk(char people) throws IOException //throw exception
-    {
-        try 
-        {
-            BufferedReader br = new BufferedReader(new FileReader(people + ".txt"));
-            
-            //Just the first talk
-            String line = " ";
-            String outPut1 = "";//First talk
-            String outPut2 = "";//Second talk, after unlocked something
-           
-            while((line = br.readLine()) != null)
-            {
-                if(!line.isEmpty())
-                {
-                    outPut1 += line + "\n";
-                }
-                else
-                {
-                    outPut2 += line;
-                    
-                    while((line = br.readLine()) != null)
-                    {
-                        outPut2 += line + "\n";
-                    }
-                    
-                    break;
-                }
-            }
-            
-            //System.out.println(outPut1);
-            System.out.println(outPut2);
-            
-            System.out.println("Press 'q' to quit the talk.");
-            boolean quitTalk = "q".equalsIgnoreCase(systemInput.nextLine());
-            
-            while(!quitTalk)
-            {
-                System.out.println("Invalid input! Press 'q' to quit the talk.");
-                quitTalk = "q".equalsIgnoreCase(systemInput.nextLine());
-            }
-        } 
-        catch (FileNotFoundException ex)
-        {
-            Logger.getLogger(Programming3Project.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 }

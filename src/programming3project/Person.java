@@ -11,10 +11,9 @@ package programming3project;
  */
 public abstract class Person
 {
-
-    private final String name;
-    private final char gender;
-    private final int age;
+    private String name;
+    private char gender;
+    private int age;
 
     public Person(String name, char gender, int age)
     {

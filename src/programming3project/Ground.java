@@ -100,56 +100,7 @@ public class Ground extends Room
         movingArea[0][getWidth() - 3] = 'X';
 
         //The butler is in the ground
-        relativePosition();
-    }
-
-    /**
-     * create random relative position
-     */
-    protected void relativePosition()
-    {
-        //Randomly assign some hint positions in the ground 
-        Random rand = new Random();
-
-        int firstHei = rand.nextInt(getHeight() - 2);
-        int firstWid = rand.nextInt(getWidth() - 2);
-        int secondHei = rand.nextInt(getHeight() - 2);
-        int secondWid = rand.nextInt(getWidth() - 2);
-
-        //Check if those two positions are in the same position
-        //Position replace space only
-        boolean checkedFirst = false;
-        boolean checkedSecond = false;
-        while (!(checkedFirst && checkedSecond))
-        {
-            if (firstHei != secondHei || firstWid != secondWid)
-            {
-                if (movingArea[firstHei][firstWid] == ' ' && movingArea[secondHei][secondWid] == ' ')
-                {
-                    if (firstHei >= 7 && firstHei <= 14 && firstWid >= 17 && firstWid <= 35)
-                    {
-                        firstHei = rand.nextInt(getHeight() - 2);
-                        firstWid = rand.nextInt(getWidth() - 2);
-                    } else
-                    {
-                        checkedFirst = true;
-                    }
-
-                    if (secondHei >= 7 && secondHei <= 14 && secondWid >= 17 && secondWid <= 35)
-                    {
-                        secondHei = rand.nextInt(getHeight() - 2);
-                        secondWid = rand.nextInt(getWidth() - 2);
-                    } else
-                    {
-                        checkedSecond = true;
-                    }
-                }
-            }
-        }
-
-        //Assign position 
-        movingArea[firstHei][firstWid] = 'B';
-        movingArea[secondHei][secondWid] = 'W';
+        positionNPC('B');
     }
 
     /**

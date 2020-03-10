@@ -54,6 +54,8 @@ public class RoomMaid extends Room
                 }
             }
         }
+        
+        positionNPC('M');
     }
 
     @Override

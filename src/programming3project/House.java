@@ -227,7 +227,7 @@ public class House extends Room implements LockedArea
                     }
                 }
             }
-        }
+        }        
     }
 
     /**
