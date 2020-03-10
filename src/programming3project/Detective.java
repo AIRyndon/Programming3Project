@@ -172,7 +172,7 @@ public class Detective extends Person
         getCurrentRoom().xCurrent = getxCoord();
         getCurrentRoom().yCurrent = getyCoord();
         setPlayArea(newRoom.movingArea);
-        
+
         if (newRoom.previousRoom != null)
         {
             setPreviousRoom(newRoom.previousRoom);
@@ -193,11 +193,10 @@ public class Detective extends Person
 
     public void setLocationToNewRoom()
     {
-
-        setxPrevious(getPreviousRoom().xCurrent);
-        setyPrevious(getPreviousRoom().yCurrent);
         setxCoord(getCurrentRoom().xInitial);
         setyCoord(getCurrentRoom().yInitial);
+        setxPrevious(getPreviousRoom().xCurrent);
+        setyPrevious(getPreviousRoom().yCurrent);
     }
 
     private boolean startingInsideHouse()

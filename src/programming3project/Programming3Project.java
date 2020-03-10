@@ -191,6 +191,7 @@ public class Programming3Project
                     if (detective.getCurrentRoom().previousRoom != null)
                     {
                         detective.moveToAnotherRoom(detective.getCurrentRoom().previousRoom);
+                        detective.setLocationToPreviousRoom();                      
                     }
                     
                     break;
