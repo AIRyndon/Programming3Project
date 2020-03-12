@@ -148,8 +148,8 @@ public class Game
             
             clearScreen();
             
-            playerHits(countUnlock, keyPress);
-            
+            countUnlock = playerHits(countUnlock, keyPress);
+                    
             if (keyPress == 'q')
             {
                 systemInput.nextLine();
@@ -158,7 +158,7 @@ public class Game
         }
     }
     
-    private void playerHits(int countUnlock, char keyPress)
+    private int playerHits(int countUnlock, char keyPress)
     {
         char landedSquare = detective.move(keyPress);
         String unlockNPC = "";
@@ -298,7 +298,6 @@ public class Game
             assistant.unlockTalk();
             countUnlock = 1;
         }
-
         else if(countUnlock == 1)
         {
             if(butler.getRole() == unlockNPC)
@@ -318,6 +317,8 @@ public class Game
                 daughter.unlockTalk();
             }
         }
+        
+        return countUnlock;
     }
 
     private boolean quitGame()
@@ -329,7 +330,7 @@ public class Game
         while (!(quitGame == 'Y' || quitGame == 'y' || quitGame == 'N' || quitGame == 'n'))
         {
             System.out.println("Invalid input!");
-            System.out.println("Do you want to continue the game? (Y/N)");
+            System.out.println("Are you sure you want to quit? (Y/N)");
             quitGame = systemInput.next().charAt(0);
         }
 
