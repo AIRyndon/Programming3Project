@@ -12,6 +12,7 @@ package programming3project;
 public class Victim
 {
     private String name;
+    private String body;
     private String role;
     private char gender;
     private int age;
