@@ -127,10 +127,10 @@ public class Game
     private void startGameLoop()
     {
         boolean stoppedPlaying = false;
+        int countUnlock = 0;
 
         while (!stoppedPlaying)
         {
-            int countUnlock = 0;
             char keyPress = '\0';
 
             //access ground => print ground
@@ -143,145 +143,150 @@ public class Game
             
             clearScreen();
             
-            char landedSquare = detective.move(keyPress);
-            String unlockNPC = "";
+            playerHits(countUnlock, keyPress);
             
-            switch (landedSquare) 
-            {
-                case 'B':
-                {
-                    System.out.println(butler.toString());                    
-                    butler.getTalk().talk();
-                    unlockNPC = butler.getUnlockNPC();
-                    
-                    break;
-                }
-                case 'W': 
-                {
-                    System.out.println(wife.toString());                    
-                    wife.getTalk().talk();
-                    unlockNPC = wife.getUnlockNPC();
-
-                    break;
-                }
-                case 'A': 
-                {
-                    System.out.println(assistant.toString());                    
-                    assistant.getTalk().talk();
-                    unlockNPC = assistant.getUnlockNPC();
-
-                    break;
-                }
-                case 'M':
-                {
-                    System.out.println(maid.toString());                    
-                    maid.getTalk().talk();
-                    unlockNPC = maid.getUnlockNPC();
-
-                    break;
-                }
-                case 'D': 
-                {
-                    System.out.println(daughter.toString());                    
-                    daughter.getTalk().talk();
-                    unlockNPC = daughter.getUnlockNPC();
-
-                    break; 
-                }
-                case '*':
-                {
-                    if (detective.getCurrentRoom().previousRoom != null)
-                    {
-                        detective.moveToAnotherRoom(detective.getCurrentRoom().previousRoom);
-                        detective.setLocationToPreviousRoom();  
-                    }
-                    
-                    break;
-                }
-                case '/':
-                {
-                    //check if at ground area
-                    if (detective.getCurrentRoom().getClass() == ground.getClass())
-                    {
-                        //check if in front of the house
-                        if ((detective.getyCoord() >= 25 && detective.getyCoord() <= 27)
-                                && detective.getxCoord() == 6)
-                        {
-                            detective.moveToAnotherRoom(house);
-                            detective.setLocationToNewRoom();
-                        }
-
-                        //check if inside the House
-                    } 
-                    else if (detective.getCurrentRoom().getClass() == house.getClass())
-                    {
-                        //in front of maid's room
-                        if (detective.getxCoord() == 2 && detective.getyCoord() == 24)
-                        {
-                            detective.moveToAnotherRoom(roomMaid);
-                            detective.setLocationToNewRoom();
-
-                            //in front of butler's room
-                        } 
-                        else if (detective.getxCoord() == 5 && detective.getyCoord() == 24)
-                        {
-                            detective.moveToAnotherRoom(roomButler);
-                            detective.setLocationToNewRoom();
-
-                            //in front of wife's room
-                        } 
-                        else if (detective.getxCoord() == 9 && detective.getyCoord() == 24)
-                        {
-                            detective.moveToAnotherRoom(roomWife);
-                            detective.setLocationToNewRoom();
-
-                            //in front of working area
-                        } 
-                        else if (detective.getxCoord() == 11 && detective.getyCoord() == 24)
-                        {
-                            detective.moveToAnotherRoom(roomWorking);
-                            detective.setLocationToNewRoom();
-                        }
-                    }
-
-                    break;
-                }
-                default:
-                    break;
-            }
-            
-            if(butler.getTalk().isHasTalk() && wife.getTalk().isHasTalk() && 
-                    daughter.getTalk().isHasTalk() && assistant.getTalk().isHasTalk() && 
-                    maid.getTalk().isHasTalk() && countUnlock == 0)
-            {
-                assistant.unlockTalk();
-                countUnlock++;
-            }
-
-            else if(countUnlock == 1)
-            {
-                if(butler.getRole() == unlockNPC)
-                {
-                    butler.unlockTalk();
-                }
-                else if(wife.getRole() == unlockNPC)
-                {
-                    wife.unlockTalk();
-                }
-                else if(maid.getRole() == unlockNPC)
-                {
-                    maid.unlockTalk();
-                }
-                else if(daughter.getRole() == unlockNPC)
-                {
-                    daughter.unlockTalk();
-                }
-            }
-
             if (keyPress == 'q')
             {
                 systemInput.nextLine();
                 stoppedPlaying = quitGame();
+            }
+        }
+    }
+    
+    private void playerHits(int countUnlock, char keyPress)
+    {
+        char landedSquare = detective.move(keyPress);
+        String unlockNPC = "";
+
+        switch (landedSquare) 
+        {
+            case 'B':
+            {
+                System.out.println(butler.toString());                    
+                butler.getTalk().talk();
+                unlockNPC = butler.getUnlockNPC();
+
+                break;
+            }
+            case 'W': 
+            {
+                System.out.println(wife.toString());                    
+                wife.getTalk().talk();
+                unlockNPC = wife.getUnlockNPC();
+
+                break;
+            }
+            case 'A': 
+            {
+                System.out.println(assistant.toString());                    
+                assistant.getTalk().talk();
+                unlockNPC = assistant.getUnlockNPC();
+
+                break;
+            }
+            case 'M':
+            {
+                System.out.println(maid.toString());                    
+                maid.getTalk().talk();
+                unlockNPC = maid.getUnlockNPC();
+
+                break;
+            }
+            case 'D': 
+            {
+                System.out.println(daughter.toString());                    
+                daughter.getTalk().talk();
+                unlockNPC = daughter.getUnlockNPC();
+
+                break; 
+            }
+            case '*':
+            {
+                if (detective.getCurrentRoom().previousRoom != null)
+                {
+                    detective.moveToAnotherRoom(detective.getCurrentRoom().previousRoom);
+                    detective.setLocationToPreviousRoom();  
+                }
+
+                break;
+            }
+            case '/':
+            {
+                //check if at ground area
+                if (detective.getCurrentRoom().getClass() == ground.getClass())
+                {
+                    //check if in front of the house
+                    if ((detective.getyCoord() >= 25 && detective.getyCoord() <= 27)
+                            && detective.getxCoord() == 6)
+                    {
+                        detective.moveToAnotherRoom(house);
+                        detective.setLocationToNewRoom();
+                    }
+
+                    //check if inside the House
+                } 
+                else if (detective.getCurrentRoom().getClass() == house.getClass())
+                {
+                    //in front of maid's room
+                    if (detective.getxCoord() == 2 && detective.getyCoord() == 24)
+                    {
+                        detective.moveToAnotherRoom(roomMaid);
+                        detective.setLocationToNewRoom();
+
+                        //in front of butler's room
+                    } 
+                    else if (detective.getxCoord() == 5 && detective.getyCoord() == 24)
+                    {
+                        detective.moveToAnotherRoom(roomButler);
+                        detective.setLocationToNewRoom();
+
+                        //in front of wife's room
+                    } 
+                    else if (detective.getxCoord() == 9 && detective.getyCoord() == 24)
+                    {
+                        detective.moveToAnotherRoom(roomWife);
+                        detective.setLocationToNewRoom();
+
+                        //in front of working area
+                    } 
+                    else if (detective.getxCoord() == 11 && detective.getyCoord() == 24)
+                    {
+                        detective.moveToAnotherRoom(roomWorking);
+                        detective.setLocationToNewRoom();
+                    }
+                }
+
+                break;
+            }
+            default:
+                break;
+        }
+
+        if(countUnlock == 0 && butler.getTalk().isHasTalk() && 
+                wife.getTalk().isHasTalk() && daughter.getTalk().isHasTalk() && 
+                assistant.getTalk().isHasTalk() && maid.getTalk().isHasTalk())
+        {
+            assistant.unlockTalk();
+            countUnlock = 1;
+        }
+
+        else if(countUnlock == 1)
+        {
+            if(butler.getRole() == unlockNPC)
+            {
+                butler.unlockTalk();
+            }
+            else if(wife.getRole() == unlockNPC)
+            {
+                wife.unlockTalk();
+            }
+            else if(maid.getRole() == unlockNPC)
+            {
+                maid.unlockTalk();
+            }
+            else if(daughter.getRole() == unlockNPC)
+            {
+                daughter.unlockTalk();
             }
         }
     }
