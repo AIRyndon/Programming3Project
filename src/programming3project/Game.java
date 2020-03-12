@@ -207,9 +207,7 @@ public class Game
             }
             case 'V': 
             {
-                System.out.println(victim.toString());                    
-                daughter.getTalk().talk();
-                unlockNPC = daughter.getUnlockNPC();
+                System.out.println(victim.toString());
 
                 break; 
             }
