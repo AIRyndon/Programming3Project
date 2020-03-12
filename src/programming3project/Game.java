@@ -211,6 +211,8 @@ public class Game
                 {
                     clearScreen();
                     //check if at ground area
+                    //todo - move checking for location in the room - e.g. ground checks if
+                    //the player is in the ground
                     if (detective.getCurrentRoom().getClass() == ground.getClass())
                     {
                         //check if in front of the house

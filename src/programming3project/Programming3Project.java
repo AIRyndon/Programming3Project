@@ -26,7 +26,6 @@ import java.util.logging.Logger;
  */
 public class Programming3Project
 {
-
     private static Scanner systemInput = new Scanner(System.in);
 
     /**
