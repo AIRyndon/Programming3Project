@@ -48,13 +48,13 @@ public class Conversation
         {
             System.out.println(getFirstTalk());
             hasTalk = true;
+            quit();
         }
         else if(listen == 'Y' || listen == 'y')
         {
             System.out.println(getSecondTalk());
+            quit();
         }
-        
-        quit();        
     }
     
     public void quit()
