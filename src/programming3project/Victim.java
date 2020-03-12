@@ -61,7 +61,7 @@ public class Victim
         this.age = age;
     }
 
-        public char getGender() 
+    public char getGender() 
     {
         return gender;
     }
@@ -79,6 +79,17 @@ public class Victim
     public void setInjures(String injures)
     {
         this.injuries = injures;
+
+    }
+
+    public String getBody()
+    {
+        return body;
+    }
+
+    public void setBody(String body)
+    {
+        this.body = body;
     }
 
     @Override

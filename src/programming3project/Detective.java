@@ -77,7 +77,7 @@ public class Detective extends Person
                 break;
 
             case 'd':
-                
+
                 if (yCoord == playArea[0].length - 1)
                 {
                     return ' ';
@@ -92,8 +92,8 @@ public class Detective extends Person
                         playArea[xCoord][yCoord] = '*';
                         yCoord += 1;
                         playArea[xCoord][yCoord] = 'P';
-                    } 
-                    else
+
+                    } else
                     {
                         playArea[xCoord][yCoord] = ' ';
                         yCoord += 1;
@@ -130,8 +130,8 @@ public class Detective extends Person
                         playArea[xCoord][yCoord] = '*';
                         xCoord -= 1;
                         playArea[xCoord][yCoord] = 'P';
-                    } 
-                    else
+
+                    } else
                     {
                         playArea[xCoord][yCoord] = ' ';
                         xCoord -= 1;
@@ -161,15 +161,16 @@ public class Detective extends Person
                 }
 
                 item = playArea[xCoord + 1][yCoord];
-                if (item == ' ' || item == 'X')
+
+                if (item == ' ')
                 {
                     if (startingInsideHouse())
                     {
                         playArea[xCoord][yCoord] = '*';
                         xCoord += 1;
                         playArea[xCoord][yCoord] = 'P';
-                    }
-                    else
+
+                    } else
                     {
                         playArea[xCoord][yCoord] = ' ';
                         xCoord += 1;
@@ -179,10 +180,8 @@ public class Detective extends Person
                 else if(item == 'X')
                 {
                     System.out.println("Achieved: pieces of poisoned cheesecake");
-                    playArea[xCoord][yCoord] = ' ';
-                    xCoord += 1;
-                    playArea[xCoord][yCoord] = 'P';
-                }
+
+                } 
                 else if (item == '*')
                 {
                     playArea[xCoord][yCoord] = ' ';

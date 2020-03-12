@@ -150,6 +150,7 @@ public class Game
             
             countUnlock = playerHits(countUnlock, keyPress);
                     
+            
             if (keyPress == 'q')
             {
                 systemInput.nextLine();
