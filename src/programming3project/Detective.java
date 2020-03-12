@@ -40,15 +40,14 @@ public class Detective extends Person
         {
             case 'a':
 
-                if (yCoord == 0)
+                if (inCorner(yCoord, 0))
                 {
-                    return ' ';
+                    return '\0';
                 }
 
                 item = playArea[xCoord][yCoord - 1];
                 if (item == ' ')
                 {
-
                     if (startingInsideHouse())
                     {
                         playArea[xCoord][yCoord] = '*';
@@ -70,15 +69,14 @@ public class Detective extends Person
 
             case 'd':
 
-                if (yCoord == playArea[0].length - 1)
+                if (inCorner(yCoord, playArea[0].length - 1))
                 {
-                    return ' ';
+                    return '\0';
                 }
 
                 item = playArea[xCoord][yCoord + 1];
                 if (item == ' ')
                 {
-
                     //if at starting location, print the item used to get back
                     if (startingInsideHouse())
                     {
@@ -101,9 +99,9 @@ public class Detective extends Person
 
             case 'w':
 
-                if (xCoord == 0)
+                if (inCorner(xCoord, 0))
                 {
-                    return ' ';
+                    return '\0';
                 }
 
                 item = playArea[xCoord - 1][yCoord];
@@ -131,9 +129,9 @@ public class Detective extends Person
 
             case 's':
 
-                if (xCoord == playArea.length - 1)
+                if (inCorner(xCoord, playArea.length - 1))
                 {
-                    return ' ';
+                    return '\0';
                 }
 
                 item = playArea[xCoord + 1][yCoord];
@@ -163,7 +161,6 @@ public class Detective extends Person
         }
 
         currentRoom.printRoom(currentRoom.getName());
-
         return item;
     }
 
@@ -179,7 +176,6 @@ public class Detective extends Person
         }
 
         setCurrentRoom(newRoom);
-
         getCurrentRoom().printRoom(getCurrentRoom().getName());
     }
 
@@ -193,10 +189,21 @@ public class Detective extends Person
 
     public void setLocationToNewRoom()
     {
-        setxCoord(getCurrentRoom().xInitial);
-        setyCoord(getCurrentRoom().yInitial);
         setxPrevious(getPreviousRoom().xCurrent);
         setyPrevious(getPreviousRoom().yCurrent);
+        setxCoord(getCurrentRoom().xInitial);
+        setyCoord(getCurrentRoom().yInitial);
+    }
+
+    private boolean inCorner(int coordinate, int worldEdge)
+    {
+        if (coordinate == worldEdge)
+        {
+            currentRoom.printRoom(currentRoom.getName());
+            return true;
+        }
+
+        return false;
     }
 
     private boolean startingInsideHouse()
@@ -245,7 +252,6 @@ public class Detective extends Person
 
     public void setPlayArea(char[][] playArea)
     {
-
         this.playArea = null;
         this.playArea = playArea;
     }

@@ -13,7 +13,6 @@ import java.util.Scanner;
  */
 public class RoomMaid extends Room
 {
-
     public RoomMaid(String name, Room previous)
     {
         super(previous);

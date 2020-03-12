@@ -11,7 +11,6 @@ package programming3project;
  */
 public abstract class Room
 {
-
     protected int width;
     protected int height;
     protected String name;
