@@ -16,7 +16,9 @@ import java.io.IOException;
  * @author pc
  */
 public class NPC extends Person implements Story
-{ 
+{  
+    private int hintXCoord;
+    private int hintYCoord;   
     private String role;
     private String unlockNPC;
     private Conversation talk;
@@ -28,11 +30,12 @@ public class NPC extends Person implements Story
         this.setUnlockNPC(unlockNPC);
         this.role = role;
     }
-    
-    public void unlockTalk()
+
+    public void unlockConversation()
     {
-        System.out.println("Congratulation! You have unlocked " + this.getRole() + " talk!\n");
-        
+        System.out.println("Congratulations! You can now get potentially important information from the " + this.getRole() + "!\n");
+        System.out.println("You might want to speak with " + (getGender() == 'M' ? "him" : "her") + " again.");
+
         talk.unlock();
     }
 
@@ -53,10 +56,20 @@ public class NPC extends Person implements Story
         return output;
     }
 
+    public void tryToPlaceHint(Room room,int xCoord, int yCoord)
+    {
+        if (getTalk().isUnlocked())
+        {
+            hintXCoord = xCoord;
+            hintYCoord = yCoord;
+            room.movingArea[hintXCoord][hintYCoord] = 'X';
+        }
+    }
+
     /**
      * @param role the role to set
      */
-    public void setRole(String role) 
+    public void setRole(String role)
     {
         this.role = role;
     }
@@ -64,7 +77,7 @@ public class NPC extends Person implements Story
     /**
      * @return the talk
      */
-    public Conversation getTalk() 
+    public Conversation getTalk()
     {
         return talk;
     }
@@ -72,7 +85,7 @@ public class NPC extends Person implements Story
     /**
      * @param talk the talk to set
      */
-    public void setTalk(Conversation talk) 
+    public void setTalk(Conversation talk)
     {
         this.talk = talk;
     }
@@ -80,7 +93,7 @@ public class NPC extends Person implements Story
     /**
      * @return the unlockNPC
      */
-    public String getUnlockNPC() 
+    public String getUnlockNPC()
     {
         return unlockNPC;
     }
@@ -88,7 +101,7 @@ public class NPC extends Person implements Story
     /**
      * @param unlockNPC the unlockNPC to set
      */
-    public void setUnlockNPC(String unlockNPC) 
+    public void setUnlockNPC(String unlockNPC)
     {
         this.unlockNPC = unlockNPC;
     }

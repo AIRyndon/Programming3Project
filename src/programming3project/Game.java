@@ -187,6 +187,8 @@ public class Game
                 System.out.println(assistant.toString());                    
                 assistant.getTalk().talk();
                 unlockNPC = assistant.getUnlockNPC();
+                
+                assistant.tryToPlaceHint(ground, 0, 10);
 
                 break;
             }
@@ -195,6 +197,12 @@ public class Game
                 System.out.println(maid.toString());                    
                 maid.getTalk().talk();
                 unlockNPC = maid.getUnlockNPC();
+                
+                if (maid.getTalk().isUnlocked())
+                {
+                    ground.movingArea[0][10] = 'X';
+                }
+                
 
                 break;
             }
@@ -299,26 +307,26 @@ public class Game
                 wife.getTalk().isHasTalk() && daughter.getTalk().isHasTalk() && 
                 assistant.getTalk().isHasTalk() && maid.getTalk().isHasTalk())
         {
-            assistant.unlockTalk();
+            assistant.unlockConversation();
             countUnlock = 1;
         }
         else if(countUnlock == 1)
         {
             if(butler.getRole() == unlockNPC)
             {
-                butler.unlockTalk();
+                butler.unlockConversation();
             }
             else if(wife.getRole() == unlockNPC)
             {
-                wife.unlockTalk();
+                wife.unlockConversation();
             }
             else if(maid.getRole() == unlockNPC)
             {
-                maid.unlockTalk();
+                maid.unlockConversation();
             }
             else if(daughter.getRole() == unlockNPC)
             {
-                daughter.unlockTalk();
+                daughter.unlockConversation();
             }
         }
         
