@@ -11,18 +11,19 @@ package programming3project;
  */
 public class Victim
 {
-
     private String name;
+    private String body;
     private String role;
+    private char gender;
     private int age;
-    private String injuries; //not yet
-    private String body;    //not yet   
+    private String injuries = "There was a serious wound on his left chest and no more injuries.";
 
-    public Victim(String name, String role, int age)
+    public Victim(String name, String role, int age, char gender)
     {
         this.setName(name);
         this.setRole(role);
         this.setAge(age);
+        this.setGender(gender);
     }
 
     public Victim()
@@ -61,6 +62,16 @@ public class Victim
         this.age = age;
     }
 
+    public char getGender() 
+    {
+        return gender;
+    }
+
+    public void setGender(char gender) 
+    {
+        this.gender = gender;
+    }
+    
     public String getInjures()
     {
         return injuries;
@@ -69,6 +80,7 @@ public class Victim
     public void setInjures(String injures)
     {
         this.injuries = injures;
+
     }
 
     public String getBody()
@@ -84,6 +96,13 @@ public class Victim
     @Override
     public String toString()
     {
-        return "";
+        String output = "";
+
+        output += "Name: " + this.getName() + "\n";
+        output += "Gender: " + (this.getGender() == 'M' ? "Male\n" : "Female\n");
+        output += "Age: " + this.getAge() + "\n";
+        output += this.getInjures()+ "\n";
+
+        return output;
     }
 }

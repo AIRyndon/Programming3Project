@@ -20,6 +20,8 @@ public class RoomWorking extends Room
         setWidth(72);
 
         initializeMovingArea();
+        
+        positionNPC('V');
     }
 
     @Override

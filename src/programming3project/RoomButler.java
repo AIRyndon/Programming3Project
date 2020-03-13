@@ -51,6 +51,8 @@ public class RoomButler extends Room
                 }
             }
         }
+        
+        positionNPC('A');
     }
 
     @Override

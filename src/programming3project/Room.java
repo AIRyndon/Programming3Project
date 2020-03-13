@@ -5,6 +5,8 @@
  */
 package programming3project;
 
+import java.util.Random;
+
 /**
  *
  * @author group
@@ -51,6 +53,20 @@ public abstract class Room
         }
     }
 
+    protected void positionNPC(char person)
+    {
+        //Randomly assign some hint positions in the ground 
+        Random rand = new Random();
+        
+        int y = rand.nextInt(getHeight() - 2);
+        int x = rand.nextInt(getWidth() - 2);
+
+        if(movingArea[y][x] == ' ')
+        {   
+            movingArea[y][x] = person;
+        }
+    }
+    
     protected void printRoom(String door)
     {
         //Print first line

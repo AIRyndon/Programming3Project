@@ -18,7 +18,7 @@ public class Detective extends Person
     private int xCoord;
     private int yCoord;
     private String background;
-    private Relative currentTarget;
+    private NPC currentTarget;
     private char[][] playArea;
     private Room currentRoom;
     private Room previousRoom;
@@ -59,7 +59,15 @@ public class Detective extends Person
                         yCoord -= 1;
                         playArea[xCoord][yCoord] = 'P';
                     }
-                } else if (item == '*')
+                } 
+                else if(item == 'X')
+                {
+                    System.out.println("Achieved: pieces of poisoned cheesecake");
+                    playArea[xCoord][yCoord] = ' ';
+                    yCoord -= 1;
+                    playArea[xCoord][yCoord] = 'P';
+                }
+                else if (item == '*')
                 {
                     playArea[xCoord][yCoord] = ' ';
                     yCoord -= 1;
@@ -83,13 +91,22 @@ public class Detective extends Person
                         playArea[xCoord][yCoord] = '*';
                         yCoord += 1;
                         playArea[xCoord][yCoord] = 'P';
+
                     } else
                     {
                         playArea[xCoord][yCoord] = ' ';
                         yCoord += 1;
                         playArea[xCoord][yCoord] = 'P';
                     }
-                } else if (item == '*')
+                } 
+                else if(item == 'X')
+                {
+                    System.out.println("Achieved: pieces of poisoned cheesecake");
+                    playArea[xCoord][yCoord] = ' ';
+                    yCoord += 1;
+                    playArea[xCoord][yCoord] = 'P';
+                }
+                else if (item == '*')
                 {
                     playArea[xCoord][yCoord] = ' ';
                     yCoord += 1;
@@ -112,14 +129,22 @@ public class Detective extends Person
                         playArea[xCoord][yCoord] = '*';
                         xCoord -= 1;
                         playArea[xCoord][yCoord] = 'P';
+
                     } else
                     {
                         playArea[xCoord][yCoord] = ' ';
                         xCoord -= 1;
                         playArea[xCoord][yCoord] = 'P';
                     }
-
-                } else if (item == '*')
+                } 
+                else if(item == 'X')
+                {
+                    System.out.println("Achieved: pieces of poisoned cheesecake");
+                    playArea[xCoord][yCoord] = ' ';
+                    xCoord -= 1;
+                    playArea[xCoord][yCoord] = 'P';
+                }
+                else if (item == '*')
                 {
                     playArea[xCoord][yCoord] = ' ';
                     xCoord -= 1;
@@ -135,6 +160,7 @@ public class Detective extends Person
                 }
 
                 item = playArea[xCoord + 1][yCoord];
+
                 if (item == ' ')
                 {
                     if (startingInsideHouse())
@@ -142,18 +168,26 @@ public class Detective extends Person
                         playArea[xCoord][yCoord] = '*';
                         xCoord += 1;
                         playArea[xCoord][yCoord] = 'P';
+
                     } else
                     {
                         playArea[xCoord][yCoord] = ' ';
                         xCoord += 1;
                         playArea[xCoord][yCoord] = 'P';
                     }
-                } else if (item == '*')
+                }
+                else if(item == 'X')
+                {
+                    System.out.println("Achieved: pieces of poisoned cheesecake");
+
+                } 
+                else if (item == '*')
                 {
                     playArea[xCoord][yCoord] = ' ';
                     xCoord += 1;
                     playArea[xCoord][yCoord] = 'P';
                 }
+
                 break;
 
             default:
@@ -264,7 +298,7 @@ public class Detective extends Person
         output += "Name: " + this.getName() + "\n";
         output += "Gender: " + (this.getGender() == 'M' ? "Male\n" : "Female\n");
         output += "Age: " + this.getAge() + "\n";//Do we need to create another attribute for age? => Then ask user
-        output += "Background: " + this.getBackground() + "\n\n";
+        output += "Background: " + this.getBackground() + "\n";
 
         return output;
     }
@@ -272,7 +306,7 @@ public class Detective extends Person
     /**
      * @return the currentTarget
      */
-    public Relative getCurrentTarget()
+    public NPC getCurrentTarget()
     {
         return currentTarget;
     }
@@ -280,7 +314,7 @@ public class Detective extends Person
     /**
      * @param currentTarget the currentTarget to set
      */
-    public void setCurrentTarget(Relative currentTarget)
+    public void setCurrentTarget(NPC currentTarget)
     {
         this.currentTarget = currentTarget;
     }

@@ -47,62 +47,8 @@ public class Programming3Project
         Game game = new Game();
         
         game.startGame();
-
         System.out.println("Thank you for playing!\n");
 
         systemInput.close();
-    }
-
-    /**
-     * @return char (Y/N)
-     */
-    
-    
-    public static void printTalk(char people) throws IOException //throw exception
-    {
-        try 
-        {
-            BufferedReader br = new BufferedReader(new FileReader(people + ".txt"));
-            
-            //Just the first talk
-            String line = " ";
-            String outPut1 = "";//First talk
-            String outPut2 = "";//Second talk, after unlocked something
-           
-            while((line = br.readLine()) != null)
-            {
-                if(!line.isEmpty())
-                {
-                    outPut1 += line + "\n";
-                }
-                else
-                {
-                    outPut2 += line;
-                    
-                    while((line = br.readLine()) != null)
-                    {
-                        outPut2 += line + "\n";
-                    }
-                    
-                    break;
-                }
-            }
-            
-            //System.out.println(outPut1);
-            System.out.println(outPut2);
-            
-            System.out.println("Press 'q' to quit the talk.");
-            boolean quitTalk = "q".equalsIgnoreCase(systemInput.nextLine());
-            
-            while(!quitTalk)
-            {
-                System.out.println("Invalid input! Press 'q' to quit the talk.");
-                quitTalk = "q".equalsIgnoreCase(systemInput.nextLine());
-            }
-        } 
-        catch (FileNotFoundException ex)
-        {
-            Logger.getLogger(Programming3Project.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 }

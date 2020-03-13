@@ -5,6 +5,8 @@
  */
 package programming3project;
 
+import java.util.Random;
+
 /**
  *
  * @author pc
@@ -60,6 +62,10 @@ public class RoomWife extends Room
                 }
             }
         }
+        
+        //Wife is in her bed room
+        positionNPC('W');
+        positionNPC('D');
     }
 
     @Override
