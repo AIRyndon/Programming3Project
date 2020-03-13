@@ -7,13 +7,13 @@ import java.util.Scanner;
  *
  * @author pc
  */
-public class House extends Room implements LockedArea
+public class House extends Room
 {
     /*we match the key passed to Unlock in the class that uses House
      * the key could come from clues. I made it an interface so we can show that we
      * are using interfaces :). And a house can be composed of a lockedRoom, so it kinda makes sense
      */
-    private int lockedAreaKey;
+    
 
     public House(String name, Room previous)
     {
@@ -22,16 +22,6 @@ public class House extends Room implements LockedArea
         setHeight(20);
         setWidth(52);
         initializeMovingArea();
-    }
-
-    public boolean unlock(int key)
-    {
-        if (key == lockedAreaKey)
-        {
-            return true;
-        }
-
-        return false;
     }
 
     protected void initializeMovingArea()

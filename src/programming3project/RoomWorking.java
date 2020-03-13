@@ -9,7 +9,7 @@ package programming3project;
  *
  * @author pc
  */
-public class RoomWorking extends Room
+public class RoomWorking extends Room implements LockedArea
 {
 
     public RoomWorking(String name, Room previous)
@@ -29,5 +29,11 @@ public class RoomWorking extends Room
     {
         super.printRoom(door);
         printWall();
+    }
+
+    @Override
+    public void unlock(int key)
+    {
+        
     }
 }

@@ -12,5 +12,5 @@ package programming3project;
 interface LockedArea
 {
 
-    public boolean unlock(int key);
+    public void unlock(int key);
 }

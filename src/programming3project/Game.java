@@ -6,7 +6,6 @@
 package programming3project;
 
 import java.io.IOException;
-import java.nio.Buffer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -171,6 +170,7 @@ public class Game
                 System.out.println(butler.toString());                    
                 butler.getTalk().talk();
                 unlockNPC = butler.getUnlockNPC();
+                ground.unlock(1);
 
                 break;
             }
@@ -234,6 +234,7 @@ public class Game
             {
                 if (detective.getCurrentRoom().previousRoom != null)
                 {
+                    clearScreen();
                     detective.moveToAnotherRoom(detective.getCurrentRoom().previousRoom);
                     detective.setLocationToPreviousRoom();  
                 }
@@ -242,6 +243,7 @@ public class Game
             }
             case '/':
             {
+                clearScreen();
                 //check if at ground area
                 if (detective.getCurrentRoom().getClass() == ground.getClass())
                 {
@@ -249,6 +251,7 @@ public class Game
                     if ((detective.getyCoord() >= 25 && detective.getyCoord() <= 27)
                             && detective.getxCoord() == 6)
                     {
+                        
                         detective.moveToAnotherRoom(house);
                         detective.setLocationToNewRoom();
                     }
@@ -338,7 +341,7 @@ public class Game
         return (quitGame == 'Y' || quitGame == 'y') ? true : false;
     }
     
-    private void clearScreen() throws IOException
+    private void clearScreen()
     {
         System.out.println(new String(new char[100]).replace('\0','\n'));    
     }

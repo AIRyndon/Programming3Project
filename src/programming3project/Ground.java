@@ -12,7 +12,7 @@ import java.util.Scanner;
  *
  * @author pc
  */
-public class Ground extends Room
+public class Ground extends Room implements LockedArea
 {
 
     public Ground(String name, Room previous)
@@ -36,6 +36,7 @@ public class Ground extends Room
 
         //Assign dog's place
         movingArea[0][getWidth() - 15] = '|';
+        movingArea[1][getWidth() - 15] = '|';
         movingArea[1][getWidth() - 14] = ' ';
         movingArea[1][getWidth() - 9] = 'd';
         movingArea[1][getWidth() - 8] = 'o';
@@ -112,5 +113,14 @@ public class Ground extends Room
         super.printRoom(door);
 
         printWall();
+    }
+
+    @Override
+    public void unlock(int key)
+    {
+        if (true)
+        {
+            movingArea[1][getWidth() - 15] = ' ';
+        }
     }
 }
