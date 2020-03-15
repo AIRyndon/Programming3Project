@@ -5,6 +5,7 @@
  */
 package programming3project;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -13,10 +14,11 @@ import java.util.Random;
  */
 public abstract class Room
 {
+    protected ArrayList<Hint> hints = new ArrayList<>();
     protected int width;
     protected int height;
     protected String name;
-    public char[][] movingArea;
+    protected char[][] movingArea;
     protected int xInitial;
     protected int yInitial;
     protected int xCurrent;

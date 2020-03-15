@@ -97,9 +97,6 @@ public class Ground extends Room implements LockedArea
         movingArea[11][27] = 'S';
         movingArea[11][28] = 'E';
 
-        //One hint inside the dog's house
-        movingArea[0][getWidth() - 3] = 'X';
-
         //The butler is in the ground
         positionNPC('B');
     }

@@ -17,6 +17,7 @@ import java.util.Scanner;
  */
 public class Game
 {
+
     //Required game fields
     private static Scanner systemInput = new Scanner(System.in);
     private Ground ground = new Ground("Ground", null);
@@ -28,16 +29,16 @@ public class Game
     private Detective detective;
     Victim victim = new Victim("Bosh", "President of KPI Cooperation", 55, 'M');
     private NPC daughter, wife, maid, butler, assistant;
-  
+
     public void setupNPC() throws IOException
     {
-        daughter = new NPC("Calista", 'F', 25, "Daughter", "");
         wife = new NPC("Belinda", 'F', 50, "Wife", "");
-        maid = new NPC("Cindel", 'F', 20, "Maid", daughter.getRole());
+        maid = new NPC("Cindel", 'F', 20, "Maid", wife.getRole());
         butler = new NPC("Marcello", 'M', 63, "Butler", maid.getRole());
-        assistant = new NPC("Ashton", 'M', 34, "Assistant", wife.getRole());
+        daughter = new NPC("Calista", 'F', 25, "Daughter", butler.getRole());
+        assistant = new NPC("Ashton", 'M', 34, "Assistant", daughter.getRole());      
     }
-    
+
     private Detective setupPlayerInfo()
     {
         //Promt user input
@@ -50,8 +51,8 @@ public class Game
         {
             System.out.print("Please enter a gender(M/F): ");
             userGender = systemInput.next().charAt(0);
-        } while (!(userGender == 'M' || userGender == 'm' || userGender == 'F' || 
-                userGender == 'f'));
+        } while (!(userGender == 'M' || userGender == 'm' || userGender == 'F'
+                || userGender == 'f'));
 
         //Clear buffer
         systemInput.nextLine();
@@ -88,9 +89,9 @@ public class Game
         System.out.println(dateFormat.format(new Date()));
 
         //Story begins
-        System.out.println(detective.getName() + " is working in" + 
-                (detective.getGender() == 'M' ? "his " : "her ") + 
-                "office and reading some news.");
+        System.out.println(detective.getName() + " is working in"
+                + (detective.getGender() == 'M' ? "his " : "her ")
+                + "office and reading some news.");
         System.out.println("\"" + (detective.getGender() == 'M' ? "Sir " : "Madam ")
                 + detective.getName() + "!\"");
         System.out.println("A police officer runs to you:");
@@ -98,8 +99,8 @@ public class Game
                 + "Please come there now!\"");
 
         char enterPremises = '\0';
-        while (!(enterPremises == 'Y' || enterPremises == 'y' || 
-                enterPremises == 'N' || enterPremises == 'n'))
+        while (!(enterPremises == 'Y' || enterPremises == 'y'
+                || enterPremises == 'N' || enterPremises == 'n'))
         {
             System.out.println("Do you want to enter the compound?(Y/N)");
             enterPremises = systemInput.next().charAt(0);
@@ -137,19 +138,18 @@ public class Game
 
             //access ground => print ground
             //Moving
-            while (!(keyPress == 'a' || keyPress == 'd' || keyPress == 's' || 
-                    keyPress == 'w' || keyPress == 'q'))
+            while (!(keyPress == 'a' || keyPress == 'd' || keyPress == 's'
+                    || keyPress == 'w' || keyPress == 'q'))
             {
                 System.out.println("Press a, s, d, w then enter to move. "
                         + "Press q then enter to quit.");
                 keyPress = systemInput.next().charAt(0);
             }
-            
+
             clearScreen();
-            
-            countUnlock = playerHits(countUnlock, keyPress);
-                    
-            
+
+            playerHits(countUnlock, keyPress);
+
             if (keyPress == 'q')
             {
                 systemInput.nextLine();
@@ -157,68 +157,72 @@ public class Game
             }
         }
     }
-    
+
     private int playerHits(int countUnlock, char keyPress)
     {
         char landedSquare = detective.move(keyPress);
         String unlockNPC = "";
 
-        switch (landedSquare) 
+        switch (landedSquare)
         {
             case 'B':
             {
-                System.out.println(butler.toString());                    
+                System.out.println(butler.toString());
                 butler.getTalk().talk();
                 unlockNPC = butler.getUnlockNPC();
                 ground.unlock(1);
+                
+                butler.tryToPlaceHint(roomWorking, "Picture", "The maid's picture as a child", 1, 6);
 
                 break;
             }
-            case 'W': 
+            case 'W':
             {
-                System.out.println(wife.toString());                    
+                System.out.println(wife.toString());
                 wife.getTalk().talk();
                 unlockNPC = wife.getUnlockNPC();
+                
+                wife.tryToPlaceHint(roomWorking, "Gloves", "A worn-out pair of gloves", 0, 5);
 
                 break;
             }
-            case 'A': 
+            case 'A':
             {
-                System.out.println(assistant.toString());                    
+                System.out.println(assistant.toString());
                 assistant.getTalk().talk();
                 unlockNPC = assistant.getUnlockNPC();
-                
-                assistant.tryToPlaceHint(ground, 0, 10);
+
+                assistant.tryToPlaceHint(ground, "Knife", "A bloody knife",
+                        0, 10);
 
                 break;
             }
             case 'M':
             {
-                System.out.println(maid.toString());                    
+                System.out.println(maid.toString());
                 maid.getTalk().talk();
                 unlockNPC = maid.getUnlockNPC();
-                
-                if (maid.getTalk().isUnlocked())
-                {
-                    ground.movingArea[0][10] = 'X';
-                }
-                
+
+                maid.tryToPlaceHint(ground, "Cheescake", "An innocuous-looking cheesecake",
+                        0, ground.getWidth() - 3);
 
                 break;
             }
-            case 'D': 
+            case 'D':
             {
-                System.out.println(daughter.toString());                    
+                System.out.println(daughter.toString());
                 daughter.getTalk().talk();
                 unlockNPC = daughter.getUnlockNPC();
+                
+                daughter.tryToPlaceHint(house, "Sedative", "A powerful sedative", 0, house.getWidth() - 10);
 
-                break; 
+                break;
             }
-            case 'V': 
+            case 'V':
             {
                 System.out.println(victim.toString());
 
-                break; 
+                break;
             }
             case 'd':
             {
@@ -244,7 +248,7 @@ public class Game
                 {
                     clearScreen();
                     detective.moveToAnotherRoom(detective.getCurrentRoom().previousRoom);
-                    detective.setLocationToPreviousRoom();  
+                    detective.setLocationToPreviousRoom();
                 }
 
                 break;
@@ -259,14 +263,12 @@ public class Game
                     if ((detective.getyCoord() >= 25 && detective.getyCoord() <= 27)
                             && detective.getxCoord() == 6)
                     {
-                        
                         detective.moveToAnotherRoom(house);
                         detective.setLocationToNewRoom();
                     }
 
                     //check if inside the House
-                } 
-                else if (detective.getCurrentRoom().getClass() == house.getClass())
+                } else if (detective.getCurrentRoom().getClass() == house.getClass())
                 {
                     //in front of maid's room
                     if (detective.getxCoord() == 2 && detective.getyCoord() == 24)
@@ -275,22 +277,19 @@ public class Game
                         detective.setLocationToNewRoom();
 
                         //in front of butler's room
-                    } 
-                    else if (detective.getxCoord() == 5 && detective.getyCoord() == 24)
+                    } else if (detective.getxCoord() == 5 && detective.getyCoord() == 24)
                     {
                         detective.moveToAnotherRoom(roomButler);
                         detective.setLocationToNewRoom();
 
                         //in front of wife's room
-                    } 
-                    else if (detective.getxCoord() == 9 && detective.getyCoord() == 24)
+                    } else if (detective.getxCoord() == 9 && detective.getyCoord() == 24)
                     {
                         detective.moveToAnotherRoom(roomWife);
                         detective.setLocationToNewRoom();
 
                         //in front of working area
-                    } 
-                    else if (detective.getxCoord() == 11 && detective.getyCoord() == 24)
+                    } else if (detective.getxCoord() == 11 && detective.getyCoord() == 24)
                     {
                         detective.moveToAnotherRoom(roomWorking);
                         detective.setLocationToNewRoom();
@@ -303,33 +302,29 @@ public class Game
                 break;
         }
 
-        if(countUnlock == 0 && butler.getTalk().isHasTalk() && 
-                wife.getTalk().isHasTalk() && daughter.getTalk().isHasTalk() && 
-                assistant.getTalk().isHasTalk() && maid.getTalk().isHasTalk())
+        if (countUnlock == 0 && butler.getTalk().isHasTalk()
+                && wife.getTalk().isHasTalk() && daughter.getTalk().isHasTalk()
+                && assistant.getTalk().isHasTalk() && maid.getTalk().isHasTalk())
         {
             assistant.unlockConversation();
             countUnlock = 1;
-        }
-        else if(countUnlock == 1)
+        } else if (countUnlock == 1)
         {
-            if(butler.getRole() == unlockNPC)
+            if (butler.getRole().equals(unlockNPC))
             {
                 butler.unlockConversation();
-            }
-            else if(wife.getRole() == unlockNPC)
+            } else if (wife.getRole().equals(unlockNPC))
             {
                 wife.unlockConversation();
-            }
-            else if(maid.getRole() == unlockNPC)
+            } else if (maid.getRole().equals(unlockNPC))
             {
                 maid.unlockConversation();
-            }
-            else if(daughter.getRole() == unlockNPC)
+            } else if (daughter.getRole().equals(unlockNPC))
             {
                 daughter.unlockConversation();
             }
         }
-        
+
         return countUnlock;
     }
 
@@ -346,11 +341,11 @@ public class Game
             quitGame = systemInput.next().charAt(0);
         }
 
-        return (quitGame == 'Y' || quitGame == 'y') ? true : false;
+        return (quitGame == 'Y' || quitGame == 'y');
     }
-    
+
     private void clearScreen()
     {
-        System.out.println(new String(new char[100]).replace('\0','\n'));    
+        System.out.println(new String(new char[100]).replace('\0', '\n'));
     }
 }

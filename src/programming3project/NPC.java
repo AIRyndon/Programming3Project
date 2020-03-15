@@ -16,9 +16,10 @@ import java.io.IOException;
  * @author pc
  */
 public class NPC extends Person implements Story
-{  
+{
+
     private int hintXCoord;
-    private int hintYCoord;   
+    private int hintYCoord;
     private String role;
     private String unlockNPC;
     private Conversation talk;
@@ -56,12 +57,14 @@ public class NPC extends Person implements Story
         return output;
     }
 
-    public void tryToPlaceHint(Room room,int xCoord, int yCoord)
+    public void tryToPlaceHint(Room room, String name, String description,
+            int xCoord, int yCoord)
     {
         if (getTalk().isUnlocked())
         {
             hintXCoord = xCoord;
             hintYCoord = yCoord;
+            room.hints.add(new Hint(name, description, xCoord, yCoord));
             room.movingArea[hintXCoord][hintYCoord] = 'X';
         }
     }

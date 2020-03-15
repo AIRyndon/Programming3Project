@@ -59,20 +59,14 @@ public class Detective extends Person
                         yCoord -= 1;
                         playArea[xCoord][yCoord] = 'P';
                     }
-                } 
-                else if(item == 'X')
+                } else if (item == 'X' || item == '*')
                 {
-                    System.out.println("Achieved: pieces of poisoned cheesecake");
+                    //todo - how to know what hint should be spit out.
                     playArea[xCoord][yCoord] = ' ';
                     yCoord -= 1;
                     playArea[xCoord][yCoord] = 'P';
                 }
-                else if (item == '*')
-                {
-                    playArea[xCoord][yCoord] = ' ';
-                    yCoord -= 1;
-                    playArea[xCoord][yCoord] = 'P';
-                }
+
                 break;
 
             case 'd':
@@ -98,20 +92,13 @@ public class Detective extends Person
                         yCoord += 1;
                         playArea[xCoord][yCoord] = 'P';
                     }
-                } 
-                else if(item == 'X')
-                {
-                    System.out.println("Achieved: pieces of poisoned cheesecake");
-                    playArea[xCoord][yCoord] = ' ';
-                    yCoord += 1;
-                    playArea[xCoord][yCoord] = 'P';
-                }
-                else if (item == '*')
+                } else if (item == 'X' || item == '*')
                 {
                     playArea[xCoord][yCoord] = ' ';
                     yCoord += 1;
                     playArea[xCoord][yCoord] = 'P';
                 }
+
                 break;
 
             case 'w':
@@ -136,20 +123,13 @@ public class Detective extends Person
                         xCoord -= 1;
                         playArea[xCoord][yCoord] = 'P';
                     }
-                } 
-                else if(item == 'X')
-                {
-                    System.out.println("Achieved: pieces of poisoned cheesecake");
-                    playArea[xCoord][yCoord] = ' ';
-                    xCoord -= 1;
-                    playArea[xCoord][yCoord] = 'P';
-                }
-                else if (item == '*')
+                } else if (item == 'X' || item == '*')
                 {
                     playArea[xCoord][yCoord] = ' ';
                     xCoord -= 1;
                     playArea[xCoord][yCoord] = 'P';
                 }
+
                 break;
 
             case 's':
@@ -175,17 +155,12 @@ public class Detective extends Person
                         xCoord += 1;
                         playArea[xCoord][yCoord] = 'P';
                     }
-                }
-                else if(item == 'X')
-                {
-                    System.out.println("Achieved: pieces of poisoned cheesecake");
-
-                } 
-                else if (item == '*')
+                } else if (item == 'X' || item == '*')
                 {
                     playArea[xCoord][yCoord] = ' ';
                     xCoord += 1;
                     playArea[xCoord][yCoord] = 'P';
+
                 }
 
                 break;
