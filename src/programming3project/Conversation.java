@@ -6,8 +6,10 @@
 package programming3project;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -18,20 +20,24 @@ import java.util.Scanner;
 public class Conversation 
 {
     private Scanner systemInput = new Scanner(System.in);
+    BufferedWriter bw = new BufferedWriter(new FileWriter("SecretTalk.txt", false));
     private boolean unlocked;
     private boolean hasTalk;
+    private char NPC;
     private String unlockNPC;
     private String firstTalk = "";
     private String secondTalk = "";
     
     public Conversation(char NPC, String unlockNPC) throws FileNotFoundException, IOException
     {
-        readTalkFile(NPC);
+        setUnlockNPC(unlockNPC);
+        setNPC(NPC);
         unlocked = false;
         hasTalk = false;
+        ReadTalk();
     }
 
-    public void talk()
+    public void talk() throws FileNotFoundException, IOException
     {
         //Ask if player wants to talk
         System.out.print("Do you want to get some information? (Y/N)");
@@ -53,33 +59,47 @@ public class Conversation
         else if(listen == 'Y' || listen == 'y')
         {
             System.out.println(getSecondTalk());
+            saveSecretTalk();
+            this.setSecondTalk("");
+            this.setUnlocked(false);
             quit();
         }
     }
     
-    public void quit()
+    public void quit() throws FileNotFoundException
     {
-        //Ask if user wants to quit or reaf firstTalk
-        char userChoice = ' ';
+        System.out.println("Press any character to close the talk.");
+        char userChoice = systemInput.next().charAt(0);
         
-        while(userChoice != 'q' && userChoice != 'Q' && userChoice != 'a' && userChoice != 'Q')
-        {
-            System.out.println("Press 'q' to close the talk.");
-        
-            if(isUnlocked())
-            {
-                System.out.println("Press 'a' to read the first talk again.");
-            }
-
-            userChoice = systemInput.next().charAt(0);
-        }
-
         //Clear the buffer;
         systemInput.nextLine();
+    }
+    
+    public void saveSecretTalk() throws FileNotFoundException, IOException
+    {
+        System.out.println("Note: You cannot read this information again.");
+        System.out.print("=> Press 'y' save this talk, any character to ignore: ");
+        boolean save = "y".equalsIgnoreCase(systemInput.nextLine());
         
-        if((userChoice == 'a' || userChoice == 'A'))
+        if(save)
         {
-            System.out.println(getFirstTalk());
+            bw = new BufferedWriter(new FileWriter("SecretTalk.txt", true));
+
+            String word = "";
+            
+            for(int i = 0; i < getSecondTalk().length(); i++)
+            {
+                bw.append(this.getSecondTalk().charAt(i));
+                
+                if(getSecondTalk().charAt(i) == '.')
+                {
+                    bw.newLine();
+                }
+            }
+            
+            bw.append("\n");
+            bw.close();
+            System.out.println("The talk has been saved!");
         }
     }
     
@@ -88,17 +108,17 @@ public class Conversation
         setUnlocked(true);
     }
     
-    public void readTalkFile(char NPC) throws FileNotFoundException, IOException
+    public void ReadTalk() throws FileNotFoundException, IOException
     {
-        BufferedReader br = new BufferedReader(new FileReader(NPC + ".txt"));
+        BufferedReader br = new BufferedReader(new FileReader(getNPC() + ".txt"));
         
-        String line = " ";
+        String line = "b";
 
         while((line = br.readLine()) != null)
         {
             if(!line.isEmpty())
             {
-                firstTalk += line + "\n";
+                setFirstTalk(getFirstTalk() + line + "\n");
             }
             else
             {
@@ -106,7 +126,7 @@ public class Conversation
 
                 while((line = br.readLine()) != null)
                 {
-                    secondTalk += line + "\n";
+                    setSecondTalk(getSecondTalk() + line + "\n");
                 }
 
                 break;
@@ -181,14 +201,32 @@ public class Conversation
     /**
      * @return the hasTalk
      */
-    public boolean isHasTalk() {
+    public boolean isHasTalk() 
+    {
         return hasTalk;
     }
 
     /**
      * @param hasTalk the hasTalk to set
      */
-    public void setHasTalk(boolean hasTalk) {
+    public void setHasTalk(boolean hasTalk) 
+    {
         this.hasTalk = hasTalk;
+    }
+
+    /**
+     * @return the NPC
+     */
+    public char getNPC() 
+    {
+        return NPC;
+    }
+
+    /**
+     * @param NPC the NPC to set
+     */
+    public void setNPC(char NPC) 
+    {
+        this.NPC = NPC;
     }
 }

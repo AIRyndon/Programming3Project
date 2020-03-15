@@ -5,6 +5,7 @@
  */
 package programming3project;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,8 +27,9 @@ public class Game
     private RoomWife roomWife = new RoomWife("Wife's Room", house);
     private RoomWorking roomWorking = new RoomWorking("Work Room", house);
     private Detective detective;
-    Victim victim = new Victim("Bosh", "President of KPI Cooperation", 55, 'M');
+    private Victim victim = new Victim("Bosh", "President of KPI Cooperation", 55, 'M');
     private NPC daughter, wife, maid, butler, assistant;
+    private Hints headLockedArea, tailLockedArea, headDogHouse, tailDogHouse;
   
     public void setupNPC() throws IOException
     {
@@ -38,89 +40,18 @@ public class Game
         assistant = new NPC("Ashton", 'M', 34, "Assistant", wife.getRole());
     }
     
-    private Detective setupPlayerInfo()
+    public void setupHints() throws IOException
     {
-        //Promt user input
-        //Need to check those inputs (InputException - try catch)
-        System.out.print("Please enter a name: ");
-        String userName = systemInput.nextLine();
-
-        char userGender = '\0';
-        do
-        {
-            System.out.print("Please enter a gender(M/F): ");
-            userGender = systemInput.next().charAt(0);
-        } while (!(userGender == 'M' || userGender == 'm' || userGender == 'F' || 
-                userGender == 'f'));
-
-        //Clear buffer
-        systemInput.nextLine();
-
-        int userAge = 0;
-        do
-        {
-            System.out.print("Please enter your age: ");
-
-            if (systemInput.hasNextInt())
-            {
-                userAge = systemInput.nextInt();
-            } else
-            {
-                systemInput.nextLine();
-            }
-        } while (userAge <= 0);
-
-        Detective detective = new Detective(userName, userGender, userAge, ground);
-
-        detective.setBackground("Mysterious fellow");
-        detective.setCurrentRoom(ground);
-        detective.setPreviousRoom(null);
-        detective.setPlayArea(ground.movingArea);
-
-        return detective;
+        headLockedArea = new Hints(Functions.HINTHEAD, roomWorking.getLock(), 1);
+        tailLockedArea = new Hints(Functions.HINTTAIL, roomWorking.getLock(), 2);
+        headDogHouse = new Hints(Functions.HINTHEAD, ground.getLock(), 3);
+        tailDogHouse = new Hints(Functions.HINTTAIL, ground.getLock(), 4);
     }
-
-    private void introduceStory(Detective detective)
-    {
-        System.out.println(detective);
-
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        System.out.println(dateFormat.format(new Date()));
-
-        //Story begins
-        System.out.println(detective.getName() + " is working in" + 
-                (detective.getGender() == 'M' ? "his " : "her ") + 
-                "office and reading some news.");
-        System.out.println("\"" + (detective.getGender() == 'M' ? "Sir " : "Madam ")
-                + detective.getName() + "!\"");
-        System.out.println("A police officer runs to you:");
-        System.out.println("\"There was a murder at Royal Street! "
-                + "Please come there now!\"");
-
-        char enterPremises = '\0';
-        while (!(enterPremises == 'Y' || enterPremises == 'y' || 
-                enterPremises == 'N' || enterPremises == 'n'))
-        {
-            System.out.println("Do you want to enter the compound?(Y/N)");
-            enterPremises = systemInput.next().charAt(0);
-        }
-
-        //If player does not want to enter the compound
-        if (enterPremises != 'Y' && enterPremises != 'y')
-        {
-            System.out.println("\n\"Sorry I do not have time at the moment...\"");
-            System.out.println("Right then, you came to one of your customers' house "
-                    + "- a bilionaire names " + victim.getName() + ".");
-            System.out.println("Coincidentally, your customer is the victim "
-                    + "who was mentioned by the police");
-        }
-
-        ground.printRoom(ground.getName());
-    }
-
+    
     public void startGame() throws IOException
     {
         setupNPC();
+        setupHints();
         detective = setupPlayerInfo();
         introduceStory(detective);
         startGameLoop();
@@ -158,7 +89,87 @@ public class Game
         }
     }
     
-    private int playerHits(int countUnlock, char keyPress)
+    private Detective setupPlayerInfo()
+    {
+        //Promt user input
+        //Need to check those inputs (InputException - try catch)
+        System.out.print("Please enter a name: ");
+        String userName = systemInput.nextLine();
+
+        char userGender = '\0';
+        do
+        {
+            System.out.print("Please enter a gender(M/F): ");
+            userGender = systemInput.next().charAt(0);
+        } while (!(userGender == 'M' || userGender == 'm' || userGender == 'F' || 
+                userGender == 'f'));
+
+        //Clear buffer
+        systemInput.nextLine();
+
+        int userAge = 0;
+        do
+        {
+            System.out.print("Please enter your age: ");
+
+            if (systemInput.hasNextInt())
+            {
+                userAge = systemInput.nextInt();
+            } 
+            else
+            {
+                systemInput.nextLine();
+            }
+        } while (userAge <= 0);
+
+        Detective detective = new Detective(userName, userGender, userAge, ground);
+        
+        detective.setBackground("Mysterious fellow");
+        detective.setCurrentRoom(ground);
+        detective.setPreviousRoom(null);
+        detective.setPlayArea(ground.movingArea);
+
+        return detective;
+    }
+
+    private void introduceStory(Detective detective)
+    {
+        System.out.println(detective);
+
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        System.out.println(dateFormat.format(new Date()));
+
+        //Story begins
+        System.out.println(detective.getName() + " - you are working in your office and "
+                + "reading some news.");
+        System.out.println("\"" + (detective.getGender() == 'M' ? "Sir " : "Madam ")
+                + detective.getName() + "!\"");
+        System.out.println("A police officer runs to you:");
+        System.out.println("\"There was a murder at Royal Street! "
+                + "Please come there now!\"");
+
+        char enterPremises = '\0';
+        while (!(enterPremises == 'Y' || enterPremises == 'y' || 
+                enterPremises == 'N' || enterPremises == 'n'))
+        {
+            System.out.println("Do you want to enter the compound?(Y/N)");
+            enterPremises = systemInput.next().charAt(0);
+        }
+
+        //If player does not want to enter the compound
+        if (enterPremises != 'Y' && enterPremises != 'y')
+        {
+            System.out.println("\n\"Sorry I do not have time at the moment...\"");
+            System.out.println("Right then, you came to one of your customers' house "
+                    + "- a bilionaire names " + victim.getName() + ".");
+            System.out.println("Coincidentally, your customer is the victim "
+                    + "who was mentioned by the police");
+        }
+
+        ground.printRoom(ground.getName());
+    }
+    
+    private int playerHits(int countUnlock, char keyPress) throws FileNotFoundException, IOException
     {
         char landedSquare = detective.move(keyPress);
         String unlockNPC = "";
@@ -170,7 +181,6 @@ public class Game
                 System.out.println(butler.toString());                    
                 butler.getTalk().talk();
                 unlockNPC = butler.getUnlockNPC();
-                ground.unlock(1);
 
                 break;
             }
@@ -232,10 +242,10 @@ public class Game
             }
             case '*':
             {
-                if (detective.getCurrentRoom().previousRoom != null)
+                if (detective.getCurrentRoom().getPreviousRoom() != null)
                 {
                     clearScreen();
-                    detective.moveToAnotherRoom(detective.getCurrentRoom().previousRoom);
+                    detective.moveToAnotherRoom(detective.getCurrentRoom().getPreviousRoom());
                     detective.setLocationToPreviousRoom();  
                 }
 
@@ -291,10 +301,58 @@ public class Game
 
                 break;
             }
+            case '#':
+            {
+                detective.getCurrentRoom().checkPassword();
+                
+                break;
+            }
+            case '$':
+            {
+                if(headLockedArea.promtAnswer())
+                {
+                    detective.getCurrentRoom().removeCharacter(landedSquare);
+                    headLockedArea.saveHint();
+                }
+                
+                break;
+            }
+            case '@':
+            {
+                if(tailLockedArea.promtAnswer())
+                {
+                    detective.getCurrentRoom().removeCharacter(landedSquare);
+                    tailLockedArea.saveHint();
+                }
+                
+                break;
+            }
+            case '!':
+            {
+                if(headDogHouse.promtAnswer())
+                {
+                    detective.getCurrentRoom().removeCharacter(landedSquare);
+                    headDogHouse.saveHint();
+                }
+                
+                break;
+            }
+            case '0':
+            {
+                if(tailDogHouse.promtAnswer())
+                {
+                    detective.getCurrentRoom().removeCharacter(landedSquare);
+                    tailDogHouse.saveHint();
+                }
+                
+                break;
+            }
+                
             default:
                 break;
         }
 
+        /*
         if(countUnlock == 0 && butler.getTalk().isHasTalk() && 
                 wife.getTalk().isHasTalk() && daughter.getTalk().isHasTalk() && 
                 assistant.getTalk().isHasTalk() && maid.getTalk().isHasTalk())
@@ -320,6 +378,16 @@ public class Game
             {
                 daughter.unlockTalk();
             }
+        }
+                */
+        if(countUnlock == 0)
+        { 
+            butler.unlockTalk();
+            wife.unlockTalk();
+            maid.unlockTalk();
+            daughter.unlockTalk();
+            assistant.unlockTalk();
+            countUnlock = 1;
         }
         
         return countUnlock;

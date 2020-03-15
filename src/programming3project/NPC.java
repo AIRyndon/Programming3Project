@@ -15,7 +15,7 @@ import java.io.IOException;
  *
  * @author pc
  */
-public class NPC extends Person implements Story
+public class NPC extends Person
 { 
     private String role;
     private String unlockNPC;
@@ -31,7 +31,7 @@ public class NPC extends Person implements Story
     
     public void unlockTalk()
     {
-        System.out.println("Congratulation! You have unlocked " + this.getRole() + " talk!\n");
+        System.out.println("Congratulation! You have unlocked " + this.getRole() + " secret talk!\n");
         
         talk.unlock();
     }
@@ -39,18 +39,6 @@ public class NPC extends Person implements Story
     public String getRole()
     {
         return role;
-    }
-
-    @Override
-    public String toString()
-    {
-        String output = "";
-
-        output += "Name: " + this.getName() + "\n";
-        output += "Gender: " + (this.getGender() == 'M' ? "Male\n" : "Female\n");
-        output += "Age: " + this.getAge() + "\n";
-
-        return output;
     }
 
     /**
@@ -91,5 +79,18 @@ public class NPC extends Person implements Story
     public void setUnlockNPC(String unlockNPC) 
     {
         this.unlockNPC = unlockNPC;
+    }
+    
+    @Override
+    public String toString()
+    {
+        String output = "";
+
+        output += "Name: " + this.getName() + "\n";
+        output += "Gender: " + (this.getGender() == 'M' ? "Male\n" : "Female\n");
+        output += "Role: " + this.getRole() + "\n";
+        output += "Age: " + this.getAge() + "\n";
+
+        return output;
     }
 }

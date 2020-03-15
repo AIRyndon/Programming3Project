@@ -54,11 +54,33 @@ public class RoomButler extends Room
         
         positionNPC('A');
     }
-
+    
     @Override
-    protected void printRoom(String door)
+    protected void positionNPC(char person)
     {
-        super.printRoom(door);
-        printWall();
+        super.positionNPC(person);
+        boolean stop = false;
+        
+        while(!stop)
+        {
+            for (int i = 0; i <= getHeight() - 2; i++)
+            {   
+                for (int j = 0; j <= getWidth() - 2; j++)
+                {
+                    if(movingArea[i][j] == person)
+                    {
+                        if(i < 2 && j < 11)
+                        {
+                            movingArea[i][j] = ' ';
+                            super.positionNPC(person);
+                        }
+                        else
+                        {
+                            stop = true;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
