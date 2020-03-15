@@ -18,7 +18,6 @@ public class Detective extends Person
     private int xCoord;
     private int yCoord;
     private String background;
-    private NPC currentTarget;
     private char[][] playArea;
     private Room currentRoom;
     private Room previousRoom;
@@ -307,22 +306,6 @@ public class Detective extends Person
         output += "Background: " + this.getBackground() + "\n";
 
         return output;
-    }
-
-    /**
-     * @return the currentTarget
-     */
-    public NPC getCurrentTarget()
-    {
-        return currentTarget;
-    }
-
-    /**
-     * @param currentTarget the currentTarget to set
-     */
-    public void setCurrentTarget(NPC currentTarget)
-    {
-        this.currentTarget = currentTarget;
     }
 
     /**

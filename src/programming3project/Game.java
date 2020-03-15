@@ -130,7 +130,7 @@ public class Game
     private void startGameLoop() throws IOException
     {
         boolean stoppedPlaying = false;
-        int countUnlock = 0;
+        int conversationLevel = 0;
 
         while (!stoppedPlaying)
         {
@@ -148,7 +148,7 @@ public class Game
 
             clearScreen();
 
-            countUnlock = playerHits(countUnlock, keyPress);
+            conversationLevel = playerHits(conversationLevel, keyPress);
 
             if (keyPress == 'q')
             {
@@ -158,13 +158,14 @@ public class Game
         }
     }
 
-    private int playerHits(int countUnlock, char keyPress)
+    private int playerHits(int conversationLevel, char keyPress)
     {
         char landedSquare = detective.move(keyPress);
         String unlockNPC = "";
 
         switch (landedSquare)
         {
+            //todo - handling of NPC character cases should be in NPC class
             case 'B':
             {
                 System.out.println(butler.toString());
@@ -242,6 +243,7 @@ public class Game
 
                 break;
             }
+            //todo - handling of * and / cases should be in Detective class
             case '*':
             {
                 if (detective.getCurrentRoom().previousRoom != null)
@@ -301,14 +303,15 @@ public class Game
             default:
                 break;
         }
-
-        if (countUnlock == 0 && butler.getTalk().isHasTalk()
+        
+        //todo - if clause should be in NPC class or Conversation class?
+        if (conversationLevel == 1 && butler.getTalk().isHasTalk()
                 && wife.getTalk().isHasTalk() && daughter.getTalk().isHasTalk()
                 && assistant.getTalk().isHasTalk() && maid.getTalk().isHasTalk())
         {
             assistant.unlockConversation();
-            countUnlock = 1;
-        } else if (countUnlock == 1)
+            conversationLevel = 2;
+        } else if (conversationLevel == 2)
         {
             if (butler.getRole().equals(unlockNPC))
             {
@@ -325,7 +328,7 @@ public class Game
             }
         }
 
-        return countUnlock;
+        return conversationLevel;
     }
 
     private boolean quitGame()
