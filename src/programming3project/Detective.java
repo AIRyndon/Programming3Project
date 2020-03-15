@@ -65,6 +65,14 @@ public class Detective extends Person
                     playArea[xCoord][yCoord] = ' ';
                     yCoord -= 1;
                     playArea[xCoord][yCoord] = 'P';
+
+                    currentRoom.hints.forEach(hint ->
+                    {
+                        if (hint.getxLocation() == xCoord && hint.getyLocation() == yCoord)
+                        {
+                            System.out.println(hint.toString());
+                        }
+                    });
                 }
 
                 break;
@@ -97,6 +105,14 @@ public class Detective extends Person
                     playArea[xCoord][yCoord] = ' ';
                     yCoord += 1;
                     playArea[xCoord][yCoord] = 'P';
+
+                    currentRoom.hints.forEach(hint ->
+                    {
+                        if (hint.getxLocation() == xCoord && hint.getyLocation() == yCoord)
+                        {
+                            System.out.println(hint.toString());
+                        }
+                    });
                 }
 
                 break;
@@ -128,6 +144,14 @@ public class Detective extends Person
                     playArea[xCoord][yCoord] = ' ';
                     xCoord -= 1;
                     playArea[xCoord][yCoord] = 'P';
+                    
+                    currentRoom.hints.forEach(hint ->
+                    {
+                        if (hint.getxLocation() == xCoord && hint.getyLocation() == yCoord)
+                        {
+                            System.out.println(hint.toString());
+                        }
+                    });
                 }
 
                 break;
@@ -160,7 +184,14 @@ public class Detective extends Person
                     playArea[xCoord][yCoord] = ' ';
                     xCoord += 1;
                     playArea[xCoord][yCoord] = 'P';
-
+                    
+                    currentRoom.hints.forEach(hint ->
+                    {
+                        if (hint.getxLocation() == xCoord && hint.getyLocation() == yCoord)
+                        {
+                            System.out.println(hint.toString());
+                        }
+                    });
                 }
 
                 break;

@@ -148,7 +148,7 @@ public class Game
 
             clearScreen();
 
-            playerHits(countUnlock, keyPress);
+            countUnlock = playerHits(countUnlock, keyPress);
 
             if (keyPress == 'q')
             {
