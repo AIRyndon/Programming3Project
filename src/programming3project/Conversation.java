@@ -17,23 +17,24 @@ import java.util.Scanner;
  *
  * @author pc
  */
-public class Conversation 
+public class Conversation
 {
+
     private Scanner systemInput = new Scanner(System.in);
     BufferedWriter bw = new BufferedWriter(new FileWriter("SecretTalk.txt", false));
     private boolean unlocked;
-    private boolean hasTalk;
+    private boolean talkedWithPlayer;
     private char NPC;
     private String unlockNPC;
-    private String firstTalk = "";
-    private String secondTalk = "";
-    
+    private String firstConversation = "";
+    private String secondConversation = "";
+
     public Conversation(char NPC, String unlockNPC) throws FileNotFoundException, IOException
     {
         setUnlockNPC(unlockNPC);
         setNPC(NPC);
         unlocked = false;
-        hasTalk = false;
+        talkedWithPlayer = false;
         ReadTalk();
     }
 
@@ -43,96 +44,94 @@ public class Conversation
         System.out.print("Do you want to get some information? (Y/N)");
         char listen = systemInput.next().charAt(0);
         systemInput.nextLine();
-        
-        while(listen != 'Y' && listen != 'y' && listen != 'N' && listen != 'n')
+
+        while (listen != 'Y' && listen != 'y' && listen != 'N' && listen != 'n')
         {
             System.out.print("Invalid input! Please enter again: ");
             listen = systemInput.next().charAt(0);
         }
 
-        if((listen == 'Y' || listen == 'y') && !isUnlocked())
+        if ((listen == 'Y' || listen == 'y'))
         {
-            System.out.println(getFirstTalk());
-            hasTalk = true;
+            talkedWithPlayer = true;
+            System.out.println(getFirstConversation());
+
+            if (isUnlocked())
+            {
+                System.out.println(getSecondConversation());
+                this.setSecondConversation("");
+            }
+
+            saveConversation();
             quit();
         }
-        else if(listen == 'Y' || listen == 'y')
-        {
-            System.out.println(getSecondTalk());
-            saveSecretTalk();
-            this.setSecondTalk("");
-            
+    }
+
 //todo - saving a conversation should be possible for any conversations - e.g. first or second conversation
 //I commented setting unlocked to false here because we wont be able to see the hints, when we set it to false after
 //talking with an NPC
 // I think the cleanest way to go about this is clear the second talk, and have an option to save a conversation after pressing a key - like K for example
 //that way the player can save any conversation, and without the hint that some conversations only appear once :D
 //this.setUnlocked(true);
-            quit();
-        }
-    }
-    
     public void quit() throws FileNotFoundException
     {
         System.out.println("Press any character to close the talk.");
-        char userChoice = systemInput.next().charAt(0);
-        
+        //systemInput.next().charAt(0);
+
         //Clear the buffer;
         systemInput.nextLine();
     }
-    
-    public void saveSecretTalk() throws FileNotFoundException, IOException
+
+    public void saveConversation() throws FileNotFoundException, IOException
     {
-        System.out.println("Note: You cannot read this information again.");
         System.out.print("=> Press 'y' save this talk, any character to ignore: ");
         boolean save = "y".equalsIgnoreCase(systemInput.nextLine());
-        
-        if(save)
+
+        if (save)
         {
             bw = new BufferedWriter(new FileWriter("SecretTalk.txt", true));
 
             String word = "";
-            
-            for(int i = 0; i < getSecondTalk().length(); i++)
+
+            for (int i = 0; i < getSecondConversation().length(); i++)
             {
-                bw.append(this.getSecondTalk().charAt(i));
-                
-                if(getSecondTalk().charAt(i) == '.')
+                bw.append(this.getSecondConversation().charAt(i));
+
+                if (getSecondConversation().charAt(i) == '.')
                 {
                     bw.newLine();
                 }
             }
-            
+
             bw.append("\n");
             bw.close();
             System.out.println("The talk has been saved!");
         }
     }
-    
+
     public void unlock()
     {
         setUnlocked(true);
     }
-    
+
     public void ReadTalk() throws FileNotFoundException, IOException
     {
         BufferedReader br = new BufferedReader(new FileReader(getNPC() + ".txt"));
-        
+
         String line = "b";
 
-        while((line = br.readLine()) != null)
+        while ((line = br.readLine()) != null)
         {
-            if(!line.isEmpty())
+            if (!line.isEmpty())
             {
-                setFirstTalk(getFirstTalk() + line + "\n");
-            }
-            else
+                setFirstConversation(getFirstConversation() + line + "\n");
+            } else
             {
-                secondTalk += line;
+                secondConversation += line;
 
-                while((line = br.readLine()) != null)
+                while ((line = br.readLine()) != null)
                 {
-                    setSecondTalk(getSecondTalk() + line + "\n");
+                    setSecondConversation(getSecondConversation() + line + "\n");
                 }
 
                 break;
@@ -151,7 +150,7 @@ public class Conversation
     /**
      * @param unlocked the unlocked to set
      */
-    public void setUnlocked(boolean unlocked) 
+    public void setUnlocked(boolean unlocked)
     {
         this.unlocked = unlocked;
     }
@@ -173,57 +172,49 @@ public class Conversation
     }
 
     /**
-     * @return the firstTalk
+     * @return the firstConversation
      */
-    public String getFirstTalk() 
+    public String getFirstConversation()
     {
-        return firstTalk;
+        return firstConversation;
     }
 
     /**
-     * @param firstTalk the firstTalk to set
+     * @param conversation the firstConversation to set
      */
-    public void setFirstTalk(String firstTalk) 
+    public void setFirstConversation(String conversation)
     {
-        this.firstTalk = firstTalk;
+        this.firstConversation = conversation;
     }
 
     /**
-     * @return the secondTalk
+     * @return the secondConversation
      */
-    public String getSecondTalk()
+    public String getSecondConversation()
     {
-        return secondTalk;
+        return secondConversation;
     }
 
     /**
-     * @param secondTalk the secondTalk to set
+     * @param conversation the secondConversation to set
      */
-    public void setSecondTalk(String secondTalk) 
+    public void setSecondConversation(String conversation)
     {
-        this.secondTalk = secondTalk;
+        this.secondConversation = conversation;
     }
 
     /**
-     * @return the hasTalk
+     * @return the talkedWithPlayerOnce
      */
-    public boolean isHasTalk() 
+    public boolean hasTalkedWithPlayer()
     {
-        return hasTalk;
-    }
-
-    /**
-     * @param hasTalk the hasTalk to set
-     */
-    public void setHasTalk(boolean hasTalk) 
-    {
-        this.hasTalk = hasTalk;
+        return talkedWithPlayer;
     }
 
     /**
      * @return the NPC
      */
-    public char getNPC() 
+    public char getNPC()
     {
         return NPC;
     }
@@ -231,7 +222,7 @@ public class Conversation
     /**
      * @param NPC the NPC to set
      */
-    public void setNPC(char NPC) 
+    public void setNPC(char NPC)
     {
         this.NPC = NPC;
     }

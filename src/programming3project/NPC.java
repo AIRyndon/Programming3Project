@@ -22,12 +22,12 @@ public class NPC extends Person
     private int hintYCoord;
     private String role;
     private String unlockNPC;
-    private Conversation talk;
+    private Conversation conversation;
 
     public NPC(String name, char gender, int age, String role, String unlockNPC) throws IOException
     {
         super(name, gender, age);
-        this.talk = new Conversation(role.charAt(0), unlockNPC);
+        this.conversation = new Conversation(role.charAt(0), unlockNPC);
         this.setUnlockNPC(unlockNPC);
         this.role = role;
     }
@@ -37,7 +37,7 @@ public class NPC extends Person
         System.out.println("Congratulations! You can now get potentially important information from the " + this.getRole() + "!\n");
         System.out.println("You might want to speak with " + (getGender() == 'M' ? "him" : "her") + " again.");
       
-        talk.unlock();
+        conversation.unlock();
     }
 
     public String getRole()
@@ -48,7 +48,7 @@ public class NPC extends Person
     public void tryToPlaceHint(Room room, String name, String description,
             int xCoord, int yCoord)
     {
-        if (getTalk().isUnlocked())
+        if (getConversation().isUnlocked())
         {
             hintXCoord = xCoord;
             hintYCoord = yCoord;
@@ -66,19 +66,19 @@ public class NPC extends Person
     }
 
     /**
-     * @return the talk
+     * @return the conversation
      */
-    public Conversation getTalk()
+    public Conversation getConversation()
     {
-        return talk;
+        return conversation;
     }
 
     /**
-     * @param talk the talk to set
+     * @param conversation the conversation to set
      */
-    public void setTalk(Conversation talk)
+    public void setConversation(Conversation conversation)
     {
-        this.talk = talk;
+        this.conversation = conversation;
     }
 
     /**

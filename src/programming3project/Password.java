@@ -12,7 +12,7 @@ import java.util.Scanner;
  *
  * @author pc
  */
-public class Locks 
+public class Password 
 {
     private Random rand = new Random();
     private Scanner scan = new Scanner(System.in);
@@ -20,7 +20,7 @@ public class Locks
     private boolean unlock;
     private String password;
     
-    public Locks()
+    public Password()
     {
         this.setUnlock(false);
         

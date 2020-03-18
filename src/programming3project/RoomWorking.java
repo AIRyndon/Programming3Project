@@ -14,7 +14,7 @@ public class RoomWorking extends Room
     public RoomWorking(String name, Room previous)
     {
         super(previous);
-        this.setLock(new Locks());
+        this.setLock(new Password());
         setName(name);
         setHeight(12);
         setWidth(72);

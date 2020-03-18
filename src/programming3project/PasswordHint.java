@@ -18,12 +18,12 @@ import java.util.Scanner;
  *
  * @author pc
  */
-public class Hints 
+public class PasswordHint 
 {
     private Random rand = new Random();
     private static Scanner scan = new Scanner(System.in);
     
-    private Locks lock;
+    private Password lock;
     private Functions function;
     private String question;
     private String answer;
@@ -31,7 +31,7 @@ public class Hints
     private int order;
     private String beforeQuestion;
     
-    public Hints(Functions function, Locks lock, int order) throws IOException
+    public PasswordHint(Functions function, Password lock, int order) throws IOException
     {
         this.setFunction(function);
         this.setLock(lock);
@@ -41,12 +41,12 @@ public class Hints
         setupBeforeQuestion();
     }
     
-    public Hints()
+    public PasswordHint()
     {
         
     }
     
-    public boolean promtAnswer()
+    public boolean promptAnswer()
     {
         boolean correct = false;
 
@@ -223,14 +223,14 @@ public class Hints
     /**
      * @return the lock
      */
-    public Locks getLock() {
+    public Password getLock() {
         return lock;
     }
 
     /**
      * @param lock the lock to set
      */
-    public void setLock(Locks lock) {
+    public void setLock(Password lock) {
         this.lock = lock;
     }
 

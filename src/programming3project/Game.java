@@ -30,7 +30,7 @@ public class Game
     private Detective detective;
     private Victim victim = new Victim("Bosh", "President of KPI Cooperation", 55, 'M');
     private NPC daughter, wife, maid, butler, assistant;
-    private Hints headLockedArea, tailLockedArea, headDogHouse, tailDogHouse;
+    private PasswordHint headLockedArea, tailLockedArea, headDogHouse, tailDogHouse;
   
     public void setupNPC() throws IOException
     {
@@ -43,10 +43,10 @@ public class Game
     
     public void setupHints() throws IOException
     {
-        headLockedArea = new Hints(Functions.HINTHEAD, roomWorking.getLock(), 1);
-        tailLockedArea = new Hints(Functions.HINTTAIL, roomWorking.getLock(), 2);
-        headDogHouse = new Hints(Functions.HINTHEAD, ground.getLock(), 3);
-        tailDogHouse = new Hints(Functions.HINTTAIL, ground.getLock(), 4);
+        headLockedArea = new PasswordHint(Functions.HINTHEAD, roomWorking.getLock(), 1);
+        tailLockedArea = new PasswordHint(Functions.HINTTAIL, roomWorking.getLock(), 2);
+        headDogHouse = new PasswordHint(Functions.HINTHEAD, ground.getLock(), 3);
+        tailDogHouse = new PasswordHint(Functions.HINTTAIL, ground.getLock(), 4);
     }
     
     public void startGame() throws IOException
@@ -61,7 +61,7 @@ public class Game
     private void startGameLoop() throws IOException
     {
         boolean stoppedPlaying = false;
-        int countUnlock = 0;
+        int conversationLevel = 1;
 
         while (!stoppedPlaying)
         {
@@ -79,7 +79,7 @@ public class Game
             
             clearScreen();
             
-            countUnlock = playerHits(countUnlock, keyPress);
+            conversationLevel = playerHits(conversationLevel, keyPress);
                     
             
             if (keyPress == 'q')
@@ -93,7 +93,6 @@ public class Game
     private Detective setupPlayerInfo()
     {
         //Promt user input
-        //Need to check those inputs (InputException - try catch)
         System.out.print("Please enter a name: ");
         String userName = systemInput.nextLine();
 
@@ -141,14 +140,14 @@ public class Game
         System.out.println(dateFormat.format(new Date()));
 
         //Story begins
-        System.out.println(detective.getName() + " is working in"
+        System.out.println(detective.getName() + " is working in "
                 + (detective.getGender() == 'M' ? "his " : "her ")
                 + "office and reading some news.");
-        System.out.println("\"" + (detective.getGender() == 'M' ? "Sir " : "Madam ")
-                + detective.getName() + "!\"");
         System.out.println("A police officer runs to you:");
+        System.out.println("\"" + (detective.getGender() == 'M' ? "Sir " : "Madam ")
+                + detective.getName() + "!\"");     
         System.out.println("\"There was a murder at Royal Street! "
-                + "Please come there now!\"");
+                + "We need your help!\"");
 
         char enterPremises = '\0';
         while (!(enterPremises == 'Y' || enterPremises == 'y'
@@ -162,7 +161,7 @@ public class Game
         if (enterPremises != 'Y' && enterPremises != 'y')
         {
             System.out.println("\n\"Sorry I do not have time at the moment...\"");
-            System.out.println("Right then, you came to one of your customers' house "
+            System.out.println("Right then, you went to one of your customers' house "
                     + "- a bilionaire names " + victim.getName() + ".");
             System.out.println("Coincidentally, your customer is the victim "
                     + "who was mentioned by the police");
@@ -171,7 +170,7 @@ public class Game
         ground.printRoom(ground.getName());
     }
     
-    private int playerHits(int countUnlock, char keyPress) throws FileNotFoundException, IOException
+    private int playerHits(int conversationLevel, char keyPress) throws FileNotFoundException, IOException
     {
         char landedSquare = detective.move(keyPress);
         String unlockNPC = "";
@@ -182,7 +181,7 @@ public class Game
             case 'B':
             {
                 System.out.println(butler.toString());
-                butler.getTalk().talk();
+                butler.getConversation().talk();
                 unlockNPC = butler.getUnlockNPC();
 
                 break;
@@ -190,7 +189,7 @@ public class Game
             case 'W':
             {
                 System.out.println(wife.toString());
-                wife.getTalk().talk();
+                wife.getConversation().talk();
                 unlockNPC = wife.getUnlockNPC();
                 
                 wife.tryToPlaceHint(roomWorking, "Gloves", "A worn-out pair of gloves", 0, 5);
@@ -200,7 +199,7 @@ public class Game
             case 'A':
             {
                 System.out.println(assistant.toString());
-                assistant.getTalk().talk();
+                assistant.getConversation().talk();
                 unlockNPC = assistant.getUnlockNPC();
 
                 assistant.tryToPlaceHint(ground, "Knife", "A bloody knife",
@@ -211,7 +210,7 @@ public class Game
             case 'M':
             {
                 System.out.println(maid.toString());
-                maid.getTalk().talk();
+                maid.getConversation().talk();
                 unlockNPC = maid.getUnlockNPC();
 
                 maid.tryToPlaceHint(ground, "Cheescake", "An innocuous-looking cheesecake",
@@ -222,7 +221,7 @@ public class Game
             case 'D':
             {
                 System.out.println(daughter.toString());
-                daughter.getTalk().talk();
+                daughter.getConversation().talk();
                 unlockNPC = daughter.getUnlockNPC();
                 
                 daughter.tryToPlaceHint(house, "Sedative", "A powerful sedative", 0, house.getWidth() - 10);
@@ -237,19 +236,19 @@ public class Game
             }
             case 'd':
             {
-                System.out.println("Oh wait! The dog was dead!");
+                System.out.println("Oh wait! The dog is dead!");
 
                 break;
             }
             case 'o':
             {
-                System.out.println("Oh wait! The dog was dead!");
+                System.out.println("Oh wait! The dog is dead!");
 
                 break;
             }
             case 'g':
             {
-                System.out.println("Oh wait! The dog was dead!");
+                System.out.println("Oh wait! The dog is dead!");
 
                 break;
             }
@@ -318,7 +317,7 @@ public class Game
             }
             case '$':
             {
-                if(headLockedArea.promtAnswer())
+                if(headLockedArea.promptAnswer())
                 {
                     detective.getCurrentRoom().removeCharacter(landedSquare);
                     headLockedArea.saveHint();
@@ -328,7 +327,7 @@ public class Game
             }
             case '@':
             {
-                if(tailLockedArea.promtAnswer())
+                if(tailLockedArea.promptAnswer())
                 {
                     detective.getCurrentRoom().removeCharacter(landedSquare);
                     tailLockedArea.saveHint();
@@ -338,7 +337,7 @@ public class Game
             }
             case '!':
             {
-                if(headDogHouse.promtAnswer())
+                if(headDogHouse.promptAnswer())
                 {
                     detective.getCurrentRoom().removeCharacter(landedSquare);
                     headDogHouse.saveHint();
@@ -348,7 +347,7 @@ public class Game
             }
             case '0':
             {
-                if(tailDogHouse.promtAnswer())
+                if(tailDogHouse.promptAnswer())
                 {
                     detective.getCurrentRoom().removeCharacter(landedSquare);
                     tailDogHouse.saveHint();
@@ -362,13 +361,13 @@ public class Game
         }
         
         //todo - if clause should be in NPC class or Conversation class?
-        if(countUnlock == 0 && butler.getTalk().isHasTalk() && 
-                wife.getTalk().isHasTalk() && daughter.getTalk().isHasTalk() && 
-                assistant.getTalk().isHasTalk() && maid.getTalk().isHasTalk())
+        if(conversationLevel == 1 && butler.getConversation().hasTalkedWithPlayer() && 
+                wife.getConversation().hasTalkedWithPlayer() && daughter.getConversation().hasTalkedWithPlayer() && 
+                assistant.getConversation().hasTalkedWithPlayer() && maid.getConversation().hasTalkedWithPlayer())
         {
             assistant.unlockConversation();
-            countUnlock = 1;
-        } else if (countUnlock == 1)
+            conversationLevel = 2;
+        } else if (conversationLevel == 2)
         {
             if (butler.getRole().equals(unlockNPC))
             {
@@ -385,7 +384,7 @@ public class Game
             }
         }
               
-        return countUnlock;
+        return conversationLevel;
     }
 
     private boolean quitGame()

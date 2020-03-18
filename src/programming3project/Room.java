@@ -20,7 +20,7 @@ public abstract class Room
     protected String name;
     protected char[][] movingArea;
     protected Room previousRoom;
-    protected Locks lock;
+    protected Password lock;
     protected int xInitial;
     protected int yInitial;
     protected int xCurrent;
@@ -234,7 +234,7 @@ public abstract class Room
     /**
      * @return the lock
      */
-    public Locks getLock() 
+    public Password getLock() 
     {
         return lock;
     }
@@ -242,7 +242,7 @@ public abstract class Room
     /**
      * @param lock the lock to set
      */
-    public void setLock(Locks lock) {
+    public void setLock(Password lock) {
         this.lock = lock;
     }
 

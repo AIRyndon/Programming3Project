@@ -14,7 +14,7 @@ public class Ground extends Room
     public Ground(String name, Room previous)
     {
         super(previous);
-        this.setLock(new Locks());
+        this.setLock(new Password());
         setName(name);
         setHeight(24);
         setWidth(52);
