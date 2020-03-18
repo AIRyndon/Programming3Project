@@ -5,8 +5,6 @@
  */
 package programming3project;
 
-import java.util.Random;
-
 /**
  *
  * @author pc
@@ -69,9 +67,32 @@ public class RoomWife extends Room
     }
 
     @Override
-    protected void printRoom(String door)
+    protected void positionNPC(char person)
     {
-        super.printRoom(door);
-        printWall();
+        super.positionNPC(person);
+        boolean stop = false;
+        
+        while(!stop)
+        {
+            for (int i = 0; i <= getHeight() - 2; i++)
+            {   
+                for (int j = 0; j <= getWidth() - 2; j++)
+                {
+                    //Identify 'D' of "BED" vs 'D' of "Daughter"
+                    if(movingArea[i][j] == person && (i != 3 || j != 7))
+                    {
+                        if(i < 5 && i > 1 && j < 13)
+                        {
+                            movingArea[i][j] = ' ';
+                            super.positionNPC(person);
+                        }
+                        else
+                        {
+                            stop = true;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

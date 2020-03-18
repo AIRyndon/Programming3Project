@@ -1,8 +1,5 @@
 package programming3project;
 
-import java.util.Random;
-import java.util.Scanner;
-
 /**
  *
  * @author pc
@@ -13,8 +10,7 @@ public class House extends Room
      * the key could come from clues. I made it an interface so we can show that we
      * are using interfaces :). And a house can be composed of a lockedRoom, so it kinda makes sense
      */
-    
-
+       
     public House(String name, Room previous)
     {
         super(previous);
@@ -48,7 +44,8 @@ public class House extends Room
                         movingArea[i][14] = 'O';
                         movingArea[i][15] = 'O';
                         movingArea[i][16] = 'M';
-                    } else if (i == 2)
+                    } 
+                    else if (i == 2)
                     {
                         if (j >= 1 && j <= getWidth() / 2 - 3)
                         {
@@ -66,7 +63,8 @@ public class House extends Room
                         movingArea[i][getWidth() / 2 + 17] = 'N';
                         movingArea[i][getWidth() - 1] = '=';
 
-                    } else if (i == 5)
+                    } 
+                    else if (i == 5)
                     {
                         if ((j >= 1 && j <= getWidth() / 2 - 4) || (j >= getWidth() / 2 + 11 && j < getWidth() - 1))
                         {
@@ -75,7 +73,8 @@ public class House extends Room
                         {
                             movingArea[i][getWidth() / 2 - 3] = '/';
                         }
-                    } else if (i == 4)
+                    } 
+                    else if (i == 4)
                     {
                         //BUTLER'S ROOM
                         movingArea[i][0] = '=';
@@ -97,7 +96,8 @@ public class House extends Room
                     {
                         movingArea[i][j] = '|';
                     }
-                } else if (i <= 12)
+                } 
+                else if (i <= 12)
                 {
                     if (i == 9)
                     {
@@ -138,19 +138,23 @@ public class House extends Room
 
                         movingArea[i][getWidth() / 2 - 3] = '|';
                         movingArea[i][getWidth() / 2 - 2] = '/';
-                    } else if (j == getWidth() / 2 - 3)
+                    } 
+                    else if (j == getWidth() / 2 - 3)
                     {
                         movingArea[i][j] = '|';
-                    } else if (j == getWidth() - 1)
+                    }
+                    else if (j == getWidth() - 1)
                     {
                         movingArea[i][j] = '=';
                     }
-                } else if (i == 14)
+                } 
+                else if (i == 14)
                 {
                     movingArea[i][12] = '|';
                     movingArea[i][getWidth() / 2 + 9] = '|';
                     movingArea[i][getWidth() / 2 + 10] = '\\';
-                } else if (i == 15)
+                } 
+                else if (i == 15)
                 {
                     //LOCKED AREA
                     movingArea[i][3] = 'L';
@@ -176,7 +180,8 @@ public class House extends Room
                     movingArea[i][getWidth() / 2 + 9] = '|';
                     movingArea[i][getWidth() / 2 + 10] = 'B';
                     movingArea[i][getWidth() / 2 + 11] = '\\';
-                } else if (i == 16)
+                } 
+                else if (i == 16)
                 {
                     //LOCKED AREA
                     movingArea[i][4] = 'A';
@@ -198,7 +203,8 @@ public class House extends Room
                     movingArea[i][getWidth() / 2 + 10] = 'O';
                     movingArea[i][getWidth() / 2 + 11] = 'O';
                     movingArea[i][getWidth() / 2 + 12] = '\\';
-                } else if (i == 17)
+                } 
+                else if (i == 17)
                 {
                     //WALL
                     movingArea[i][12] = '|';
@@ -208,7 +214,8 @@ public class House extends Room
                     movingArea[i][getWidth() / 2 + 10] = 'K';
                     movingArea[i][getWidth() / 2 + 11] = 'S';
                     movingArea[i][getWidth() / 2 + 13] = '\\';
-                } else
+                }
+                else
                 {
                     if (j == getWidth() / 2 - 14 || j == getWidth() / 2 + 9)
                     {
@@ -217,16 +224,9 @@ public class House extends Room
                 }
             }
         }        
-    }
-
-    /**
-     * Printing the house
-     */
-    protected void printRoom(String door)
-    {
-        super.printRoom(door);
-
-        printWall();
+        
+        //Assign hint
+        movingArea[1][50] = '$';
     }
 
     /**
@@ -242,35 +242,13 @@ public class House extends Room
                     || wid == getWidth() / 2 + 9 || wid == getWidth() / 2 + 14)
             {
                 System.out.print("|");
-            } else
+            } 
+            else
             {
                 System.out.print("_");
             }
         }
 
         System.out.println();
-    }
-
-    public void printLockedArea()
-    {
-        //Loops for height
-        for (int i = 0; i < this.getHeight(); i++)
-        {
-            for (int j = 0; j < this.getWidth(); j++)
-            {
-                if (j == 0 || j == this.getWidth() - 1)
-                {
-                    System.out.print("|");
-                } else if (i == 0 || i == this.getHeight() - 1)
-                {
-                    System.out.print("----");
-                } else
-                {
-                    System.out.print("    ");
-                }
-            }
-
-            System.out.println("");
-        }
     }
 }

@@ -11,7 +11,6 @@ package programming3project;
  */
 public class Detective extends Person
 {
-
     //player position in the grid
     private int xPrevious;
     private int yPrevious;
@@ -27,8 +26,8 @@ public class Detective extends Person
         super(name, gender, age);
 
         //set initial position
-        xCoord = room.xInitial;
-        yCoord = room.yInitial;
+        xCoord = room.getxInitial();
+        yCoord = room.getyInitial();
     }
 
     public char move(char keyPress)
@@ -209,9 +208,9 @@ public class Detective extends Person
         getCurrentRoom().yCurrent = getyCoord();
         setPlayArea(newRoom.movingArea);
 
-        if (newRoom.previousRoom != null)
+        if (newRoom.getPreviousRoom() != null)
         {
-            setPreviousRoom(newRoom.previousRoom);
+            setPreviousRoom(newRoom.getPreviousRoom());
         }
 
         setCurrentRoom(newRoom);
@@ -230,8 +229,8 @@ public class Detective extends Person
     {
         setxPrevious(getPreviousRoom().xCurrent);
         setyPrevious(getPreviousRoom().yCurrent);
-        setxCoord(getCurrentRoom().xInitial);
-        setyCoord(getCurrentRoom().yInitial);
+        setxCoord(getCurrentRoom().getxInitial());
+        setyCoord(getCurrentRoom().getyInitial());
     }
 
     private boolean inCorner(int coordinate, int worldEdge)
@@ -247,8 +246,8 @@ public class Detective extends Person
 
     private boolean startingInsideHouse()
     {
-        return (xCoord == getCurrentRoom().xInitial
-                && yCoord == getCurrentRoom().yInitial
+        return (xCoord == getCurrentRoom().getxInitial()
+                && yCoord == getCurrentRoom().getyInitial()
                 && getCurrentRoom().getName() != "Ground");
     }
 

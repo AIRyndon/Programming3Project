@@ -36,7 +36,7 @@ public class NPC extends Person implements Story
     {
         System.out.println("Congratulations! You can now get potentially important information from the " + this.getRole() + "!\n");
         System.out.println("You might want to speak with " + (getGender() == 'M' ? "him" : "her") + " again.");
-
+      
         talk.unlock();
     }
 
@@ -107,5 +107,18 @@ public class NPC extends Person implements Story
     public void setUnlockNPC(String unlockNPC)
     {
         this.unlockNPC = unlockNPC;
+    }
+    
+    @Override
+    public String toString()
+    {
+        String output = "";
+
+        output += "Name: " + this.getName() + "\n";
+        output += "Gender: " + (this.getGender() == 'M' ? "Male\n" : "Female\n");
+        output += "Role: " + this.getRole() + "\n";
+        output += "Age: " + this.getAge() + "\n";
+
+        return output;
     }
 }

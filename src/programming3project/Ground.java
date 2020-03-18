@@ -5,20 +5,16 @@
  */
 package programming3project;
 
-import java.util.Random;
-import java.util.Scanner;
-
 /**
  *
  * @author pc
  */
-public class Ground extends Room implements LockedArea
+public class Ground extends Room 
 {
-
     public Ground(String name, Room previous)
     {
         super(previous);
-
+        this.setLock(new Locks());
         setName(name);
         setHeight(24);
         setWidth(52);
@@ -36,7 +32,7 @@ public class Ground extends Room implements LockedArea
 
         //Assign dog's place
         movingArea[0][getWidth() - 15] = '|';
-        movingArea[1][getWidth() - 15] = '|';
+        movingArea[1][getWidth() - 15] = '#';
         movingArea[1][getWidth() - 14] = ' ';
         movingArea[1][getWidth() - 9] = 'd';
         movingArea[1][getWidth() - 8] = 'o';
@@ -61,14 +57,17 @@ public class Ground extends Room implements LockedArea
                     if (j <= 17 + 6 || j >= 17 + 12)
                     {
                         movingArea[i][j] = '_';
-                    } else if (j == (17 + 7) || j == (17 + 11))
+                    } 
+                    else if (j == (17 + 7) || j == (17 + 11))
                     {
                         movingArea[i][j] = '|';
-                    } else
+                    } 
+                    else
                     {
                         movingArea[i][j] = '/';
                     }
-                } else if (i == 14)
+                } 
+                else if (i == 14)
                 {
                     if (j == 17 || j == 34)
                     {
@@ -77,12 +76,14 @@ public class Ground extends Room implements LockedArea
                     {
                         movingArea[i][j] = '_';
                     }
-                } else //House's area
+                } 
+                else //House's area
                 {
                     if (j == 17 || j == 34) //House's left and right wall (barrier)
                     {
                         movingArea[i][j] = '|';
-                    } else //Empty area inside the house
+                    }
+                    else //Empty area inside the house
                     {
                         movingArea[i][j] = ' ';
                     }
@@ -99,25 +100,35 @@ public class Ground extends Room implements LockedArea
 
         //The butler is in the ground
         positionNPC('B');
+
     }
-
-    /**
-     * Printing the ground
-     */
+    
     @Override
-    public void printRoom(String door)
+    protected void positionNPC(char person)
     {
-        super.printRoom(door);
-
-        printWall();
-    }
-
-    @Override
-    public void unlock(int key)
-    {
-        if (true)
+        super.positionNPC(person);
+        boolean stop = false;
+        
+        while(!stop)
         {
-            movingArea[1][getWidth() - 15] = ' ';
+            for (int i = 0; i <= getHeight() - 2; i++)
+            {   
+                for (int j = 0; j <= getWidth() - 2; j++)
+                {
+                    if(movingArea[i][j] == person)
+                    {
+                        if((i < 3 && j > getWidth() - 15) || (i >= 7 && i <= 14 && j >= 17 && j <= 34))
+                        {
+                            movingArea[i][j] = ' ';
+                            super.positionNPC(person);
+                        }
+                        else
+                        {
+                            stop = true;
+                        }
+                    }
+                }
+            }
         }
     }
 }

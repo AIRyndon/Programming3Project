@@ -19,11 +19,15 @@ public abstract class Room
     protected int height;
     protected String name;
     protected char[][] movingArea;
+    protected Room previousRoom;
+    protected Locks lock;
+    protected String name;
+    protected int width;
+    protected int height;
     protected int xInitial;
     protected int yInitial;
     protected int xCurrent;
     protected int yCurrent;
-    protected Room previousRoom;
 
     public Room(Room previous)
     {
@@ -33,8 +37,8 @@ public abstract class Room
     protected void initializeMovingArea()
     {
         this.movingArea = new char[getHeight() - 1][getWidth()];
-        xInitial = 0;
-        yInitial = movingArea[0].length / 2;
+        setxInitial(0);
+        setyInitial(movingArea[0].length / 2);
 
         //Loops for empty movingArea (ground with wall and gate only)
         for (int i = 0; i < this.getHeight() - 2; i++)
@@ -44,10 +48,12 @@ public abstract class Room
                 if (j == 0 || j == getWidth() - 1)
                 {
                     movingArea[i][j] = '|';
-                } else if (i == 0 && j == getWidth() / 2)
+                } 
+                else if (i == 0 && j == getWidth() / 2)
                 {
                     movingArea[i][j] = 'P';
-                } else
+                } 
+                else
                 {
                     movingArea[i][j] = ' ';
                 }
@@ -63,10 +69,45 @@ public abstract class Room
         int y = rand.nextInt(getHeight() - 2);
         int x = rand.nextInt(getWidth() - 2);
 
-        if(movingArea[y][x] == ' ')
+        while(movingArea[y][x] != ' ')
         {   
-            movingArea[y][x] = person;
+            y = rand.nextInt(getHeight() - 2);
+            x = rand.nextInt(getWidth() - 2);
         }
+        
+        movingArea[y][x] = person;
+    }
+    
+    public void checkPassword()
+    {
+        this.getLock().promtPassword();
+        
+        //Remove '#' when user inputs a correct password
+        if(this.getLock().isUnlock())
+        {        
+            removeCharacter('#');
+            
+            System.out.println("Congratulation! Your password is correct!");
+            System.out.println("DOOR UNLOCKED!");
+        }
+    }
+    
+    public void removeCharacter(char hint)
+    {
+        for(int i = 0; i < this.getHeight() - 1; i++)
+        {
+            for(int j = 0; j < this.getWidth(); j++)
+            {
+                if(movingArea[i][j] == hint)
+                {
+                    movingArea[i][j] = ' ';
+
+                    break;
+                }
+            }
+        }        
+        
+        printRoom(this.getName());
     }
     
     protected void printRoom(String door)
@@ -84,6 +125,8 @@ public abstract class Room
 
             System.out.println("");
         }
+        
+        printWall();
     }
 
     public void printEntrance(String roomName)
@@ -117,7 +160,8 @@ public abstract class Room
             if (wid == 0 || wid == getWidth() - 1)
             {
                 System.out.print("|");
-            } else
+            }
+            else
             {
                 System.out.print("_");
             }
@@ -173,4 +217,91 @@ public abstract class Room
     {
         return height;
     }
+
+    /**
+     * @return the previousRoom
+     */
+    public Room getPreviousRoom() 
+    {
+        return previousRoom;
+    }
+
+    /**
+     * @param previousRoom the previousRoom to set
+     */
+    public void setPreviousRoom(Room previousRoom) 
+    {
+        this.previousRoom = previousRoom;
+    }
+
+    /**
+     * @return the lock
+     */
+    public Locks getLock() 
+    {
+        return lock;
+    }
+
+    /**
+     * @param lock the lock to set
+     */
+    public void setLock(Locks lock) {
+        this.lock = lock;
+    }
+
+    /**
+     * @return the xInitial
+     */
+    public int getxInitial() {
+        return xInitial;
+    }
+
+    /**
+     * @param xInitial the xInitial to set
+     */
+    public void setxInitial(int xInitial) {
+        this.xInitial = xInitial;
+    }
+
+    /**
+     * @return the yInitial
+     */
+    public int getyInitial() {
+        return yInitial;
+    }
+
+    /**
+     * @param yInitial the yInitial to set
+     */
+    public void setyInitial(int yInitial) {
+        this.yInitial = yInitial;
+    }
+
+    /**
+     * @return the xCurrent
+     */
+    public int getxCurrent() {
+        return xCurrent;
+    }
+
+    /**
+     * @param xCurrent the xCurrent to set
+     */
+    public void setxCurrent(int xCurrent) {
+        this.xCurrent = xCurrent;
+    }
+
+    /**
+     * @return the yCurrent
+     */
+    public int getyCurrent() {
+        return yCurrent;
+    }
+
+    /**
+     * @param yCurrent the yCurrent to set
+     */
+    public void setyCurrent(int yCurrent) {
+        this.yCurrent = yCurrent;
+    }     
 }
