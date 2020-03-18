@@ -15,7 +15,7 @@ import java.io.IOException;
  *
  * @author pc
  */
-public class NPC extends Person implements Story
+public class NPC extends Person
 {
 
     private int hintXCoord;
@@ -44,19 +44,7 @@ public class NPC extends Person implements Story
     {
         return role;
     }
-
-    @Override
-    public String toString()
-    {
-        String output = "";
-
-        output += "Name: " + this.getName() + "\n";
-        output += "Gender: " + (this.getGender() == 'M' ? "Male\n" : "Female\n");
-        output += "Age: " + this.getAge() + "\n";
-
-        return output;
-    }
-
+    
     public void tryToPlaceHint(Room room, String name, String description,
             int xCoord, int yCoord)
     {

@@ -21,9 +21,6 @@ public abstract class Room
     protected char[][] movingArea;
     protected Room previousRoom;
     protected Locks lock;
-    protected String name;
-    protected int width;
-    protected int height;
     protected int xInitial;
     protected int yInitial;
     protected int xCurrent;
