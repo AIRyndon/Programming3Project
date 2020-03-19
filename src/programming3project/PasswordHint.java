@@ -24,14 +24,14 @@ public class PasswordHint
     private static Scanner scan = new Scanner(System.in);
     
     private Password lock;
-    private Functions function;
+    private PasswordHintType function;
     private String question;
     private String answer;
     private String hint;
     private int order;
     private String beforeQuestion;
     
-    public PasswordHint(Functions function, Password lock, int order) throws IOException
+    public PasswordHint(PasswordHintType function, Password lock, int order) throws IOException
     {
         this.setFunction(function);
         this.setLock(lock);
@@ -150,7 +150,7 @@ public class PasswordHint
 
     public void setupHint()
     {
-        if(getFunction() == Functions.HINTHEAD)
+        if(getFunction() == PasswordHintType.HINTHEAD)
         {
             String aHint = this.getLock().toString().substring(0, 2) + "XX";
             
@@ -167,14 +167,14 @@ public class PasswordHint
     /**
      * @return the function
      */
-    public Functions getFunction() {
+    public PasswordHintType getFunction() {
         return function;
     }
 
     /**
      * @param function the function to set
      */
-    public void setFunction(Functions function) {
+    public void setFunction(PasswordHintType function) {
         this.function = function;
     }
 

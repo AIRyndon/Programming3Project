@@ -11,7 +11,6 @@ package programming3project;
  */
 public class Hint
 {
-
     private String name;
     private String description;
     private int xLocation;

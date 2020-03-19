@@ -14,7 +14,7 @@ import java.util.Random;
  */
 public abstract class Room
 {
-    protected ArrayList<Hint> hints = new ArrayList<>();
+    public static ArrayList<Hint> hints = new ArrayList<>();
     protected int width;
     protected int height;
     protected String name;
@@ -89,13 +89,13 @@ public abstract class Room
         }
     }
     
-    public void removeCharacter(char hint)
+    public void removeCharacter(char character)
     {
         for(int i = 0; i < this.getHeight() - 1; i++)
         {
             for(int j = 0; j < this.getWidth(); j++)
             {
-                if(movingArea[i][j] == hint)
+                if(movingArea[i][j] == character)
                 {
                     movingArea[i][j] = ' ';
 

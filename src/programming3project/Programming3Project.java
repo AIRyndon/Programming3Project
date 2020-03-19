@@ -47,6 +47,14 @@ public class Programming3Project
         Game game = new Game();
         
         game.startGame();
+        
+        while(game.playAgain())
+        {
+            game = new Game();
+            System.out.println("\nWelcome to the game");
+            game.startGame();
+        }
+        
         System.out.println("Thank you for playing!\n");
 
         systemInput.close();

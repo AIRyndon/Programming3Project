@@ -61,7 +61,7 @@ public class RoomWife extends Room
             }
         }
         
-        //Wife is in her bed room
+        //Wife and Daughter are in her Wife's room
         positionNPC('W');
         positionNPC('D');
     }

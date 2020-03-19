@@ -18,7 +18,6 @@ import java.util.Scanner;
  */
 public class Game
 {
-
     //Required game fields
     private static Scanner systemInput = new Scanner(System.in);
     private Ground ground = new Ground("Ground", null);
@@ -41,18 +40,18 @@ public class Game
         assistant = new NPC("Ashton", 'M', 34, "Assistant", daughter.getRole());      
     }
     
-    public void setupHints() throws IOException
+    public void setupPasswordHints() throws IOException
     {
-        headLockedArea = new PasswordHint(Functions.HINTHEAD, roomWorking.getLock(), 1);
-        tailLockedArea = new PasswordHint(Functions.HINTTAIL, roomWorking.getLock(), 2);
-        headDogHouse = new PasswordHint(Functions.HINTHEAD, ground.getLock(), 3);
-        tailDogHouse = new PasswordHint(Functions.HINTTAIL, ground.getLock(), 4);
+        headLockedArea = new PasswordHint(PasswordHintType.HINTHEAD, roomWorking.getLock(), 1);
+        tailLockedArea = new PasswordHint(PasswordHintType.HINTTAIL, roomWorking.getLock(), 2);
+        headDogHouse = new PasswordHint(PasswordHintType.HINTHEAD, ground.getLock(), 3);
+        tailDogHouse = new PasswordHint(PasswordHintType.HINTTAIL, ground.getLock(), 4);
     }
     
     public void startGame() throws IOException
     {
         setupNPC();
-        setupHints();
+        setupPasswordHints();
         detective = setupPlayerInfo();
         introduceStory(detective);
         startGameLoop();
@@ -81,8 +80,19 @@ public class Game
             
             conversationLevel = playerHits(conversationLevel, keyPress);
                     
+            //If unlock all hints
+            //hints is static => any NPC can access hints
+            wife.unlockConversation();
+            wife.tryToPlaceHint(roomWorking, "Gloves", "A worn-out pair of gloves", 0, 5);
+            wife.tryToPlaceHint(roomWorking, "Gloves", "A worn-out pair of gloves", 0, 5);
+            wife.tryToPlaceHint(roomWorking, "Gloves", "A worn-out pair of gloves", 0, 5);
+            wife.tryToPlaceHint(roomWorking, "Gloves", "A worn-out pair of gloves", 0, 5);
             
-            if (keyPress == 'q')
+            if(house.hints.size() == 4)
+            {
+                stoppedPlaying = guessKiller();
+            }
+            else if (keyPress == 'q')
             {
                 systemInput.nextLine();
                 stoppedPlaying = quitGame();
@@ -279,7 +289,8 @@ public class Game
                     }
 
                     //check if inside the House
-                } else if (detective.getCurrentRoom().getClass() == house.getClass())
+                } 
+                else if (detective.getCurrentRoom().getClass() == house.getClass())
                 {
                     //in front of maid's room
                     if (detective.getxCoord() == 2 && detective.getyCoord() == 24)
@@ -288,19 +299,22 @@ public class Game
                         detective.setLocationToNewRoom();
 
                         //in front of butler's room
-                    } else if (detective.getxCoord() == 5 && detective.getyCoord() == 24)
+                    } 
+                    else if (detective.getxCoord() == 5 && detective.getyCoord() == 24)
                     {
                         detective.moveToAnotherRoom(roomButler);
                         detective.setLocationToNewRoom();
 
                         //in front of wife's room
-                    } else if (detective.getxCoord() == 9 && detective.getyCoord() == 24)
+                    } 
+                    else if (detective.getxCoord() == 9 && detective.getyCoord() == 24)
                     {
                         detective.moveToAnotherRoom(roomWife);
                         detective.setLocationToNewRoom();
 
                         //in front of working area
-                    } else if (detective.getxCoord() == 11 && detective.getyCoord() == 24)
+                    } 
+                    else if (detective.getxCoord() == 11 && detective.getyCoord() == 24)
                     {
                         detective.moveToAnotherRoom(roomWorking);
                         detective.setLocationToNewRoom();
@@ -367,24 +381,78 @@ public class Game
         {
             assistant.unlockConversation();
             conversationLevel = 2;
-        } else if (conversationLevel == 2)
+        } 
+        else if (conversationLevel == 2)
         {
             if (butler.getRole().equals(unlockNPC))
             {
                 butler.unlockConversation();
-            } else if (wife.getRole().equals(unlockNPC))
+            } 
+            else if (wife.getRole().equals(unlockNPC))
             {
                 wife.unlockConversation();
-            } else if (maid.getRole().equals(unlockNPC))
+            } 
+            else if (maid.getRole().equals(unlockNPC))
             {
                 maid.unlockConversation();
-            } else if (daughter.getRole().equals(unlockNPC))
+            } 
+            else if (daughter.getRole().equals(unlockNPC))
             {
                 daughter.unlockConversation();
             }
         }
               
-        return conversationLevel;
+        return conversationLevel;    
+    }
+    
+    private boolean guessKiller()
+    {
+        System.out.println("\nYou have unlocked and discovered anything in this scene!");
+        System.out.println("Press 1 to choose Daughter.");
+
+        System.out.println("Press 2 to choose Wife.");
+        System.out.println("Press 3 to choose Maid.");
+        System.out.println("Press 4 to choose Butler.");
+        System.out.println("Press 5 to choose Assistant.");
+        System.out.println("> ");
+        int killerInput = systemInput.nextInt();
+        
+        while(killerInput < 1 && killerInput > 5)
+        {
+            System.out.println("Invalid input! Please enter 1 to 5 only: ");
+            killerInput = systemInput.nextInt();
+        }
+        
+        return killerConfirm(killerInput);
+    }
+    
+    private boolean killerConfirm(int killerInput)       
+    {
+        if(killerInput == 1)
+        {
+            System.out.println("Fantastic! Daughter is the killer!");
+            System.out.println("She left without the cheesecake and the victim "
+                    + "\nate a piece of this, before being stabbled by the Maid.");
+            System.out.println("After killing the victim, the Maid clean the Working room"
+                    + "\nand threw the cheesecake in the dog's house.");
+            System.out.println("YOU WIN THE GAME!");
+        }
+        else
+        {
+            System.out.println("Oh no, something wrong! The killer is another person.");
+            System.out.println("You has been asked for getting out.");
+        }
+        
+        return true;
+    }
+    
+    public boolean playAgain()
+    {
+        systemInput.nextLine();
+
+        System.out.println("Do you want to play again? (Press 'Y')");
+        
+        return "y".equalsIgnoreCase(systemInput.nextLine());
     }
 
     private boolean quitGame()

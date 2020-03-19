@@ -9,18 +9,18 @@ package programming3project;
  *
  * @author pc
  */
-public enum Functions 
+public enum PasswordHintType 
 {
     HINTHEAD(0), HINTTAIL(1);
     
     private int functionValue;
     
-    Functions(int functionValue)
+    PasswordHintType(int functionValue)
     {
         this.setFunctionValue(functionValue);
     }
 
-    Functions() 
+    PasswordHintType() 
     {
         this.setFunctionValue(0);
     }

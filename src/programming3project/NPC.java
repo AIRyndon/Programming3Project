@@ -1,7 +1,3 @@
-/**
- *
- * @author pc
- */
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -17,7 +13,6 @@ import java.io.IOException;
  */
 public class NPC extends Person
 {
-
     private int hintXCoord;
     private int hintYCoord;
     private String role;
@@ -39,11 +34,6 @@ public class NPC extends Person
       
         conversation.unlock();
     }
-
-    public String getRole()
-    {
-        return role;
-    }
     
     public void tryToPlaceHint(Room room, String name, String description,
             int xCoord, int yCoord)
@@ -55,6 +45,11 @@ public class NPC extends Person
             room.hints.add(new Hint(name, description, xCoord, yCoord));
             room.movingArea[hintXCoord][hintYCoord] = 'X';
         }
+    }
+    
+    public String getRole()
+    {
+        return role;
     }
 
     /**

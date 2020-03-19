@@ -84,6 +84,9 @@ public class Conversation
 
     public void saveConversation() throws FileNotFoundException, IOException
     {
+        //Clear buffer
+        systemInput.nextLine();
+        
         System.out.print("=> Press 'y' save this talk, any character to ignore: ");
         boolean save = "y".equalsIgnoreCase(systemInput.nextLine());
 

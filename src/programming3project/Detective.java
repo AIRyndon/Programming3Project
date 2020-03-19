@@ -51,13 +51,15 @@ public class Detective extends Person
                         playArea[xCoord][yCoord] = '*';
                         yCoord -= 1;
                         playArea[xCoord][yCoord] = 'P';
-                    } else
+                    } 
+                    else
                     {
                         playArea[xCoord][yCoord] = ' ';
                         yCoord -= 1;
                         playArea[xCoord][yCoord] = 'P';
                     }
-                } else if (item == 'X' || item == '*')
+                } 
+                else if (item == 'X' || item == '*')
                 {
                     //todo - how to know what hint should be spit out.
                     playArea[xCoord][yCoord] = ' ';
@@ -98,7 +100,8 @@ public class Detective extends Person
                         yCoord += 1;
                         playArea[xCoord][yCoord] = 'P';
                     }
-                } else if (item == 'X' || item == '*')
+                }
+                else if (item == 'X' || item == '*')
                 {
                     playArea[xCoord][yCoord] = ' ';
                     yCoord += 1;
@@ -137,7 +140,8 @@ public class Detective extends Person
                         xCoord -= 1;
                         playArea[xCoord][yCoord] = 'P';
                     }
-                } else if (item == 'X' || item == '*')
+                } 
+                else if (item == 'X' || item == '*')
                 {
                     playArea[xCoord][yCoord] = ' ';
                     xCoord -= 1;
@@ -177,7 +181,8 @@ public class Detective extends Person
                         xCoord += 1;
                         playArea[xCoord][yCoord] = 'P';
                     }
-                } else if (item == 'X' || item == '*')
+                } 
+                else if (item == 'X' || item == '*')
                 {
                     playArea[xCoord][yCoord] = ' ';
                     xCoord += 1;
