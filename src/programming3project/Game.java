@@ -30,7 +30,7 @@ public class Game
     private Victim victim = new Victim("Bosh", "President of KPI Cooperation", 55, 'M');
     private NPC daughter, wife, maid, butler, assistant;
     private PasswordHint headLockedArea, tailLockedArea, headDogHouse, tailDogHouse;
-  
+    
     public void setupNPC() throws IOException
     {
         wife = new NPC("Belinda", 'F', 50, "Wife", "");
@@ -54,6 +54,7 @@ public class Game
         setupPasswordHints();
         detective = setupPlayerInfo();
         introduceStory(detective);
+        ground.hints.clear();
         startGameLoop();
     }
 
@@ -79,14 +80,6 @@ public class Game
             clearScreen();
             
             conversationLevel = playerHits(conversationLevel, keyPress);
-                    
-            //If unlock all hints
-            //hints is static => any NPC can access hints
-            wife.unlockConversation();
-            wife.tryToPlaceHint(roomWorking, "Gloves", "A worn-out pair of gloves", 0, 5);
-            wife.tryToPlaceHint(roomWorking, "Gloves", "A worn-out pair of gloves", 0, 5);
-            wife.tryToPlaceHint(roomWorking, "Gloves", "A worn-out pair of gloves", 0, 5);
-            wife.tryToPlaceHint(roomWorking, "Gloves", "A worn-out pair of gloves", 0, 5);
             
             if(house.hints.size() == 4)
             {
