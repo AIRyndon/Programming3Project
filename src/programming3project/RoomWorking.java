@@ -63,8 +63,6 @@ public class RoomWorking extends Room
         
         //Locked area
         movingArea[getHeight() / 2 - 1][getWidth() / 4] = '#';
-        movingArea[getHeight() / 2 - 3][4] = '!';
-        movingArea[getHeight() / 2 + 1][8] = '0';
         
         //Drawing table
         for(int row = getWidth() / 2 - 2; row < getWidth() / 2 + 3; row++)
@@ -92,12 +90,12 @@ public class RoomWorking extends Room
         while(!stop)
         {
             for (int i = 0; i <= getHeight() - 2; i++)
-            {   
+            {
                 for (int j = 0; j <= getWidth() - 2; j++)
                 {
                     if(movingArea[i][j] == person)
                     {
-                        if(j < getWidth() / 4 || j > getWidth() / 2 + 15)
+                        if(j < getWidth() / 4 || j > getWidth() / 2 + 14)
                         {
                             movingArea[i][j] = ' ';
                             super.positionNPC(person);

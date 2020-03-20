@@ -44,7 +44,6 @@ public class Password
 
     public void promtPassword()
     {        
-        System.out.println("This door is locked!");
         System.out.println("Press y to enter password, any character to leave");
         System.out.println(this.password);
         boolean enterPass = "y".equalsIgnoreCase(scan.nextLine());

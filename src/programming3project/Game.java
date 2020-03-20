@@ -318,6 +318,8 @@ public class Game
             }
             case '#':
             {
+                System.out.println("This door is locked!\n");
+                headDogHouse.printHintFile();
                 detective.getCurrentRoom().checkPassword();
                 
                 break;

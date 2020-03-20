@@ -11,6 +11,8 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -20,19 +22,21 @@ import java.util.Scanner;
  */
 public class PasswordHint 
 {
+    private Scanner scan = new Scanner(System.in);
     private Random rand = new Random();
-    private static Scanner scan = new Scanner(System.in);
-    
-    private Password lock;
     private PasswordHintType function;
+    private Password lock;
     private String question;
     private String answer;
     private String hint;
-    private int order;
     private String beforeQuestion;
+    private int order;
+    public static int hintSize = 0;
+    public static String[] hintFileContent;
     
     public PasswordHint(PasswordHintType function, Password lock, int order) throws IOException
     {
+        PrintWriter pw = new PrintWriter(new FileOutputStream("Hints.txt", false));
         this.setFunction(function);
         this.setLock(lock);
         this.setOrder(order);
@@ -89,19 +93,73 @@ public class PasswordHint
         return correct;
     }
     
-    public void saveHint() throws FileNotFoundException
+    public void saveHint() throws FileNotFoundException, IOException
     {
-        System.out.println("Note: You cannot read this information again.");
         System.out.print("Do you want to save this hint(y)? ");
         boolean save = "y".equalsIgnoreCase(scan.nextLine());
         
         if(save)
-        {
-            PrintWriter pw = new PrintWriter(new FileOutputStream("Hints.txt", true));
-            pw.append(this.getHint().toString() + "\n");
-            pw.close();
-            System.out.println("The hint has been saved!");
+        {      
+            if(hintSize == 2)
+            {
+                deleteHint();
+            }
+            
+            if(hintSize < 2)
+            {
+                PrintWriter pw = new PrintWriter(new FileOutputStream("Hints.txt", true));
+                pw.append(this.getHint().toString() + "\n");
+                pw.close();
+                System.out.println("The hint has been saved!");
+                hintSize++;
+            }
         }
+    }
+    
+    public void printHintFile() throws IOException
+    {
+        System.out.println("Opening your saved hints:");
+        BufferedReader br = new BufferedReader(new FileReader("Hints.txt"));
+        hintFileContent = new String[2];        
+        int count = 0;
+        
+        String line = "";
+        
+        while((line = br.readLine()) != null)
+        {
+            System.out.println(line);
+            hintFileContent[count] = line;
+            count++;
+        }
+    }
+    
+    public void deleteHint() throws FileNotFoundException, IOException
+    {
+        System.out.println("Ouf of memory! Press y to you to delete previous hint.");
+        printHintFile();
+        
+        System.out.println("Press 1 to delete first hint.");
+        System.out.println("Press 2 to delete second hint.");
+        System.out.println("Press any character to quit.");
+        char deleteHint = scan.next().charAt(0);
+
+        if(deleteHint == '1')
+        {
+            PrintWriter pw = new PrintWriter(new FileOutputStream("Hints.txt", false));
+            pw.print(hintFileContent[0] + "\n");
+            hintSize--;
+            pw.close();
+        }
+        else if(deleteHint == '2')
+        {
+            PrintWriter pw = new PrintWriter(new FileOutputStream("Hints.txt", false));
+            pw.print(hintFileContent[1] + "\n");
+            hintSize--;
+            pw.close();
+        }
+        
+        //clear buffer
+        scan.nextLine();
     }
     
     public void setupQuestionAndAnswer() throws FileNotFoundException, IOException

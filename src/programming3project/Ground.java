@@ -97,6 +97,8 @@ public class Ground extends Room
         movingArea[11][26] = 'U';
         movingArea[11][27] = 'S';
         movingArea[11][28] = 'E';
+        
+        movingArea[18][9] = '!';
 
         //The butler is in the ground
         positionNPC('B');

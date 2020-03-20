@@ -20,7 +20,7 @@ public class Detective extends Person
     private char[][] playArea;
     private Room currentRoom;
     private Room previousRoom;
-
+    
     public Detective(String name, char gender, int age, Room room)
     {
         super(name, gender, age);
