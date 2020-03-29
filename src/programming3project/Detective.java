@@ -5,12 +5,15 @@
  */
 package programming3project;
 
+import java.util.function.Consumer;
+
 /**
  *
  * @author airyn
  */
 public class Detective extends Person
 {
+
     //player position in the grid
     private int xPrevious;
     private int yPrevious;
@@ -20,7 +23,7 @@ public class Detective extends Person
     private char[][] playArea;
     private Room currentRoom;
     private Room previousRoom;
-    
+
     public Detective(String name, char gender, int age, Room room)
     {
         super(name, gender, age);
@@ -28,6 +31,13 @@ public class Detective extends Person
         //set initial position
         xCoord = room.getxInitial();
         yCoord = room.getyInitial();
+    }
+
+    private void updatePlayArea(Character oldValue, Character newValue, Consumer<Integer> action)
+    {
+        playArea[xCoord][yCoord] = oldValue;
+        action.accept(1);
+        playArea[xCoord][yCoord] = newValue;
     }
 
     public char move(char keyPress)
@@ -46,25 +56,17 @@ public class Detective extends Person
                 item = playArea[xCoord][yCoord - 1];
                 if (item == ' ')
                 {
-                    if (startingInsideHouse())
+                    if (notInGround())
                     {
-                        playArea[xCoord][yCoord] = '*';
-                        yCoord -= 1;
-                        playArea[xCoord][yCoord] = 'P';
-                    } 
-                    else
+                        updatePlayArea('*', 'P', value -> yCoord -= value);
+                    } else
                     {
-                        playArea[xCoord][yCoord] = ' ';
-                        yCoord -= 1;
-                        playArea[xCoord][yCoord] = 'P';
+                        updatePlayArea(' ', 'P', value -> yCoord -= value);
                     }
-                } 
-                else if (item == 'X' || item == '*')
+                } else if (item == 'X' || item == '*')
                 {
                     //todo - how to know what hint should be spit out.
-                    playArea[xCoord][yCoord] = ' ';
-                    yCoord -= 1;
-                    playArea[xCoord][yCoord] = 'P';
+                    updatePlayArea(' ', 'P', value -> yCoord -= value);
 
                     currentRoom.hints.forEach(hint ->
                     {
@@ -88,24 +90,17 @@ public class Detective extends Person
                 if (item == ' ')
                 {
                     //if at starting location, print the item used to get back
-                    if (startingInsideHouse())
+                    if (notInGround())
                     {
-                        playArea[xCoord][yCoord] = '*';
-                        yCoord += 1;
-                        playArea[xCoord][yCoord] = 'P';
+                        updatePlayArea('*', 'P', value -> yCoord += value);
 
                     } else
                     {
-                        playArea[xCoord][yCoord] = ' ';
-                        yCoord += 1;
-                        playArea[xCoord][yCoord] = 'P';
+                        updatePlayArea(' ', 'P', value -> yCoord += value);
                     }
-                }
-                else if (item == 'X' || item == '*')
+                } else if (item == 'X' || item == '*')
                 {
-                    playArea[xCoord][yCoord] = ' ';
-                    yCoord += 1;
-                    playArea[xCoord][yCoord] = 'P';
+                    updatePlayArea(' ', 'P', value -> yCoord += value);
 
                     currentRoom.hints.forEach(hint ->
                     {
@@ -128,25 +123,18 @@ public class Detective extends Person
                 item = playArea[xCoord - 1][yCoord];
                 if (item == ' ')
                 {
-                    if (startingInsideHouse())
+                    if (notInGround())
                     {
-                        playArea[xCoord][yCoord] = '*';
-                        xCoord -= 1;
-                        playArea[xCoord][yCoord] = 'P';
+                        updatePlayArea('*', 'P', value -> xCoord -= value);
 
                     } else
                     {
-                        playArea[xCoord][yCoord] = ' ';
-                        xCoord -= 1;
-                        playArea[xCoord][yCoord] = 'P';
+                        updatePlayArea(' ', 'P', value -> xCoord -= value);
                     }
-                } 
-                else if (item == 'X' || item == '*')
+                } else if (item == 'X' || item == '*')
                 {
-                    playArea[xCoord][yCoord] = ' ';
-                    xCoord -= 1;
-                    playArea[xCoord][yCoord] = 'P';
-                    
+                    updatePlayArea(' ', 'P', value -> xCoord -= value);
+
                     currentRoom.hints.forEach(hint ->
                     {
                         if (hint.getxLocation() == xCoord && hint.getyLocation() == yCoord)
@@ -169,25 +157,18 @@ public class Detective extends Person
 
                 if (item == ' ')
                 {
-                    if (startingInsideHouse())
+                    if (notInGround())
                     {
-                        playArea[xCoord][yCoord] = '*';
-                        xCoord += 1;
-                        playArea[xCoord][yCoord] = 'P';
+                        updatePlayArea('*', 'P', value -> xCoord += value);
 
                     } else
                     {
-                        playArea[xCoord][yCoord] = ' ';
-                        xCoord += 1;
-                        playArea[xCoord][yCoord] = 'P';
+                        updatePlayArea(' ', 'P', value -> xCoord += value);
                     }
-                } 
-                else if (item == 'X' || item == '*')
+                } else if (item == 'X' || item == '*')
                 {
-                    playArea[xCoord][yCoord] = ' ';
-                    xCoord += 1;
-                    playArea[xCoord][yCoord] = 'P';
-                    
+                    updatePlayArea(' ', 'P', value -> xCoord += value);
+
                     currentRoom.hints.forEach(hint ->
                     {
                         if (hint.getxLocation() == xCoord && hint.getyLocation() == yCoord)
@@ -249,7 +230,7 @@ public class Detective extends Person
         return false;
     }
 
-    private boolean startingInsideHouse()
+    private boolean notInGround()
     {
         return (xCoord == getCurrentRoom().getxInitial()
                 && yCoord == getCurrentRoom().getyInitial()

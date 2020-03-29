@@ -7,6 +7,7 @@ package programming3project;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -21,15 +22,14 @@ public class Conversation
 {
 
     private Scanner systemInput = new Scanner(System.in);
-    BufferedWriter bw = new BufferedWriter(new FileWriter("SecretTalk.txt", false));
     private boolean unlocked;
     private boolean talkedWithPlayer;
-    private char NPC;
+    private String NPC;
     private String unlockNPC;
     private String firstConversation = "";
     private String secondConversation = "";
 
-    public Conversation(char NPC, String unlockNPC) throws FileNotFoundException, IOException
+    public Conversation(String NPC, String unlockNPC) throws FileNotFoundException, IOException
     {
         setUnlockNPC(unlockNPC);
         setNPC(NPC);
@@ -75,7 +75,7 @@ public class Conversation
 //this.setUnlocked(true);
     public void quit() throws FileNotFoundException
     {
-        System.out.println("Press any character to close the talk.");
+        System.out.println("Press any character to close this conversation.");
         //systemInput.next().charAt(0);
 
         //Clear the buffer;
@@ -87,12 +87,12 @@ public class Conversation
         //Clear buffer
         systemInput.nextLine();
         
-        System.out.print("=> Press 'y' save this talk, any character to ignore: ");
+        System.out.print("=> Press 'y' save this conversation, any character to ignore: ");
         boolean save = "y".equalsIgnoreCase(systemInput.nextLine());
 
         if (save)
         {
-            bw = new BufferedWriter(new FileWriter("SecretTalk.txt", true));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(Game.getGameDirectoryPath("SecretTalk.txt"), true));
 
             String word = "";
 
@@ -108,7 +108,7 @@ public class Conversation
 
             bw.append("\n");
             bw.close();
-            System.out.println("The talk has been saved!");
+            System.out.println("The conversation has been saved!");
         }
     }
 
@@ -119,7 +119,7 @@ public class Conversation
 
     public void ReadTalk() throws FileNotFoundException, IOException
     {
-        BufferedReader br = new BufferedReader(new FileReader(getNPC() + ".txt"));
+        BufferedReader br = new BufferedReader(new FileReader(Game.getGameDirectoryPath(getNPC() + ".txt")));
 
         String line = "b";
 
@@ -217,7 +217,7 @@ public class Conversation
     /**
      * @return the NPC
      */
-    public char getNPC()
+    public String getNPC()
     {
         return NPC;
     }
@@ -225,7 +225,7 @@ public class Conversation
     /**
      * @param NPC the NPC to set
      */
-    public void setNPC(char NPC)
+    public void setNPC(String NPC)
     {
         this.NPC = NPC;
     }

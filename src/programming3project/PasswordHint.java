@@ -6,13 +6,12 @@
 package programming3project;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -35,8 +34,7 @@ public class PasswordHint
     public static String[] hintFileContent;
     
     public PasswordHint(PasswordHintType function, Password lock, int order) throws IOException
-    {
-        PrintWriter pw = new PrintWriter(new FileOutputStream("Hints.txt", false));
+    {       
         this.setFunction(function);
         this.setLock(lock);
         this.setOrder(order);
@@ -145,14 +143,14 @@ public class PasswordHint
 
         if(deleteHint == '1')
         {
-            PrintWriter pw = new PrintWriter(new FileOutputStream("Hints.txt", false));
+            PrintWriter pw = new PrintWriter(new FileOutputStream(Game.getGameDirectoryPath("Hints.txt"), false));
             pw.print(hintFileContent[0] + "\n");
             hintSize--;
             pw.close();
         }
         else if(deleteHint == '2')
         {
-            PrintWriter pw = new PrintWriter(new FileOutputStream("Hints.txt", false));
+            PrintWriter pw = new PrintWriter(new FileOutputStream(Game.getGameDirectoryPath("Hints.txt"), false));
             pw.print(hintFileContent[1] + "\n");
             hintSize--;
             pw.close();
@@ -164,7 +162,7 @@ public class PasswordHint
     
     public void setupQuestionAndAnswer() throws FileNotFoundException, IOException
     {
-        BufferedReader br = new BufferedReader(new FileReader("Questions.txt"));
+        BufferedReader br = new BufferedReader(new FileReader(Game.getGameDirectoryPath("Questions.txt")));
         
         String line = "";
         
@@ -184,7 +182,7 @@ public class PasswordHint
     
     public void setupBeforeQuestion() throws FileNotFoundException, IOException
     {
-        BufferedReader br = new BufferedReader(new FileReader("BeforeQuestion.txt"));
+        BufferedReader br = new BufferedReader(new FileReader(Game.getGameDirectoryPath("BeforeQuestion.txt")));
         
         String line = "";
         String beforeQuestions = "";
@@ -325,6 +323,4 @@ public class PasswordHint
     {
         return this.getHint();
     }
-
-
 }

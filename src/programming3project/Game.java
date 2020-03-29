@@ -5,6 +5,7 @@
  */
 package programming3project;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -18,6 +19,7 @@ import java.util.Scanner;
  */
 public class Game
 {
+
     //Required game fields
     private static Scanner systemInput = new Scanner(System.in);
     private Ground ground = new Ground("Ground", null);
@@ -25,21 +27,32 @@ public class Game
     private RoomMaid roomMaid = new RoomMaid("Maid's Room", house);
     private RoomButler roomButler = new RoomButler("Butler's Room", house);
     private RoomWife roomWife = new RoomWife("Wife's Room", house);
-    private RoomWorking roomWorking = new RoomWorking("Work Room", house);
-    private Detective detective;
+    private RoomWorking roomWorking = new RoomWorking("Work Room", house);   
     private Victim victim = new Victim("Bosh", "President of KPI Cooperation", 55, 'M');
+    private Detective detective;
     private NPC daughter, wife, maid, butler, assistant;
     private PasswordHint headLockedArea, tailLockedArea, headDogHouse, tailDogHouse;
-    
+
+    public Game()
+    {
+        String workingDir = System.getProperty("user.dir");
+        new File(workingDir + "/FileDB/").mkdir();
+    }
+
+    public static String getGameDirectoryPath(String fileName)
+    {
+        return System.getProperty("user.dir") + "/FileDB/" + fileName;
+    }
+
     public void setupNPC() throws IOException
     {
         wife = new NPC("Belinda", 'F', 50, "Wife", "");
         maid = new NPC("Cindel", 'F', 20, "Maid", wife.getRole());
         butler = new NPC("Marcello", 'M', 63, "Butler", maid.getRole());
         daughter = new NPC("Calista", 'F', 25, "Daughter", butler.getRole());
-        assistant = new NPC("Ashton", 'M', 34, "Assistant", daughter.getRole());      
+        assistant = new NPC("Ashton", 'M', 34, "Assistant", daughter.getRole());
     }
-    
+
     public void setupPasswordHints() throws IOException
     {
         headLockedArea = new PasswordHint(PasswordHintType.HINTHEAD, roomWorking.getLock(), 1);
@@ -47,7 +60,7 @@ public class Game
         headDogHouse = new PasswordHint(PasswordHintType.HINTHEAD, ground.getLock(), 3);
         tailDogHouse = new PasswordHint(PasswordHintType.HINTTAIL, ground.getLock(), 4);
     }
-    
+
     public void startGame() throws IOException
     {
         setupNPC();
@@ -69,30 +82,29 @@ public class Game
 
             //access ground => print ground
             //Moving
-            while (!(keyPress == 'a' || keyPress == 'd' || keyPress == 's' || 
-                    keyPress == 'w' || keyPress == 'q'))
+            while (!(keyPress == 'a' || keyPress == 'd' || keyPress == 's'
+                    || keyPress == 'w' || keyPress == 'q'))
             {
                 System.out.println("Press a, s, d, w then enter to move. "
                         + "Press q then enter to quit.");
                 keyPress = systemInput.next().charAt(0);
             }
-            
+
             clearScreen();
-            
+
             conversationLevel = playerHits(conversationLevel, keyPress);
-            
-            if(house.hints.size() == 4)
+
+            if (house.hints.size() == 4)
             {
                 stoppedPlaying = guessKiller();
-            }
-            else if (keyPress == 'q')
+            } else if (keyPress == 'q')
             {
                 systemInput.nextLine();
                 stoppedPlaying = quitGame();
             }
         }
     }
-    
+
     private Detective setupPlayerInfo()
     {
         //Promt user input
@@ -118,15 +130,14 @@ public class Game
             if (systemInput.hasNextInt())
             {
                 userAge = systemInput.nextInt();
-            } 
-            else
+            } else
             {
                 systemInput.nextLine();
             }
         } while (userAge <= 0);
 
         Detective detective = new Detective(userName, userGender, userAge, ground);
-        
+
         detective.setBackground("Mysterious fellow");
         detective.setCurrentRoom(ground);
         detective.setPreviousRoom(null);
@@ -148,7 +159,7 @@ public class Game
                 + "office and reading some news.");
         System.out.println("A police officer runs to you:");
         System.out.println("\"" + (detective.getGender() == 'M' ? "Sir " : "Madam ")
-                + detective.getName() + "!\"");     
+                + detective.getName() + "!\"");
         System.out.println("\"There was a murder at Royal Street! "
                 + "We need your help!\"");
 
@@ -172,7 +183,7 @@ public class Game
 
         ground.printRoom(ground.getName());
     }
-    
+
     private int playerHits(int conversationLevel, char keyPress) throws FileNotFoundException, IOException
     {
         char landedSquare = detective.move(keyPress);
@@ -194,7 +205,7 @@ public class Game
                 System.out.println(wife.toString());
                 wife.getConversation().talk();
                 unlockNPC = wife.getUnlockNPC();
-                
+
                 wife.tryToPlaceHint(roomWorking, "Gloves", "A worn-out pair of gloves", 0, 5);
 
                 break;
@@ -226,7 +237,7 @@ public class Game
                 System.out.println(daughter.toString());
                 daughter.getConversation().talk();
                 unlockNPC = daughter.getUnlockNPC();
-                
+
                 daughter.tryToPlaceHint(house, "Sedative", "A powerful sedative", 0, house.getWidth() - 10);
 
                 break;
@@ -282,8 +293,7 @@ public class Game
                     }
 
                     //check if inside the House
-                } 
-                else if (detective.getCurrentRoom().getClass() == house.getClass())
+                } else if (detective.getCurrentRoom().getClass() == house.getClass())
                 {
                     //in front of maid's room
                     if (detective.getxCoord() == 2 && detective.getyCoord() == 24)
@@ -292,22 +302,19 @@ public class Game
                         detective.setLocationToNewRoom();
 
                         //in front of butler's room
-                    } 
-                    else if (detective.getxCoord() == 5 && detective.getyCoord() == 24)
+                    } else if (detective.getxCoord() == 5 && detective.getyCoord() == 24)
                     {
                         detective.moveToAnotherRoom(roomButler);
                         detective.setLocationToNewRoom();
 
                         //in front of wife's room
-                    } 
-                    else if (detective.getxCoord() == 9 && detective.getyCoord() == 24)
+                    } else if (detective.getxCoord() == 9 && detective.getyCoord() == 24)
                     {
                         detective.moveToAnotherRoom(roomWife);
                         detective.setLocationToNewRoom();
 
                         //in front of working area
-                    } 
-                    else if (detective.getxCoord() == 11 && detective.getyCoord() == 24)
+                    } else if (detective.getxCoord() == 11 && detective.getyCoord() == 24)
                     {
                         detective.moveToAnotherRoom(roomWorking);
                         detective.setLocationToNewRoom();
@@ -321,132 +328,127 @@ public class Game
                 System.out.println("This door is locked!\n");
                 headDogHouse.printHintFile();
                 detective.getCurrentRoom().checkPassword();
-                
+
                 break;
             }
             case '$':
             {
-                if(headLockedArea.promptAnswer())
+                if (headLockedArea.promptAnswer())
                 {
                     detective.getCurrentRoom().removeCharacter(landedSquare);
                     headLockedArea.saveHint();
                 }
-                
+
                 break;
             }
             case '@':
             {
-                if(tailLockedArea.promptAnswer())
+                if (tailLockedArea.promptAnswer())
                 {
                     detective.getCurrentRoom().removeCharacter(landedSquare);
                     tailLockedArea.saveHint();
                 }
-                
+
                 break;
             }
             case '!':
             {
-                if(headDogHouse.promptAnswer())
+                if (headDogHouse.promptAnswer())
                 {
                     detective.getCurrentRoom().removeCharacter(landedSquare);
                     headDogHouse.saveHint();
                 }
-                
+
                 break;
             }
             case '0':
             {
-                if(tailDogHouse.promptAnswer())
+                if (tailDogHouse.promptAnswer())
                 {
                     detective.getCurrentRoom().removeCharacter(landedSquare);
                     tailDogHouse.saveHint();
                 }
-                
+
                 break;
             }
-                
+
             default:
                 break;
         }
-        
+
         //todo - if clause should be in NPC class or Conversation class?
-        if(conversationLevel == 1 && butler.getConversation().hasTalkedWithPlayer() && 
-                wife.getConversation().hasTalkedWithPlayer() && daughter.getConversation().hasTalkedWithPlayer() && 
-                assistant.getConversation().hasTalkedWithPlayer() && maid.getConversation().hasTalkedWithPlayer())
+        if (conversationLevel == 1 && butler.getConversation().hasTalkedWithPlayer()
+                && wife.getConversation().hasTalkedWithPlayer() && daughter.getConversation().hasTalkedWithPlayer()
+                && assistant.getConversation().hasTalkedWithPlayer() && maid.getConversation().hasTalkedWithPlayer())
         {
             assistant.unlockConversation();
             conversationLevel = 2;
-        } 
-        else if (conversationLevel == 2)
+        } else if (conversationLevel == 2)
         {
             if (butler.getRole().equals(unlockNPC))
             {
                 butler.unlockConversation();
-            } 
-            else if (wife.getRole().equals(unlockNPC))
+            } else if (wife.getRole().equals(unlockNPC))
             {
                 wife.unlockConversation();
-            } 
-            else if (maid.getRole().equals(unlockNPC))
+            } else if (maid.getRole().equals(unlockNPC))
             {
                 maid.unlockConversation();
-            } 
-            else if (daughter.getRole().equals(unlockNPC))
+            } else if (daughter.getRole().equals(unlockNPC))
             {
                 daughter.unlockConversation();
             }
         }
-              
-        return conversationLevel;    
+
+        return conversationLevel;
     }
-    
+
     private boolean guessKiller()
     {
         System.out.println("\nYou have unlocked and discovered anything in this scene!");
-        System.out.println("Press 1 to choose Daughter.");
+        System.out.println("Press 1 to choose Assistant.");
+        System.out.println("Press 2 to choose Butler.");
+        System.out.println("Press 3 to choose Daughter.");
+        System.out.println("Press 4 to choose Maid.");
+        System.out.println("Press 5 to choose Wife.");
 
-        System.out.println("Press 2 to choose Wife.");
-        System.out.println("Press 3 to choose Maid.");
-        System.out.println("Press 4 to choose Butler.");
-        System.out.println("Press 5 to choose Assistant.");
         System.out.println("> ");
         int killerInput = systemInput.nextInt();
-        
-        while(killerInput < 1 && killerInput > 5)
+
+        while (killerInput < 1 && killerInput > 5)
         {
             System.out.println("Invalid input! Please enter 1 to 5 only: ");
             killerInput = systemInput.nextInt();
         }
-        
+
         return killerConfirm(killerInput);
     }
-    
-    private boolean killerConfirm(int killerInput)       
+
+    private boolean killerConfirm(int killerInput)
     {
-        if(killerInput == 1)
+        if (killerInput == 3)
         {
-            System.out.println("Fantastic! Daughter is the killer!");
+            System.out.println("Fantastic! The daughter is the killer!");
             System.out.println("She left without the cheesecake and the victim "
                     + "\nate a piece of this, before being stabbled by the Maid.");
-            System.out.println("After killing the victim, the Maid clean the Working room"
+            System.out.println("After killing the victim, the Maid cleaned the Working room"
                     + "\nand threw the cheesecake in the dog's house.");
             System.out.println("YOU WIN THE GAME!");
-        }
-        else
+        } else
         {
             System.out.println("Oh no, something wrong! The killer is another person.");
             System.out.println("You has been asked for getting out.");
         }
-        
+
         return true;
     }
-    
+
     public boolean playAgain()
     {
         systemInput.nextLine();
 
         System.out.println("Do you want to play again? (Press 'Y')");
-        
+
         return "y".equalsIgnoreCase(systemInput.nextLine());
     }
 
@@ -466,7 +468,7 @@ public class Game
         return (quitGame == 'Y' || quitGame == 'y');
     }
 
-    private void clearScreen()
+    private static void clearScreen()
     {
         System.out.println(new String(new char[100]).replace('\0', '\n'));
     }

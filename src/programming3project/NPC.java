@@ -22,7 +22,7 @@ public class NPC extends Person
     public NPC(String name, char gender, int age, String role, String unlockNPC) throws IOException
     {
         super(name, gender, age);
-        this.conversation = new Conversation(role.charAt(0), unlockNPC);
+        this.conversation = new Conversation(role, unlockNPC);
         this.setUnlockNPC(unlockNPC);
         this.role = role;
     }

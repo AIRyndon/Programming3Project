@@ -14,7 +14,7 @@ import java.util.Random;
  */
 public abstract class Room
 {
-    public static ArrayList<Hint> hints = new ArrayList<>();
+    public ArrayList<Hint> hints = new ArrayList<>();
     protected int width;
     protected int height;
     protected String name;
