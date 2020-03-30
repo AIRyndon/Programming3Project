@@ -19,7 +19,7 @@ public class NPC extends Person
     private String unlockNPC;
     private Conversation conversation;
 
-    public NPC(String name, char gender, int age, String role, String unlockNPC) throws IOException
+    public NPC(String name, char gender, int age, String role, String unlockNPC)
     {
         super(name, gender, age);
         this.conversation = new Conversation(role, unlockNPC);

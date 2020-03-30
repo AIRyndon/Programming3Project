@@ -7,7 +7,6 @@ package programming3project;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -29,16 +28,16 @@ public class Conversation
     private String firstConversation = "";
     private String secondConversation = "";
 
-    public Conversation(String NPC, String unlockNPC) throws FileNotFoundException, IOException
+    public Conversation(String NPC, String unlockNPC)
     {
         setUnlockNPC(unlockNPC);
         setNPC(NPC);
         unlocked = false;
         talkedWithPlayer = false;
-        ReadTalk();
+        ReadNPCLines();
     }
 
-    public void talk() throws FileNotFoundException, IOException
+    public void talk()
     {
         //Ask if player wants to talk
         System.out.print("Do you want to get some information? (Y/N)");
@@ -59,10 +58,14 @@ public class Conversation
             if (isUnlocked())
             {
                 System.out.println(getSecondConversation());
+                saveConversation(getFirstConversation() + getSecondConversation());
                 this.setSecondConversation("");
+            } else
+            {
+                saveConversation(getFirstConversation());
             }
 
-            saveConversation();
+            //todo - pass the string to save here - not just the second conversation
             quit();
         }
     }
@@ -73,7 +76,7 @@ public class Conversation
 // I think the cleanest way to go about this is clear the second talk, and have an option to save a conversation after pressing a key - like K for example
 //that way the player can save any conversation, and without the hint that some conversations only appear once :D
 //this.setUnlocked(true);
-    public void quit() throws FileNotFoundException
+    public void quit()
     {
         System.out.println("Press any character to close this conversation.");
         //systemInput.next().charAt(0);
@@ -82,33 +85,29 @@ public class Conversation
         systemInput.nextLine();
     }
 
-    public void saveConversation() throws FileNotFoundException, IOException
+    public void saveConversation(String conversation)
     {
         //Clear buffer
         systemInput.nextLine();
-        
+
         System.out.print("=> Press 'y' save this conversation, any character to ignore: ");
         boolean save = "y".equalsIgnoreCase(systemInput.nextLine());
 
         if (save)
         {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(Game.getGameDirectoryPath("SecretTalk.txt"), true));
-
-            String word = "";
-
-            for (int i = 0; i < getSecondConversation().length(); i++)
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(Game.getCompletePath("SecretTalk.txt"), true)))
             {
-                bw.append(this.getSecondConversation().charAt(i));
-
-                if (getSecondConversation().charAt(i) == '.')
+                for (int i = 0; i < conversation.length(); i++)
                 {
-                    bw.newLine();
+                    bw.append(conversation.charAt(i));
                 }
-            }
 
-            bw.append("\n");
-            bw.close();
-            System.out.println("The conversation has been saved!");
+                bw.append("\n");
+                System.out.println("The conversation has been saved!");
+            } catch (IOException ex)
+            {
+                System.out.println(ex.getMessage());
+            }
         }
     }
 
@@ -117,28 +116,32 @@ public class Conversation
         setUnlocked(true);
     }
 
-    public void ReadTalk() throws FileNotFoundException, IOException
+    public void ReadNPCLines()
     {
-        BufferedReader br = new BufferedReader(new FileReader(Game.getGameDirectoryPath(getNPC() + ".txt")));
-
-        String line = "b";
-
-        while ((line = br.readLine()) != null)
+        try (BufferedReader br = new BufferedReader(new FileReader(Game.getCompletePath(getNPC() + ".txt"))))
         {
-            if (!line.isEmpty())
-            {
-                setFirstConversation(getFirstConversation() + line + "\n");
-            } else
-            {
-                secondConversation += line;
+            String line;
 
-                while ((line = br.readLine()) != null)
+            while ((line = br.readLine()) != null)
+            {
+                if (!line.isEmpty())
                 {
-                    setSecondConversation(getSecondConversation() + line + "\n");
-                }
+                    setFirstConversation(getFirstConversation() + line + "\n");
+                } else
+                {
+                    secondConversation += line;
 
-                break;
+                    while ((line = br.readLine()) != null)
+                    {
+                        setSecondConversation(getSecondConversation() + line + "\n");
+                    }
+
+                    break;
+                }
             }
+        } catch (IOException ex)
+        {
+            System.out.println(ex.getMessage());
         }
     }
 

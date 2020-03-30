@@ -56,7 +56,7 @@ public class Detective extends Person
                 item = playArea[xCoord][yCoord - 1];
                 if (item == ' ')
                 {
-                    if (notInGround())
+                    if (startingInHouse())
                     {
                         updatePlayArea('*', 'P', value -> yCoord -= value);
                     } else
@@ -90,7 +90,7 @@ public class Detective extends Person
                 if (item == ' ')
                 {
                     //if at starting location, print the item used to get back
-                    if (notInGround())
+                    if (startingInHouse())
                     {
                         updatePlayArea('*', 'P', value -> yCoord += value);
 
@@ -123,7 +123,7 @@ public class Detective extends Person
                 item = playArea[xCoord - 1][yCoord];
                 if (item == ' ')
                 {
-                    if (notInGround())
+                    if (startingInHouse())
                     {
                         updatePlayArea('*', 'P', value -> xCoord -= value);
 
@@ -157,7 +157,7 @@ public class Detective extends Person
 
                 if (item == ' ')
                 {
-                    if (notInGround())
+                    if (startingInHouse())
                     {
                         updatePlayArea('*', 'P', value -> xCoord += value);
 
@@ -230,7 +230,7 @@ public class Detective extends Person
         return false;
     }
 
-    private boolean notInGround()
+    private boolean startingInHouse()
     {
         return (xCoord == getCurrentRoom().getxInitial()
                 && yCoord == getCurrentRoom().getyInitial()

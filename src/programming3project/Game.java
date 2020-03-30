@@ -7,6 +7,7 @@ package programming3project;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,7 +28,7 @@ public class Game
     private RoomMaid roomMaid = new RoomMaid("Maid's Room", house);
     private RoomButler roomButler = new RoomButler("Butler's Room", house);
     private RoomWife roomWife = new RoomWife("Wife's Room", house);
-    private RoomWorking roomWorking = new RoomWorking("Work Room", house);   
+    private RoomWorking roomWorking = new RoomWorking("Work Room", house);
     private Victim victim = new Victim("Bosh", "President of KPI Cooperation", 55, 'M');
     private Detective detective;
     private NPC daughter, wife, maid, butler, assistant;
@@ -37,14 +38,22 @@ public class Game
     {
         String workingDir = System.getProperty("user.dir");
         new File(workingDir + "/FileDB/").mkdir();
+
+        try
+        {
+            new FileWriter(getCompletePath("SecretTalk.txt")).close();
+        } catch (IOException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
     }
 
-    public static String getGameDirectoryPath(String fileName)
+    public static String getCompletePath(String fileName)
     {
         return System.getProperty("user.dir") + "/FileDB/" + fileName;
     }
 
-    public void setupNPC() throws IOException
+    public void setupNPC()
     {
         wife = new NPC("Belinda", 'F', 50, "Wife", "");
         maid = new NPC("Cindel", 'F', 20, "Maid", wife.getRole());
@@ -53,7 +62,7 @@ public class Game
         assistant = new NPC("Ashton", 'M', 34, "Assistant", daughter.getRole());
     }
 
-    public void setupPasswordHints() throws IOException
+    public void setupPasswordHints()
     {
         headLockedArea = new PasswordHint(PasswordHintType.HINTHEAD, roomWorking.getLock(), 1);
         tailLockedArea = new PasswordHint(PasswordHintType.HINTTAIL, roomWorking.getLock(), 2);
@@ -61,7 +70,7 @@ public class Game
         tailDogHouse = new PasswordHint(PasswordHintType.HINTTAIL, ground.getLock(), 4);
     }
 
-    public void startGame() throws IOException
+    public void startGame()
     {
         setupNPC();
         setupPasswordHints();
@@ -71,7 +80,7 @@ public class Game
         startGameLoop();
     }
 
-    private void startGameLoop() throws IOException
+    private void startGameLoop()
     {
         boolean stoppedPlaying = false;
         int conversationLevel = 1;
@@ -184,7 +193,7 @@ public class Game
         ground.printRoom(ground.getName());
     }
 
-    private int playerHits(int conversationLevel, char keyPress) throws FileNotFoundException, IOException
+    private int playerHits(int conversationLevel, char keyPress)
     {
         char landedSquare = detective.move(keyPress);
         String unlockNPC = "";
