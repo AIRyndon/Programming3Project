@@ -70,7 +70,7 @@ public class PasswordHint
 
             if (userInput.equalsIgnoreCase(this.getAnswer()))
             {
-                System.out.println("You are right! A round of applause for your itelligence!");
+                System.out.println("You are right! A round of applause for your intelligence!");
                 System.out.println("Hint: " + this.getHint());
                 correct = true;
                 enterPass = false;
@@ -113,7 +113,6 @@ public class PasswordHint
                 {
                     System.out.println(ex.getMessage());
                 }
-
             }
         }
     }
@@ -121,7 +120,7 @@ public class PasswordHint
     public void printHintFile()
     {
         System.out.println("Opening your saved hints:");
-        try (BufferedReader br = new BufferedReader(new FileReader("Hints.txt")))
+        try (BufferedReader br = new BufferedReader(new FileReader(Game.getCompletePath("Hints.txt"))))
         {
             int count = 0;
             String line = "";

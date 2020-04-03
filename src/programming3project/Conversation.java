@@ -69,13 +69,7 @@ public class Conversation
             quit();
         }
     }
-
-//todo - saving a conversation should be possible for any conversations - e.g. first or second conversation
-//I commented setting unlocked to false here because we wont be able to see the hints, when we set it to false after
-//talking with an NPC
-// I think the cleanest way to go about this is clear the second talk, and have an option to save a conversation after pressing a key - like K for example
-//that way the player can save any conversation, and without the hint that some conversations only appear once :D
-//this.setUnlocked(true);
+ 
     public void quit()
     {
         System.out.println("Press any character to close this conversation.");
