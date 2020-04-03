@@ -69,14 +69,6 @@ public class NPC extends Person
     }
 
     /**
-     * @param conversation the conversation to set
-     */
-    public void setConversation(Conversation conversation)
-    {
-        this.conversation = conversation;
-    }
-
-    /**
      * @return the unlockNPC
      */
     public String getUnlockNPC()

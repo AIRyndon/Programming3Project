@@ -19,6 +19,7 @@ public class Detective extends Person
     private int yPrevious;
     private int xCoord;
     private int yCoord;
+    private int grabbedHints = 0;
     private String background;
     private char[][] playArea;
     private Room currentRoom;
@@ -107,6 +108,7 @@ public class Detective extends Person
                         if (hint.getxLocation() == xCoord && hint.getyLocation() == yCoord)
                         {
                             System.out.println(hint.toString());
+                            ++grabbedHints;
                         }
                     });
                 }
@@ -371,5 +373,13 @@ public class Detective extends Person
     public void setyCoord(int yCoord)
     {
         this.yCoord = yCoord;
+    }
+
+    /**
+     * @return the grabbedHints
+     */
+    public int getGrabbedHints()
+    {
+        return grabbedHints;
     }
 }

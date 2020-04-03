@@ -55,9 +55,9 @@ public class Game
     public void setupNPC()
     {
         wife = new NPC("Belinda", 'F', 50, "Wife", "");
-        maid = new NPC("Cindel", 'F', 20, "Maid", wife.getRole());
+        maid = new NPC("Maria", 'F', 20, "Maid", wife.getRole());
         butler = new NPC("Marcello", 'M', 63, "Butler", maid.getRole());
-        daughter = new NPC("Calista", 'F', 25, "Daughter", butler.getRole());
+        daughter = new NPC("Sandy", 'F', 25, "Daughter", butler.getRole());
         assistant = new NPC("Ashton", 'M', 34, "Assistant", daughter.getRole());
     }
 
@@ -89,7 +89,6 @@ public class Game
             char keyPress = '\0';
 
             //access ground => print ground
-            //Moving
             while (!(keyPress == 'a' || keyPress == 'd' || keyPress == 's'
                     || keyPress == 'w' || keyPress == 'q'))
             {
@@ -102,7 +101,7 @@ public class Game
 
             conversationLevel = playerHits(conversationLevel, keyPress);
 
-            if (house.hints.size() == 4)
+            if (detective.getGrabbedHints() >= 4)
             {
                 stoppedPlaying = guessKiller();
             } else if (keyPress == 'q')
@@ -194,10 +193,10 @@ public class Game
 
     private int playerHits(int conversationLevel, char keyPress)
     {
-        char landedSquare = detective.move(keyPress);
+        char currentSquare = detective.move(keyPress);
         String unlockNPC = "";
 
-        switch (landedSquare)
+        switch (currentSquare)
         {
             //todo - handling of NPC character cases should be in NPC class
             case 'B':
@@ -343,7 +342,7 @@ public class Game
             {
                 if (headLockedArea.promptAnswer())
                 {
-                    detective.getCurrentRoom().removeCharacter(landedSquare);
+                    detective.getCurrentRoom().removeCharacter(currentSquare);
                     headLockedArea.saveHint();
                 }
 
@@ -353,7 +352,7 @@ public class Game
             {
                 if (tailLockedArea.promptAnswer())
                 {
-                    detective.getCurrentRoom().removeCharacter(landedSquare);
+                    detective.getCurrentRoom().removeCharacter(currentSquare);
                     tailLockedArea.saveHint();
                 }
 
@@ -363,7 +362,7 @@ public class Game
             {
                 if (headDogHouse.promptAnswer())
                 {
-                    detective.getCurrentRoom().removeCharacter(landedSquare);
+                    detective.getCurrentRoom().removeCharacter(currentSquare);
                     headDogHouse.saveHint();
                 }
 
@@ -373,7 +372,7 @@ public class Game
             {
                 if (tailDogHouse.promptAnswer())
                 {
-                    detective.getCurrentRoom().removeCharacter(landedSquare);
+                    detective.getCurrentRoom().removeCharacter(currentSquare);
                     tailDogHouse.saveHint();
                 }
 
@@ -413,7 +412,7 @@ public class Game
 
     private boolean guessKiller()
     {
-        System.out.println("\nYou have unlocked and discovered anything in this scene!");
+        System.out.println("\nYou have unlocked all the hints in the game! Who do you think killed the victim?");
         System.out.println("Press 1 to choose Assistant.");
         System.out.println("Press 2 to choose Butler.");
         System.out.println("Press 3 to choose Daughter.");
@@ -438,14 +437,13 @@ public class Game
         {
             System.out.println("Fantastic! The daughter is the killer!");
             System.out.println("She left without the cheesecake and the victim "
-                    + "\nate a piece of this, before being stabbled by the Maid.");
-            System.out.println("After killing the victim, the Maid cleaned the Working room"
+                    + "\nate a piece of this - killing him - before he got stabbled by the Maid.");
+            System.out.println("After stabbing the victim, the Maid cleaned the Working room"
                     + "\nand threw the cheesecake in the dog's house.");
             System.out.println("YOU WIN THE GAME!");
         } else
         {
-            System.out.println("Oh no, something wrong! The killer is another person.");
-            System.out.println("You has been asked for getting out.");
+            System.out.println("The killer is a different person. You lost the game! Try again next time!");
         }
 
         return true;
