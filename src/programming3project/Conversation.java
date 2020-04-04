@@ -89,7 +89,8 @@ public class Conversation
 
         if (save)
         {
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter(Game.getCompletePath("SecretTalk.txt"), true)))
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(
+                    Game.getCompletePath("SecretTalk.txt"), true)))
             {
                 for (int i = 0; i < conversation.length(); i++)
                 {
@@ -112,7 +113,8 @@ public class Conversation
 
     public void ReadNPCLines()
     {
-        try (BufferedReader br = new BufferedReader(new FileReader(Game.getCompletePath(getNPC() + ".txt"))))
+        try (BufferedReader br = new BufferedReader(new FileReader(
+                Game.getCompletePath(getNPC() + ".txt"))))
         {
             String line;
 
@@ -120,7 +122,7 @@ public class Conversation
             {
                 if (!line.isEmpty())
                 {
-                    setFirstConversation(getFirstConversation() + line + "\n");
+                    setFirstConversation(line + "\n");
                 } else
                 {
                     secondConversation += line;

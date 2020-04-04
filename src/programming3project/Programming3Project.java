@@ -6,7 +6,6 @@
 package programming3project;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 /**
  *

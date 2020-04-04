@@ -35,12 +35,14 @@ public class Game
 
     public Game()
     {
+        //Setup writable game files
         String workingDir = System.getProperty("user.dir");
         new File(workingDir + "/FileDB/").mkdir();
 
         try
         {
             new FileWriter(getCompletePath("SecretTalk.txt")).close();
+            new FileWriter(getCompletePath("Hints.txt")).close();
         } catch (IOException ex)
         {
             System.out.println(ex.getMessage());
@@ -55,7 +57,7 @@ public class Game
     public void setupNPC()
     {
         wife = new NPC("Belinda", 'F', 50, "Wife", "");
-        maid = new NPC("Maria", 'F', 20, "Maid", wife.getRole());
+        maid = new NPC("Chelsea", 'F', 20, "Maid", wife.getRole());
         butler = new NPC("Marcello", 'M', 63, "Butler", maid.getRole());
         daughter = new NPC("Sandy", 'F', 25, "Daughter", butler.getRole());
         assistant = new NPC("Ashton", 'M', 34, "Assistant", daughter.getRole());
@@ -63,10 +65,10 @@ public class Game
 
     public void setupPasswordHints()
     {
-        headLockedArea = new PasswordHint(PasswordHintType.HINTHEAD, roomWorking.getLock(), 1);
-        tailLockedArea = new PasswordHint(PasswordHintType.HINTTAIL, roomWorking.getLock(), 2);
-        headDogHouse = new PasswordHint(PasswordHintType.HINTHEAD, ground.getLock(), 3);
-        tailDogHouse = new PasswordHint(PasswordHintType.HINTTAIL, ground.getLock(), 4);
+        headLockedArea = new PasswordHint(PasswordHintType.HINTHEAD, roomWorking.getLock(), 1,"Alprazolam");
+        tailLockedArea = new PasswordHint(PasswordHintType.HINTTAIL, roomWorking.getLock(), 2,"9:50");
+        headDogHouse = new PasswordHint(PasswordHintType.HINTHEAD, ground.getLock(), 3,"Bosh");
+        tailDogHouse = new PasswordHint(PasswordHintType.HINTTAIL, ground.getLock(), 4,"Working room");
     }
 
     public void startGame()
@@ -213,7 +215,8 @@ public class Game
                 wife.getConversation().talk();
                 unlockNPC = wife.getUnlockNPC();
 
-                wife.tryToPlaceHint(roomWorking, "Gloves", "A worn-out pair of gloves", 0, 5);
+                wife.tryToPlaceHint(roomWorking, "Gloves", "A worn-out pair of gloves...there is a name on it - "
+                        + "\nit is illegible, you only recognize the letters cse,", 0, 5);
 
                 break;
             }

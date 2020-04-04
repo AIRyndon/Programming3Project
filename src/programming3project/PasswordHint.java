@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Random;
@@ -30,22 +31,17 @@ public class PasswordHint
     private String hint;
     private String beforeQuestion;
     private int order;
-    public static int hintSize = 0;
-    public static String[] hintFileContent = new String[2];
+    public static int savedCodeCount = 0;
+    public static String[] savedCodes = {"",""};
 
-    public PasswordHint(PasswordHintType function, Password lock, int order)
+    public PasswordHint(PasswordHintType function, Password lock, int order, String answer)
     {
         this.setFunction(function);
         this.setLock(lock);
         this.setOrder(order);
         setupHint();
-        setupQuestionAndAnswer();
-        setupBeforeQuestion();
-    }
-
-    public PasswordHint()
-    {
-
+        setupQuestionAndAnswer(answer);
+        setupTrivias();
     }
 
     public boolean promptAnswer()
@@ -70,7 +66,7 @@ public class PasswordHint
 
             if (userInput.equalsIgnoreCase(this.getAnswer()))
             {
-                System.out.println("You are right! A round of applause for your intelligence!");
+                System.out.println("You are right! Great job!!");
                 System.out.println("Hint: " + this.getHint());
                 correct = true;
                 enterPass = false;
@@ -97,18 +93,29 @@ public class PasswordHint
 
         if (save)
         {
-            if (hintSize == 2)
+            if (savedCodeCount == 2)
             {
-                deleteHint();
+                deleteCode();
             }
 
-            if (hintSize < 2)
+            if (savedCodeCount < 2)
             {
-                try (PrintWriter pw = new PrintWriter(new FileOutputStream("Hints.txt", true)))
+                for (int i = 0; i < savedCodes.length; i++)
                 {
-                    pw.append(this.getHint().toString() + "\n");
+                    if (savedCodes[i].equals(""))
+                    {
+                        savedCodes[i] = getHint();
+                        break;
+                    }
+                }
+
+                try (FileWriter pw = new FileWriter(
+                        Game.getCompletePath("Hints.txt")))
+                {
+                    pw.append(savedCodes[0] + '\n');
+                    pw.append(savedCodes[1] + '\n');
                     System.out.println("The hint has been saved!");
-                    hintSize++;
+                    savedCodeCount++;
                 } catch (IOException ex)
                 {
                     System.out.println(ex.getMessage());
@@ -120,56 +127,52 @@ public class PasswordHint
     public void printHintFile()
     {
         System.out.println("Opening your saved hints:");
-        try (BufferedReader br = new BufferedReader(new FileReader(Game.getCompletePath("Hints.txt"))))
+        try (BufferedReader br = new BufferedReader(new FileReader(
+                Game.getCompletePath("Hints.txt"))))
         {
-            int count = 0;
             String line = "";
-
             while ((line = br.readLine()) != null)
             {
                 System.out.println(line);
-                hintFileContent[count] = line;
-                count++;
             }
+            
         } catch (IOException ex)
         {
             System.out.println(ex.getMessage());
         }
     }
 
-    public void deleteHint()
+    public void deleteCode()
     {
-        System.out.println("Ouf of memory! Press y to you to delete previous hint.");
+        System.out.println("You can only save 2 codes! Press y to you to delete a previous one.");
         printHintFile();
 
-        System.out.println("Press 1 to delete first hint.");
-        System.out.println("Press 2 to delete second hint.");
-        System.out.println("Press any character to quit.");
-        char deleteHint = scan.next().charAt(0);
+        int deletedItem = 0;
 
-        try (PrintWriter pw = new PrintWriter(new FileOutputStream(Game.getCompletePath("Hints.txt"), false)))
+        do
         {
-            if (deleteHint == '1')
+            System.out.println("Press 1 to delete first code.");
+            System.out.println("Press 2 to delete second code.");
+            System.out.println("Press any character to quit.");
+
+            if (scan.hasNextInt())
             {
-                pw.print(hintFileContent[0] + "\n");
-                hintSize--;
-            } else if (deleteHint == '2')
-            {
-                pw.print(hintFileContent[1] + "\n");
-                hintSize--;
+                deletedItem = scan.nextInt();
             }
-        } catch (IOException ex)
-        {
-            System.out.println(ex.getMessage());
-        }
+
+        } while (!(deletedItem == 1 || deletedItem == 2));
+
+        savedCodes[deletedItem - 1] = "";
+        --savedCodeCount;
 
         //clear buffer
         scan.nextLine();
     }
 
-    public void setupQuestionAndAnswer()
+    public void setupQuestionAndAnswer(String answer)
     {
-        try (BufferedReader br = new BufferedReader(new FileReader(Game.getCompletePath("Questions.txt"))))
+        try (BufferedReader br = new BufferedReader(new FileReader(
+                Game.getCompletePath("Questions.txt"))))
         {
             String line = "";
 
@@ -178,7 +181,7 @@ public class PasswordHint
                 if (line.contains(Integer.toString(this.getOrder())))
                 {
                     this.setQuestion(line.substring(1));
-                    this.setAnswer(br.readLine());
+                    this.setAnswer(answer);
 
                     break;
                 }
@@ -189,7 +192,7 @@ public class PasswordHint
         }
     }
 
-    public void setupBeforeQuestion()
+    public void setupTrivias()
     {
         try (BufferedReader br = new BufferedReader(new FileReader(
                 Game.getCompletePath("BeforeQuestion.txt"))))
@@ -218,17 +221,15 @@ public class PasswordHint
 
     public void setupHint()
     {
+        String aHint = "";
         if (getFunction() == PasswordHintType.HINTHEAD)
         {
-            String aHint = this.getLock().toString().substring(0, 2) + "XX";
-
-            this.setHint(aHint);
+            aHint = this.getLock().toString().substring(0, 2) + "XX";
         } else
         {
-            String aHint = "XX" + this.getLock().toString().substring(2);
-
-            this.setHint(aHint);
+            aHint = "XX" + this.getLock().toString().substring(2);          
         }
+        this.setHint(aHint);
     }
 
     /**
