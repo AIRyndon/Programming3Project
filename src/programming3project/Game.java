@@ -38,15 +38,7 @@ public class Game
         //Setup writable game files
         String workingDir = System.getProperty("user.dir");
         new File(workingDir + "/FileDB/").mkdir();
-
-        try
-        {
-            new FileWriter(getCompletePath("SecretTalk.txt")).close();
-            new FileWriter(getCompletePath("Hints.txt")).close();
-        } catch (IOException ex)
-        {
-            System.out.println(ex.getMessage());
-        }
+        clearWritableFiles();
     }
 
     public static String getCompletePath(String fileName)
@@ -63,21 +55,20 @@ public class Game
         assistant = new NPC("Ashton", 'M', 34, "Assistant", daughter.getRole());
     }
 
-    public void setupPasswordHints()
+    public void setupPasswordCodes()
     {
-        headLockedArea = new PasswordHint(PasswordHintType.HINTHEAD, roomWorking.getLock(), 1,"Alprazolam");
-        tailLockedArea = new PasswordHint(PasswordHintType.HINTTAIL, roomWorking.getLock(), 2,"9:50");
-        headDogHouse = new PasswordHint(PasswordHintType.HINTHEAD, ground.getLock(), 3,"Bosh");
-        tailDogHouse = new PasswordHint(PasswordHintType.HINTTAIL, ground.getLock(), 4,"Working room");
+        headLockedArea = new PasswordHint(PasswordHintType.HINTHEAD, roomWorking.getLock(), 1, "Alprazolam");
+        tailLockedArea = new PasswordHint(PasswordHintType.HINTTAIL, roomWorking.getLock(), 2, "9:50");
+        headDogHouse = new PasswordHint(PasswordHintType.HINTHEAD, ground.getLock(), 3, "Bosh");
+        tailDogHouse = new PasswordHint(PasswordHintType.HINTTAIL, ground.getLock(), 4, "Work Room");
     }
 
     public void startGame()
     {
         setupNPC();
-        setupPasswordHints();
+        setupPasswordCodes();
         detective = setupPlayerInfo();
         introduceStory(detective);
-        ground.hints.clear();
         startGameLoop();
     }
 
@@ -248,7 +239,7 @@ public class Game
                 daughter.getConversation().talk();
                 unlockNPC = daughter.getUnlockNPC();
 
-                daughter.tryToPlaceHint(house, "Sedative", "A powerful sedative", 0, house.getWidth() - 10);
+                daughter.tryToPlaceHint(house, "Alprazolam", "A powerful sedative - can have side-effects when taken regularly", 0, house.getWidth() - 10);
 
                 break;
             }
@@ -474,9 +465,26 @@ public class Game
             quitGame = systemInput.next().charAt(0);
         }
 
+        if (quitGame == 'Y' || quitGame == 'y')
+        {
+            clearWritableFiles();
+        }
+
         return (quitGame == 'Y' || quitGame == 'y');
     }
-
+    
+    private void clearWritableFiles()
+    {
+        try
+        {
+            new FileWriter(getCompletePath("SecretTalk.txt")).close();
+            new FileWriter(getCompletePath("Hints.txt")).close();
+        } catch (IOException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
     private static void clearScreen()
     {
         System.out.println(new String(new char[100]).replace('\0', '\n'));

@@ -1,10 +1,10 @@
 1Q: What is the sedative's name? (eg. Abcde)
 
 
-2Q: What time did Marcello start talking with the victim (eg. 8:00 p.m.)?
+2Q: What time did Marcello start talking with the victim? (eg. 8:00)
 
 
-3Q: Who allowed Chelsea to work here (enter name only, eg. Leo)?
+3Q: Who allowed Chelsea to work here? (enter name only, eg. Leo)
 
 
-4Q: Where are the gloves (eg. Xyz's room)?
+4Q: Where are the gloves? (eg. Ground)

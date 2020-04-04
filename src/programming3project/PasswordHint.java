@@ -49,7 +49,7 @@ public class PasswordHint
         boolean correct = false;
 
         System.out.println("Press y to get hint, any character to leave: ");
-        System.out.println(this.getAnswer());
+        //System.out.println(this.getAnswer());
         boolean enterPass = "y".equalsIgnoreCase(scan.nextLine());
         int count = 0;
 

@@ -64,8 +64,7 @@ public class Conversation
             {
                 saveConversation(getFirstConversation());
             }
-
-            //todo - pass the string to save here - not just the second conversation
+           
             quit();
         }
     }
@@ -73,7 +72,6 @@ public class Conversation
     public void quit()
     {
         System.out.println("Press any character to close this conversation.");
-        //systemInput.next().charAt(0);
 
         //Clear the buffer;
         systemInput.nextLine();
@@ -122,14 +120,14 @@ public class Conversation
             {
                 if (!line.isEmpty())
                 {
-                    setFirstConversation(line + "\n");
+                    setFirstConversation(getFirstConversation() + line + '\n');
                 } else
                 {
                     secondConversation += line;
 
                     while ((line = br.readLine()) != null)
                     {
-                        setSecondConversation(getSecondConversation() + line + "\n");
+                        setSecondConversation(getSecondConversation() + line + '\n');
                     }
 
                     break;
