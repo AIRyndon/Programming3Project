@@ -7,7 +7,6 @@ package programming3project;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -95,7 +94,7 @@ public class Conversation
                     bw.append(conversation.charAt(i));
                 }
 
-                bw.append("\n");
+                bw.append('\n');
                 System.out.println("The conversation has been saved!");
             } catch (IOException ex)
             {

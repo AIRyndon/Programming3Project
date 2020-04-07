@@ -74,6 +74,7 @@ public class Detective extends Person
                         if (hint.getxLocation() == xCoord && hint.getyLocation() == yCoord)
                         {
                             System.out.println(hint.toString());
+                            ++grabbedHints;
                         }
                     });
                 }
@@ -142,6 +143,7 @@ public class Detective extends Person
                         if (hint.getxLocation() == xCoord && hint.getyLocation() == yCoord)
                         {
                             System.out.println(hint.toString());
+                            ++grabbedHints;
                         }
                     });
                 }
@@ -176,6 +178,7 @@ public class Detective extends Person
                         if (hint.getxLocation() == xCoord && hint.getyLocation() == yCoord)
                         {
                             System.out.println(hint.toString());
+                            ++grabbedHints;
                         }
                     });
                 }
