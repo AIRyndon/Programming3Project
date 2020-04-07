@@ -68,15 +68,6 @@ public class Detective extends Person
                 {
                     //todo - how to know what hint should be spit out.
                     updatePlayArea(' ', 'P', value -> yCoord -= value);
-
-                    currentRoom.hints.forEach(hint ->
-                    {
-                        if (hint.getxLocation() == xCoord && hint.getyLocation() == yCoord)
-                        {
-                            System.out.println(hint.toString());
-                            ++grabbedHints;
-                        }
-                    });
                 }
 
                 break;
@@ -103,15 +94,6 @@ public class Detective extends Person
                 } else if (item == 'X' || item == '*')
                 {
                     updatePlayArea(' ', 'P', value -> yCoord += value);
-
-                    currentRoom.hints.forEach(hint ->
-                    {
-                        if (hint.getxLocation() == xCoord && hint.getyLocation() == yCoord)
-                        {
-                            System.out.println(hint.toString());
-                            ++grabbedHints;
-                        }
-                    });
                 }
 
                 break;
@@ -137,15 +119,6 @@ public class Detective extends Person
                 } else if (item == 'X' || item == '*')
                 {
                     updatePlayArea(' ', 'P', value -> xCoord -= value);
-
-                    currentRoom.hints.forEach(hint ->
-                    {
-                        if (hint.getxLocation() == xCoord && hint.getyLocation() == yCoord)
-                        {
-                            System.out.println(hint.toString());
-                            ++grabbedHints;
-                        }
-                    });
                 }
 
                 break;
@@ -172,15 +145,6 @@ public class Detective extends Person
                 } else if (item == 'X' || item == '*')
                 {
                     updatePlayArea(' ', 'P', value -> xCoord += value);
-
-                    currentRoom.hints.forEach(hint ->
-                    {
-                        if (hint.getxLocation() == xCoord && hint.getyLocation() == yCoord)
-                        {
-                            System.out.println(hint.toString());
-                            ++grabbedHints;
-                        }
-                    });
                 }
 
                 break;
@@ -210,18 +174,18 @@ public class Detective extends Person
 
     public void setLocationToPreviousRoom()
     {
-        setxCoord(getCurrentRoom().xCurrent);
-        setyCoord(getCurrentRoom().yCurrent);
-        setxPrevious(getPreviousRoom().xCurrent);
-        setyPrevious(getPreviousRoom().yCurrent);
+        xCoord = getCurrentRoom().xCurrent;
+        yCoord = getCurrentRoom().yCurrent;
+        xPrevious = getPreviousRoom().xCurrent;
+        yPrevious = getPreviousRoom().yCurrent;
     }
 
     public void setLocationToNewRoom()
     {
-        setxPrevious(getPreviousRoom().xCurrent);
-        setyPrevious(getPreviousRoom().yCurrent);
-        setxCoord(getCurrentRoom().getxInitial());
-        setyCoord(getCurrentRoom().getyInitial());
+        xPrevious = getPreviousRoom().xCurrent;
+        yPrevious = getPreviousRoom().yCurrent;
+        xCoord = getCurrentRoom().getxInitial();
+        yCoord = getCurrentRoom().getyInitial();
     }
 
     private boolean inCorner(int coordinate, int worldEdge)
@@ -285,19 +249,6 @@ public class Detective extends Person
         this.playArea = playArea;
     }
 
-    @Override
-    public String toString()
-    {
-        String output = "";
-
-        output += "Name: " + this.getName() + "\n";
-        output += "Gender: " + (this.getGender() == 'M' ? "Male\n" : "Female\n");
-        output += "Age: " + this.getAge() + "\n";//Do we need to create another attribute for age? => Then ask user
-        output += "Background: " + this.getBackground() + "\n";
-
-        return output;
-    }
-
     /**
      * @return the previousRoom
      */
@@ -323,27 +274,11 @@ public class Detective extends Person
     }
 
     /**
-     * @param xPrevious the xPrevious to set
-     */
-    public void setxPrevious(int xPrevious)
-    {
-        this.xPrevious = xPrevious;
-    }
-
-    /**
      * @return the yPrevious
      */
     public int getyPrevious()
     {
         return yPrevious;
-    }
-
-    /**
-     * @param yPrevious the yPrevious to set
-     */
-    public void setyPrevious(int yPrevious)
-    {
-        this.yPrevious = yPrevious;
     }
 
     /**
@@ -355,14 +290,6 @@ public class Detective extends Person
     }
 
     /**
-     * @param xCoord the xCoord to set
-     */
-    public void setxCoord(int xCoord)
-    {
-        this.xCoord = xCoord;
-    }
-
-    /**
      * @return the yPrevious
      */
     public int getyCoord()
@@ -371,18 +298,28 @@ public class Detective extends Person
     }
 
     /**
-     * @param yCoord the yCoord to set
-     */
-    public void setyCoord(int yCoord)
-    {
-        this.yCoord = yCoord;
-    }
-
-    /**
      * @return the grabbedHints
      */
     public int getGrabbedHints()
     {
         return grabbedHints;
+    }
+
+    public void incrementGrabbedHints()
+    {
+        ++grabbedHints;
+    }
+
+    @Override
+    public String toString()
+    {
+        String output = "";
+
+        output += "Name: " + this.getName() + "\n";
+        output += "Gender: " + (this.getGender() == 'M' ? "Male\n" : "Female\n");
+        output += "Age: " + this.getAge() + "\n";//Do we need to create another attribute for age? => Then ask user
+        output += "Background: " + this.getBackground() + "\n";
+
+        return output;
     }
 }

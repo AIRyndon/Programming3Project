@@ -59,8 +59,7 @@ public abstract class Room
     }
 
     protected void positionNPC(char person)
-    {
-        //Randomly assign some hint positions in the ground 
+    { 
         Random rand = new Random();
         
         int y = rand.nextInt(getHeight() - 2);
@@ -84,7 +83,7 @@ public abstract class Room
         {        
             removeCharacter('#');
             
-            System.out.println("Congratulation! Your password is correct!");
+            System.out.println("Congratulations! Your password is correct!");
             System.out.println("DOOR UNLOCKED!");
         }
     }

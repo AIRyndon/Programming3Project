@@ -5,46 +5,45 @@
  */
 package programming3project;
 
-import java.io.IOException;
-
 /**
  *
  * @author pc
  */
 public class NPC extends Person
 {
+
     private boolean placedHint = false;
     private String role;
     private String unlockNPC;
-    private Conversation conversation;
+    private NPCLine NPCLine;
 
     public NPC(String name, char gender, int age, String role, String unlockNPC)
     {
         super(name, gender, age);
-        this.conversation = new Conversation(role, unlockNPC);
+        this.NPCLine = new NPCLine(role, unlockNPC);
         this.setUnlockNPC(unlockNPC);
         this.role = role;
     }
 
-    public void unlockConversation()
-    {
-        System.out.println("Congratulations! You can now get potentially important information from the " + this.getRole() + "!\n");
-        System.out.println("You might want to speak with " + (getGender() == 'M' ? "him" : "her") + " again.");
-      
-        conversation.unlock();
+    public void unlockNPCLine()
+    {     
+        NPCLine.unlock();
     }
-    
+
     public void tryToPlaceHint(Room room, String name, String description,
             int xCoord, int yCoord)
     {
-        if (getConversation().isUnlocked() && !placedHint)
+        if (getLine().isUnlocked() && !placedHint)
         {
             placedHint = true;
             room.hints.add(new Hint(name, description, xCoord, yCoord));
             room.movingArea[xCoord][yCoord] = 'X';
+
+            System.out.println("Congratulations! You can now get potentially important information from the " + getRole() + "!\n");
+            System.out.println("You might want to speak with " + (getGender() == 'M' ? "him" : "her") + " again.");
         }
     }
-    
+
     public String getRole()
     {
         return role;
@@ -59,11 +58,11 @@ public class NPC extends Person
     }
 
     /**
-     * @return the conversation
+     * @return the NPCLine
      */
-    public Conversation getConversation()
+    public NPCLine getLine()
     {
-        return conversation;
+        return NPCLine;
     }
 
     /**
@@ -81,7 +80,7 @@ public class NPC extends Person
     {
         this.unlockNPC = unlockNPC;
     }
-    
+
     @Override
     public String toString()
     {

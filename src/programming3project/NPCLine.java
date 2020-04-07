@@ -16,7 +16,7 @@ import java.util.Scanner;
  *
  * @author pc
  */
-public class Conversation
+public class NPCLine
 {
 
     private Scanner systemInput = new Scanner(System.in);
@@ -24,10 +24,10 @@ public class Conversation
     private boolean talkedWithPlayer;
     private String NPC;
     private String unlockNPC;
-    private String firstConversation = "";
-    private String secondConversation = "";
+    private String firstLine = "";
+    private String secondLine = "";
 
-    public Conversation(String NPC, String unlockNPC)
+    public NPCLine(String NPC, String unlockNPC)
     {
         setUnlockNPC(unlockNPC);
         setNPC(NPC);
@@ -52,16 +52,16 @@ public class Conversation
         if ((listen == 'Y' || listen == 'y'))
         {
             talkedWithPlayer = true;
-            System.out.println(getFirstConversation());
+            System.out.println(getFirstLine());
 
             if (isUnlocked())
             {
-                System.out.println(getSecondConversation());
-                saveConversation(getFirstConversation() + getSecondConversation());
-                this.setSecondConversation("");
+                System.out.println(getSecondLine());
+                saveNPCLines(getFirstLine() + getSecondLine());
+                this.setSecondLine("");
             } else
             {
-                saveConversation(getFirstConversation());
+                saveNPCLines(getFirstLine());
             }
            
             quit();
@@ -76,7 +76,7 @@ public class Conversation
         systemInput.nextLine();
     }
 
-    public void saveConversation(String conversation)
+    public void saveNPCLines(String conversation)
     {
         //Clear buffer
         systemInput.nextLine();
@@ -119,14 +119,14 @@ public class Conversation
             {
                 if (!line.isEmpty())
                 {
-                    setFirstConversation(getFirstConversation() + line + '\n');
+                    setFirstLine(getFirstLine() + line + '\n');
                 } else
                 {
-                    secondConversation += line;
+                    secondLine += line;
 
                     while ((line = br.readLine()) != null)
                     {
-                        setSecondConversation(getSecondConversation() + line + '\n');
+                        setSecondLine(getSecondLine() + line + '\n');
                     }
 
                     break;
@@ -173,33 +173,33 @@ public class Conversation
     /**
      * @return the firstConversation
      */
-    public String getFirstConversation()
+    public String getFirstLine()
     {
-        return firstConversation;
+        return firstLine;
     }
 
     /**
-     * @param conversation the firstConversation to set
+     * @param line the firstConversation to set
      */
-    public void setFirstConversation(String conversation)
+    public void setFirstLine(String line)
     {
-        this.firstConversation = conversation;
+        firstLine = line;
     }
 
     /**
      * @return the secondConversation
      */
-    public String getSecondConversation()
+    public String getSecondLine()
     {
-        return secondConversation;
+        return secondLine;
     }
 
     /**
-     * @param conversation the secondConversation to set
+     * @param line the secondConversation to set
      */
-    public void setSecondConversation(String conversation)
+    public void setSecondLine(String line)
     {
-        this.secondConversation = conversation;
+        secondLine = line;
     }
 
     /**

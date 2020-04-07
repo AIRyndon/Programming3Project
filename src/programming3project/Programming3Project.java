@@ -23,7 +23,7 @@ public class Programming3Project
         Game game = new Game();       
         game.startGame();
         
-        while(game.playAgain())
+        if(game.playAgain())
         {
             game = new Game();
             System.out.println("\nWelcome to the game");
