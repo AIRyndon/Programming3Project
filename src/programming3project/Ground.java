@@ -45,8 +45,8 @@ public class Ground extends Room
         }
 
         /**
-         * Assign HouseArea (because the house is on the ground) Player cannot
-         * move in this area, just access through the door
+         * Assign HouseArea (because the house is on the ground)
+         * Player cannot move in this area, just access through the door.
          */
         for (int i = 7; i <= 14; i++)
         {
@@ -102,7 +102,6 @@ public class Ground extends Room
 
         //The butler is in the ground
         positionNPC('B');
-
     }
     
     @Override

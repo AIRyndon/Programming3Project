@@ -1,10 +1,7 @@
-1Q: What is the sedative's name? (eg. Abcde)
+1Q: How long has Chelsea been working in the house? (eg. 4 months)
 
+2Q: What time did Ashton called the police? (eg. 8:00)
 
-2Q: What time did Marcello start talking with the victim? (eg. 8:00)
+3Q: What is the sedative's name? (eg. Android)
 
-
-3Q: Who allowed Chelsea to work here? (enter name only, eg. Leo)
-
-
-4Q: Where are the gloves? (eg. Ground)
+4Q: Who saw Sandy returned home? (enter first name only, eg. Leo)

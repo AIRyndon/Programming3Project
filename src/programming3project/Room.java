@@ -101,9 +101,7 @@ public abstract class Room
                     break;
                 }
             }
-        }        
-        
-        printRoom(this.getName());
+        }
     }
     
     protected void printRoom(String door)

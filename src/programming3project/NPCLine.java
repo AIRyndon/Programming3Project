@@ -18,7 +18,6 @@ import java.util.Scanner;
  */
 public class NPCLine
 {
-
     private Scanner systemInput = new Scanner(System.in);
     private boolean unlocked;
     private boolean talkedWithPlayer;
@@ -39,29 +38,25 @@ public class NPCLine
     public void talk()
     {
         //Ask if player wants to talk
-        System.out.print("Do you want to get some information? (Y/N)");
+        System.out.println("Press y to get some information, any character to leave.");
+        System.out.print("> ");
         char listen = systemInput.next().charAt(0);
         systemInput.nextLine();
-
-        while (listen != 'Y' && listen != 'y' && listen != 'N' && listen != 'n')
-        {
-            System.out.print("Invalid input! Please enter again: ");
-            listen = systemInput.next().charAt(0);
-        }
-
+        
         if ((listen == 'Y' || listen == 'y'))
         {
-            talkedWithPlayer = true;
-            System.out.println(getFirstLine());
-
-            if (isUnlocked())
+            if(!isUnlocked())
             {
-                System.out.println(getSecondLine());
-                saveNPCLines(getFirstLine() + getSecondLine());
-                this.setSecondLine("");
-            } else
+                talkedWithPlayer = true;
+                System.out.println("\n" + getFirstLine());
+            }
+            else
             {
-                saveNPCLines(getFirstLine());
+                System.out.println("\n" + getSecondLine());
+                
+                //After printing task 2, task 2 = task 1
+                    //Player is unable to see task 2 again
+                this.setSecondLine(getFirstLine());
             }
            
             quit();
@@ -81,7 +76,8 @@ public class NPCLine
         //Clear buffer
         systemInput.nextLine();
 
-        System.out.print("=> Press 'y' save this conversation, any character to ignore: ");
+        System.out.println("Press 'y' to save this conversation, any character to ignore.");
+        System.out.print("> ");
         boolean save = "y".equalsIgnoreCase(systemInput.nextLine());
 
         if (save)
@@ -96,7 +92,8 @@ public class NPCLine
 
                 bw.append('\n');
                 System.out.println("The conversation has been saved!");
-            } catch (IOException ex)
+            } 
+            catch (IOException ex)
             {
                 System.out.println(ex.getMessage());
             }
@@ -120,7 +117,8 @@ public class NPCLine
                 if (!line.isEmpty())
                 {
                     setFirstLine(getFirstLine() + line + '\n');
-                } else
+                } 
+                else
                 {
                     secondLine += line;
 

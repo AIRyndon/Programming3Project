@@ -9,8 +9,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
+import javafx.scene.Node;
 
 /**
  *
@@ -18,7 +20,6 @@ import java.util.Scanner;
  */
 public class PasswordHint
 {
-
     private Scanner scan = new Scanner(System.in);
     private Random rand = new Random();
     private PasswordHintType function;
@@ -28,8 +29,7 @@ public class PasswordHint
     private String hint;
     private String beforeQuestion;
     private int order;
-    public static int savedCodeCount = 0;
-    public static String[] savedCodes = {"",""};
+    public static LinkedList<String> savedCodes;
 
     public PasswordHint(PasswordHintType function, Password lock, int order, String answer)
     {
@@ -39,6 +39,8 @@ public class PasswordHint
         setupHint();
         setupQuestionAndAnswer(answer);
         setupTrivias();
+        
+        savedCodes = new LinkedList<String>();
     }
 
     public boolean promptAnswer()
@@ -48,36 +50,31 @@ public class PasswordHint
         System.out.println("Press y to get hint, any character to leave: ");
         //System.out.println(this.getAnswer());
         boolean enterPass = "y".equalsIgnoreCase(scan.nextLine());
-        int count = 0;
 
-        while (enterPass)
+        if(enterPass)
         {
-            if (count == 0)
-            {
-                System.out.println(this.getBeforeQuestion());
-            }
-
+            System.out.println(this.getBeforeQuestion());
+            
             System.out.println(this.getQuestion());
             System.out.print("> ");
             String userInput = scan.nextLine();
-
-            if (userInput.equalsIgnoreCase(this.getAnswer()))
+            
+            while (!userInput.equalsIgnoreCase("q"))
             {
-                System.out.println("You are right! Great job!!");
-                System.out.println("Hint: " + this.getHint());
-                correct = true;
-                enterPass = false;
-            } else if (!userInput.equalsIgnoreCase("q"))
-            {
-                System.out.println("You are wrong! Enter your answer again or press q to quit.");
+                if (userInput.equalsIgnoreCase(this.getAnswer()))
+                {
+                    System.out.println("You are right! Great job!");
+                    System.out.println("Hint: " + this.getHint());
+                    correct = true;
+                    userInput = "q";
+                } 
+                else if (!userInput.equalsIgnoreCase("q"))
+                {
+                    System.out.println("You are wrong! Press q to quit.");
+                    System.out.print("> ");
+                    userInput = scan.nextLine();
+                }
             }
-
-            if (userInput.equalsIgnoreCase("q"))
-            {
-                enterPass = false;
-            }
-
-            count = 1;
         }
 
         return correct;
@@ -90,30 +87,27 @@ public class PasswordHint
 
         if (save)
         {
-            if (savedCodeCount == 2)
+            if (savedCodes.size() == 2)
             {
                 deleteCode();
             }
 
-            if (savedCodeCount < 2)
+            if (savedCodes.size() < 2)
             {
-                for (int i = 0; i < savedCodes.length; i++)
-                {
-                    if (savedCodes[i].equals(""))
-                    {
-                        savedCodes[i] = getHint();
-                        break;
-                    }
-                }
+                savedCodes.add(this.getHint());
 
                 try (FileWriter pw = new FileWriter(
                         Game.getCompletePath("Hints.txt")))
                 {
-                    pw.append(savedCodes[0] + '\n');
-                    pw.append(savedCodes[1] + '\n');
-                    System.out.println("The hint has been saved!");
-                    savedCodeCount++;
-                } catch (IOException ex)
+                    for(int size = 0; size < savedCodes.size(); size++)
+                    {
+                        pw.append(savedCodes.get(size) + '\n');
+                    }
+                   
+                    System.out.println("The hint has been saved! Press enter to return to your location.");
+                    scan.nextLine();
+                } 
+                catch (IOException ex)
                 {
                     System.out.println(ex.getMessage());
                 }
@@ -141,29 +135,19 @@ public class PasswordHint
 
     public void deleteCode()
     {
-        System.out.println("You can only save 2 codes! Press y to you to delete a previous one.");
+        System.out.println("\nYou can only save 2 codes!");
         printHintFile();
 
-        int deletedItem = 0;
+        boolean isDelete = false;
 
-        do
+        System.out.println("Press d to delete the first one, any character to leave.");
+        System.out.print("> ");
+        isDelete = "d".equalsIgnoreCase(scan.nextLine());
+
+        if (isDelete)
         {
-            System.out.println("Press 1 to delete first code.");
-            System.out.println("Press 2 to delete second code.");
-            System.out.println("Press any character to quit.");
-
-            if (scan.hasNextInt())
-            {
-                deletedItem = scan.nextInt();
-            }
-
-        } while (!(deletedItem == 1 || deletedItem == 2));
-
-        savedCodes[deletedItem - 1] = "";
-        --savedCodeCount;
-
-        //clear buffer
-        scan.nextLine();
+            savedCodes.remove();
+        }
     }
 
     public void setupQuestionAndAnswer(String answer)

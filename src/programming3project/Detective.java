@@ -13,7 +13,6 @@ import java.util.function.Consumer;
  */
 public class Detective extends Person
 {
-
     //player position in the grid
     private int xPrevious;
     private int yPrevious;

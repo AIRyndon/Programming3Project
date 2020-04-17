@@ -28,35 +28,47 @@ public class RoomWorking extends Room
         super.initializeMovingArea();
 
         //Assign Locked Area
-        for (int i = 0; i < getHeight() - 1; i++)
+        for (int height = 0; height < getHeight() - 1; height++)
         {
-            for (int j = 0; j < getWidth(); j++)
+            for (int width = 0; width < getWidth(); width++)
             {
-                if(j == getWidth() / 4)
+                if(width == getWidth() / 4)
                 {
-                    movingArea[i][j] = '|';
+                    movingArea[height][width] = '|';
                 }
                 
                 //Wall of Book room
-                if(j == getWidth() / 2 + 15 && i != 9)
+                if(width == getWidth() / 2 + 15 && height != 9)
                 {
-                    movingArea[i][j] = '|';
+                    movingArea[height][width] = '|';
                 }
                 
-                if(j == getWidth() - 1)
+                if(width == getWidth() - 1)
                 {
-                    movingArea[i][j] = ' ';
+                    movingArea[height][width] = ' ';
+                }
+                
+                //Book Room's wall
+                if(width == getWidth() / 2 + 15 + height * 2)
+                {
+                    movingArea[height][width] = '\\';
+                    
+                    if(height < getHeight() - 2)
+                    {
+                        movingArea[height][width + 1] = '.';
+                    }
                 }
             }
         }
         
         //Book Room's wall
-        int j;
+        /*int j;
         for (int i = 0; i < getHeight() - 1; i++)
         {
             j = getWidth() / 2 + 15 + i * 2;
             movingArea[i][j] = '\\';
-        }
+            
+        }*/
         
         //Hints in Book room
         movingArea[4][getWidth() - 19] = '@';
@@ -95,7 +107,7 @@ public class RoomWorking extends Room
                 {
                     if(movingArea[i][j] == person)
                     {
-                        if(j < getWidth() / 4 || j > getWidth() / 2 + 14)
+                        if(j < getWidth() / 4 || j > getWidth() / 2 + 12)
                         {
                             movingArea[i][j] = ' ';
                             super.positionNPC(person);

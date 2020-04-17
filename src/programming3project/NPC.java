@@ -37,9 +37,17 @@ public class NPC extends Person
         {
             placedHint = true;
             room.hints.add(new Hint(name, description, xCoord, yCoord));
-            room.movingArea[xCoord][yCoord] = 'X';
-
-            System.out.println("Congratulations! You can now get potentially important information from the " + getRole() + "!\n");
+            
+            if(room.movingArea[xCoord][yCoord] == ' ')
+            {
+                room.movingArea[xCoord][yCoord] = 'X';
+            }
+            else
+            {
+                room.movingArea[xCoord][yCoord + 1] = 'X';
+            }
+            
+            System.out.println("Congratulations! You can now get potentially important information from the " + getRole() + "!");
             System.out.println("You might want to speak with " + (getGender() == 'M' ? "him" : "her") + " again.");
         }
     }

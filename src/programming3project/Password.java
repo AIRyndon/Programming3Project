@@ -25,7 +25,6 @@ public class Password
         this.setUnlock(false);
         
         initialisePassword();
-        
     }
     
     void initialisePassword()

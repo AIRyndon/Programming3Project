@@ -59,6 +59,6 @@ public class Hint
     @Override
     public String toString()
     {
-        return "You found the " + getName() + "." + getDescription();
+        return "You found the " + getName() + ". " + getDescription();
     }
 }
