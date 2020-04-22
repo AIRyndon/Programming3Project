@@ -4,4 +4,4 @@
 
 3Q: What is the sedative's name? (eg. Android)
 
-4Q: Who saw Sandy returned home? (enter first name only, eg. Leo)
+4Q: Who saw Sandy return home? (enter first name only, eg. Leo)

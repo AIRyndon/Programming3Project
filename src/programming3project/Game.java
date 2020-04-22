@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 /**
@@ -21,7 +22,7 @@ public class Game
 {
 
     //Required game fields
-    private final static Scanner SYSTEMINPUT = new Scanner(System.in);
+    public final static Scanner SYSTEMINPUT = new Scanner(System.in);
     private final Ground ground = new Ground("Ground", null);
     private final House house = new House("House", ground);
     private final RoomMaid roomMaid = new RoomMaid("Maid's Room", house);
@@ -55,7 +56,6 @@ public class Game
         butler = new NPC("Marcello", 'M', 63, "Butler", maid.getRole());
         wife = new NPC("Belinda", 'F', 50, "Wife", butler.getRole());
         assistant = new NPC("Ashton", 'M', 34, "Assistant", wife.getRole());
-
     }
 
     public void setupPasswordCodes()
@@ -77,9 +77,9 @@ public class Game
 
     private void startGameLoop()
     {
-        boolean stillPlaying = true;
+        boolean playing = true;
 
-        while (stillPlaying)
+        while (playing)
         {
             char keyPress = '\0';
 
@@ -87,8 +87,8 @@ public class Game
             while (!(keyPress == 'a' || keyPress == 'd' || keyPress == 's'
                     || keyPress == 'w' || keyPress == 'q'))
             {
-                System.out.println("Press a, s, d, w then enter to move. "
-                        + "Press q then enter to quit.");
+                System.out.print("\nPress a, s, d, w then enter to move. "
+                        + "Press q then enter to quit.> ");
                 keyPress = SYSTEMINPUT.next().charAt(0);
             }
 
@@ -99,12 +99,11 @@ public class Game
 
             if (detective.getGrabbedHints() == 5)
             {
-                stillPlaying = guessKiller();
-            } 
-            else if (keyPress == 'q')
+                playing = guessKiller();
+            } else if (keyPress == 'q')
             {
                 SYSTEMINPUT.nextLine();
-                stillPlaying = quitGame();
+                playing = quitGame();
             }
         }
     }
@@ -120,7 +119,9 @@ public class Game
         {
             System.out.print("Please enter a gender(M/F): ");
             userGender = SYSTEMINPUT.next().charAt(0);
-        } while (!(userGender == 'M' || userGender == 'm' || userGender == 'F'
+        } while (!(userGender == 'M'
+                || userGender == 'm'
+                || userGender == 'F'
                 || userGender == 'f'));
 
         //Clear buffer
@@ -169,7 +170,7 @@ public class Game
         while (!(enterPremises == 'Y' || enterPremises == 'y'
                 || enterPremises == 'N' || enterPremises == 'n'))
         {
-            System.out.println("\nDo you want to enter the compound?(Y/N)");
+            System.out.print("\nDo you want to enter the compound?(Y/N)");
             enterPremises = SYSTEMINPUT.next().charAt(0);
         }
 
@@ -183,40 +184,47 @@ public class Game
                     + "who was mentioned by the police...\n\n");
         }
 
+        try
+        {
+            Thread.sleep(1500);
+        } catch (InterruptedException ex)
+        {
+            ex.printStackTrace(System.out);
+        }
+
         ground.printRoom(ground.getName());
     }
 
     private void updateConversationLevel()
     {
-        if (conversationLevel == 1 && butler.getLine().hasTalkedWithPlayer()
-                && wife.getLine().hasTalkedWithPlayer() && daughter.getLine().hasTalkedWithPlayer()
-                && assistant.getLine().hasTalkedWithPlayer() && maid.getLine().hasTalkedWithPlayer())
+        if (conversationLevel == 1
+                && butler.hasTalkedWithPlayer()
+                && wife.hasTalkedWithPlayer()
+                && daughter.hasTalkedWithPlayer()
+                && maid.hasTalkedWithPlayer())
         {
-            assistant.unlockNPCLine();
+            assistant.unlockLines();
             conversationLevel = 2;
-        } 
-        else if (conversationLevel == 2)
+
+        } else if (conversationLevel == 2)
         {
             if (butler.getRole().equals(unlockNPC))
             {
-                butler.unlockNPCLine();
-            } 
-            else if (wife.getRole().equals(unlockNPC))
+                butler.unlockLines();
+            } else if (wife.getRole().equals(unlockNPC))
             {
-                wife.unlockNPCLine();
-            } 
-            else if (maid.getRole().equals(unlockNPC))
+                wife.unlockLines();
+            } else if (maid.getRole().equals(unlockNPC))
             {
-                maid.unlockNPCLine();
-            } 
-            else if (daughter.getRole().equals(unlockNPC))
+                maid.unlockLines();
+            } else if (daughter.getRole().equals(unlockNPC))
             {
-                daughter.unlockNPCLine();
+                daughter.unlockLines();
             }
         }
     }
 
-    private void handlePlayerInteraction (char keyPress)
+    private void handlePlayerInteraction(char keyPress)
     {
         char currentSquare = detective.move(keyPress);
 
@@ -228,7 +236,7 @@ public class Game
                 System.out.println(butler.toString());
                 butler.getLine().talk();
                 unlockNPC = butler.getUnlockNPC();
-                
+
                 butler.tryToPlaceHint(roomWorking, "Old Picture", "A picture of a young girl - "
                         + "\nthe girl has a resemblance with the maid", 0, 5);
 
@@ -249,10 +257,10 @@ public class Game
                 System.out.println(assistant.toString());
                 assistant.getLine().talk();
                 unlockNPC = assistant.getUnlockNPC();
-                
+
                 assistant.tryToPlaceHint(house, "Alprazolam", "A powerful sedative -"
                         + "\ncan have side-effects when taken regularly", 0, house.getWidth() - 10);
-                
+
                 break;
             }
             case 'M':
@@ -271,7 +279,7 @@ public class Game
                 System.out.println(daughter.toString());
                 daughter.getLine().talk();
                 unlockNPC = daughter.getUnlockNPC();
-                
+
                 daughter.tryToPlaceHint(roomMaid, "Gloves", "A worn-out pair of gloves, there is a name on it - "
                         + "\nit is illegible, you only recognize the letters ATO,", 3, 39);
 
@@ -280,7 +288,7 @@ public class Game
             case 'V':
             {
                 System.out.println(victim.toString());
-                
+
                 break;
             }
             case 'd':
@@ -342,8 +350,7 @@ public class Game
                     }
 
                     //check if inside the House
-                } 
-                else if (detective.getCurrentRoom().getClass() == house.getClass())
+                } else if (detective.getCurrentRoom().getClass() == house.getClass())
                 {
                     //in front of maid's room
                     if (detective.getxCoord() == 2 && detective.getyCoord() == 24)
@@ -352,22 +359,19 @@ public class Game
                         detective.setLocationToNewRoom();
 
                         //in front of butler's room
-                    } 
-                    else if (detective.getxCoord() == 5 && detective.getyCoord() == 24)
+                    } else if (detective.getxCoord() == 5 && detective.getyCoord() == 24)
                     {
                         detective.moveToAnotherRoom(roomButler);
                         detective.setLocationToNewRoom();
 
                         //in front of wife's room
-                    } 
-                    else if (detective.getxCoord() == 9 && detective.getyCoord() == 24)
+                    } else if (detective.getxCoord() == 9 && detective.getyCoord() == 24)
                     {
                         detective.moveToAnotherRoom(roomWife);
                         detective.setLocationToNewRoom();
 
                         //in front of working area
-                    } 
-                    else if (detective.getxCoord() == 11 && detective.getyCoord() == 24)
+                    } else if (detective.getxCoord() == 11 && detective.getyCoord() == 24)
                     {
                         detective.moveToAnotherRoom(roomWorking);
                         detective.setLocationToNewRoom();
@@ -435,15 +439,23 @@ public class Game
 
     private boolean guessKiller()
     {
-        System.out.println("\nCongratulation! You have unlocked all the hints in the game!");
-        System.out.println("Let's decide who is the murderer.");
+        System.out.println("\nCongratulations! You have unlocked all the hints in the game!");
+        System.out.println("Time to guess who is the murderer.");
+
+        System.out.println("Below are your saved notes to help you decide: ");
+      
+        LinkedList<String> savedItems = NPCLine.getSavedLines();
+        for (int index = 0; index < savedItems.size(); index++)
+        {
+            System.out.println(savedItems.get(index));
+        }
+
         System.out.println("Press 1 to choose Assistant.");
         System.out.println("Press 2 to choose Butler.");
         System.out.println("Press 3 to choose Daughter.");
         System.out.println("Press 4 to choose Maid.");
         System.out.println("Press 5 to choose Wife.");
 
-        System.out.println("> ");
         int guess = SYSTEMINPUT.nextInt();
 
         while (guess < 1 && guess > 5)
@@ -465,8 +477,7 @@ public class Game
             System.out.println("After stabbing the victim, the Maid cleaned the Working room"
                     + "\nand threw the cheesecake in the dog's house.");
             System.out.println("YOU WIN THE GAME!\n");
-        } 
-        else
+        } else
         {
             System.out.println("The killer is a different person. YOU LOST THE GAME!\n");
         }
@@ -512,8 +523,7 @@ public class Game
         {
             new FileWriter(getCompletePath("SecretTalk.txt")).close();
             new FileWriter(getCompletePath("Hints.txt")).close();
-        } 
-        catch (IOException ex)
+        } catch (IOException ex)
         {
             System.out.println(ex.getMessage());
         }

@@ -13,6 +13,7 @@ import java.util.function.Consumer;
  */
 public class Detective extends Person
 {
+
     //player position in the grid
     private int xPrevious;
     private int yPrevious;
@@ -31,13 +32,6 @@ public class Detective extends Person
         //set initial position
         xCoord = room.getxInitial();
         yCoord = room.getyInitial();
-    }
-
-    private void updatePlayArea(Character oldValue, Character newValue, Consumer<Integer> action)
-    {
-        playArea[xCoord][yCoord] = oldValue;
-        action.accept(1);
-        playArea[xCoord][yCoord] = newValue;
     }
 
     public char move(char keyPress)
@@ -187,24 +181,6 @@ public class Detective extends Person
         yCoord = getCurrentRoom().getyInitial();
     }
 
-    private boolean inCorner(int coordinate, int worldEdge)
-    {
-        if (coordinate == worldEdge)
-        {
-            currentRoom.printRoom(currentRoom.getName());
-            return true;
-        }
-
-        return false;
-    }
-
-    private boolean startingInHouse()
-    {
-        return (xCoord == getCurrentRoom().getxInitial()
-                && yCoord == getCurrentRoom().getyInitial()
-                && getCurrentRoom().getName() != "Ground");
-    }
-
     /**
      * @return the background
      */
@@ -307,6 +283,32 @@ public class Detective extends Person
     public void incrementGrabbedHints()
     {
         ++grabbedHints;
+    }
+
+    private boolean inCorner(int coordinate, int worldEdge)
+    {
+        if (coordinate == worldEdge)
+        {
+            currentRoom.printRoom(currentRoom.getName());
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean startingInHouse()
+    {
+        return (xCoord == getCurrentRoom().getxInitial()
+                && yCoord == getCurrentRoom().getyInitial()
+                && !getCurrentRoom().getName().equals("Ground"));
+    }
+
+    private void updatePlayArea(Character oldValue, Character newValue,
+                            Consumer<Integer> action)
+    {
+        playArea[xCoord][yCoord] = oldValue;
+        action.accept(1);
+        playArea[xCoord][yCoord] = newValue;
     }
 
     @Override

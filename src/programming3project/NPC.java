@@ -13,6 +13,7 @@ public class NPC extends Person
 {
 
     private boolean placedHint = false;
+    private boolean talkedWithPlayer = false;
     private String role;
     private String unlockNPC;
     private NPCLine NPCLine;
@@ -20,14 +21,20 @@ public class NPC extends Person
     public NPC(String name, char gender, int age, String role, String unlockNPC)
     {
         super(name, gender, age);
-        this.NPCLine = new NPCLine(role, unlockNPC);
         this.setUnlockNPC(unlockNPC);
         this.role = role;
+        this.NPCLine = new NPCLine(this);
     }
 
-    public void unlockNPCLine()
-    {     
-        NPCLine.unlock();
+    public void unlockLines()
+    {
+        if (!getLine().isUnlocked())
+        {
+            System.out.println("\nCongratulations! You can now get potentially important information from the "
+                    + getRole() + "!");
+            System.out.println("You might want to speak with " + (getGender() == 'M' ? "him" : "her") + " again.");
+            NPCLine.unlock();
+        }
     }
 
     public void tryToPlaceHint(Room room, String name, String description,
@@ -37,18 +44,9 @@ public class NPC extends Person
         {
             placedHint = true;
             room.hints.add(new Hint(name, description, xCoord, yCoord));
-            
-            if(room.movingArea[xCoord][yCoord] == ' ')
-            {
-                room.movingArea[xCoord][yCoord] = 'X';
-            }
-            else
-            {
-                room.movingArea[xCoord][yCoord + 1] = 'X';
-            }
-            
-            System.out.println("Congratulations! You can now get potentially important information from the " + getRole() + "!");
-            System.out.println("You might want to speak with " + (getGender() == 'M' ? "him" : "her") + " again.");
+            room.movingArea[xCoord][yCoord] = 'X';
+
+            System.out.println("\nAn item popped up somewhere...maybe it can help you with this case.");
         }
     }
 
@@ -87,6 +85,19 @@ public class NPC extends Person
     public void setUnlockNPC(String unlockNPC)
     {
         this.unlockNPC = unlockNPC;
+    }
+
+    /**
+     * @return the talkedWithPlayerOnce
+     */
+    public boolean hasTalkedWithPlayer()
+    {
+        return talkedWithPlayer;
+    }
+
+    public void talkedWithPlayer()
+    {
+        talkedWithPlayer = true;
     }
 
     @Override

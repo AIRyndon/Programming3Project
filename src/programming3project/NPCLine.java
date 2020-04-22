@@ -10,92 +10,68 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
  *
  * @author pc
  */
-public class NPCLine
+public final class NPCLine
 {
-    private Scanner systemInput = new Scanner(System.in);
+
+    private static LinkedList<String> SAVEDLINES = new LinkedList<>();
     private boolean unlocked;
-    private boolean talkedWithPlayer;
-    private String NPC;
-    private String unlockNPC;
+    private NPC npc;
     private String firstLine = "";
     private String secondLine = "";
 
-    public NPCLine(String NPC, String unlockNPC)
+    public NPCLine(NPC npc)
     {
-        setUnlockNPC(unlockNPC);
-        setNPC(NPC);
-        unlocked = false;
-        talkedWithPlayer = false;
+        setNPC(npc);
         ReadNPCLines();
+        unlocked = false;
+    }
+
+    public static LinkedList<String> getSavedLines()
+    {
+
+        LinkedList<String> copy = new LinkedList<>();
+        Iterator<String> iterator = SAVEDLINES.iterator();
+
+        while (iterator.hasNext())
+        {
+            copy.add(iterator.next());
+        }
+
+        return copy;
     }
 
     public void talk()
     {
         //Ask if player wants to talk
-        System.out.println("Press y to get some information, any character to leave.");
-        System.out.print("> ");
-        char listen = systemInput.next().charAt(0);
-        systemInput.nextLine();
-        
-        if ((listen == 'Y' || listen == 'y'))
+        System.out.print("Press y then enter to get some information, any character to ignore.> ");
+
+        //clear buffer first
+        Game.SYSTEMINPUT.nextLine();
+        boolean talk = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
+
+        if (talk)
         {
-            if(!isUnlocked())
+            if (!isUnlocked())
             {
-                talkedWithPlayer = true;
+                getNPC().talkedWithPlayer();
                 System.out.println("\n" + getFirstLine());
-            }
-            else
+
+                saveNPCLines(getFirstLine());
+            } else
             {
                 System.out.println("\n" + getSecondLine());
-                
+                saveNPCLines(getSecondLine());
+
                 //After printing task 2, task 2 = task 1
-                    //Player is unable to see task 2 again
+                //Player is unable to see task 2 again
                 this.setSecondLine(getFirstLine());
-            }
-           
-            quit();
-        }
-    }
- 
-    public void quit()
-    {
-        System.out.println("Press any character to close this conversation.");
-
-        //Clear the buffer;
-        systemInput.nextLine();
-    }
-
-    public void saveNPCLines(String conversation)
-    {
-        //Clear buffer
-        systemInput.nextLine();
-
-        System.out.println("Press 'y' to save this conversation, any character to ignore.");
-        System.out.print("> ");
-        boolean save = "y".equalsIgnoreCase(systemInput.nextLine());
-
-        if (save)
-        {
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter(
-                    Game.getCompletePath("SecretTalk.txt"), true)))
-            {
-                for (int i = 0; i < conversation.length(); i++)
-                {
-                    bw.append(conversation.charAt(i));
-                }
-
-                bw.append('\n');
-                System.out.println("The conversation has been saved!");
-            } 
-            catch (IOException ex)
-            {
-                System.out.println(ex.getMessage());
             }
         }
     }
@@ -108,7 +84,7 @@ public class NPCLine
     public void ReadNPCLines()
     {
         try (BufferedReader br = new BufferedReader(new FileReader(
-                Game.getCompletePath(getNPC() + ".txt"))))
+                Game.getCompletePath(getNPC().getRole() + ".txt"))))
         {
             String line;
 
@@ -117,8 +93,7 @@ public class NPCLine
                 if (!line.isEmpty())
                 {
                     setFirstLine(getFirstLine() + line + '\n');
-                } 
-                else
+                } else
                 {
                     secondLine += line;
 
@@ -150,22 +125,6 @@ public class NPCLine
     public void setUnlocked(boolean unlocked)
     {
         this.unlocked = unlocked;
-    }
-
-    /**
-     * @return the unlockNPC
-     */
-    public String getUnlockNPC()
-    {
-        return unlockNPC;
-    }
-
-    /**
-     * @param unlockNPC the unlockNPC to set
-     */
-    public void setUnlockNPC(String unlockNPC)
-    {
-        this.unlockNPC = unlockNPC;
     }
 
     /**
@@ -201,26 +160,69 @@ public class NPCLine
     }
 
     /**
-     * @return the talkedWithPlayerOnce
+     * @return the npc
      */
-    public boolean hasTalkedWithPlayer()
+    public NPC getNPC()
     {
-        return talkedWithPlayer;
+        return npc;
     }
 
     /**
-     * @return the NPC
+     * @param npc the npc to set
      */
-    public String getNPC()
+    public void setNPC(NPC npc)
     {
-        return NPC;
+        this.npc = npc;
     }
 
-    /**
-     * @param NPC the NPC to set
-     */
-    public void setNPC(String NPC)
+    private void saveNPCLines(String conversation)
     {
-        this.NPC = NPC;
+        System.out.print("\nPress 'y' then enter to save this conversation, any character to ignore.> ");
+
+        boolean save = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
+
+        if (save)
+        {
+            if (SAVEDLINES.size() == 3)
+            {
+                System.out.println("You can only save 3 conversations.");
+
+                for (int index = 0; index < SAVEDLINES.size(); index++)
+                {
+                    System.out.println((index + 1) + ". " + SAVEDLINES.get(index));
+                }
+
+                int removedItem = 0;
+                do
+                {
+                    System.out.print("Choose something to remove(1-3). ");
+
+                    if (Game.SYSTEMINPUT.hasNextInt())
+                    {
+                        removedItem = Game.SYSTEMINPUT.nextInt();
+                    }
+
+                } while (removedItem < 0 && removedItem > 3);
+
+                SAVEDLINES.remove(--removedItem);
+            }
+
+            SAVEDLINES.add(npc.getName() + ":\n" + conversation);
+
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(
+                    Game.getCompletePath("SecretTalk.txt"))))
+            {
+                for (int index = 0; index < SAVEDLINES.size(); index++)
+                {
+                    bw.append(SAVEDLINES.get(index) + '\n');
+                }
+
+                System.out.println("The conversation has been saved!");
+
+            } catch (IOException ex)
+            {
+                System.out.println(ex.getMessage());
+            }
+        }
     }
 }
