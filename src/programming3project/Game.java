@@ -287,25 +287,25 @@ public class Game
             }
             case 'V':
             {
-                System.out.println(victim.toString());
+                System.out.println('\n' + victim.toString());
 
                 break;
             }
             case 'd':
             {
-                System.out.println("Oh wait! The dog is dead!");
+                System.out.println("\nOh wait! The dog is dead!");
 
                 break;
             }
             case 'o':
             {
-                System.out.println("Oh wait! The dog is dead!");
+                System.out.println("\nOh wait! The dog is dead!");
 
                 break;
             }
             case 'g':
             {
-                System.out.println("Oh wait! The dog is dead!");
+                System.out.println("\nOh wait! The dog is dead!");
 
                 break;
             }
@@ -328,7 +328,8 @@ public class Game
                     if (hint.getxLocation() == detective.getxCoord()
                             && hint.getyLocation() == detective.getyCoord())
                     {
-                        System.out.println(hint.toString());
+                        System.out.println("\nYou found something. . ." + hint.toString());
+                        GroundHint.saveGroundHint(hint);
                         detective.incrementGrabbedHints();
                     }
                 });
@@ -382,7 +383,7 @@ public class Game
             }
             case '#':
             {
-                System.out.println("This door is locked!\n");
+                System.out.println("\nThis door is locked!");
                 headDogHouse.printHintFile();
                 detective.getCurrentRoom().checkPassword();
 
@@ -444,10 +445,16 @@ public class Game
 
         System.out.println("Below are your saved notes to help you decide: ");
       
-        LinkedList<String> savedItems = NPCLine.getSavedLines();
-        for (int index = 0; index < savedItems.size(); index++)
+        LinkedList<String> savedLines = NPCLine.getSavedLines();
+        for (int index = 0; index < savedLines.size(); index++)
         {
-            System.out.println(savedItems.get(index));
+            System.out.println(savedLines.get(index));
+        }
+        
+        LinkedList<GroundHint> savedHints = GroundHint.getSavedHints();
+        for (int index = 0; index < savedHints.size(); index++)
+        {
+            System.out.println(savedHints.get(index));
         }
 
         System.out.println("Press 1 to choose Assistant.");
@@ -457,7 +464,6 @@ public class Game
         System.out.println("Press 5 to choose Wife.");
 
         int guess = SYSTEMINPUT.nextInt();
-
         while (guess < 1 && guess > 5)
         {
             System.out.println("Invalid input! Please enter 1 to 5 only: ");
@@ -521,8 +527,9 @@ public class Game
     {
         try
         {
-            new FileWriter(getCompletePath("SecretTalk.txt")).close();
-            new FileWriter(getCompletePath("Hints.txt")).close();
+            new FileWriter(getCompletePath("Conversations.txt")).close();
+            new FileWriter(getCompletePath("PasswordHints.txt")).close();
+            new FileWriter(getCompletePath("GroundHints.txt")).close();
         } catch (IOException ex)
         {
             System.out.println(ex.getMessage());

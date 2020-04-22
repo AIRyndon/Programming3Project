@@ -57,14 +57,13 @@ public class PasswordHint
     {
         boolean correct = false;
 
-        System.out.println("Press y to get hint, any character to leave: ");
+        System.out.print("Press y to get hint, any character to leave.> ");
         //System.out.println(this.getAnswer());
         boolean enterPass = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
 
         if (enterPass)
         {
             System.out.println(this.getBeforeQuestion());
-
             System.out.println(this.getQuestion());
             System.out.print("> ");
             String userInput = Game.SYSTEMINPUT.nextLine();
@@ -79,8 +78,7 @@ public class PasswordHint
                     userInput = "q";
                 } else if (!userInput.equalsIgnoreCase("q"))
                 {
-                    System.out.println("You are wrong! Press q to quit.");
-                    System.out.print("> ");
+                    System.out.println("You are wrong! Press q to quit.> ");
                     userInput = Game.SYSTEMINPUT.nextLine();
                 }
             }
@@ -106,7 +104,7 @@ public class PasswordHint
                 SAVEDCODES.add(this.getHint());
 
                 try (BufferedWriter pw = new BufferedWriter(new FileWriter(
-                        Game.getCompletePath("Hints.txt"))))
+                        Game.getCompletePath("PasswordHints.txt"))))
                 {
                     for (int size = 0; size < SAVEDCODES.size(); size++)
                     {
@@ -127,7 +125,7 @@ public class PasswordHint
     {
         System.out.println("Opening your saved hints:");
         try (BufferedReader br = new BufferedReader(new FileReader(
-                Game.getCompletePath("Hints.txt"))))
+                Game.getCompletePath("PasswordHints.txt"))))
         {
             String line = "";
             while ((line = br.readLine()) != null)
