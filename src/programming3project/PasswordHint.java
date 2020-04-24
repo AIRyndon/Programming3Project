@@ -150,14 +150,14 @@ public class PasswordHint
 
     public void deleteCode() throws IOException
     {
-        System.out.println("\nYou can only save 2 codes!");
+        System.out.println("\nYou can only save 2 key passwords!");
         printHintFile();
 
         boolean isDelete = false;
 
-        System.out.println("Press d to delete the first one, any character to leave: ");
+        System.out.println("Press y to delete the first one, any character to leave: ");
 
-        isDelete = "d".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
+        isDelete = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
 
         if (isDelete)
         {

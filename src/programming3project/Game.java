@@ -65,9 +65,9 @@ public class Game
 
     public void setupPasswordCodes() throws IOException
     {
-        headLockedArea = new PasswordHint(PasswordHintType.HINTHEAD, roomWorking.getLock(), 1, "2 years");
+        headLockedArea = new PasswordHint(PasswordHintType.HINTHEAD, roomWorking.getLock(), 1, "Alprazolam");
         tailLockedArea = new PasswordHint(PasswordHintType.HINTTAIL, roomWorking.getLock(), 2, "11:03");
-        headDogHouse = new PasswordHint(PasswordHintType.HINTHEAD, ground.getLock(), 3, "Alprazolam");
+        headDogHouse = new PasswordHint(PasswordHintType.HINTHEAD, ground.getLock(), 3, "2 years");
         tailDogHouse = new PasswordHint(PasswordHintType.HINTTAIL, ground.getLock(), 4, "Chelsea");
     }
 
@@ -416,7 +416,6 @@ public class Game
                 System.out.println("\nThis door is locked!");
                 headDogHouse.printHintFile();
                 detective.getCurrentRoom().checkPassword();
-
                 break;
             }
             case '$':

@@ -79,7 +79,7 @@ public abstract class Room
         if(this.getLock().isUnlock())
         {        
             removeCharacter('#');
-            
+            printRoom(this.getName());
             System.out.println("Congratulations! Your password is correct!");
             System.out.println("DOOR UNLOCKED!");
         }
