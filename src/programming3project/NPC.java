@@ -5,20 +5,21 @@
  */
 package programming3project;
 
+import java.io.IOException;
+
 /**
  *
  * @author pc
  */
 public class NPC extends Person
 {
-
     private boolean placedHint = false;
     private boolean talkedWithPlayer = false;
     private String role;
     private String unlockNPC;
     private NPCLine NPCLine;
 
-    public NPC(String name, char gender, int age, String role, String unlockNPC)
+    public NPC(String name, char gender, int age, String role, String unlockNPC) throws IOException
     {
         super(name, gender, age);
         this.setUnlockNPC(unlockNPC);
@@ -30,7 +31,7 @@ public class NPC extends Person
     {
         if (!getLine().isUnlocked())
         {
-            System.out.println("\nCongratulations! You can now get potentially important information from the "
+            System.out.println("\nNow You can now get potentially important information from the "
                     + getRole() + "!");
             System.out.println("You might want to speak with " + (getGender() == 'M' ? "him" : "her") + " again.");
             NPCLine.unlock();
@@ -46,7 +47,7 @@ public class NPC extends Person
             room.hints.add(new GroundHint(name, description, xCoord, yCoord));
             room.movingArea[xCoord][yCoord] = 'X';
 
-            System.out.println("\nAn item popped up somewhere...maybe it can help you with this case.");
+            System.out.println("\nHey! An item popped up somewhere... maybe it can help you with this case.");
         }
     }
 

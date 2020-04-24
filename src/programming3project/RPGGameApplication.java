@@ -11,7 +11,7 @@ import java.io.IOException;
  *
  * @author airyn
  */
-public class Programming3Project
+public class RPGGameApplication
 {
     /**
      * @param args the command line arguments

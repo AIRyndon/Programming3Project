@@ -6,7 +6,6 @@
 package programming3project;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  *
@@ -59,16 +58,14 @@ public abstract class Room
     }
 
     protected void positionNPC(char person)
-    { 
-        Random rand = new Random();
-        
-        int y = rand.nextInt(getHeight() - 2);
-        int x = rand.nextInt(getWidth() - 2);
+    {        
+        int y = Game.RANDOM.nextInt(getHeight() - 2);
+        int x = Game.RANDOM.nextInt(getWidth() - 2);
 
         while(movingArea[y][x] != ' ')
         {   
-            y = rand.nextInt(getHeight() - 2);
-            x = rand.nextInt(getWidth() - 2);
+            y = Game.RANDOM.nextInt(getHeight() - 2);
+            x = Game.RANDOM.nextInt(getWidth() - 2);
         }
         
         movingArea[y][x] = person;

@@ -1,0 +1,14 @@
+You are working in your office and reading some news.
+!" - A police officer runs to you:
+"There was a murder at Royal Street! We need your help!"
+
+"Sorry I do not have time at the moment..."
+Right then, you go to one of your customers' house - a bilionaire names 
+Coincidentally, your customer is the victim who was mentioned by the police.
+Therefore, you decide to investigate his death.
+
+"Can you please tell me where he lived?"
+The police officer gives you an address
+You has arrived there with some information.
+
+Inside the ground...

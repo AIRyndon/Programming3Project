@@ -12,32 +12,37 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
  *
  * @author airyn
  */
-public class Game
+public class Game 
 {
-
     //Required game fields
     public final static Scanner SYSTEMINPUT = new Scanner(System.in);
+    public final static Random RANDOM = new Random();
+    private final Story storyIntro;
     private final Ground ground = new Ground("Ground", null);
     private final House house = new House("House", ground);
     private final RoomMaid roomMaid = new RoomMaid("Maid's Room", house);
     private final RoomButler roomButler = new RoomButler("Butler's Room", house);
     private final RoomWife roomWife = new RoomWife("Wife's Room", house);
     private final RoomWorking roomWorking = new RoomWorking("Work Room", house);
-    private final Victim victim = new Victim("Bosh", "President of KPI Cooperation", 55, 'M');
+    private final Victim victim = new Victim("Bosh", "President of KPI Cooperation", 
+            55, 'M', "His working room");
     private int conversationLevel = 1;
     private String unlockNPC = "";
     private Detective detective;
     private NPC daughter, wife, maid, butler, assistant;
     private PasswordHint headLockedArea, tailLockedArea, headDogHouse, tailDogHouse;
 
-    public Game()
+    public Game() throws IOException
     {
+        this.storyIntro = new Story();
+        
         //Setup writable game files
         String workingDir = System.getProperty("user.dir");
         new File(workingDir + "/FileDB/").mkdir();
@@ -49,7 +54,7 @@ public class Game
         return System.getProperty("user.dir") + "/FileDB/" + fileName;
     }
 
-    public void setupNPC()
+    public void setupNPC() throws IOException
     {
         daughter = new NPC("Sandy", 'F', 25, "Daughter", "");
         maid = new NPC("Chelsea", 'F', 20, "Maid", daughter.getRole());
@@ -58,15 +63,15 @@ public class Game
         assistant = new NPC("Ashton", 'M', 34, "Assistant", wife.getRole());
     }
 
-    public void setupPasswordCodes()
+    public void setupPasswordCodes() throws IOException
     {
-        headLockedArea = new PasswordHint(PasswordHintType.HINTHEAD, roomWorking.getLock(), 1, "Bosh");
+        headLockedArea = new PasswordHint(PasswordHintType.HINTHEAD, roomWorking.getLock(), 1, "2 years");
         tailLockedArea = new PasswordHint(PasswordHintType.HINTTAIL, roomWorking.getLock(), 2, "11:03");
         headDogHouse = new PasswordHint(PasswordHintType.HINTHEAD, ground.getLock(), 3, "Alprazolam");
-        tailDogHouse = new PasswordHint(PasswordHintType.HINTTAIL, ground.getLock(), 4, "2 years");
+        tailDogHouse = new PasswordHint(PasswordHintType.HINTTAIL, ground.getLock(), 4, "Chelsea");
     }
 
-    public void startGame()
+    public void startGame() throws IOException
     {
         setupNPC();
         setupPasswordCodes();
@@ -75,7 +80,7 @@ public class Game
         startGameLoop();
     }
 
-    private void startGameLoop()
+    private void startGameLoop() throws IOException
     {
         boolean playing = true;
 
@@ -88,7 +93,7 @@ public class Game
                     || keyPress == 'w' || keyPress == 'q'))
             {
                 System.out.print("\nPress a, s, d, w then enter to move. "
-                        + "Press q then enter to quit.> ");
+                        + "Press q then enter to quit: ");
                 keyPress = SYSTEMINPUT.next().charAt(0);
             }
 
@@ -100,7 +105,8 @@ public class Game
             if (detective.getGrabbedHints() == 5)
             {
                 playing = guessKiller();
-            } else if (keyPress == 'q')
+            } 
+            else if (keyPress == 'q')
             {
                 SYSTEMINPUT.nextLine();
                 playing = quitGame();
@@ -135,64 +141,82 @@ public class Game
             if (SYSTEMINPUT.hasNextInt())
             {
                 userAge = SYSTEMINPUT.nextInt();
-            } else
+            } 
+            else
             {
                 SYSTEMINPUT.nextLine();
             }
         } while (userAge <= 0);
 
         detective = new Detective(userName, userGender, userAge, ground);
-
         detective.setBackground("Mysterious fellow");
         detective.setCurrentRoom(ground);
         detective.setPreviousRoom(null);
         detective.setPlayArea(ground.movingArea);
     }
 
-    private void introduceStory(Detective detective)
+    private void introduceStory(Detective detective) throws IOException
     {
         System.out.println(detective);
 
+        pauseScreen(2000);
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         System.out.println(dateFormat.format(new Date()));
 
         //Story begins
-        System.out.println(detective.getName() + " is working in "
-                + (detective.getGender() == 'M' ? "his " : "her ")
-                + "office and reading some news.");
-        System.out.println("A police officer runs to you:");
-        System.out.println("\"" + (detective.getGender() == 'M' ? "Sir " : "Madam ")
-                + detective.getName() + "!\"");
-        System.out.println("\"There was a murder at Royal Street! "
-                + "We need your help!\"");
-
+        pauseScreen(1000);
+        System.out.println(storyIntro.getStory().get(0));
+        pauseScreen(2000);
+        System.out.println((detective.getGender() == 'M' ? "\"Sir " : "\"Madam ") 
+                + detective.getName() + storyIntro.getStory().get(1));
+        pauseScreen(2000);
+        System.out.println(storyIntro.getStory().get(2));
+        pauseScreen(2000);
+        
         char enterPremises = '\0';
         while (!(enterPremises == 'Y' || enterPremises == 'y'
                 || enterPremises == 'N' || enterPremises == 'n'))
         {
-            System.out.print("\nDo you want to enter the compound?(Y/N)");
+            System.out.print("\nDo you want to enter the compound (Y/N)? ");
             enterPremises = SYSTEMINPUT.next().charAt(0);
         }
-
+        
+        pauseScreen(1000);            
         //If player does not want to enter the compound
         if (enterPremises != 'Y' && enterPremises != 'y')
         {
-            System.out.println("\n\"Sorry I do not have time at the moment...\"");
-            System.out.println("Right then, you went to one of your customers' house "
-                    + "- a bilionaire names " + victim.getName() + ".");
-            System.out.println("Coincidentally, your customer is the victim "
-                    + "who was mentioned by the police...\n\n");
+            System.out.println("\n" + storyIntro.getStory().get(4));
+            
+            pauseScreen(2000);
+            System.out.println(storyIntro.getStory().get(5)+ victim.getName() + ".");
+            
+            pauseScreen(2000);
+            System.out.println(storyIntro.getStory().get(6));
+            
+            pauseScreen(2000);
+            System.out.println(storyIntro.getStory().get(7));
         }
-
-        try
+        else
         {
-            Thread.sleep(1500);
-        } catch (InterruptedException ex)
-        {
-            ex.printStackTrace(System.out);
+            System.out.println("\n" + storyIntro.getStory().get(9));
+            
+            pauseScreen(2000);
+            System.out.println(storyIntro.getStory().get(10));
+            
+            pauseScreen(2000);
+            System.out.println(storyIntro.getStory().get(11));
         }
-
+        
+        pauseScreen(2000);
+        System.out.println("\n" + victim.toString());
+        
+        pauseScreen(2000);
+        System.out.println(storyIntro.getStory().get(13));
+        
+        pauseScreen(2000);
         ground.printRoom(ground.getName());
+        
+        
     }
 
     private void updateConversationLevel()
@@ -205,26 +229,29 @@ public class Game
         {
             assistant.unlockLines();
             conversationLevel = 2;
-
-        } else if (conversationLevel == 2)
+        } 
+        else if (conversationLevel == 2)
         {
             if (butler.getRole().equals(unlockNPC))
             {
                 butler.unlockLines();
-            } else if (wife.getRole().equals(unlockNPC))
+            } 
+            else if (wife.getRole().equals(unlockNPC))
             {
                 wife.unlockLines();
-            } else if (maid.getRole().equals(unlockNPC))
+            } 
+            else if (maid.getRole().equals(unlockNPC))
             {
                 maid.unlockLines();
-            } else if (daughter.getRole().equals(unlockNPC))
+            } 
+            else if (daughter.getRole().equals(unlockNPC))
             {
                 daughter.unlockLines();
             }
         }
     }
 
-    private void handlePlayerInteraction(char keyPress)
+    private void handlePlayerInteraction(char keyPress) throws IOException
     {
         char currentSquare = detective.move(keyPress);
 
@@ -309,7 +336,6 @@ public class Game
 
                 break;
             }
-            //todo - handling of * and / cases should be in Detective class
             case '*':
             {
                 if (detective.getCurrentRoom().getPreviousRoom() != null)
@@ -349,9 +375,10 @@ public class Game
                         detective.moveToAnotherRoom(house);
                         detective.setLocationToNewRoom();
                     }
-
+                    
                     //check if inside the House
-                } else if (detective.getCurrentRoom().getClass() == house.getClass())
+                } 
+                else if (detective.getCurrentRoom().getClass() == house.getClass())
                 {
                     //in front of maid's room
                     if (detective.getxCoord() == 2 && detective.getyCoord() == 24)
@@ -360,19 +387,22 @@ public class Game
                         detective.setLocationToNewRoom();
 
                         //in front of butler's room
-                    } else if (detective.getxCoord() == 5 && detective.getyCoord() == 24)
+                    } 
+                    else if (detective.getxCoord() == 5 && detective.getyCoord() == 24)
                     {
                         detective.moveToAnotherRoom(roomButler);
                         detective.setLocationToNewRoom();
 
                         //in front of wife's room
-                    } else if (detective.getxCoord() == 9 && detective.getyCoord() == 24)
+                    } 
+                    else if (detective.getxCoord() == 9 && detective.getyCoord() == 24)
                     {
                         detective.moveToAnotherRoom(roomWife);
                         detective.setLocationToNewRoom();
 
                         //in front of working area
-                    } else if (detective.getxCoord() == 11 && detective.getyCoord() == 24)
+                    } 
+                    else if (detective.getxCoord() == 11 && detective.getyCoord() == 24)
                     {
                         detective.moveToAnotherRoom(roomWorking);
                         detective.setLocationToNewRoom();
@@ -483,7 +513,8 @@ public class Game
             System.out.println("After stabbing the victim, the Maid cleaned the Working room"
                     + "\nand threw the cheesecake in the dog's house.");
             System.out.println("YOU WIN THE GAME!\n");
-        } else
+        } 
+        else
         {
             System.out.println("The killer is a different person. YOU LOST THE GAME!\n");
         }
@@ -530,7 +561,8 @@ public class Game
             new FileWriter(getCompletePath("Conversations.txt")).close();
             new FileWriter(getCompletePath("PasswordHints.txt")).close();
             new FileWriter(getCompletePath("GroundHints.txt")).close();
-        } catch (IOException ex)
+        } 
+        catch (IOException ex)
         {
             System.out.println(ex.getMessage());
         }
@@ -539,5 +571,31 @@ public class Game
     private static void clearScreen()
     {
         System.out.println(new String(new char[30]).replace('\0', '\n'));
+    }
+    
+    private static void pauseScreen(int time)
+    {
+//        ThreadPauseScreen t = new ThreadPauseScreen();
+//        t.run();
+//        
+//        try
+//        {
+//            Thread.sleep(time);
+//        }
+//        catch (InterruptedException ex)
+//        {
+//            ex.printStackTrace(System.out);
+//        }
+//            
+//        t.stop();
+        
+        try
+        {
+            Thread.sleep(time);
+        }
+        catch (InterruptedException ex)
+        {
+            ex.printStackTrace(System.out);
+        }
     }
 }

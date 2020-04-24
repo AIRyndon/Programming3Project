@@ -17,7 +17,6 @@ import java.util.LinkedList;
  */
 public class GroundHint
 {
-
     private static LinkedList<GroundHint> SAVEDHINTS = new LinkedList<>();
     private String name;
     private String description;
@@ -53,7 +52,7 @@ public class GroundHint
 
     public static void saveGroundHint(GroundHint hint)
     {
-        System.out.print("\nPress 'y' then enter to save this hint, any character to ignore.> ");
+        System.out.print("Do you want to save this hint(y)? ");
 
         Game.SYSTEMINPUT.nextLine();
         boolean save = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());

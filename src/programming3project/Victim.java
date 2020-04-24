@@ -14,16 +14,18 @@ public class Victim
     private String name;
     private String body;
     private String role;
+    private String location;
     private char gender;
     private int age;
     private String injuries = "There was a serious wound on his left chest and no more injuries.";
 
-    public Victim(String name, String role, int age, char gender)
+    public Victim(String name, String role, int age, char gender, String location)
     {
         this.setName(name);
         this.setRole(role);
         this.setAge(age);
         this.setGender(gender);
+        this.setLocation(location);
     }
 
     public Victim()
@@ -80,7 +82,6 @@ public class Victim
     public void setInjures(String injures)
     {
         this.injuries = injures;
-
     }
 
     public String getBody()
@@ -92,16 +93,28 @@ public class Victim
     {
         this.body = body;
     }
+    
+    public String getLocation() 
+    {
+        return location;
+    }
+    
+    public void setLocation(String location)
+    {
+        this.location = location;
+    }
 
     @Override
     public String toString()
     {
         String output = "";
 
+        output += "Victim infomation\n";
         output += "Name: " + this.getName() + "\n";
         output += "Gender: " + (this.getGender() == 'M' ? "Male\n" : "Female\n");
         output += "Age: " + this.getAge() + "\n";
-        output += this.getInjures()+ "\n";
+        output += "Scene: " + this.getLocation() + "\n";
+        output += this.getInjures() + "\n";
 
         return output;
     }

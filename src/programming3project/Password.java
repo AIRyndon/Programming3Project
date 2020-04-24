@@ -5,18 +5,12 @@
  */
 package programming3project;
 
-import java.util.Random;
-import java.util.Scanner;
-
 /**
  *
  * @author pc
  */
 public class Password 
-{
-    private Random rand = new Random();
-    private Scanner scan = new Scanner(System.in);
-    
+{    
     private boolean unlock;
     private String password;
     
@@ -30,10 +24,10 @@ public class Password
     void initialisePassword()
     {
         //Choose four random numbers between 0 to 9
-        int first = rand.nextInt(10);
-        int second = rand.nextInt(10);
-        int third = rand.nextInt(10);
-        int fourth = rand.nextInt(10);
+        int first = Game.RANDOM.nextInt(10);
+        int second = Game.RANDOM.nextInt(10);
+        int third = Game.RANDOM.nextInt(10);
+        int fourth = Game.RANDOM.nextInt(10);
         
         String pass = Integer.toString(first) + Integer.toString(second) + 
                 Integer.toString(third) + Integer.toString(fourth);
@@ -43,29 +37,31 @@ public class Password
 
     public void promtPassword()
     {        
-        System.out.println("Press y to enter password, any character to leave");
+        Game.SYSTEMINPUT.nextLine();
         System.out.println(this.password);
-        boolean enterPass = "y".equalsIgnoreCase(scan.nextLine());
+        System.out.print("Press y to enter password, any character to leave: ");
+        boolean enterPass = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
 
-        while(enterPass)
+        if (enterPass)
         {
             System.out.print("> ");
-            String userInput = scan.nextLine();
-
-            if(userInput.equalsIgnoreCase(this.getPassword()))
+            String userInput = Game.SYSTEMINPUT.nextLine();
+            
+            do
             {
-                this.setUnlock(true);
-                enterPass = false;
+                if(userInput.equalsIgnoreCase(this.getPassword()))
+                {
+                    this.setUnlock(true);
+                    userInput = "q";
+                }
+                else
+                {
+                    System.out.println("Hahahaha wrong! Try again or press q to quit!");
+                    System.out.print("> ");
+                    userInput = Game.SYSTEMINPUT.nextLine();
+                }
             }
-            else
-            {
-                System.out.println("Hahahaha wrong! Try again or press q to quit!");
-            }
-
-            if(userInput.equalsIgnoreCase("q"))
-            {
-                enterPass = false;
-            }
+            while(!userInput.equalsIgnoreCase("q"));
         }
     }
     
