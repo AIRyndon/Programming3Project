@@ -13,7 +13,6 @@ import java.util.function.Consumer;
  */
 public class Detective extends Person
 {
-
     //player position in the grid
     private int xPrevious;
     private int yPrevious;
@@ -315,7 +314,8 @@ public class Detective extends Person
     public String toString()
     {
         String output = "";
-
+        
+        output += "\nDetective information\n";
         output += "Name: " + this.getName() + "\n";
         output += "Gender: " + (this.getGender() == 'M' ? "Male\n" : "Female\n");
         output += "Age: " + this.getAge() + "\n";//Do we need to create another attribute for age? => Then ask user

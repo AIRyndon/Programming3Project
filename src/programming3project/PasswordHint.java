@@ -19,7 +19,6 @@ import java.util.LinkedList;
  */
 public class PasswordHint
 {
-
     private static LinkedList<String> SAVEDCODES = new LinkedList<>();
     private PasswordHintType function;
     private Password lock;
@@ -29,7 +28,7 @@ public class PasswordHint
     private String beforeQuestion;
     private int order;
 
-    public PasswordHint(PasswordHintType function, Password lock, int order, String answer)
+    public PasswordHint(PasswordHintType function, Password lock, int order, String answer) throws IOException
     {
         this.setFunction(function);
         this.setLock(lock);
@@ -57,18 +56,20 @@ public class PasswordHint
     {
         boolean correct = false;
 
-        System.out.print("Press y to get hint, any character to leave.> ");
-        //System.out.println(this.getAnswer());
+        Game.SYSTEMINPUT.nextLine();
+        System.out.print("\nPress y to get password, any character to leave: ");
         boolean enterPass = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
 
         if (enterPass)
         {
+            //todo - open talks and hints
+            
             System.out.println(this.getBeforeQuestion());
             System.out.println(this.getQuestion());
             System.out.print("> ");
             String userInput = Game.SYSTEMINPUT.nextLine();
 
-            while (!userInput.equalsIgnoreCase("q"))
+            do
             {
                 if (userInput.equalsIgnoreCase(this.getAnswer()))
                 {
@@ -76,20 +77,23 @@ public class PasswordHint
                     System.out.println("Hint: " + this.getHint());
                     correct = true;
                     userInput = "q";
-                } else if (!userInput.equalsIgnoreCase("q"))
+                }
+                else
                 {
-                    System.out.println("You are wrong! Press q to quit.> ");
+                    System.out.println("You are wrong! Answer again or press q to quit.");
+                    System.out.print("> ");
                     userInput = Game.SYSTEMINPUT.nextLine();
                 }
             }
+            while(!userInput.equalsIgnoreCase("q"));
         }
 
         return correct;
     }
 
-    public void saveHint()
+    public void saveHint() throws IOException
     {
-        System.out.print("Do you want to save this hint(y)? ");
+        System.out.print("Do you want to save this hint (y)? ");
         boolean save = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
 
         if (save)
@@ -103,17 +107,18 @@ public class PasswordHint
             {
                 SAVEDCODES.add(this.getHint());
 
-                try (BufferedWriter pw = new BufferedWriter(new FileWriter(
-                        Game.getCompletePath("PasswordHints.txt"))))
+                try (FileWriter pw = new FileWriter(
+                        Game.getCompletePath("PasswordHints.txt")))
                 {
-                    for (int size = 0; size < SAVEDCODES.size(); size++)
+                    for(int size = 0; size < SAVEDCODES.size(); size++)
                     {
                         pw.append(SAVEDCODES.get(size) + '\n');
                     }
-
-                    System.out.println("The hint has been saved! Press enter to return to your location.");
+                   
+                    System.out.println("The hint has been saved! Press enter to continue.");
                     Game.SYSTEMINPUT.nextLine();
-                } catch (IOException ex)
+                } 
+                catch (IOException ex)
                 {
                     System.out.println(ex.getMessage());
                 }
@@ -121,34 +126,38 @@ public class PasswordHint
         }
     }
 
-    public void printHintFile()
+    public void printHintFile() throws IOException
     {
-        System.out.println("Opening your saved hints:");
-        try (BufferedReader br = new BufferedReader(new FileReader(
-                Game.getCompletePath("PasswordHints.txt"))))
+        if(SAVEDCODES.size() != 0)
         {
-            String line = "";
-            while ((line = br.readLine()) != null)
-            {
-                System.out.println(line);
-            }
-
-        } catch (IOException ex)
+            System.out.println("Opening your saved hints:");
+            
+            BufferedReader br = new BufferedReader(new FileReader(
+                Game.getCompletePath("PasswordHints.txt")));
+            
+                String line = "";
+                
+                while ((line = br.readLine()) != null)
+                {
+                    System.out.println(line);
+                }
+        }
+        else
         {
-            System.out.println(ex.getMessage());
+            System.out.println("*Find key password to unlock the door.\n");
         }
     }
 
-    public void deleteCode()
+    public void deleteCode() throws IOException
     {
-        System.out.println("\nYou can only save 2 codes!");
+        System.out.println("\nYou can only save 2 key passwords!");
         printHintFile();
 
         boolean isDelete = false;
 
-        System.out.println("Press d to delete the first one, any character to leave.> ");
+        System.out.println("Press y to delete the first one, any character to leave: ");
 
-        isDelete = "d".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
+        isDelete = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
 
         if (isDelete)
         {
@@ -156,54 +165,45 @@ public class PasswordHint
         }
     }
 
-    public void setupQuestionAndAnswer(String answer)
+    public void setupQuestionAndAnswer(String answer) throws IOException
     {
-        try (BufferedReader br = new BufferedReader(new FileReader(
-                Game.getCompletePath("Questions.txt"))))
-        {
-            String line = "";
+        BufferedReader br = new BufferedReader(new FileReader(
+                        Game.getCompletePath("Questions.txt")));
+        String line = "";
 
-            while ((line = br.readLine()) != null)
+        while ((line = br.readLine()) != null)
+        {
+            if (line.contains(Integer.toString(this.getOrder())))
             {
-                if (line.contains(Integer.toString(this.getOrder())))
-                {
-                    this.setQuestion(line.substring(1));
-                    this.setAnswer(answer);
+                this.setQuestion(line.substring(1));
+                this.setAnswer(answer);
 
-                    break;
-                }
+                break;
             }
-        } catch (IOException ex)
-        {
-            System.out.println(ex.getMessage());
         }
     }
 
-    public void setupTrivias()
+    public void setupTrivias() throws IOException
     {
-        try (BufferedReader br = new BufferedReader(new FileReader(
-                Game.getCompletePath("BeforeQuestion.txt"))))
-        {
-            String line = "";
-            String beforeQuestions = "";
+        BufferedReader br = new BufferedReader(new FileReader(
+                        Game.getCompletePath("BeforeQuestion.txt")));
+        String line = "";
+        String beforeQuestions = "";
 
-            while ((line = br.readLine()) != null)
+        while ((line = br.readLine()) != null)
+        {
+            if (line.contains(Integer.toString(this.getOrder())))
             {
-                if (line.contains(Integer.toString(this.getOrder())))
+                while (!(line = br.readLine()).isEmpty())
                 {
-                    while (!(line = br.readLine()).isEmpty())
-                    {
-                        beforeQuestions += line + "\n";
-                    }
-
-                    break;
+                    beforeQuestions += line + "\n";
                 }
+
+                break;
             }
-            this.setBeforeQuestion(beforeQuestions);
-        } catch (IOException ex)
-        {
-            System.out.println(ex.getMessage());
         }
+            
+        this.setBeforeQuestion(beforeQuestions);
     }
 
     public void setupHint()
