@@ -29,9 +29,9 @@ public class NPC extends Person
 
     public void unlockLines()
     {
-        if (!getLine().isUnlocked())
+        if (!getNPCLine().isUnlocked())
         {
-            System.out.println("\nNow You can now get potentially important information from the "
+            System.out.println("\nNow you can now get potentially important information from the "
                     + getRole() + "!");
             System.out.println("You might want to speak with " + (getGender() == 'M' ? "him" : "her") + " again.");
             NPCLine.unlock();
@@ -41,7 +41,7 @@ public class NPC extends Person
     public void tryToPlaceHint(Room room, String name, String description,
             int xCoord, int yCoord)
     {
-        if (getLine().isUnlocked() && !placedHint)
+        if (getNPCLine().isUnlocked() && !placedHint)
         {
             placedHint = true;
             room.hints.add(new GroundHint(name, description, xCoord, yCoord));
@@ -62,14 +62,6 @@ public class NPC extends Person
     public void setRole(String role)
     {
         this.role = role;
-    }
-
-    /**
-     * @return the NPCLine
-     */
-    public NPCLine getLine()
-    {
-        return NPCLine;
     }
 
     /**
@@ -100,6 +92,16 @@ public class NPC extends Person
     {
         talkedWithPlayer = true;
     }
+
+    public NPCLine getNPCLine() 
+    {
+        return NPCLine;
+    }
+
+    public void setNPCLine(NPCLine NPCLine) 
+    {
+        this.NPCLine = NPCLine;
+    }   
 
     @Override
     public String toString()

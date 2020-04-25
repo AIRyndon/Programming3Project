@@ -37,7 +37,7 @@ public class Game
     private String unlockNPC = "";
     private Detective detective;
     private NPC daughter, wife, maid, butler, assistant;
-    private PasswordHint headLockedArea, tailLockedArea, headDogHouse, tailDogHouse;
+    private KeyPassword headLockedArea, tailLockedArea, headDogHouse, tailDogHouse;
 
     public Game() throws IOException
     {
@@ -59,16 +59,16 @@ public class Game
         daughter = new NPC("Sandy", 'F', 25, "Daughter", "");
         maid = new NPC("Chelsea", 'F', 20, "Maid", daughter.getRole());
         butler = new NPC("Marcello", 'M', 63, "Butler", maid.getRole());
-        wife = new NPC("Belinda", 'F', 50, "Wife", butler.getRole());
+        wife = new NPC("Belinda", 'F', 50, "Wife", "");
         assistant = new NPC("Ashton", 'M', 34, "Assistant", wife.getRole());
     }
 
     public void setupPasswordCodes() throws IOException
     {
-        headLockedArea = new PasswordHint(PasswordHintType.HINTHEAD, roomWorking.getLock(), 1, "Alprazolam");
-        tailLockedArea = new PasswordHint(PasswordHintType.HINTTAIL, roomWorking.getLock(), 2, "11:03");
-        headDogHouse = new PasswordHint(PasswordHintType.HINTHEAD, ground.getLock(), 3, "2 years");
-        tailDogHouse = new PasswordHint(PasswordHintType.HINTTAIL, ground.getLock(), 4, "Chelsea");
+        headLockedArea = new KeyPassword(KeyPasswordType.KEYHEAD, roomWorking.getLock(), 1, "Alprazolam");
+        tailLockedArea = new KeyPassword(KeyPasswordType.KEYTAIL, roomWorking.getLock(), 2, "11:03");
+        headDogHouse = new KeyPassword(KeyPasswordType.KEYHEAD, ground.getLock(), 3, "2 years");
+        tailDogHouse = new KeyPassword(KeyPasswordType.KEYTAIL, ground.getLock(), 4, "Chelsea");
     }
 
     public void startGame() throws IOException
@@ -76,7 +76,7 @@ public class Game
         setupNPC();
         setupPasswordCodes();
         setupPlayerInfo();
-        introduceStory(detective);
+        //introduceStory(detective);
         startGameLoop();
     }
 
@@ -96,8 +96,6 @@ public class Game
                         + "Press q then enter to quit: ");
                 keyPress = SYSTEMINPUT.next().charAt(0);
             }
-
-            clearScreen();
 
             handlePlayerInteraction(keyPress);
             updateConversationLevel();
@@ -229,18 +227,15 @@ public class Game
         {
             assistant.unlockLines();
             conversationLevel = 2;
-        } 
-        else if (conversationLevel == 2)
+        }
+        else if (conversationLevel == 2 && wife.getRole().equals(unlockNPC))
         {
-            if (butler.getRole().equals(unlockNPC))
-            {
-                butler.unlockLines();
-            } 
-            else if (wife.getRole().equals(unlockNPC))
-            {
-                wife.unlockLines();
-            } 
-            else if (maid.getRole().equals(unlockNPC))
+            wife.unlockLines();
+            conversationLevel = 3;
+        }
+        else if(conversationLevel == 3 && butler.getNPCLine().isUnlocked())
+        {
+            if (maid.getRole().equals(unlockNPC))
             {
                 maid.unlockLines();
             } 
@@ -261,55 +256,70 @@ public class Game
             case 'B':
             {
                 System.out.println(butler.toString());
-                butler.getLine().talk();
-                unlockNPC = butler.getUnlockNPC();
+                boolean playerOpenedTalk = butler.getNPCLine().talk();
 
-                butler.tryToPlaceHint(roomWorking, "Old Picture", "A picture of a young girl - "
-                        + "\nthe girl has a resemblance with the maid", 0, 5);
-
+                if(playerOpenedTalk)
+                {
+                    unlockNPC = butler.getUnlockNPC();
+                    butler.tryToPlaceHint(roomMaid, "Gloves", "A worn-out pair of gloves, there is a name on it - "
+                            + "\nit is illegible, you only recognize the letters ATO", 3, 39);
+                //Hey, what does ATO mean by the way? =))
+                }
+                
                 break;
             }
             case 'W':
             {
                 System.out.println(wife.toString());
-                wife.getLine().talk();
-                unlockNPC = wife.getUnlockNPC();
+                boolean playerOpenedTalk = wife.getNPCLine().talk();
 
-                wife.tryToPlaceHint(roomWorking, "Knife", "The blade is bloody. . .",
-                        9, ground.getWidth() + 10);
+                if(playerOpenedTalk)
+                {
+                    unlockNPC = wife.getUnlockNPC();
+                    wife.tryToPlaceHint(roomWorking, "Old Picture", "A picture of a young girl - "
+                            + "\nthe girl has a resemblance with the maid", 0, 5);
+                }
+                
                 break;
             }
             case 'A':
             {
                 System.out.println(assistant.toString());
-                assistant.getLine().talk();
-                unlockNPC = assistant.getUnlockNPC();
+                boolean playerOpenedTalk = assistant.getNPCLine().talk();
 
-                assistant.tryToPlaceHint(house, "Alprazolam", "A powerful sedative -"
-                        + "\ncan have side-effects when taken regularly", 0, house.getWidth() - 10);
-
+                if(playerOpenedTalk)
+                {
+                    unlockNPC = assistant.getUnlockNPC();
+                    assistant.tryToPlaceHint(house, "Alprazolam", "A powerful sedative -"
+                            + "\ncan have side-effects when taken regularly", 0, house.getWidth() - 10);
+                }
                 break;
             }
             case 'M':
             {
                 System.out.println(maid.toString());
-                maid.getLine().talk();
-                unlockNPC = maid.getUnlockNPC();
+                boolean playerOpenedTalk = maid.getNPCLine().talk();
 
-                maid.tryToPlaceHint(ground, "Cheescake", "An innocuous-looking cheesecake",
-                        0, ground.getWidth() - 3);
-
+                if(playerOpenedTalk)
+                {
+                    unlockNPC = maid.getUnlockNPC();
+                    maid.tryToPlaceHint(ground, "Cheescake", "An innocuous-looking cheesecake",
+                            0, ground.getWidth() - 3);
+                }
                 break;
             }
             case 'D':
             {
                 System.out.println(daughter.toString());
-                daughter.getLine().talk();
-                unlockNPC = daughter.getUnlockNPC();
+                boolean playerOpenedTalk = daughter.getNPCLine().talk();
 
-                daughter.tryToPlaceHint(roomMaid, "Gloves", "A worn-out pair of gloves, there is a name on it - "
-                        + "\nit is illegible, you only recognize the letters ATO,", 3, 39);
-
+                if(playerOpenedTalk)
+                {
+                    unlockNPC = daughter.getUnlockNPC();
+                    daughter.tryToPlaceHint(roomWorking, "Knife", "The blade is bloody. . .",
+                            9, ground.getWidth() + 10);
+                }
+                
                 break;
             }
             case 'V':
@@ -340,7 +350,6 @@ public class Game
             {
                 if (detective.getCurrentRoom().getPreviousRoom() != null)
                 {
-                    clearScreen();
                     detective.moveToAnotherRoom(detective.getCurrentRoom().previousRoom);
                     detective.setLocationToPreviousRoom();
                 }
@@ -358,13 +367,18 @@ public class Game
                         GroundHint.saveGroundHint(hint);
                         detective.incrementGrabbedHints();
                     }
+                    
+                    //When user hits Old Picture, Butler talk unlock.
+                    if(hint.getName().equals("Old Picture"))
+                    {
+                        butler.unlockLines();
+                    }
                 });
 
                 break;
             }
             case '/':
             {
-                clearScreen();
                 //check if at ground area
                 if (detective.getCurrentRoom().getClass() == ground.getClass())
                 {
@@ -414,7 +428,7 @@ public class Game
             case '#':
             {
                 System.out.println("\nThis door is locked!");
-                headDogHouse.printHintFile();
+                headDogHouse.printSavedKeyPasswords();
                 detective.getCurrentRoom().checkPassword();
                 break;
             }
@@ -423,18 +437,7 @@ public class Game
                 if (headLockedArea.promptAnswer())
                 {
                     detective.getCurrentRoom().removeCharacter(currentSquare);
-                    headLockedArea.saveHint();
-                    detective.getCurrentRoom().printRoom(detective.getCurrentRoom().getName());
-                }
-
-                break;
-            }
-            case '@':
-            {
-                if (tailLockedArea.promptAnswer())
-                {
-                    detective.getCurrentRoom().removeCharacter(currentSquare);
-                    tailLockedArea.saveHint();
+                    headLockedArea.saveKeyPassword();
                     detective.getCurrentRoom().printRoom(detective.getCurrentRoom().getName());
                 }
 
@@ -442,10 +445,10 @@ public class Game
             }
             case '!':
             {
-                if (headDogHouse.promptAnswer())
+                if (tailLockedArea.promptAnswer())
                 {
                     detective.getCurrentRoom().removeCharacter(currentSquare);
-                    headDogHouse.saveHint();
+                    tailLockedArea.saveKeyPassword();
                     detective.getCurrentRoom().printRoom(detective.getCurrentRoom().getName());
                 }
 
@@ -453,10 +456,21 @@ public class Game
             }
             case '0':
             {
+                if (headDogHouse.promptAnswer())
+                {
+                    detective.getCurrentRoom().removeCharacter(currentSquare);
+                    headDogHouse.saveKeyPassword();
+                    detective.getCurrentRoom().printRoom(detective.getCurrentRoom().getName());
+                }
+
+                break;
+            }
+            case '@':
+            {
                 if (tailDogHouse.promptAnswer())
                 {
                     detective.getCurrentRoom().removeCharacter(currentSquare);
-                    tailDogHouse.saveHint();
+                    tailDogHouse.saveKeyPassword();
                     detective.getCurrentRoom().printRoom(detective.getCurrentRoom().getName());
                 }
 
@@ -469,22 +483,12 @@ public class Game
 
     private boolean guessKiller()
     {
-        System.out.println("\nCongratulations! You have unlocked all the hints in the game!");
-        System.out.println("Time to guess who is the murderer.");
-
-        System.out.println("Below are your saved notes to help you decide: ");
+        System.out.println("\nCongratulations! You have unlocked all the hints in the game!\n");
+        System.out.println("................Time to guess who is the murderer................");
+        System.out.println("Below are your saved notes to help you decide.");
       
-        LinkedList<String> savedLines = NPCLine.getSavedLines();
-        for (int index = 0; index < savedLines.size(); index++)
-        {
-            System.out.println(savedLines.get(index));
-        }
-        
-        LinkedList<GroundHint> savedHints = GroundHint.getSavedHints();
-        for (int index = 0; index < savedHints.size(); index++)
-        {
-            System.out.println(savedHints.get(index));
-        }
+        printSavedNPCLines();
+        printSavedHints();        
 
         System.out.println("Press 1 to choose Assistant.");
         System.out.println("Press 2 to choose Butler.");
@@ -502,6 +506,47 @@ public class Game
         return confirmKiller(guess);
     }
 
+    public static void printSavedNPCLines()
+    {
+        LinkedList<String> savedLines = NPCLine.getSavedLines();
+        
+        if(savedLines.size() > 0)
+        {    
+            System.out.println("Opening your saved talks:");
+
+            for (int index = 0; index < savedLines.size(); index++)
+            {
+                System.out.println(savedLines.get(index));
+            }
+        }
+        else
+        {
+            System.out.println("Your saved talk file is empty!");
+        }
+    }
+    
+    public static void printSavedHints()
+    {
+        LinkedList<GroundHint> savedHints = GroundHint.getSavedHints();
+        
+        if(savedHints.size() > 0)
+        {
+            System.out.println("Opening your saved hints:");
+            
+            for (int index = 0; index < savedHints.size(); index++)
+            {
+                System.out.println(savedHints.get(index));
+            }
+        }
+        else
+        {
+            System.out.println("Your saved hint file is empty!");
+        }
+    }
+    
+    //Todo: add printSaveKeyPassword method here
+    //public static void printSaveKeyPassword()
+    
     private boolean confirmKiller(int guess)
     {
         if (guess == 3)
@@ -565,11 +610,6 @@ public class Game
         {
             System.out.println(ex.getMessage());
         }
-    }
-
-    private static void clearScreen()
-    {
-        System.out.println(new String(new char[30]).replace('\0', '\n'));
     }
     
     private static void pauseScreen(int time)

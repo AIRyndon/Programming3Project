@@ -104,11 +104,13 @@ public class Detective extends Person
                     {
                         updatePlayArea('*', 'P', value -> xCoord -= value);
 
-                    } else
+                    } 
+                    else
                     {
                         updatePlayArea(' ', 'P', value -> xCoord -= value);
                     }
-                } else if (item == 'X' || item == '*')
+                } 
+                else if (item == 'X' || item == '*')
                 {
                     updatePlayArea(' ', 'P', value -> xCoord -= value);
                 }
@@ -130,11 +132,13 @@ public class Detective extends Person
                     {
                         updatePlayArea('*', 'P', value -> xCoord += value);
 
-                    } else
+                    } 
+                    else
                     {
                         updatePlayArea(' ', 'P', value -> xCoord += value);
                     }
-                } else if (item == 'X' || item == '*')
+                } 
+                else if (item == 'X' || item == '*')
                 {
                     updatePlayArea(' ', 'P', value -> xCoord += value);
                 }
@@ -318,7 +322,7 @@ public class Detective extends Person
         output += "\nDetective information\n";
         output += "Name: " + this.getName() + "\n";
         output += "Gender: " + (this.getGender() == 'M' ? "Male\n" : "Female\n");
-        output += "Age: " + this.getAge() + "\n";//Do we need to create another attribute for age? => Then ask user
+        output += "Age: " + this.getAge() + "\n";
         output += "Background: " + this.getBackground() + "\n";
 
         return output;

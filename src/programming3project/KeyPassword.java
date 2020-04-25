@@ -17,18 +17,18 @@ import java.util.LinkedList;
  *
  * @author pc
  */
-public class PasswordHint
+public class KeyPassword
 {
     private static LinkedList<String> SAVEDCODES = new LinkedList<>();
-    private PasswordHintType function;
+    private KeyPasswordType function;
     private Password lock;
     private String question;
     private String answer;
-    private String hint;
+    private String keyPassword;
     private String beforeQuestion;
     private int order;
 
-    public PasswordHint(PasswordHintType function, Password lock, int order, String answer) throws IOException
+    public KeyPassword(KeyPasswordType function, Password lock, int order, String answer) throws IOException
     {
         this.setFunction(function);
         this.setLock(lock);
@@ -51,18 +51,47 @@ public class PasswordHint
 
         return copy;
     }
+    
+    public void openSaveHintsAndTalk()
+    {
+        System.out.println("\nPress h to open your saved hints");
+        System.out.println("Press t to open your saved talks");
+        System.out.println("Press b to open both");
+        System.out.println("Press any characters to ignore");
+        System.out.print("> ");
+        String openSavedFile = Game.SYSTEMINPUT.nextLine();
+        
+        System.out.println("");
+        
+        if (openSavedFile.equalsIgnoreCase("h"))
+        {
+            Game.printSavedHints();
+        }
+        else if (openSavedFile.equalsIgnoreCase("t"))
+        {
+            Game.printSavedNPCLines();
+        }
+        else if (openSavedFile.equalsIgnoreCase("b"))
+        {
+            Game.printSavedHints();
+            System.out.println("");
+            Game.printSavedNPCLines();
+        }
+        
+        System.out.println("");
+    }
 
     public boolean promptAnswer()
     {
         boolean correct = false;
-
+ 
         Game.SYSTEMINPUT.nextLine();
         System.out.print("\nPress y to get password, any character to leave: ");
         boolean enterPass = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
 
         if (enterPass)
         {
-            //todo - open talks and hints
+            openSaveHintsAndTalk();
             
             System.out.println(this.getBeforeQuestion());
             System.out.println(this.getQuestion());
@@ -84,16 +113,15 @@ public class PasswordHint
                     System.out.print("> ");
                     userInput = Game.SYSTEMINPUT.nextLine();
                 }
-            }
-            while(!userInput.equalsIgnoreCase("q"));
+            } while(!userInput.equalsIgnoreCase("q"));
         }
 
         return correct;
     }
 
-    public void saveHint() throws IOException
+    public void saveKeyPassword() throws IOException
     {
-        System.out.print("Do you want to save this hint (y)? ");
+        System.out.print("Do you want to save the key password (y)? ");
         boolean save = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
 
         if (save)
@@ -115,7 +143,7 @@ public class PasswordHint
                         pw.append(SAVEDCODES.get(size) + '\n');
                     }
                    
-                    System.out.println("The hint has been saved! Press enter to continue.");
+                    System.out.println("The key password has been saved! Press enter to continue.");
                     Game.SYSTEMINPUT.nextLine();
                 } 
                 catch (IOException ex)
@@ -126,11 +154,11 @@ public class PasswordHint
         }
     }
 
-    public void printHintFile() throws IOException
+    public void printSavedKeyPasswords() throws IOException
     {
         if(SAVEDCODES.size() != 0)
         {
-            System.out.println("Opening your saved hints:");
+            System.out.println("Opening your saved key password:");
             
             BufferedReader br = new BufferedReader(new FileReader(
                 Game.getCompletePath("PasswordHints.txt")));
@@ -151,7 +179,7 @@ public class PasswordHint
     public void deleteCode() throws IOException
     {
         System.out.println("\nYou can only save 2 key passwords!");
-        printHintFile();
+        printSavedKeyPasswords();
 
         boolean isDelete = false;
 
@@ -209,10 +237,11 @@ public class PasswordHint
     public void setupHint()
     {
         String aHint = "";
-        if (getFunction() == PasswordHintType.HINTHEAD)
+        if (getFunction() == KeyPasswordType.KEYHEAD)
         {
             aHint = this.getLock().toString().substring(0, 2) + "XX";
-        } else
+        } 
+        else
         {
             aHint = "XX" + this.getLock().toString().substring(2);
         }
@@ -222,7 +251,7 @@ public class PasswordHint
     /**
      * @return the function
      */
-    public PasswordHintType getFunction()
+    public KeyPasswordType getFunction()
     {
         return function;
     }
@@ -230,7 +259,7 @@ public class PasswordHint
     /**
      * @param function the function to set
      */
-    public void setFunction(PasswordHintType function)
+    public void setFunction(KeyPasswordType function)
     {
         this.function = function;
     }
@@ -268,19 +297,19 @@ public class PasswordHint
     }
 
     /**
-     * @return the hint
+     * @return the keyPassword
      */
     public String getHint()
     {
-        return hint;
+        return keyPassword;
     }
 
     /**
-     * @param printHint the hint to set
+     * @param printHint the keyPassword to set
      */
     public void setHint(String printHint)
     {
-        this.hint = printHint;
+        this.keyPassword = printHint;
     }
 
     /**

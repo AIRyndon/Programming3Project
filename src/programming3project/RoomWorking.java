@@ -61,17 +61,8 @@ public class RoomWorking extends Room
             }
         }
         
-        //Book Room's wall
-        /*int j;
-        for (int i = 0; i < getHeight() - 1; i++)
-        {
-            j = getWidth() / 2 + 15 + i * 2;
-            movingArea[i][j] = '\\';
-            
-        }*/
-        
         //Hints in Book room
-        movingArea[4][getWidth() - 19] = '@';
+        movingArea[9][getWidth() / 2 - 30] = '@';
         
         //Locked area
         movingArea[getHeight() / 2 - 1][getWidth() / 4] = '#';

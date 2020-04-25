@@ -41,7 +41,8 @@ public class GroundHint
             try
             {
                 copy.add((GroundHint) iterator.next().clone());
-            } catch (CloneNotSupportedException ex)
+            } 
+            catch (CloneNotSupportedException ex)
             {
                 ex.printStackTrace(System.out);
             }
@@ -52,7 +53,7 @@ public class GroundHint
 
     public static void saveGroundHint(GroundHint hint)
     {
-        System.out.print("Do you want to save this hint(y)? ");
+        System.out.print("Do you want to save this hint (y)? ");
 
         Game.SYSTEMINPUT.nextLine();
         boolean save = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
@@ -95,7 +96,8 @@ public class GroundHint
 
                 System.out.println("\nThe hint has been saved!");
 
-            } catch (IOException ex)
+            } 
+            catch (IOException ex)
             {
                 System.out.println(ex.getMessage());
             }

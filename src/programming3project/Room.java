@@ -101,8 +101,15 @@ public abstract class Room
         }
     }
     
+    protected static void clearScreen()
+    {
+        System.out.println(new String(new char[30]).replace('\0', '\n'));
+    }
+    
     protected void printRoom(String door)
     {
+        clearScreen();
+        
         //Print first line
         printEntrance(door);
 

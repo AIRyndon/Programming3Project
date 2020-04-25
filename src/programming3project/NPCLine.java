@@ -45,7 +45,7 @@ public final class NPCLine
         return copy;
     }
 
-    public void talk() throws IOException
+    public boolean talk() throws IOException
     {
         //Ask if player wants to talk
         System.out.print("Press y then enter to get some information, any character to ignore: ");
@@ -68,11 +68,15 @@ public final class NPCLine
                 System.out.println("\n" + getSecondLine());
                 saveNPCLines(getSecondLine());
 
-                //After printing task 2, task 2 = task 1
-                //Player is unable to see task 2 again
+                //After printing talk 2, talk 2 = talk 1
+                //Player is unable to see talk 2 again
                 this.setSecondLine(getFirstLine());
             }
+            
+            return true;
         }
+        
+        return false;
     }
 
     public void unlock()
@@ -173,7 +177,7 @@ public final class NPCLine
     
     private void saveNPCLines(String conversation) throws IOException
     {
-        System.out.print("Press y then enter to save this conversation, any character to ignore: ");
+        System.out.print("Do you want to save this talk (y)? ");
 
         boolean save = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
 
