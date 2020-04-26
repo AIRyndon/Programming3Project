@@ -15,8 +15,9 @@ import java.util.LinkedList;
  *
  * @author airyn
  */
-public class GroundHint
+public class GroundHint implements Cloneable
 {
+
     private static LinkedList<GroundHint> SAVEDHINTS = new LinkedList<>();
     private String name;
     private String description;
@@ -41,8 +42,7 @@ public class GroundHint
             try
             {
                 copy.add((GroundHint) iterator.next().clone());
-            } 
-            catch (CloneNotSupportedException ex)
+            } catch (CloneNotSupportedException ex)
             {
                 ex.printStackTrace(System.out);
             }
@@ -78,8 +78,8 @@ public class GroundHint
                     {
                         removeIndex = Game.SYSTEMINPUT.nextInt();
                     }
-
-                } while (removeIndex < 0 && removeIndex > 2);
+                    Game.SYSTEMINPUT.nextLine();
+                } while (removeIndex < 0 || removeIndex > 2);
 
                 SAVEDHINTS.remove(--removeIndex);
             }
@@ -96,8 +96,7 @@ public class GroundHint
 
                 System.out.println("\nThe hint has been saved!");
 
-            } 
-            catch (IOException ex)
+            } catch (IOException ex)
             {
                 System.out.println(ex.getMessage());
             }
@@ -141,5 +140,11 @@ public class GroundHint
     {
         return "\nItem name: " + getName()
                 + "\nItem description: " + getDescription() + '\n';
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException
+    {
+        return (GroundHint) super.clone();
     }
 }

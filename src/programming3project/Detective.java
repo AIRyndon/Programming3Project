@@ -321,7 +321,8 @@ public class Detective extends Person
         
         output += "\nDetective information\n";
         output += "Name: " + this.getName() + "\n";
-        output += "Gender: " + (this.getGender() == 'M' ? "Male\n" : "Female\n");
+        output += "Gender: " + (this.getGender() == 'M' || this.getGender() == 'm'
+                  ? "Male\n" : "Female\n");
         output += "Age: " + this.getAge() + "\n";
         output += "Background: " + this.getBackground() + "\n";
 

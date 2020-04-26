@@ -33,7 +33,8 @@ public class NPC extends Person
         {
             System.out.println("\nNow you can now get potentially important information from the "
                     + getRole() + "!");
-            System.out.println("You might want to speak with " + (getGender() == 'M' ? "him" : "her") + " again.");
+            System.out.println("You might want to speak with " 
+                            + (getGender() == 'M' ? "him" : "her") + " again.");
             NPCLine.unlock();
         }
     }
@@ -47,7 +48,8 @@ public class NPC extends Person
             room.hints.add(new GroundHint(name, description, xCoord, yCoord));
             room.movingArea[xCoord][yCoord] = 'X';
 
-            System.out.println("\nHey! An item popped up somewhere... maybe it can help you with this case.");
+            System.out.println("\nHey! An item popped up somewhere..."
+                    + "maybe it can help you with this case.");
         }
     }
 

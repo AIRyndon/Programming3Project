@@ -6,7 +6,6 @@
 package programming3project;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -19,6 +18,7 @@ import java.util.LinkedList;
  */
 public class KeyPassword
 {
+
     private static LinkedList<String> SAVEDCODES = new LinkedList<>();
     private KeyPasswordType function;
     private Password lock;
@@ -51,48 +51,17 @@ public class KeyPassword
 
         return copy;
     }
-    
-    public void openSaveHintsAndTalk()
-    {
-        System.out.println("\nPress h to open your saved hints");
-        System.out.println("Press t to open your saved talks");
-        System.out.println("Press b to open both");
-        System.out.println("Press any characters to ignore");
-        System.out.print("> ");
-        String openSavedFile = Game.SYSTEMINPUT.nextLine();
-        
-        System.out.println("");
-        
-        if (openSavedFile.equalsIgnoreCase("h"))
-        {
-            Game.printSavedHints();
-        }
-        else if (openSavedFile.equalsIgnoreCase("t"))
-        {
-            Game.printSavedNPCLines();
-        }
-        else if (openSavedFile.equalsIgnoreCase("b"))
-        {
-            Game.printSavedHints();
-            System.out.println("");
-            Game.printSavedNPCLines();
-        }
-        
-        System.out.println("");
-    }
 
     public boolean promptAnswer()
     {
         boolean correct = false;
- 
+
         Game.SYSTEMINPUT.nextLine();
         System.out.print("\nPress y to get password, any character to leave: ");
         boolean enterPass = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
 
         if (enterPass)
         {
-            openSaveHintsAndTalk();
-            
             System.out.println(this.getBeforeQuestion());
             System.out.println(this.getQuestion());
             System.out.print("> ");
@@ -106,14 +75,13 @@ public class KeyPassword
                     System.out.println("Hint: " + this.getHint());
                     correct = true;
                     userInput = "q";
-                }
-                else
+                } else
                 {
                     System.out.println("You are wrong! Answer again or press q to quit.");
                     System.out.print("> ");
                     userInput = Game.SYSTEMINPUT.nextLine();
                 }
-            } while(!userInput.equalsIgnoreCase("q"));
+            } while (!userInput.equalsIgnoreCase("q"));
         }
 
         return correct;
@@ -138,15 +106,14 @@ public class KeyPassword
                 try (FileWriter pw = new FileWriter(
                         Game.getCompletePath("PasswordHints.txt")))
                 {
-                    for(int size = 0; size < SAVEDCODES.size(); size++)
+                    for (int size = 0; size < SAVEDCODES.size(); size++)
                     {
                         pw.append(SAVEDCODES.get(size) + '\n');
                     }
-                   
+
                     System.out.println("The key password has been saved! Press enter to continue.");
                     Game.SYSTEMINPUT.nextLine();
-                } 
-                catch (IOException ex)
+                } catch (IOException ex)
                 {
                     System.out.println(ex.getMessage());
                 }
@@ -156,21 +123,20 @@ public class KeyPassword
 
     public void printSavedKeyPasswords() throws IOException
     {
-        if(SAVEDCODES.size() != 0)
+        if (SAVEDCODES.size() != 0)
         {
             System.out.println("Opening your saved key password:");
-            
+
             BufferedReader br = new BufferedReader(new FileReader(
-                Game.getCompletePath("PasswordHints.txt")));
-            
-                String line = "";
-                
-                while ((line = br.readLine()) != null)
-                {
-                    System.out.println(line);
-                }
-        }
-        else
+                    Game.getCompletePath("PasswordHints.txt")));
+
+            String line = "";
+
+            while ((line = br.readLine()) != null)
+            {
+                System.out.println(line);
+            }
+        } else
         {
             System.out.println("*Find key password to unlock the door.\n");
         }
@@ -196,7 +162,7 @@ public class KeyPassword
     public void setupQuestionAndAnswer(String answer) throws IOException
     {
         BufferedReader br = new BufferedReader(new FileReader(
-                        Game.getCompletePath("Questions.txt")));
+                Game.getCompletePath("Questions.txt")));
         String line = "";
 
         while ((line = br.readLine()) != null)
@@ -214,7 +180,7 @@ public class KeyPassword
     public void setupTrivias() throws IOException
     {
         BufferedReader br = new BufferedReader(new FileReader(
-                        Game.getCompletePath("BeforeQuestion.txt")));
+                Game.getCompletePath("BeforeQuestion.txt")));
         String line = "";
         String beforeQuestions = "";
 
@@ -230,7 +196,7 @@ public class KeyPassword
                 break;
             }
         }
-            
+
         this.setBeforeQuestion(beforeQuestions);
     }
 
@@ -240,8 +206,7 @@ public class KeyPassword
         if (getFunction() == KeyPasswordType.KEYHEAD)
         {
             aHint = this.getLock().toString().substring(0, 2) + "XX";
-        } 
-        else
+        } else
         {
             aHint = "XX" + this.getLock().toString().substring(2);
         }

@@ -19,6 +19,7 @@ import java.util.LinkedList;
  */
 public final class NPCLine
 {
+
     private static LinkedList<String> SAVEDLINES = new LinkedList<>();
     private boolean unlocked;
     private NPC npc;
@@ -62,8 +63,7 @@ public final class NPCLine
                 System.out.println("\n" + getFirstLine());
 
                 saveNPCLines(getFirstLine());
-            } 
-            else
+            } else
             {
                 System.out.println("\n" + getSecondLine());
                 saveNPCLines(getSecondLine());
@@ -72,10 +72,10 @@ public final class NPCLine
                 //Player is unable to see talk 2 again
                 this.setSecondLine(getFirstLine());
             }
-            
+
             return true;
         }
-        
+
         return false;
     }
 
@@ -83,7 +83,7 @@ public final class NPCLine
     {
         setUnlocked(true);
     }
-  
+
     /**
      * @return the unlocked
      */
@@ -152,7 +152,7 @@ public final class NPCLine
     {
         BufferedReader br = new BufferedReader(new FileReader(
                 Game.getCompletePath(getNPC().getRole() + ".txt")));
-        
+
         String line;
 
         while ((line = br.readLine()) != null)
@@ -160,8 +160,7 @@ public final class NPCLine
             if (!line.isEmpty())
             {
                 setFirstLine(getFirstLine() + line + '\n');
-            } 
-            else
+            } else
             {
                 secondLine += line;
 
@@ -174,21 +173,20 @@ public final class NPCLine
             }
         }
     }
-    
+
     private void saveNPCLines(String conversation) throws IOException
     {
-        System.out.print("Do you want to save this talk (y)? ");
+        System.out.print("Do you want to save this conversations (y)? ");
 
         boolean save = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
 
         if (save)
         {
             //If this conversation has been saved already
-            if(SAVEDLINES.contains(npc.getName() + ":\n" + conversation))
+            if (SAVEDLINES.contains(npc.getName() + ":\n" + conversation))
             {
-                System.out.println("This conversation had already been saved!");
-            }
-            else 
+                System.out.println("You already have this on file...");
+            } else
             {
                 if (SAVEDLINES.size() == 3)
                 {
@@ -199,37 +197,33 @@ public final class NPCLine
                         System.out.println((index + 1) + ". " + SAVEDLINES.get(index));
                     }
 
-                    char removeElement = ' ';
+                    int removeIndex = 0;
                     do
                     {
-                        System.out.print("Choose something to remove(1-3), q to quit: ");
-                        removeElement = Game.SYSTEMINPUT.next().charAt(0);
+                        System.out.print("Choose something to remove(1-3): ");
 
-                    } 
-                    while (removeElement != '1' && removeElement != '2' &&
-                            removeElement != '3' &&removeElement != 'q');
+                        if (Game.SYSTEMINPUT.hasNextInt())
+                        {
+                            removeIndex = Game.SYSTEMINPUT.nextInt();
+                        }
+                        Game.SYSTEMINPUT.nextLine();
+                    } while (removeIndex < 1 || removeIndex > 3);
 
-                    if(removeElement != 'q')
-                    {
-                        int removeIndex = Integer.parseInt(String.valueOf(removeElement));
-                        SAVEDLINES.remove(--removeIndex);
-                    }
+                    SAVEDLINES.remove(--removeIndex);
+
                 }
-            
-                if(SAVEDLINES.size() != 3)
+
+                SAVEDLINES.add(npc.getName() + ":\n" + conversation);
+
+                BufferedWriter bw = new BufferedWriter(new FileWriter(
+                        Game.getCompletePath("Conversations.txt")));
+
+                for (int index = 0; index < SAVEDLINES.size(); index++)
                 {
-                    SAVEDLINES.add(npc.getName() + ":\n" + conversation);
-
-                    BufferedWriter bw = new BufferedWriter(new FileWriter(
-                            Game.getCompletePath("Conversations.txt")));
-
-                    for (int index = 0; index < SAVEDLINES.size(); index++)
-                    {
-                        bw.append(SAVEDLINES.get(index) + '\n');
-                    }
-
-                    System.out.println("The conversation has been saved!");
+                    bw.append(SAVEDLINES.get(index) + '\n');
                 }
+
+                System.out.println("The conversation has been saved!");
             }
         }
     }
