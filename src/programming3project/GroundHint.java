@@ -17,7 +17,6 @@ import java.util.LinkedList;
  */
 public class GroundHint implements Cloneable
 {
-
     private static LinkedList<GroundHint> SAVEDHINTS = new LinkedList<>();
     private String name;
     private String description;
@@ -42,7 +41,8 @@ public class GroundHint implements Cloneable
             try
             {
                 copy.add((GroundHint) iterator.next().clone());
-            } catch (CloneNotSupportedException ex)
+            } 
+            catch (CloneNotSupportedException ex)
             {
                 ex.printStackTrace(System.out);
             }
@@ -139,7 +139,7 @@ public class GroundHint implements Cloneable
     public String toString()
     {
         return "\nItem name: " + getName()
-                + "\nItem description: " + getDescription() + '\n';
+                + "\nItem description: " + getDescription();
     }
 
     @Override
