@@ -18,8 +18,7 @@ import java.util.LinkedList;
  */
 public class KeyPassword
 {
-
-    private static LinkedList<String> SAVEDCODES = new LinkedList<>();
+    public static LinkedList<String> SAVEDCODES = new LinkedList<>();
     private KeyPasswordType function;
     private Password lock;
     private String question;
@@ -33,14 +32,22 @@ public class KeyPassword
         this.setFunction(function);
         this.setLock(lock);
         this.setOrder(order);
+        
         setupHint();
         setupQuestionAndAnswer(answer);
         setupTrivias();
     }
-
+    
+    public static void giveLockAdvice()
+    {
+        if (SAVEDCODES.size() == 0)
+        {
+            System.out.println("*Find key password to unlock the door.\n");
+        }
+    }
+    
     public static LinkedList<String> getSavedCodes()
     {
-
         LinkedList<String> copy = new LinkedList<>();
         Iterator<String> iterator = SAVEDCODES.iterator();
 
@@ -56,7 +63,6 @@ public class KeyPassword
     {
         boolean correct = false;
 
-        Game.SYSTEMINPUT.nextLine();
         System.out.print("\nPress y to get password, any character to leave: ");
         boolean enterPass = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
 
@@ -72,10 +78,11 @@ public class KeyPassword
                 if (userInput.equalsIgnoreCase(this.getAnswer()))
                 {
                     System.out.println("You are right! Great job!");
-                    System.out.println("Hint: " + this.getHint());
+                    System.out.println("Key password: " + this.getHint());
                     correct = true;
                     userInput = "q";
-                } else
+                } 
+                else
                 {
                     System.out.println("You are wrong! Answer again or press q to quit.");
                     System.out.print("> ");
@@ -89,7 +96,7 @@ public class KeyPassword
 
     public void saveKeyPassword() throws IOException
     {
-        System.out.print("Do you want to save the key password (y)? ");
+        System.out.print("\nDo you want to save the key password (y)? ");
         boolean save = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
 
         if (save)
@@ -113,7 +120,8 @@ public class KeyPassword
 
                     System.out.println("The key password has been saved! Press enter to continue.");
                     Game.SYSTEMINPUT.nextLine();
-                } catch (IOException ex)
+                } 
+                catch (IOException ex)
                 {
                     System.out.println(ex.getMessage());
                 }
@@ -121,35 +129,14 @@ public class KeyPassword
         }
     }
 
-    public void printSavedKeyPasswords() throws IOException
-    {
-        if (SAVEDCODES.size() != 0)
-        {
-            System.out.println("Opening your saved key password:");
-
-            BufferedReader br = new BufferedReader(new FileReader(
-                    Game.getCompletePath("PasswordHints.txt")));
-
-            String line = "";
-
-            while ((line = br.readLine()) != null)
-            {
-                System.out.println(line);
-            }
-        } else
-        {
-            System.out.println("*Find key password to unlock the door.\n");
-        }
-    }
-
-    public void deleteCode() throws IOException
+    public void deleteCode()
     {
         System.out.println("\nYou can only save 2 key passwords!");
-        printSavedKeyPasswords();
+        Game.printSavedKeyPassword(0);
 
         boolean isDelete = false;
 
-        System.out.println("Press y to delete the first one, any character to leave: ");
+        System.out.print("Press y to delete the first one, any character to leave: ");
 
         isDelete = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
 

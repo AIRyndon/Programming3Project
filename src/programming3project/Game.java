@@ -21,7 +21,6 @@ import java.util.Scanner;
  */
 public class Game
 {
-
     //Required game fields
     public final static Scanner SYSTEMINPUT = new Scanner(System.in);
     public final static Random RANDOM = new Random();
@@ -48,16 +47,17 @@ public class Game
         String workingDir = System.getProperty("user.dir");
         new File(workingDir + "/FileDB/").mkdir();
         clearWritableFiles();
+        resetStaticVariables();
     }
 
-    public static void printSavedNPCLines()
+    public static void printSavedNPCLines(int pausedTime)
     {
         LinkedList<String> savedLines = NPCLine.getSavedLines();
 
         if (savedLines.size() > 0)
         {
-            System.out.println("\nOpening your saved conversations...");
-            pauseScreen(savedLines.size() * 1000);
+            System.out.println("\nOpening your saved conversations...\n");
+            pauseScreen(savedLines.size() * pausedTime);
 
             for (int index = 0; index < savedLines.size(); index++)
             {
@@ -66,18 +66,18 @@ public class Game
         } 
         else
         {
-            System.out.println("\nYour saved talk file is empty!");
-        }
+            System.out.println("\nYour saved talk file is empty!\n");
+        }        
     }
 
-    public static void printSavedHints()
+    public static void printSavedHints(int pausedTime)
     {
         LinkedList<GroundHint> savedHints = GroundHint.getSavedHints();
 
         if (savedHints.size() > 0)
         {
             System.out.println("\nOpening your saved hints...");
-            pauseScreen(savedHints.size() * 1000);
+            pauseScreen(savedHints.size() * pausedTime);
 
             for (int index = 0; index < savedHints.size(); index++)
             {
@@ -88,26 +88,30 @@ public class Game
         {
             System.out.println("\nYou haven't saved any hints yet!");
         }
+        
+        System.out.println("");
     }
 
-    public static void printSavedKeyPassword()
+    public static void printSavedKeyPassword(int pausedTime)
     {
         LinkedList<String> savedCodes = KeyPassword.getSavedCodes();
 
         if (savedCodes.size() > 0)
         {
-            System.out.println("\nOpening your saved password codes...");
-            pauseScreen(savedCodes.size() * 1000);
+            System.out.println("\nOpening your saved password codes...\n");
+            pauseScreen(savedCodes.size() * pausedTime);
 
             for (int index = 0; index < savedCodes.size(); index++)
             {
                 System.out.println(savedCodes.get(index));
             }
-        } 
+        }
         else
         {
             System.out.println("\nYou don't have any code saved!");
         }
+        
+        System.out.println("");
     }
 
     public static void openLogBook()
@@ -127,13 +131,13 @@ public class Game
         switch (page)
         {
             case 1:
-                printSavedNPCLines();
+                printSavedNPCLines(1000);
                 break;
             case 2:
-                printSavedHints();
+                printSavedHints(1000);
                 break;
             case 3:
-                printSavedKeyPassword();
+                printSavedKeyPassword(1000);
                 break;
             default:
                 break;
@@ -142,7 +146,7 @@ public class Game
         char input = '\0';
         do
         {
-            System.out.print("Press h again to close your log book. ");
+            System.out.print("Press h again to close your logbook. ");
             input = SYSTEMINPUT.next().charAt(0);
         } while (!(input == 'h' || input == 'H'));
     }
@@ -174,33 +178,36 @@ public class Game
         setupNPC();
         setupPasswordCodes();
         setupPlayerInfo();
-        //introduceStory(detective);
+        introduceStory(detective);
         startGameLoop();
     }
 
     private void startGameLoop() throws IOException
-    {
+    {        
+        //clear console
+        SYSTEMINPUT.nextLine();
         boolean playing = true;
-
+        
         while (playing)
         {
-            char keyPress = '\0';
-
+            String keyPress = " ";
+            
             //access ground => print ground
-            while (!(keyPress == 'a' || keyPress == 'd' || keyPress == 's'
-                    || keyPress == 'w' || keyPress == 'h' || keyPress == 'q'))
+            do
             {
                 System.out.println("\nPress h then enter to access your logbook.");
                 System.out.println("Press q then enter to quit.");
                 System.out.println("Press a, s, d, w then enter to move:");
 
-                keyPress = SYSTEMINPUT.next().charAt(0);
-            }
+                keyPress = SYSTEMINPUT.nextLine();
+            }while (!(keyPress.equals("a") || keyPress.equals("d") || 
+                    keyPress.equals("s") || keyPress.equals("w") ||
+                    keyPress.equals("h") || keyPress.equals("q")));
 
-            if (keyPress == 'h')
+            if (keyPress.equals("h"))
             {
-                SYSTEMINPUT.nextLine();
                 openLogBook();
+                SYSTEMINPUT.nextLine();
             }
 
             handlePlayerInteraction(keyPress);
@@ -208,12 +215,17 @@ public class Game
 
             if (detective.getGrabbedHints() == 5)
             {
+                pauseScreen(1500);
                 playing = guessKiller();
             } 
-            else if (keyPress == 'q')
+            else if (keyPress.equals("q"))
             {
-                SYSTEMINPUT.nextLine();
                 playing = quitGame();
+                
+                if(playing == true)
+                {
+                    SYSTEMINPUT.nextLine();
+                }
             }
         }
     }
@@ -245,7 +257,8 @@ public class Game
             if (SYSTEMINPUT.hasNextInt())
             {
                 userAge = SYSTEMINPUT.nextInt();
-            } else
+            }
+            else
             {
                 SYSTEMINPUT.nextLine();
             }
@@ -280,7 +293,7 @@ public class Game
         while (!(enterPremises == 'Y' || enterPremises == 'y'
                 || enterPremises == 'N' || enterPremises == 'n'))
         {
-            System.out.print("\nDo you want to enter the compound(Y/N)? ");
+            System.out.print("\nDo you want to enter the compound (y/n)? ");
             enterPremises = SYSTEMINPUT.next().charAt(0);
         }
 
@@ -316,8 +329,8 @@ public class Game
         pauseScreen(2000);
         System.out.println(storyIntro.getStory().get(13));
 
-        pauseScreen(2000);
-        ground.printRoom(ground.getName());
+        pauseScreen(2500);
+        ground.printRoom(ground.getName());        
     }
 
     private void updateConversationLevel()
@@ -349,7 +362,7 @@ public class Game
         }
     }
 
-    private void handlePlayerInteraction(char keyPress) throws IOException
+    private void handlePlayerInteraction(String keyPress) throws IOException
     {
         char currentSquare = detective.move(keyPress);
 
@@ -366,7 +379,6 @@ public class Game
                     unlockNPC = butler.getUnlockNPC();
                     butler.tryToPlaceHint(roomMaid, "Gloves", "A worn-out pair of gloves, there is a name on it - "
                             + "\nit is illegible, you only recognize the letters ATO", 3, 39);
-                    //Hey, what does ATO mean by the way? =))
                 }
 
                 break;
@@ -531,7 +543,7 @@ public class Game
             case '#':
             {
                 System.out.println("\nThis door is locked!");
-                headDogHouse.printSavedKeyPasswords();
+                KeyPassword.giveLockAdvice();
                 detective.getCurrentRoom().checkPassword();
                 break;
             }
@@ -590,8 +602,8 @@ public class Game
         System.out.println("................Time to guess who is the murderer................\n");
         System.out.println("Here're your saved notes to help you decide.\n");
 
-        printSavedNPCLines();
-        printSavedHints();
+        printSavedNPCLines(1000);
+        printSavedHints(1000);
 
         System.out.println("Press 1 to choose Assistant.");
         System.out.println("Press 2 to choose Butler.");
@@ -648,13 +660,8 @@ public class Game
         while (!(quitGame == 'Y' || quitGame == 'y' || quitGame == 'N' || quitGame == 'n'))
         {
             System.out.println("Invalid input!");
-            System.out.println("Are you sure you want to quit? (Y/N)");
+            System.out.println("Are you sure you want to quit (y/n)? ");
             quitGame = SYSTEMINPUT.next().charAt(0);
-        }
-
-        if (quitGame == 'Y' || quitGame == 'y')
-        {
-            clearWritableFiles();
         }
 
         return !(quitGame == 'Y' || quitGame == 'y');
@@ -664,14 +671,21 @@ public class Game
     {
         try
         {
-            new FileWriter(getCompletePath("Conversations.txt")).close();
-            new FileWriter(getCompletePath("PasswordHints.txt")).close();
-            new FileWriter(getCompletePath("GroundHints.txt")).close();
+            new FileWriter(getCompletePath("Conversations.txt"), false).close();
+            new FileWriter(getCompletePath("PasswordHints.txt"), false).close();
+            new FileWriter(getCompletePath("GroundHints.txt"), false).close();
         } 
         catch (IOException ex)
         {
             System.out.println(ex.getMessage());
         }
+    }
+    
+    private void resetStaticVariables()
+    {
+        KeyPassword.SAVEDCODES.clear();
+        GroundHint.SAVEDHINTS.clear();
+        NPCLine.SAVEDLINES.clear();
     }
 
     private static void pauseScreen(int time)
