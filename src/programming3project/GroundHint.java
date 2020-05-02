@@ -17,8 +17,7 @@ import java.util.LinkedList;
  */
 public class GroundHint implements Cloneable
 {
-
-    private static LinkedList<GroundHint> SAVEDHINTS = new LinkedList<>();
+    public static LinkedList<GroundHint> SAVEDHINTS = new LinkedList<>();
     private String name;
     private String description;
     private int xLocation;
@@ -42,7 +41,8 @@ public class GroundHint implements Cloneable
             try
             {
                 copy.add((GroundHint) iterator.next().clone());
-            } catch (CloneNotSupportedException ex)
+            } 
+            catch (CloneNotSupportedException ex)
             {
                 ex.printStackTrace(System.out);
             }
@@ -53,26 +53,26 @@ public class GroundHint implements Cloneable
 
     public static void saveGroundHint(GroundHint hint)
     {
-        System.out.print("Do you want to save this hint (y)? ");
+        System.out.print("\nDo you want to save this hint (y)? ");
 
-        Game.SYSTEMINPUT.nextLine();
         boolean save = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
 
         if (save)
         {
             if (SAVEDHINTS.size() == 2)
             {
-                System.out.println("\nYou can only save 2 hints.");
+                System.out.println("\nYou can only save 2 hints.\n");
 
                 for (int index = 0; index < SAVEDHINTS.size(); index++)
                 {
                     System.out.println((index + 1) + ". " + SAVEDHINTS.get(index));
                 }
 
+                System.out.println("");
                 int removeIndex = 0;
                 do
                 {
-                    System.out.print("Choose something to remove(1-2). ");
+                    System.out.print("Choose something to remove(1-2): ");
 
                     if (Game.SYSTEMINPUT.hasNextInt())
                     {
@@ -94,9 +94,9 @@ public class GroundHint implements Cloneable
                     bw.append(SAVEDHINTS.get(index).toString());
                 }
 
-                System.out.println("\nThe hint has been saved!");
-
-            } catch (IOException ex)
+                System.out.println("The hint has been saved!");
+            } 
+            catch (IOException ex)
             {
                 System.out.println(ex.getMessage());
             }
@@ -139,7 +139,7 @@ public class GroundHint implements Cloneable
     public String toString()
     {
         return "\nItem name: " + getName()
-                + "\nItem description: " + getDescription() + '\n';
+                + "\nItem description: " + getDescription();
     }
 
     @Override

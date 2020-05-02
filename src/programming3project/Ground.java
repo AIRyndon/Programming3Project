@@ -72,7 +72,8 @@ public class Ground extends Room
                     if (j == 17 || j == 34)
                     {
                         movingArea[i][j] = '|';
-                    } else
+                    } 
+                    else
                     {
                         movingArea[i][j] = '_';
                     }
@@ -118,7 +119,7 @@ public class Ground extends Room
                 {
                     if(movingArea[i][j] == person)
                     {
-                        if((i < 3 && j > getWidth() - 15) || (i >= 7 && i <= 14 && j >= 17 && j <= 34))
+                        if((i < 3 && j > getWidth() - 12) || (i >= 7 && i <= 14 && j >= 17 && j <= 34))
                         {
                             movingArea[i][j] = ' ';
                             super.positionNPC(person);

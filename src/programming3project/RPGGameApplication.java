@@ -23,7 +23,7 @@ public class RPGGameApplication
         Game game = new Game();       
         game.startGame();
         
-        if(game.playAgain())
+        while(game.playAgain())
         {
             game = new Game();
             System.out.println("\nWelcome to the game");

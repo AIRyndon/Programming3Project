@@ -98,7 +98,7 @@ public class RoomWorking extends Room
                 {
                     if(movingArea[i][j] == person)
                     {
-                        if(j < getWidth() / 4 || j > getWidth() / 2 + 12)
+                        if(j < getWidth() / 4 + 3 || j > getWidth() / 2 + 12)
                         {
                             movingArea[i][j] = ' ';
                             super.positionNPC(person);

@@ -37,7 +37,6 @@ public class Password
 
     public void promtPassword()
     {        
-        Game.SYSTEMINPUT.nextLine();
         System.out.println(this.password);
         System.out.print("Press y to enter password, any character to leave: ");
         boolean enterPass = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());

@@ -11,7 +11,6 @@ package programming3project;
  */
 public class RoomWife extends Room
 {
-
     public RoomWife(String name, Room previous)
     {
         super(previous);

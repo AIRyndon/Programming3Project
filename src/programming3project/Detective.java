@@ -33,13 +33,13 @@ public class Detective extends Person
         yCoord = room.getyInitial();
     }
 
-    public char move(char keyPress)
+    public char move(String keyPress)
     {
         char item = '\0';
 
         switch (keyPress)
         {
-            case 'a':
+            case "a":
 
                 if (inCorner(yCoord, 0))
                 {
@@ -52,11 +52,13 @@ public class Detective extends Person
                     if (startingInHouse())
                     {
                         updatePlayArea('*', 'P', value -> yCoord -= value);
-                    } else
+                    }
+                    else
                     {
                         updatePlayArea(' ', 'P', value -> yCoord -= value);
                     }
-                } else if (item == 'X' || item == '*')
+                } 
+                else if (item == 'X' || item == '*')
                 {
                     //todo - how to know what hint should be spit out.
                     updatePlayArea(' ', 'P', value -> yCoord -= value);
@@ -64,7 +66,7 @@ public class Detective extends Person
 
                 break;
 
-            case 'd':
+            case "d":
 
                 if (inCorner(yCoord, playArea[0].length - 1))
                 {
@@ -79,18 +81,20 @@ public class Detective extends Person
                     {
                         updatePlayArea('*', 'P', value -> yCoord += value);
 
-                    } else
+                    } 
+                    else
                     {
                         updatePlayArea(' ', 'P', value -> yCoord += value);
                     }
-                } else if (item == 'X' || item == '*')
+                } 
+                else if (item == 'X' || item == '*')
                 {
                     updatePlayArea(' ', 'P', value -> yCoord += value);
                 }
 
                 break;
 
-            case 'w':
+            case "w":
 
                 if (inCorner(xCoord, 0))
                 {
@@ -103,7 +107,6 @@ public class Detective extends Person
                     if (startingInHouse())
                     {
                         updatePlayArea('*', 'P', value -> xCoord -= value);
-
                     } 
                     else
                     {
@@ -117,7 +120,7 @@ public class Detective extends Person
 
                 break;
 
-            case 's':
+            case "s":
 
                 if (inCorner(xCoord, playArea.length - 1))
                 {
