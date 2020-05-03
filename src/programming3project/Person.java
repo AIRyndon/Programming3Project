@@ -6,7 +6,6 @@
 package programming3project;
 
 /**
- *
  * @author angel
  */
 public abstract class Person
@@ -23,11 +22,11 @@ public abstract class Person
     }
 
     /**
-     * @return the name
+     * @return the age
      */
-    public String getName()
+    public int getAge()
     {
-        return name;
+        return age;
     }
 
     /**
@@ -39,11 +38,11 @@ public abstract class Person
     }
 
     /**
-     * @return the age
+     * @return the name
      */
-    public int getAge()
+    public String getName()
     {
-        return age;
+        return name;
     }
 
 }

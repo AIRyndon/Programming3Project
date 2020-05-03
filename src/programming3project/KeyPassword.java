@@ -13,7 +13,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
- *
  * @author pc
  */
 public class KeyPassword
@@ -32,20 +31,12 @@ public class KeyPassword
         this.setFunction(function);
         this.setLock(lock);
         this.setOrder(order);
-        
+
         setupHint();
         setupQuestionAndAnswer(answer);
         setupTrivias();
     }
-    
-    public static void giveLockAdvice()
-    {
-        if (SAVEDCODES.size() == 0)
-        {
-            System.out.println("*Find key password to unlock the door.\n");
-        }
-    }
-    
+
     public static LinkedList<String> getSavedCodes()
     {
         LinkedList<String> copy = new LinkedList<>();
@@ -59,73 +50,11 @@ public class KeyPassword
         return copy;
     }
 
-    public boolean promptAnswer()
+    public static void giveLockAdvice()
     {
-        boolean correct = false;
-
-        System.out.print("\nPress y to get password, any character to leave: ");
-        boolean enterPass = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
-
-        if (enterPass)
+        if (SAVEDCODES.size() == 0)
         {
-            System.out.println(this.getBeforeQuestion());
-            System.out.println(this.getQuestion());
-            System.out.print("> ");
-            String userInput = Game.SYSTEMINPUT.nextLine();
-
-            do
-            {
-                if (userInput.equalsIgnoreCase(this.getAnswer()))
-                {
-                    System.out.println("You are right! Great job!");
-                    System.out.println("Key password: " + this.getHint());
-                    correct = true;
-                    userInput = "q";
-                } 
-                else
-                {
-                    System.out.println("You are wrong! Answer again or press q to quit.");
-                    System.out.print("> ");
-                    userInput = Game.SYSTEMINPUT.nextLine();
-                }
-            } while (!userInput.equalsIgnoreCase("q"));
-        }
-
-        return correct;
-    }
-
-    public void saveKeyPassword() throws IOException
-    {
-        System.out.print("\nDo you want to save the key password (y)? ");
-        boolean save = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
-
-        if (save)
-        {
-            if (SAVEDCODES.size() == 2)
-            {
-                deleteCode();
-            }
-
-            if (SAVEDCODES.size() < 2)
-            {
-                SAVEDCODES.add(this.getHint());
-
-                try (FileWriter pw = new FileWriter(
-                        Game.getCompletePath("PasswordHints.txt")))
-                {
-                    for (int size = 0; size < SAVEDCODES.size(); size++)
-                    {
-                        pw.append(SAVEDCODES.get(size) + '\n');
-                    }
-
-                    System.out.println("The key password has been saved! Press enter to continue.");
-                    Game.SYSTEMINPUT.nextLine();
-                } 
-                catch (IOException ex)
-                {
-                    System.out.println(ex.getMessage());
-                }
-            }
+            System.out.println("*Find key password to unlock the door.\n");
         }
     }
 
@@ -146,58 +75,36 @@ public class KeyPassword
         }
     }
 
-    public void setupQuestionAndAnswer(String answer) throws IOException
+    /**
+     * @return the answer
+     */
+    public String getAnswer()
     {
-        BufferedReader br = new BufferedReader(new FileReader(
-                Game.getCompletePath("Questions.txt")));
-        String line = "";
-
-        while ((line = br.readLine()) != null)
-        {
-            if (line.contains(Integer.toString(this.getOrder())))
-            {
-                this.setQuestion(line.substring(1));
-                this.setAnswer(answer);
-
-                break;
-            }
-        }
+        return answer;
     }
 
-    public void setupTrivias() throws IOException
+    /**
+     * @param answer the answer to set
+     */
+    public void setAnswer(String answer)
     {
-        BufferedReader br = new BufferedReader(new FileReader(
-                Game.getCompletePath("BeforeQuestion.txt")));
-        String line = "";
-        String beforeQuestions = "";
-
-        while ((line = br.readLine()) != null)
-        {
-            if (line.contains(Integer.toString(this.getOrder())))
-            {
-                while (!(line = br.readLine()).isEmpty())
-                {
-                    beforeQuestions += line + "\n";
-                }
-
-                break;
-            }
-        }
-
-        this.setBeforeQuestion(beforeQuestions);
+        this.answer = answer;
     }
 
-    public void setupHint()
+    /**
+     * @return the beforeQuestion
+     */
+    public String getBeforeQuestion()
     {
-        String aHint = "";
-        if (getFunction() == KeyPasswordType.KEYHEAD)
-        {
-            aHint = this.getLock().toString().substring(0, 2) + "XX";
-        } else
-        {
-            aHint = "XX" + this.getLock().toString().substring(2);
-        }
-        this.setHint(aHint);
+        return beforeQuestion;
+    }
+
+    /**
+     * @param printQuestion the beforeQuestion to set
+     */
+    public void setBeforeQuestion(String printQuestion)
+    {
+        this.beforeQuestion = printQuestion;
     }
 
     /**
@@ -214,38 +121,6 @@ public class KeyPassword
     public void setFunction(KeyPasswordType function)
     {
         this.function = function;
-    }
-
-    /**
-     * @return the question
-     */
-    public String getQuestion()
-    {
-        return question;
-    }
-
-    /**
-     * @param question the question to set
-     */
-    public void setQuestion(String question)
-    {
-        this.question = question;
-    }
-
-    /**
-     * @return the answer
-     */
-    public String getAnswer()
-    {
-        return answer;
-    }
-
-    /**
-     * @param answer the answer to set
-     */
-    public void setAnswer(String answer)
-    {
-        this.answer = answer;
     }
 
     /**
@@ -297,19 +172,143 @@ public class KeyPassword
     }
 
     /**
-     * @return the beforeQuestion
+     * @return the question
      */
-    public String getBeforeQuestion()
+    public String getQuestion()
     {
-        return beforeQuestion;
+        return question;
     }
 
     /**
-     * @param printQuestion the beforeQuestion to set
+     * @param question the question to set
      */
-    public void setBeforeQuestion(String printQuestion)
+    public void setQuestion(String question)
     {
-        this.beforeQuestion = printQuestion;
+        this.question = question;
+    }
+
+    public boolean promptAnswer()
+    {
+        boolean correct = false;
+
+        System.out.print("\nPress y to get password, any character to leave: ");
+        boolean enterPass = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
+
+        if (enterPass)
+        {
+            System.out.println(this.getBeforeQuestion());
+            System.out.println(this.getQuestion());
+            System.out.print("> ");
+            String userInput = Game.SYSTEMINPUT.nextLine();
+
+            do
+            {
+                if (userInput.equalsIgnoreCase(this.getAnswer()))
+                {
+                    System.out.println("You are right! Great job!");
+                    System.out.println("Key password: " + this.getHint());
+                    correct = true;
+                    userInput = "q";
+                }
+                else
+                {
+                    System.out.println("You are wrong! Answer again or press q to quit.");
+                    System.out.print("> ");
+                    userInput = Game.SYSTEMINPUT.nextLine();
+                }
+            } while (!userInput.equalsIgnoreCase("q"));
+        }
+
+        return correct;
+    }
+
+    public void saveKeyPassword() throws IOException
+    {
+        System.out.print("\nDo you want to save the key password (y)? ");
+        boolean save = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
+
+        if (save)
+        {
+            if (SAVEDCODES.size() == 2)
+            {
+                deleteCode();
+            }
+
+            if (SAVEDCODES.size() < 2)
+            {
+                SAVEDCODES.add(this.getHint());
+
+                try (FileWriter pw = new FileWriter(
+                        Game.getCompletePath("PasswordHints.txt")))
+                {
+                    for (int size = 0; size < SAVEDCODES.size(); size++)
+                    {
+                        pw.append(SAVEDCODES.get(size) + '\n');
+                    }
+
+                    System.out.println("The key password has been saved! Press enter to continue.");
+                    Game.SYSTEMINPUT.nextLine();
+                } catch (IOException ex)
+                {
+                    System.out.println(ex.getMessage());
+                }
+            }
+        }
+    }
+
+    public void setupHint()
+    {
+        String aHint = "";
+        if (getFunction() == KeyPasswordType.KEYHEAD)
+        {
+            aHint = this.getLock().toString().substring(0, 2) + "XX";
+        }
+        else
+        {
+            aHint = "XX" + this.getLock().toString().substring(2);
+        }
+        this.setHint(aHint);
+    }
+
+    public void setupQuestionAndAnswer(String answer) throws IOException
+    {
+        BufferedReader br = new BufferedReader(new FileReader(
+                Game.getCompletePath("Questions.txt")));
+        String line = "";
+
+        while ((line = br.readLine()) != null)
+        {
+            if (line.contains(Integer.toString(this.getOrder())))
+            {
+                this.setQuestion(line.substring(1));
+                this.setAnswer(answer);
+
+                break;
+            }
+        }
+    }
+
+    public void setupTrivias() throws IOException
+    {
+        BufferedReader br = new BufferedReader(new FileReader(
+                Game.getCompletePath("BeforeQuestion.txt")));
+        String line = "";
+        String beforeQuestions = "";
+
+        while ((line = br.readLine()) != null)
+        {
+            if (line.contains(Integer.toString(this.getOrder())))
+            {
+                while (!(line = br.readLine()).isEmpty())
+                {
+                    beforeQuestions += line + "\n";
+                }
+
+                break;
+            }
+        }
+
+        this.setBeforeQuestion(beforeQuestions);
     }
 
     @Override

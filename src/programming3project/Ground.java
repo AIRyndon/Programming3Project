@@ -6,10 +6,9 @@
 package programming3project;
 
 /**
- *
  * @author pc
  */
-public class Ground extends Room 
+public class Ground extends Room
 {
     public Ground(String name, Room previous)
     {
@@ -57,27 +56,27 @@ public class Ground extends Room
                     if (j <= 17 + 6 || j >= 17 + 12)
                     {
                         movingArea[i][j] = '_';
-                    } 
+                    }
                     else if (j == (17 + 7) || j == (17 + 11))
                     {
                         movingArea[i][j] = '|';
-                    } 
+                    }
                     else
                     {
                         movingArea[i][j] = '/';
                     }
-                } 
+                }
                 else if (i == 14)
                 {
                     if (j == 17 || j == 34)
                     {
                         movingArea[i][j] = '|';
-                    } 
+                    }
                     else
                     {
                         movingArea[i][j] = '_';
                     }
-                } 
+                }
                 else //House's area
                 {
                     if (j == 17 || j == 34) //House's left and right wall (barrier)
@@ -98,28 +97,28 @@ public class Ground extends Room
         movingArea[11][26] = 'U';
         movingArea[11][27] = 'S';
         movingArea[11][28] = 'E';
-        
+
         movingArea[18][9] = '!';
 
         //The butler is in the ground
         positionNPC('B');
     }
-    
+
     @Override
     protected void positionNPC(char person)
     {
         super.positionNPC(person);
         boolean stop = false;
-        
-        while(!stop)
+
+        while (!stop)
         {
             for (int i = 0; i <= getHeight() - 2; i++)
-            {   
+            {
                 for (int j = 0; j <= getWidth() - 2; j++)
                 {
-                    if(movingArea[i][j] == person)
+                    if (movingArea[i][j] == person)
                     {
-                        if((i < 3 && j > getWidth() - 12) || (i >= 7 && i <= 14 && j >= 17 && j <= 34))
+                        if ((i < 3 && j > getWidth() - 12) || (i >= 7 && i <= 14 && j >= 17 && j <= 34))
                         {
                             movingArea[i][j] = ' ';
                             super.positionNPC(person);

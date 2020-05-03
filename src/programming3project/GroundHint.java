@@ -12,7 +12,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
- *
  * @author airyn
  */
 public class GroundHint implements Cloneable
@@ -41,8 +40,7 @@ public class GroundHint implements Cloneable
             try
             {
                 copy.add((GroundHint) iterator.next().clone());
-            } 
-            catch (CloneNotSupportedException ex)
+            } catch (CloneNotSupportedException ex)
             {
                 ex.printStackTrace(System.out);
             }
@@ -68,7 +66,7 @@ public class GroundHint implements Cloneable
                     System.out.println((index + 1) + ". " + SAVEDHINTS.get(index));
                 }
 
-                System.out.println("");
+                System.out.println();
                 int removeIndex = 0;
                 do
                 {
@@ -95,20 +93,17 @@ public class GroundHint implements Cloneable
                 }
 
                 System.out.println("The hint has been saved!");
-            } 
-            catch (IOException ex)
+            } catch (IOException ex)
             {
                 System.out.println(ex.getMessage());
             }
         }
     }
 
-    /**
-     * @return the name
-     */
-    public String getName()
+    @Override
+    public Object clone() throws CloneNotSupportedException
     {
-        return name;
+        return super.clone();
     }
 
     /**
@@ -117,6 +112,14 @@ public class GroundHint implements Cloneable
     public String getDescription()
     {
         return description;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName()
+    {
+        return name;
     }
 
     /**
@@ -140,11 +143,5 @@ public class GroundHint implements Cloneable
     {
         return "\nItem name: " + getName()
                 + "\nItem description: " + getDescription();
-    }
-
-    @Override
-    public Object clone() throws CloneNotSupportedException
-    {
-        return (GroundHint) super.clone();
     }
 }

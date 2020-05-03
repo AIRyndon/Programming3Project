@@ -8,14 +8,11 @@ package programming3project;
 import java.util.function.Consumer;
 
 /**
- *
  * @author airyn
  */
 public class Detective extends Person
 {
     //player position in the grid
-    private int xPrevious;
-    private int yPrevious;
     private int xCoord;
     private int yCoord;
     private int grabbedHints = 0;
@@ -31,160 +28,6 @@ public class Detective extends Person
         //set initial position
         xCoord = room.getxInitial();
         yCoord = room.getyInitial();
-    }
-
-    public char move(String keyPress)
-    {
-        char item = '\0';
-
-        switch (keyPress)
-        {
-            case "a":
-
-                if (inCorner(yCoord, 0))
-                {
-                    return '\0';
-                }
-
-                item = playArea[xCoord][yCoord - 1];
-                if (item == ' ')
-                {
-                    if (startingInHouse())
-                    {
-                        updatePlayArea('*', 'P', value -> yCoord -= value);
-                    }
-                    else
-                    {
-                        updatePlayArea(' ', 'P', value -> yCoord -= value);
-                    }
-                } 
-                else if (item == 'X' || item == '*')
-                {
-                    //todo - how to know what hint should be spit out.
-                    updatePlayArea(' ', 'P', value -> yCoord -= value);
-                }
-
-                break;
-
-            case "d":
-
-                if (inCorner(yCoord, playArea[0].length - 1))
-                {
-                    return '\0';
-                }
-
-                item = playArea[xCoord][yCoord + 1];
-                if (item == ' ')
-                {
-                    //if at starting location, print the item used to get back
-                    if (startingInHouse())
-                    {
-                        updatePlayArea('*', 'P', value -> yCoord += value);
-
-                    } 
-                    else
-                    {
-                        updatePlayArea(' ', 'P', value -> yCoord += value);
-                    }
-                } 
-                else if (item == 'X' || item == '*')
-                {
-                    updatePlayArea(' ', 'P', value -> yCoord += value);
-                }
-
-                break;
-
-            case "w":
-
-                if (inCorner(xCoord, 0))
-                {
-                    return '\0';
-                }
-
-                item = playArea[xCoord - 1][yCoord];
-                if (item == ' ')
-                {
-                    if (startingInHouse())
-                    {
-                        updatePlayArea('*', 'P', value -> xCoord -= value);
-                    } 
-                    else
-                    {
-                        updatePlayArea(' ', 'P', value -> xCoord -= value);
-                    }
-                } 
-                else if (item == 'X' || item == '*')
-                {
-                    updatePlayArea(' ', 'P', value -> xCoord -= value);
-                }
-
-                break;
-
-            case "s":
-
-                if (inCorner(xCoord, playArea.length - 1))
-                {
-                    return '\0';
-                }
-
-                item = playArea[xCoord + 1][yCoord];
-
-                if (item == ' ')
-                {
-                    if (startingInHouse())
-                    {
-                        updatePlayArea('*', 'P', value -> xCoord += value);
-
-                    } 
-                    else
-                    {
-                        updatePlayArea(' ', 'P', value -> xCoord += value);
-                    }
-                } 
-                else if (item == 'X' || item == '*')
-                {
-                    updatePlayArea(' ', 'P', value -> xCoord += value);
-                }
-
-                break;
-
-            default:
-                break;
-        }
-
-        currentRoom.printRoom(currentRoom.getName());
-        return item;
-    }
-
-    public void moveToAnotherRoom(Room newRoom)
-    {
-        getCurrentRoom().xCurrent = getxCoord();
-        getCurrentRoom().yCurrent = getyCoord();
-        setPlayArea(newRoom.movingArea);
-
-        if (newRoom.getPreviousRoom() != null)
-        {
-            setPreviousRoom(newRoom.getPreviousRoom());
-        }
-
-        setCurrentRoom(newRoom);
-        getCurrentRoom().printRoom(getCurrentRoom().getName());
-    }
-
-    public void setLocationToPreviousRoom()
-    {
-        xCoord = getCurrentRoom().xCurrent;
-        yCoord = getCurrentRoom().yCurrent;
-        xPrevious = getPreviousRoom().xCurrent;
-        yPrevious = getPreviousRoom().yCurrent;
-    }
-
-    public void setLocationToNewRoom()
-    {
-        xPrevious = getPreviousRoom().xCurrent;
-        yPrevious = getPreviousRoom().yCurrent;
-        xCoord = getCurrentRoom().getxInitial();
-        yCoord = getCurrentRoom().getyInitial();
     }
 
     /**
@@ -219,9 +62,12 @@ public class Detective extends Person
         this.currentRoom = currentRoom;
     }
 
-    public char[][] getPlayArea()
+    /**
+     * @return the grabbedHints
+     */
+    public int getGrabbedHints()
     {
-        return playArea;
+        return grabbedHints;
     }
 
     public void setPlayArea(char[][] playArea)
@@ -231,35 +77,11 @@ public class Detective extends Person
     }
 
     /**
-     * @return the previousRoom
-     */
-    public Room getPreviousRoom()
-    {
-        return previousRoom;
-    }
-
-    /**
      * @param previousRoom the previousRoom to set
      */
     public void setPreviousRoom(Room previousRoom)
     {
         this.previousRoom = previousRoom;
-    }
-
-    /**
-     * @return the xPrevious
-     */
-    public int getxPrevious()
-    {
-        return xPrevious;
-    }
-
-    /**
-     * @return the yPrevious
-     */
-    public int getyPrevious()
-    {
-        return yPrevious;
     }
 
     /**
@@ -278,17 +100,130 @@ public class Detective extends Person
         return yCoord;
     }
 
-    /**
-     * @return the grabbedHints
-     */
-    public int getGrabbedHints()
-    {
-        return grabbedHints;
-    }
-
     public void incrementGrabbedHints()
     {
         ++grabbedHints;
+    }
+
+    public char move(String keyPress)
+    {
+        char item = '\0';
+
+        switch (keyPress)
+        {
+            case "a":
+
+                if (inCorner(yCoord, 0))
+                {
+                    return '\0';
+                }
+
+                item = changePlayerLocation(playArea[xCoord][yCoord - 1], value -> yCoord -= value);
+
+                break;
+
+            case "d":
+
+                if (inCorner(yCoord, playArea[0].length - 1))
+                {
+                    return '\0';
+                }
+
+                item = changePlayerLocation(playArea[xCoord][yCoord + 1], value -> yCoord += value);
+
+                break;
+
+            case "w":
+
+                if (inCorner(xCoord, 0))
+                {
+                    return '\0';
+                }
+
+                item = changePlayerLocation(playArea[xCoord - 1][yCoord], value -> xCoord -= value);
+
+                break;
+
+            case "s":
+
+                if (inCorner(xCoord, playArea.length - 1))
+                {
+                    return '\0';
+                }
+
+                item = changePlayerLocation(playArea[xCoord + 1][yCoord], value -> xCoord += value);
+
+                break;
+
+            default:
+                break;
+        }
+
+        currentRoom.printRoom(currentRoom.getName());
+        return item;
+    }
+
+    public void moveToAnotherRoom(Room newRoom)
+    {
+        getCurrentRoom().xCurrent = getxCoord();
+        getCurrentRoom().yCurrent = getyCoord();
+        setPlayArea(newRoom.movingArea);
+
+        if (newRoom.getPreviousRoom() != null)
+        {
+            setPreviousRoom(newRoom.getPreviousRoom());
+        }
+
+        setCurrentRoom(newRoom);
+        getCurrentRoom().printRoom(getCurrentRoom().getName());
+    }
+
+    public void setLocationToNewRoom()
+    {
+        xCoord = getCurrentRoom().getxInitial();
+        yCoord = getCurrentRoom().getyInitial();
+    }
+
+    public void setLocationToPreviousRoom()
+    {
+        xCoord = getCurrentRoom().xCurrent;
+        yCoord = getCurrentRoom().yCurrent;
+    }
+
+    @Override
+    public String toString()
+    {
+        String output = "";
+
+        output += "\nDetective information\n";
+        output += "Name: " + this.getName() + "\n";
+        output += "Gender: " + (this.getGender() == 'M' || this.getGender() == 'm'
+                ? "Male\n" : "Female\n");
+        output += "Age: " + this.getAge() + "\n";
+        output += "Background: " + this.getBackground() + "\n";
+
+        return output;
+    }
+
+    private char changePlayerLocation(char item, Consumer<Integer> action)
+    {
+        if (item == ' ')
+        {
+            if (startingInHouse())
+            {
+                updatePlayArea('*', 'P', action);
+            }
+            else
+            {
+                updatePlayArea(' ', 'P', action);
+            }
+        }
+        else if (item == 'X' || item == '*')
+        {
+            updatePlayArea(' ', 'P', action);
+        }
+
+        return item;
     }
 
     private boolean inCorner(int coordinate, int worldEdge)
@@ -310,25 +245,10 @@ public class Detective extends Person
     }
 
     private void updatePlayArea(Character oldValue, Character newValue,
-                            Consumer<Integer> action)
+                                Consumer<Integer> action)
     {
         playArea[xCoord][yCoord] = oldValue;
         action.accept(1);
         playArea[xCoord][yCoord] = newValue;
-    }
-
-    @Override
-    public String toString()
-    {
-        String output = "";
-        
-        output += "\nDetective information\n";
-        output += "Name: " + this.getName() + "\n";
-        output += "Gender: " + (this.getGender() == 'M' || this.getGender() == 'm'
-                  ? "Male\n" : "Female\n");
-        output += "Age: " + this.getAge() + "\n";
-        output += "Background: " + this.getBackground() + "\n";
-
-        return output;
     }
 }
