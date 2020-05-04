@@ -62,7 +62,7 @@ public class Game
     
     public static void printSavedHints(int pausedTime)
     {
-        LinkedList<GroundHint> savedHints = GroundHint.getSavedHints();
+        LinkedList<Hint> savedHints = Hint.getSavedHints();
         
         if (savedHints.size() > 0)
         {
@@ -82,7 +82,7 @@ public class Game
         System.out.println();
     }
     
-    public static void printSavedKeyPassword(int pausedTime)
+    public static void printSavedKeyPasswords(int pausedTime)
     {
         LinkedList<String> savedCodes = KeyPassword.getSavedCodes();
         
@@ -170,7 +170,7 @@ public class Game
                 printSavedHints(1000);
                 break;
             case 3:
-                printSavedKeyPassword(1000);
+                printSavedKeyPasswords(1000);
                 break;
             default:
                 break;
@@ -190,7 +190,7 @@ public class Game
         {
             new FileWriter(getCompletePath("Conversations.txt"), false).close();
             new FileWriter(getCompletePath("PasswordHints.txt"), false).close();
-            new FileWriter(getCompletePath("GroundHints.txt"), false).close();
+            new FileWriter(getCompletePath("Hints.txt"), false).close();
         } 
         catch (IOException ex)
         {
@@ -355,7 +355,7 @@ public class Game
                             && hint.getyLocation() == detective.getyCoord())
                     {
                         System.out.println("\nYou found something. . ." + hint.toString());
-                        GroundHint.saveGroundHint(hint);
+                        Hint.saveHint(hint);
                         detective.incrementGrabbedHints();
                     }
                     
@@ -499,7 +499,6 @@ public class Game
         }
         
         pauseScreen(1000);
-        //If player does not want to enter the compound
         if (enterPremises != 'Y' && enterPremises != 'y')
         {
             System.out.println("\n" + story.getStory().get(4));
@@ -528,7 +527,7 @@ public class Game
         System.out.println("\n" + victim.toString());
         
         pauseScreen(2000);
-        System.out.println(story.getStory().get(13));
+        System.out.println("\n" + story.getStory().get(13));
         
         pauseScreen(2500);
         ground.printRoom(ground.getName());
@@ -553,7 +552,7 @@ public class Game
     private void resetStaticVariables()
     {
         KeyPassword.SAVEDCODES.clear();
-        GroundHint.SAVEDHINTS.clear();
+        Hint.SAVEDHINTS.clear();
         NPCLine.SAVEDLINES.clear();
     }
     
@@ -576,7 +575,6 @@ public class Game
     
     private void setupPlayerInfo()
     {
-        //Promt user input
         System.out.print("Please enter a name: ");
         String userName = SYSTEMINPUT.nextLine();
         
@@ -625,7 +623,6 @@ public class Game
         {
             String keyPress = " ";
             
-            //access ground => print ground
             do
             {
                 System.out.println("\nPress h then enter to access your logbook.");

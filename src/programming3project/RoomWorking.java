@@ -22,6 +22,7 @@ public class RoomWorking extends Room
         super.getRandomPositionNPC(person);
         boolean stop = false;
         
+        //Make sure NPC will not placed in invalid areas
         while(!stop)
         {
             for (int i = 0; i <= getHeight() - 2; i++)

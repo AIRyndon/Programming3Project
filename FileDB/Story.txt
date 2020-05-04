@@ -8,7 +8,7 @@ Coincidentally, your customer is the victim who was mentioned by the police!
 Therefore, you decide to investigate his death.
 
 "Can you please tell me where he lived?"
-The police officer gives you an address
+The police officer gives you an address.
 You arrived there with some information from him.
 
 Inside the house's grounds...

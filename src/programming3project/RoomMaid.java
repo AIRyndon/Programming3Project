@@ -21,6 +21,7 @@ public class RoomMaid extends Room
         super.getRandomPositionNPC(person);
         boolean stop = false;
         
+        //Make sure NPC is just placed in space (' ')
         while(!stop)
         {
             for (int i = 0; i <= getHeight() - 2; i++)
@@ -49,6 +50,7 @@ public class RoomMaid extends Room
     {
         super.initializeMovingArea();
         
+        //Print Maid's room
         for (int row = 0; row < getHeight(); row++)
         {
             for (int col = 0; col < getWidth(); col++)

@@ -56,7 +56,7 @@ public class NPC extends Person
         if (getNPCLine().isUnlocked() && !placedHint)
         {
             placedHint = true;
-            room.hints.add(new GroundHint(name, description, xCoord, yCoord));
+            room.hints.add(new Hint(name, description, xCoord, yCoord));
             room.movingArea[xCoord][yCoord] = 'X';
             
             System.out.println("\nHey! An item popped up somewhere..."

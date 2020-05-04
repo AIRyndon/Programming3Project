@@ -160,7 +160,6 @@ public final class NPCLine
         
         if (save)
         {
-            //If this conversation has been saved already
             if (SAVEDLINES.contains(npc.getName() + ":\n" + conversation))
             {
                 System.out.println("You already have this on file...");

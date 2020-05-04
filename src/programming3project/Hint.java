@@ -6,10 +6,10 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class GroundHint implements Cloneable
+public class Hint implements Cloneable
 {
-    // <editor-fold desc="GroundHint Attributes">
-    public static LinkedList<GroundHint> SAVEDHINTS = new LinkedList<>();
+    // <editor-fold desc="Hint Attributes">
+    public static LinkedList<Hint> SAVEDHINTS = new LinkedList<>();
     private String name;
     private String description;
     private int xLocation;
@@ -17,7 +17,7 @@ public class GroundHint implements Cloneable
     // </editor-fold>
 
     // <editor-fold desc="Constructor">
-    public GroundHint(String name, String description, int xLocation, int yLocation)
+    public Hint(String name, String description, int xLocation, int yLocation)
     {
         this.name = name;
         this.description = description;
@@ -49,16 +49,16 @@ public class GroundHint implements Cloneable
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Public Methods">
-    public static LinkedList<GroundHint> getSavedHints()
+    public static LinkedList<Hint> getSavedHints()
     {
-        LinkedList<GroundHint> copy = new LinkedList<>();
-        Iterator<GroundHint> iterator = SAVEDHINTS.iterator();
+        LinkedList<Hint> copy = new LinkedList<>();
+        Iterator<Hint> iterator = SAVEDHINTS.iterator();
         
         while (iterator.hasNext())
         {
             try
             {
-                copy.add((GroundHint) iterator.next().clone());
+                copy.add((Hint) iterator.next().clone());
             } 
             catch (CloneNotSupportedException ex)
             {
@@ -69,7 +69,7 @@ public class GroundHint implements Cloneable
         return copy;
     }
     
-    public static void saveGroundHint(GroundHint hint)
+    public static void saveHint(Hint hint)
     {
         System.out.print("\nDo you want to save this hint (y)? ");
         
@@ -105,7 +105,7 @@ public class GroundHint implements Cloneable
             SAVEDHINTS.add(hint);
             
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(
-                    Game.getCompletePath("GroundHints.txt"))))
+                    Game.getCompletePath("Hints.txt"))))
             {
                 for (int index = 0; index < SAVEDHINTS.size(); index++)
                 {

@@ -6,13 +6,15 @@ public enum KeyPasswordType
     
     private int functionValue;
     
+    // <editor-fold defaultstate="collapsed" desc="Constructors">
     KeyPasswordType(int functionValue)
     {
         this.functionValue = functionValue;
     }
-
-    KeyPasswordType() 
+    
+    KeyPasswordType()
     {
         functionValue = 0;
     }
+    // </editor-fold>
 }

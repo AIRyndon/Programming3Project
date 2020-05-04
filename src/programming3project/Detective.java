@@ -5,7 +5,7 @@ import java.util.function.Consumer;
 public class Detective extends Person
 {
     // <editor-fold desc="Detective attributes">
-    private int grabbedHints = 5;
+    private int grabbedHints = 0;
     private int xCoord;
     private int yCoord;
     private String background;
@@ -19,7 +19,6 @@ public class Detective extends Person
     {
         super(name, gender, age);
         
-        //set initial position
         xCoord = room.getxInitial();
         yCoord = room.getyInitial();
     }
@@ -86,7 +85,7 @@ public class Detective extends Person
         switch (keyPress)
         {
             case "a":
-                
+            {
                 if (inCorner(yCoord, 0))
                 {
                     return '\0';
@@ -95,9 +94,9 @@ public class Detective extends Person
                 item = changePlayerLocation(playArea[xCoord][yCoord - 1], value -> yCoord -= value);
                 
                 break;
-                
+            }
             case "d":
-                
+            {
                 if (inCorner(yCoord, playArea[0].length - 1))
                 {
                     return '\0';
@@ -106,9 +105,9 @@ public class Detective extends Person
                 item = changePlayerLocation(playArea[xCoord][yCoord + 1], value -> yCoord += value);
                 
                 break;
-                
+            }
             case "w":
-                
+            {
                 if (inCorner(xCoord, 0))
                 {
                     return '\0';
@@ -117,9 +116,9 @@ public class Detective extends Person
                 item = changePlayerLocation(playArea[xCoord - 1][yCoord], value -> xCoord -= value);
                 
                 break;
-                
+            }
             case "s":
-                
+            {
                 if (inCorner(xCoord, playArea.length - 1))
                 {
                     return '\0';
@@ -128,7 +127,7 @@ public class Detective extends Person
                 item = changePlayerLocation(playArea[xCoord + 1][yCoord], value -> xCoord += value);
                 
                 break;
-                
+            }
             default:
                 break;
         }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public abstract class Room
 {
     // <editor-fold defaultstate="collapsed" desc="Room attributes">
-    public ArrayList<GroundHint> hints = new ArrayList<>();
+    public ArrayList<Hint> hints = new ArrayList<>();
     protected int width;
     protected int height;
     protected String name;
@@ -152,12 +152,13 @@ public abstract class Room
     // <editor-fold defaultstate="collapsed" desc="Protected Methods">
     protected void printLeftEntranceAndRoomName(String roomName)
     {
+        //Print left entrance
         for (int pos = 0; pos < this.getWidth() / 2 - (roomName.length() / 2 + 1); pos++)
         {
             System.out.print("_");
         }
         
-        //Print room name in the middle
+        //Print room name
         System.out.print(String.format("|%s|", roomName));
     }
     
@@ -173,7 +174,6 @@ public abstract class Room
     
     protected void printWall()
     {
-        //Print gate and wall (first row)
         for (int wid = 0; wid < this.getWidth(); wid++)
         {
             if (wid == 0 || wid == getWidth() - 1)
@@ -199,6 +199,7 @@ public abstract class Room
         int y = Game.RANDOM.nextInt(getHeight() - 2);
         int x = Game.RANDOM.nextInt(getWidth() - 2);
         
+        //Make sure NPCs just replace space(' ')
         while(movingArea[y][x] != ' ')
         {
             y = Game.RANDOM.nextInt(getHeight() - 2);
@@ -207,14 +208,15 @@ public abstract class Room
         
         movingArea[y][x] = person;
     }
-    
+
+    //Create a 2D array for printing Room
     protected void initializeMovingArea()
     {
         this.movingArea = new char[getHeight() - 1][getWidth()];
         setxInitial(0);
         setyInitial(movingArea[0].length / 2);
         
-        //Loops for empty movingArea (ground with wall and gate only)
+        //Make sure NPCs are not placed in invalid area (e.g. player cannot touch)
         for (int i = 0; i < this.getHeight() - 2; i++)
         {
             for (int j = 0; j < this.getWidth(); j++)
@@ -243,7 +245,7 @@ public abstract class Room
         printLeftEntranceAndRoomName(door);
         printRightEntrance(name);
         
-        //Loops for movingArea
+        //Print middle lines
         for (int i = 0; i < this.getHeight() - 2; i++)
         {
             for (int j = 0; j < this.getWidth(); j++)
@@ -254,6 +256,7 @@ public abstract class Room
             System.out.println("");
         }
         
+        //print last line
         printWall();
     }
     // </editor-fold>

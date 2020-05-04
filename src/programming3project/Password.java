@@ -54,7 +54,7 @@ public class Password
             
             do
             {
-                if (userInput.equalsIgnoreCase(this.getPassword()))
+                if (userInput.equals(this.getPassword()))
                 {
                     this.setUnlock(true);
                     userInput = "q";

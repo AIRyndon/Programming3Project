@@ -130,7 +130,7 @@ public class KeyPassword
     public void deleteCode()
     {
         System.out.println("\nYou can only save 2 key passwords!");
-        Game.printSavedKeyPassword(0);
+        Game.printSavedKeyPasswords(0);
         
         boolean isDelete = false;
         

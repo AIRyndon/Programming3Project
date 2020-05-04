@@ -21,6 +21,7 @@ public class RoomWife extends Room
         super.getRandomPositionNPC(person);
         boolean stop = false;
         
+        //Make sure NPC is just placed in space (' ')
         while(!stop)
         {
             for (int i = 0; i <= getHeight() - 2; i++)
@@ -50,6 +51,7 @@ public class RoomWife extends Room
     {
         super.initializeMovingArea();
         
+        //Print Wife's room
         for (int row = 0; row < getHeight(); row++)
         {
             for (int col = 0; col < getWidth(); col++)
@@ -84,7 +86,6 @@ public class RoomWife extends Room
             }
         }
         
-        //Wife and Daughter are in her Wife's room
         getRandomPositionNPC('W');
         getRandomPositionNPC('D');
     }

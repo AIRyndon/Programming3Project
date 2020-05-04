@@ -15,13 +15,12 @@ public class Ground extends Room
     // </editor-fold>
 
     // <editor-fold desc="Protected methods">
-    //Create a 2D array for printing Ground
     @Override
     protected void initializeMovingArea()
     {
         super.initializeMovingArea();
         
-        //Assign dog's place (inside the Ground)
+        //Dog's place
         movingArea[0][getWidth() - 15] = '|';
         movingArea[1][getWidth() - 15] = '#';
         movingArea[1][getWidth() - 14] = ' ';
@@ -35,7 +34,7 @@ public class Ground extends Room
             movingArea[2][i] = '_';
         }
         
-        //Assign HouseArea (inside the Ground)
+        //House area
         for (int height = 7; height <= 14; height++)
         {
             for (int width = 17; width < 35; width++)
@@ -87,7 +86,7 @@ public class Ground extends Room
         movingArea[11][27] = 'S';
         movingArea[11][28] = 'E';
         
-        //Assign KeyPassword position
+        //KeyPassword position
         movingArea[18][9] = '!';
         
         getRandomPositionNPC('B');
@@ -99,6 +98,7 @@ public class Ground extends Room
         super.getRandomPositionNPC(person);
         boolean stop = false;
         
+        //Make sure NPC will not placed in invalid areas (e.g. player cannot touch)
         while (!stop)
         {
             for (int height = 0; height <= getHeight() - 2; height++)
