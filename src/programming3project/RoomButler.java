@@ -1,31 +1,54 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package programming3project;
 
-/**
- *
- * @author pc
- */
 public class RoomButler extends Room
 {
-
+    // <editor-fold defaultstate="collapsed" desc="Constructor">
     public RoomButler(String name, Room previous)
     {
         super(previous);
         setName(name);
         setHeight(7);
         setWidth(48);
-
+        
         initializeMovingArea();
     }
+    // </editor-fold>
     
+    // <editor-fold defaultstate="collapsed" desc="Protected Methods">
+    @Override
+    protected void getRandomPositionNPC(char person)
+    {
+        super.getRandomPositionNPC(person);
+        boolean stop = false;
+        
+        while(!stop)
+        {
+            for (int i = 0; i <= getHeight() - 2; i++)
+            {
+                for (int j = 0; j <= getWidth() - 2; j++)
+                {
+                    if(movingArea[i][j] == person)
+                    {
+                        if(i < 2 && j < 11)
+                        {
+                            movingArea[i][j] = ' ';
+                            super.getRandomPositionNPC(person);
+                        }
+                        else
+                        {
+                            stop = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    @Override
     protected void initializeMovingArea()
     {
         super.initializeMovingArea();
-
+        
         for (int row = 0; row < getHeight(); row++)
         {
             for (int col = 0; col < getWidth(); col++)
@@ -40,7 +63,7 @@ public class RoomButler extends Room
                 {
                     movingArea[row][col] = '=';
                 }
-
+                
                 if (row == 1 && col > 0 && col <= 10)
                 {
                     movingArea[row][col] = '_';
@@ -54,35 +77,7 @@ public class RoomButler extends Room
         
         movingArea[2][1] = '0';
         
-        positionNPC('A');
+        getRandomPositionNPC('A');
     }
-    
-    @Override
-    protected void positionNPC(char person)
-    {
-        super.positionNPC(person);
-        boolean stop = false;
-        
-        while(!stop)
-        {
-            for (int i = 0; i <= getHeight() - 2; i++)
-            {   
-                for (int j = 0; j <= getWidth() - 2; j++)
-                {
-                    if(movingArea[i][j] == person)
-                    {
-                        if(i < 2 && j < 11)
-                        {
-                            movingArea[i][j] = ' ';
-                            super.positionNPC(person);
-                        }
-                        else
-                        {
-                            stop = true;
-                        }
-                    }
-                }
-            }
-        }
-    }
+    // </editor-fold>
 }

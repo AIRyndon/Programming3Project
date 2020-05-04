@@ -1,18 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package programming3project;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author group
- */
 public abstract class Room
 {
+    // <editor-fold defaultstate="collapsed" desc="Room attributes">
     public ArrayList<GroundHint> hints = new ArrayList<>();
     protected int width;
     protected int height;
@@ -24,60 +16,115 @@ public abstract class Room
     protected int yInitial;
     protected int xCurrent;
     protected int yCurrent;
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="Constructor">
     public Room(Room previous)
     {
         previousRoom = previous;
     }
-
-    protected void initializeMovingArea()
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Getters and Setters">
+    public String getName()
     {
-        this.movingArea = new char[getHeight() - 1][getWidth()];
-        setxInitial(0);
-        setyInitial(movingArea[0].length / 2);
-
-        //Loops for empty movingArea (ground with wall and gate only)
-        for (int i = 0; i < this.getHeight() - 2; i++)
-        {
-            for (int j = 0; j < this.getWidth(); j++)
-            {
-                if (j == 0 || j == getWidth() - 1)
-                {
-                    movingArea[i][j] = '|';
-                } 
-                else if (i == 0 && j == getWidth() / 2)
-                {
-                    movingArea[i][j] = 'P';
-                } 
-                else
-                {
-                    movingArea[i][j] = ' ';
-                }
-            }
-        }
-    }
-
-    protected void positionNPC(char person)
-    {        
-        int y = Game.RANDOM.nextInt(getHeight() - 2);
-        int x = Game.RANDOM.nextInt(getWidth() - 2);
-
-        while(movingArea[y][x] != ' ')
-        {   
-            y = Game.RANDOM.nextInt(getHeight() - 2);
-            x = Game.RANDOM.nextInt(getWidth() - 2);
-        }
-        
-        movingArea[y][x] = person;
+        return name;
     }
     
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+        
+    public int getHeight()
+    {
+        return height;
+    }
+    
+    public void setHeight(int height)
+    {
+        this.height = height;
+    }
+        
+    public Password getLock()
+    {
+        return lock;
+    }
+    
+    public void setLock(Password lock)
+    {
+        this.lock = lock;
+    }
+    
+    public Room getPreviousRoom()
+    {
+        return previousRoom;
+    }
+    
+    public void setPreviousRoom(Room previousRoom)
+    {
+        this.previousRoom = previousRoom;
+    }
+    
+    public void setWidth(int width)
+    {
+        this.width = width;
+    }
+    
+    public int getWidth()
+    {
+        return width;
+    }
+    
+    public int getxInitial()
+    {
+        return xInitial;
+    }
+    
+    public void setxInitial(int xInitial)
+    {
+        this.xInitial = xInitial;
+    }
+    
+    public int getyInitial()
+    {
+        return yInitial;
+    }
+    
+    public void setyInitial(int yInitial)
+    {
+        this.yInitial = yInitial;
+    }
+    
+    public int getxCurrent()
+    {
+        return xCurrent;
+    }
+    
+    public void setxCurrent(int xCurrent)
+    {
+        this.xCurrent = xCurrent;
+    }
+    
+    public int getyCurrent()
+    {
+        return yCurrent;
+    }
+    
+    public void setyCurrent(int yCurrent)
+    {
+        this.yCurrent = yCurrent;
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Public Methods">
     public void checkPassword()
     {
         this.getLock().promtPassword();
         
         //Remove '#' when user inputs a correct password
         if(this.getLock().isUnlock())
-        {        
+        {
             removeCharacter('#');
             printRoom(this.getName());
             System.out.println("Congratulations! Your password is correct!");
@@ -94,62 +141,36 @@ public abstract class Room
                 if(movingArea[i][j] == character)
                 {
                     movingArea[i][j] = ' ';
-
+                    
                     break;
                 }
             }
         }
     }
-    
-    protected static void clearScreen()
-    {
-        System.out.println(new String(new char[30]).replace('\0', '\n'));
-    }
-    
-    protected void printRoom(String door)
-    {
-        clearScreen();
-        
-        //Print first line
-        printEntrance(door);
+    // </editor-fold>
 
-        //Loops for movingArea  
-        for (int i = 0; i < this.getHeight() - 2; i++)
-        {
-            for (int j = 0; j < this.getWidth(); j++)
-            {
-                System.out.print(movingArea[i][j]);
-            }
-
-            System.out.println("");
-        }
-        
-        printWall();
-    }
-
-    public void printEntrance(String roomName)
+    // <editor-fold defaultstate="collapsed" desc="Protected Methods">
+    protected void printLeftEntranceAndRoomName(String roomName)
     {
-        //Print left side
-        //Divide the width and roomName length in half to print in the middle
-        //The +1 is for the | character
         for (int pos = 0; pos < this.getWidth() / 2 - (roomName.length() / 2 + 1); pos++)
         {
             System.out.print("_");
         }
-
+        
         //Print room name in the middle
         System.out.print(String.format("|%s|", roomName));
-
-        //Print right side
-        //The +2 is for the | character and the next position
+    }
+    
+    protected void printRightEntrance(String roomName)
+    {
         for (int pos = this.getWidth() / 2 + (roomName.length() / 2 + 2); pos < this.getWidth(); pos++)
         {
             System.out.print("_");
         }
-
+        
         System.out.println("");
     }
-
+    
     protected void printWall()
     {
         //Print gate and wall (first row)
@@ -164,142 +185,76 @@ public abstract class Room
                 System.out.print("_");
             }
         }
-
+        
         System.out.println();
     }
-
-    /**
-     * @return the name
-     */
-    public String getName()
+    
+    protected static void clearScreen()
     {
-        return name;
+        System.out.println(new String(new char[30]).replace('\0', '\n'));
     }
-
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name)
+    
+    protected void getRandomPositionNPC(char person)
     {
-        this.name = name;
+        int y = Game.RANDOM.nextInt(getHeight() - 2);
+        int x = Game.RANDOM.nextInt(getWidth() - 2);
+        
+        while(movingArea[y][x] != ' ')
+        {
+            y = Game.RANDOM.nextInt(getHeight() - 2);
+            x = Game.RANDOM.nextInt(getWidth() - 2);
+        }
+        
+        movingArea[y][x] = person;
     }
-
-    /**
-     * @param height the height to set
-     */
-    public void setHeight(int height)
+    
+    protected void initializeMovingArea()
     {
-        this.height = height;
+        this.movingArea = new char[getHeight() - 1][getWidth()];
+        setxInitial(0);
+        setyInitial(movingArea[0].length / 2);
+        
+        //Loops for empty movingArea (ground with wall and gate only)
+        for (int i = 0; i < this.getHeight() - 2; i++)
+        {
+            for (int j = 0; j < this.getWidth(); j++)
+            {
+                if (j == 0 || j == getWidth() - 1)
+                {
+                    movingArea[i][j] = '|';
+                }
+                else if (i == 0 && j == getWidth() / 2)
+                {
+                    movingArea[i][j] = 'P';
+                }
+                else
+                {
+                    movingArea[i][j] = ' ';
+                }
+            }
+        }
     }
-
-    /**
-     * @param width the width to set
-     */
-    public void setWidth(int width)
+    
+    protected void printRoom(String door)
     {
-        this.width = width;
+        clearScreen();
+        
+        //Print first line
+        printLeftEntranceAndRoomName(door);
+        printRightEntrance(name);
+        
+        //Loops for movingArea
+        for (int i = 0; i < this.getHeight() - 2; i++)
+        {
+            for (int j = 0; j < this.getWidth(); j++)
+            {
+                System.out.print(movingArea[i][j]);
+            }
+            
+            System.out.println("");
+        }
+        
+        printWall();
     }
-
-    /**
-     * @return the width
-     */
-    public int getWidth()
-    {
-        return width;
-    }
-
-    /**
-     * @return the height
-     */
-    public int getHeight()
-    {
-        return height;
-    }
-
-    /**
-     * @return the previousRoom
-     */
-    public Room getPreviousRoom() 
-    {
-        return previousRoom;
-    }
-
-    /**
-     * @param previousRoom the previousRoom to set
-     */
-    public void setPreviousRoom(Room previousRoom) 
-    {
-        this.previousRoom = previousRoom;
-    }
-
-    /**
-     * @return the lock
-     */
-    public Password getLock() 
-    {
-        return lock;
-    }
-
-    /**
-     * @param lock the lock to set
-     */
-    public void setLock(Password lock) {
-        this.lock = lock;
-    }
-
-    /**
-     * @return the xInitial
-     */
-    public int getxInitial() {
-        return xInitial;
-    }
-
-    /**
-     * @param xInitial the xInitial to set
-     */
-    public void setxInitial(int xInitial) {
-        this.xInitial = xInitial;
-    }
-
-    /**
-     * @return the yInitial
-     */
-    public int getyInitial() {
-        return yInitial;
-    }
-
-    /**
-     * @param yInitial the yInitial to set
-     */
-    public void setyInitial(int yInitial) {
-        this.yInitial = yInitial;
-    }
-
-    /**
-     * @return the xCurrent
-     */
-    public int getxCurrent() {
-        return xCurrent;
-    }
-
-    /**
-     * @param xCurrent the xCurrent to set
-     */
-    public void setxCurrent(int xCurrent) {
-        this.xCurrent = xCurrent;
-    }
-
-    /**
-     * @return the yCurrent
-     */
-    public int getyCurrent() {
-        return yCurrent;
-    }
-
-    /**
-     * @param yCurrent the yCurrent to set
-     */
-    public void setyCurrent(int yCurrent) {
-        this.yCurrent = yCurrent;
-    }     
+    // </editor-fold>
 }

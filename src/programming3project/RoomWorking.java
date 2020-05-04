@@ -1,16 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package programming3project;
 
-/**
- *
- * @author pc
- */
 public class RoomWorking extends Room 
 {
+    // <editor-fold defaultstate="collapsed" desc="Constructor">
     public RoomWorking(String name, Room previous)
     {
         super(previous);
@@ -18,15 +10,46 @@ public class RoomWorking extends Room
         setName(name);
         setHeight(12);
         setWidth(72);
+        
+        initializeMovingArea();
+    }
+    // </editor-fold>
 
-        initializeMovingArea();        
+    // <editor-fold defaultstate="collapsed" desc="Protected Methods">
+    @Override
+    protected void getRandomPositionNPC(char person)
+    {
+        super.getRandomPositionNPC(person);
+        boolean stop = false;
+        
+        while(!stop)
+        {
+            for (int i = 0; i <= getHeight() - 2; i++)
+            {
+                for (int j = 0; j <= getWidth() - 2; j++)
+                {
+                    if(movingArea[i][j] == person)
+                    {
+                        if(j < getWidth() / 4 + 3 || j > getWidth() / 2 + 12)
+                        {
+                            movingArea[i][j] = ' ';
+                            super.getRandomPositionNPC(person);
+                        }
+                        else
+                        {
+                            stop = true;
+                        }
+                    }
+                }
+            }
+        }
     }
     
     @Override
     protected void initializeMovingArea()
     {
         super.initializeMovingArea();
-
+        
         //Assign Locked Area
         for (int height = 0; height < getHeight() - 1; height++)
         {
@@ -81,82 +104,37 @@ public class RoomWorking extends Room
         movingArea[getHeight() - 3][getWidth() / 2 + 2] = 'r';
         movingArea[getHeight() - 3][getWidth() / 2 + 3] = '|';
         
-        positionNPC('V');
+        getRandomPositionNPC('V');
     }
     
     @Override
-    protected void positionNPC(char person)
+    protected void printRightEntrance(String roomName)
     {
-        super.positionNPC(person);
-        boolean stop = false;
-        
-        while(!stop)
-        {
-            for (int i = 0; i <= getHeight() - 2; i++)
-            {
-                for (int j = 0; j <= getWidth() - 2; j++)
-                {
-                    if(movingArea[i][j] == person)
-                    {
-                        if(j < getWidth() / 4 + 3 || j > getWidth() / 2 + 12)
-                        {
-                            movingArea[i][j] = ' ';
-                            super.positionNPC(person);
-                        }
-                        else
-                        {
-                            stop = true;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    @Override
-    public void printEntrance(String roomName)
-    {
-        //Print left side
-        //Divide the width and roomName length in half to print in the middle
-        //The +1 is for the | character
-        for (int pos = 0; pos < this.getWidth() / 2 - (roomName.length() / 2 + 1); pos++)
-        {
-            System.out.print("_");
-        }
-
-        //Print room name in the middle
-        System.out.print(String.format("|%s|", roomName));
-
-        //Print right side
-        //The +2 is for the | character and the next position
         for (int pos = this.getWidth() / 2 + (roomName.length() / 2 + 2); pos < this.getWidth() - 20; pos++)
         {
             System.out.print("_");
         }
-
-        System.out.println("");
+        
+        System.out.println();
     }
-
-    /**
-     * Printing the wall
-     */
+    
     @Override
     protected void printWall()
     {
-        //Print gate and wall (first row)
         for (int wid = 0; wid < this.getWidth(); wid++)
         {
             if (wid == 0 || wid == getWidth() - 1 || wid == 18 || wid == getWidth() / 2 + 15
                     || wid == getWidth() / 2 - 3 || wid == getWidth() / 2 + 3)
             {
                 System.out.print("|");
-            } 
+            }
             else
             {
                 System.out.print("_");
             }
         }
-
+        
         System.out.println();
     }
+    // </editor-fold>
 }

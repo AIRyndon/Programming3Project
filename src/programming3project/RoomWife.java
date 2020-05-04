@@ -1,31 +1,55 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package programming3project;
 
-/**
- *
- * @author pc
- */
 public class RoomWife extends Room
 {
+    // <editor-fold defaultstate="collapsed" desc="Constructor">
     public RoomWife(String name, Room previous)
     {
         super(previous);
         setName(name);
         setHeight(14);
         setWidth(48);
-
+        
         initializeMovingArea();
     }
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="Protected Methods">
+    @Override
+    protected void getRandomPositionNPC(char person)
+    {
+        super.getRandomPositionNPC(person);
+        boolean stop = false;
+        
+        while(!stop)
+        {
+            for (int i = 0; i <= getHeight() - 2; i++)
+            {
+                for (int j = 0; j <= getWidth() - 2; j++)
+                {
+                    //Identify 'D' of "BED" vs 'D' of "Daughter"
+                    if(movingArea[i][j] == person && (i != 3 || j != 7))
+                    {
+                        if(i < 5 && i > 1 && j < 13)
+                        {
+                            movingArea[i][j] = ' ';
+                            super.getRandomPositionNPC(person);
+                        }
+                        else
+                        {
+                            stop = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     @Override
     protected void initializeMovingArea()
     {
         super.initializeMovingArea();
-
+        
         for (int row = 0; row < getHeight(); row++)
         {
             for (int col = 0; col < getWidth(); col++)
@@ -52,7 +76,7 @@ public class RoomWife extends Room
                     movingArea[row][7] = 'D';
                     movingArea[row][13] = '|';
                 }
-
+                
                 if (row == getHeight() / 2 && col == 0)
                 {
                     movingArea[row][col] = '=';
@@ -61,37 +85,8 @@ public class RoomWife extends Room
         }
         
         //Wife and Daughter are in her Wife's room
-        positionNPC('W');
-        positionNPC('D');
+        getRandomPositionNPC('W');
+        getRandomPositionNPC('D');
     }
-
-    @Override
-    protected void positionNPC(char person)
-    {
-        super.positionNPC(person);
-        boolean stop = false;
-        
-        while(!stop)
-        {
-            for (int i = 0; i <= getHeight() - 2; i++)
-            {   
-                for (int j = 0; j <= getWidth() - 2; j++)
-                {
-                    //Identify 'D' of "BED" vs 'D' of "Daughter"
-                    if(movingArea[i][j] == person && (i != 3 || j != 7))
-                    {
-                        if(i < 5 && i > 1 && j < 13)
-                        {
-                            movingArea[i][j] = ' ';
-                            super.positionNPC(person);
-                        }
-                        else
-                        {
-                            stop = true;
-                        }
-                    }
-                }
-            }
-        }
-    }
+    // </editor-fold>
 }
