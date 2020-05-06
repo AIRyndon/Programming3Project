@@ -56,4 +56,3 @@ To-do list to finish the game:
 ## Authors
 
 - **Group 4**
-- ***
