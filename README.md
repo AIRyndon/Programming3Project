@@ -1,14 +1,13 @@
-# Project Title
-
-Detective Game
+# Detective Game
 
 ```
-That is an RPG game where you play as a detective. You are able to move, get NPC talks, unlock keys, and save hints to figure our who is the killer.
+That is an RPG game where you play as a detective.
+You are able to move, get NPC talks, unlock keys, and save hints to figure our who is the killer.
 ```
 
 ## How the game works?
 
-### Introduce current situation
+### Step 1: Introduce story
 
 ```
 1. Ask player to enter some basic information (name, gender, age).
@@ -17,7 +16,7 @@ That is an RPG game where you play as a detective. You are able to move, get NPC
 4. To finish the game, player need to get 5 hints or press 'q' to quit
 ```
 
-### Play the game
+### Step 2: Allow user to play the game
 
 ```
 Initially, the game has
@@ -39,8 +38,15 @@ To-do list to finish the game:
 -> Talk with NPC 'M' again to get her secrect talk -> A hint appears inside the Dog House
 -> Talk with NPC 'D' again to get her secrect talk -> A hint appears and able to get (Hint get: 4)
 -> Answer questions and get 2 key passwords -> Unlock the Dog House and get the hint (Hint get: 5)
--> Finish playing -> Choosing a killer -> End game
--> Play again or quit
+```
+
+### Step 3: End game (5 hints has picked up)
+
+```
+-> Ask player to decide which NPC is the killer (select 1 - 5).
+-> Print "YOU WIN THE GAME" or "YOU LOSE THE GAME" depending on player choice.
+-> Just reveal "Daughter is the killer" when player selects the correct answer.
+-> Ask if player wants to play again or quit.
 ```
 
 ## Versioning
@@ -50,3 +56,4 @@ To-do list to finish the game:
 ## Authors
 
 - **Group 4**
+- ***
