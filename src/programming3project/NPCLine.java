@@ -25,50 +25,15 @@ public final class NPCLine
         secondLine = "";
         unlocked = false;
         
-        setNPC(npc);
+        this.npc = npc;
         readNPCLines();
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Getters and Setters">
+    // <editor-fold defaultstate="collapsed" desc="Getter">
     public boolean isUnlocked()
     {
         return unlocked;
-    }
-    
-    public void setUnlocked(boolean unlocked)
-    {
-        this.unlocked = unlocked;
-    }
-    
-    public String getFirstLine()
-    {
-        return firstLine;
-    }
-    
-    public void setFirstLine(String line)
-    {
-        firstLine = line;
-    }
-    
-    public String getSecondLine()
-    {
-        return secondLine;
-    }
-    
-    public void setSecondLine(String line)
-    {
-        secondLine = line;
-    }
-    
-    public NPC getNPC()
-    {
-        return npc;
-    }
-    
-    public void setNPC(NPC npc)
-    {
-        this.npc = npc;
     }
     // </editor-fold>
 
@@ -86,8 +51,6 @@ public final class NPCLine
         return copy;
     }
 
-<<<<<<< HEAD
-=======
     public boolean talk() throws IOException
     {
         //Ask if player wants to talk
@@ -100,18 +63,18 @@ public final class NPCLine
             if (!isUnlocked())
             {
                 npc.talkedWithPlayer();
-                System.out.println("\n" + getFirstLine());
+                System.out.println("\n" + firstLine);
                 
-                saveNPCLines(getFirstLine());
+                saveNPCLines(firstLine);
             }
             else
             {
-                System.out.println("\n" + getSecondLine());
-                saveNPCLines(getSecondLine());
+                System.out.println("\n" + secondLine);
+                saveNPCLines(secondLine);
                 
                 //After printing talk 2, talk 2 = talk 1
                 //Player is unable to see talk 2 again
-                this.setSecondLine(getFirstLine());
+                secondLine = firstLine;
             }
             
             return true;
@@ -122,7 +85,7 @@ public final class NPCLine
     
     public void unlock()
     {
-        setUnlocked(true);
+        this.unlocked = true;
     }
     // </editor-fold>
     
@@ -132,39 +95,29 @@ public final class NPCLine
         BufferedReader br = new BufferedReader(new FileReader(
                 Game.getCompletePath(npc.getRole() + ".txt")));
 
->>>>>>> da20b8509c4a2898bda506c077bd14069b867ad2
         String line;
 
         while ((line = br.readLine()) != null)
         {
             if (!line.isEmpty())
             {
-                setFirstLine(getFirstLine() + line + '\n');
-<<<<<<< HEAD
-            } 
-=======
+                firstLine += line + '\n';
             }
->>>>>>> da20b8509c4a2898bda506c077bd14069b867ad2
             else
             {
                 secondLine += line;
 
                 while ((line = br.readLine()) != null)
                 {
-                    setSecondLine(getSecondLine() + line + '\n');
+                    secondLine += line + '\n';
                 }
 
                 break;
             }
         }
     }
-<<<<<<< HEAD
-    
-    public void saveNPCLines(String conversation)
-=======
 
     private void saveNPCLines(String conversation)
->>>>>>> da20b8509c4a2898bda506c077bd14069b867ad2
     {
         System.out.print("Do you want to save this conversations (y)? ");
         

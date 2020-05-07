@@ -12,17 +12,17 @@ public class Hint implements Cloneable
     public static LinkedList<Hint> SAVEDHINTS = new LinkedList<>();
     private String name;
     private String description;
-    private int xLocation;
-    private int yLocation;
+    private int rowCoord;
+    private int colCoord;
     // </editor-fold>
 
     // <editor-fold desc="Constructor">
-    public Hint(String name, String description, int xLocation, int yLocation)
+    public Hint(String name, String description, int rowCoord, int colCoord)
     {
         this.name = name;
         this.description = description;
-        this.xLocation = xLocation;
-        this.yLocation = yLocation;
+        this.rowCoord = rowCoord;
+        this.colCoord = colCoord;
     }
     // </editor-fold>
 
@@ -32,14 +32,14 @@ public class Hint implements Cloneable
         return name;
     }
     
-    public int getxLocation()
+    public int getRowCoord()
     {
-        return xLocation;
+        return rowCoord;
     }
     
-    public int getyLocation()
+    public int getColCoord()
     {
-        return yLocation;
+        return colCoord;
     }
     // </editor-fold>
     

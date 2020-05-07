@@ -11,10 +11,5 @@ public enum KeyPasswordType
     {
         this.functionValue = functionValue;
     }
-    
-    KeyPasswordType()
-    {
-        functionValue = 0;
-    }
     // </editor-fold>
 }

@@ -37,6 +37,7 @@ public class Victim
         
         output += "Victim infomation\n";
         output += "Name: " + this.getName() + "\n";
+        output += "Position: " + this.role + "\n";
         output += "Gender: " + (this.gender == 'M' ? "Male\n" : "Female\n");
         output += "Age: " + this.age + "\n";
         output += "Scene: " + this.location + "\n";

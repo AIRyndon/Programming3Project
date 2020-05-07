@@ -3,6 +3,12 @@ package programming3project;
 public class RoomWorking extends Room
 {
     // <editor-fold defaultstate="collapsed" desc="Constructor">
+    /**
+     * @param name        the room's name
+     * @param previous    the previous room this room is connected to
+     * @param rowBoundary the row boundary of NPCs in this room
+     * @param colBoundary the column boundary of NPCs in this room
+     */
     public RoomWorking(String name, Room previous, NPCSpawnBoundary rowBoundary, NPCSpawnBoundary colBoundary)
     {
         super(previous, rowBoundary, colBoundary);
@@ -80,7 +86,7 @@ public class RoomWorking extends Room
     }
 
     @Override
-    protected void printRightEntrance(String roomName)
+    protected void printTopWallRightSide(String roomName)
     {
         for (int pos = this.getWidth() / 2 + (roomName.length() / 2 + 2); pos < this.getWidth() - 20; pos++)
         {
@@ -91,7 +97,7 @@ public class RoomWorking extends Room
     }
 
     @Override
-    protected void printWall()
+    protected void printBottomWall()
     {
         for (int wid = 0; wid < this.getWidth(); wid++)
         {

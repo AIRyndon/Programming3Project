@@ -6,8 +6,8 @@ public class Detective extends Person
 {
     // <editor-fold defaultstate="collapsed" desc="Detective attributes">
     private int grabbedHints = 0;
-    private int xCoord;
-    private int yCoord;
+    private int rowCoord;
+    private int colCoord;
     private String background;
     private char[][] playArea;
     private Room currentRoom;
@@ -18,8 +18,8 @@ public class Detective extends Person
     {
         super(name, gender, age);
 
-        xCoord = room.getxInitial();
-        yCoord = room.getyInitial();
+        rowCoord = room.getRowInitialCoord();
+        colCoord = room.getColInitialCoord();
     }
     // </editor-fold>
 
@@ -50,14 +50,14 @@ public class Detective extends Person
         this.playArea = playArea;
     }
 
-    public int getxCoord()
+    public int getRowCoord()
     {
-        return xCoord;
+        return rowCoord;
     }
 
-    public int getyCoord()
+    public int getColCoord()
     {
-        return yCoord;
+        return colCoord;
     }
     // </editor-fold>
 
@@ -75,42 +75,42 @@ public class Detective extends Person
         {
             case "a":
             {
-                if (inCorner(yCoord, 0))
+                if (inCorner(colCoord, 0))
                 {
                     return '\0';
                 }
 
-                item = changePlayerLocation(playArea[xCoord][yCoord - 1], value -> yCoord -= value);
+                item = changePlayerLocation(playArea[rowCoord][colCoord - 1], value -> colCoord -= value);
                 break;
             }
             case "d":
             {
-                if (inCorner(yCoord, playArea[0].length - 1))
+                if (inCorner(colCoord, playArea[0].length - 1))
                 {
                     return '\0';
                 }
 
-                item = changePlayerLocation(playArea[xCoord][yCoord + 1], value -> yCoord += value);
+                item = changePlayerLocation(playArea[rowCoord][colCoord + 1], value -> colCoord += value);
                 break;
             }
             case "w":
             {
-                if (inCorner(xCoord, 0))
+                if (inCorner(rowCoord, 0))
                 {
                     return '\0';
                 }
 
-                item = changePlayerLocation(playArea[xCoord - 1][yCoord], value -> xCoord -= value);
+                item = changePlayerLocation(playArea[rowCoord - 1][colCoord], value -> rowCoord -= value);
                 break;
             }
             case "s":
             {
-                if (inCorner(xCoord, playArea.length - 1))
+                if (inCorner(rowCoord, playArea.length - 1))
                 {
                     return '\0';
                 }
 
-                item = changePlayerLocation(playArea[xCoord + 1][yCoord], value -> xCoord += value);
+                item = changePlayerLocation(playArea[rowCoord + 1][colCoord], value -> rowCoord += value);
                 break;
             }
             default:
@@ -123,8 +123,8 @@ public class Detective extends Person
 
     public void moveToAnotherRoom(Room newRoom)
     {
-        getCurrentRoom().xCurrent = getxCoord();
-        getCurrentRoom().yCurrent = getyCoord();
+        getCurrentRoom().rowCurrentCoord = getRowCoord();
+        getCurrentRoom().colCurrentCoord = getColCoord();
 
         setPlayArea(newRoom.movingArea);
         setCurrentRoom(newRoom);
@@ -133,14 +133,14 @@ public class Detective extends Person
 
     public void setLocationToNewRoom()
     {
-        xCoord = getCurrentRoom().getxInitial();
-        yCoord = getCurrentRoom().getyInitial();
+        rowCoord = getCurrentRoom().getRowInitialCoord();
+        colCoord = getCurrentRoom().getColInitialCoord();
     }
 
     public void setLocationToPreviousRoom()
     {
-        xCoord = getCurrentRoom().xCurrent;
-        yCoord = getCurrentRoom().yCurrent;
+        rowCoord = getCurrentRoom().rowCurrentCoord;
+        colCoord = getCurrentRoom().colCurrentCoord;
     }
 
     @Override
@@ -194,17 +194,17 @@ public class Detective extends Person
 
     private boolean startingInHouse()
     {
-        return (xCoord == getCurrentRoom().getxInitial()
-                && yCoord == getCurrentRoom().getyInitial()
+        return (rowCoord == getCurrentRoom().getRowInitialCoord()
+                && colCoord == getCurrentRoom().getColInitialCoord()
                 && !getCurrentRoom().getName().equals("Ground"));
     }
 
     private void updatePlayArea(Character oldValue, Character newValue,
                                 Consumer<Integer> action)
     {
-        playArea[xCoord][yCoord] = oldValue;
+        playArea[rowCoord][colCoord] = oldValue;
         action.accept(1);
-        playArea[xCoord][yCoord] = newValue;
+        playArea[rowCoord][colCoord] = newValue;
     }
     // </editor-fold>
 }

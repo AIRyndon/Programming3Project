@@ -3,6 +3,10 @@ package programming3project;
 public class House extends Room
 {
     // <editor-fold defaultstate="collapsed" desc="Constructor">
+    /**
+     * @param name        the room's name
+     * @param previous    the previous room this room is connected to
+     */
     public House(String name, Room previous)
     {
         super(previous, null, null);
@@ -227,7 +231,7 @@ public class House extends Room
     }
 
     @Override
-    protected void printWall()
+    protected void printBottomWall()
     {
         for (int wid = 0; wid < this.getWidth(); wid++)
         {

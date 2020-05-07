@@ -12,15 +12,15 @@ public abstract class Room
     protected char[][] movingArea;
     protected Room previousRoom;
     protected Password lock;
-    protected int xInitial;
-    protected int yInitial;
-    protected int xCurrent;
-    protected int yCurrent;
+    protected int rowInitialCoord;
+    protected int colInitialCoord;
+    protected int rowCurrentCoord;
+    protected int colCurrentCoord;
     private NPCSpawnBoundary rowBoundary;
     private NPCSpawnBoundary colBoundary;
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Constructor">
+    // <editor-fold desc="Constructor">
 
     /**
      * @param previous    the previous room this room is connected to
@@ -33,17 +33,12 @@ public abstract class Room
         this.rowBoundary = rowBoundary;
         this.colBoundary = colBoundary;
     }
+
     // </editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="Getters and Setters">
-    public String getName()
+    public int getColInitialCoord()
     {
-        return name;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
+        return colInitialCoord;
     }
 
     public int getHeight()
@@ -66,19 +61,25 @@ public abstract class Room
         this.lock = lock;
     }
 
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
     public Room getPreviousRoom()
     {
         return previousRoom;
     }
 
-    public void setPreviousRoom(Room previousRoom)
+    public int getRowInitialCoord()
     {
-        this.previousRoom = previousRoom;
-    }
-
-    public void setWidth(int width)
-    {
-        this.width = width;
+        return rowInitialCoord;
     }
 
     public int getWidth()
@@ -86,45 +87,11 @@ public abstract class Room
         return width;
     }
 
-    public int getxInitial()
+    public void setWidth(int width)
     {
-        return xInitial;
+        this.width = width;
     }
 
-    public void setxInitial(int xInitial)
-    {
-        this.xInitial = xInitial;
-    }
-
-    public int getyInitial()
-    {
-        return yInitial;
-    }
-
-    public void setyInitial(int yInitial)
-    {
-        this.yInitial = yInitial;
-    }
-
-    public int getxCurrent()
-    {
-        return xCurrent;
-    }
-
-    public void setxCurrent(int xCurrent)
-    {
-        this.xCurrent = xCurrent;
-    }
-
-    public int getyCurrent()
-    {
-        return yCurrent;
-    }
-
-    public void setyCurrent(int yCurrent)
-    {
-        this.yCurrent = yCurrent;
-    }
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Public Methods">
@@ -160,48 +127,60 @@ public abstract class Room
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Protected Methods">
-    protected void printLeftEntranceAndRoomName(String roomName)
+    protected void addBed()
     {
-        //Print left entrance
-        for (int pos = 0; pos < this.getWidth() / 2 - (roomName.length() / 2 + 1); pos++)
+        for (int row = 0; row < getHeight(); row++)
         {
-            System.out.print("_");
-        }
-
-        //Print room name
-        System.out.print(String.format("|%s|", roomName));
-    }
-
-    protected void printRightEntrance(String roomName)
-    {
-        for (int pos = this.getWidth() / 2 + (roomName.length() / 2 + 2); pos < this.getWidth(); pos++)
-        {
-            System.out.print("_");
-        }
-
-        System.out.println();
-    }
-
-    protected void printWall()
-    {
-        for (int wid = 0; wid < this.getWidth(); wid++)
-        {
-            if (wid == 0 || wid == getWidth() - 1)
+            for (int col = 0; col < getWidth(); col++)
             {
-                System.out.print("|");
-            }
-            else
-            {
-                System.out.print("_");
+                if (row == 0)
+                {
+                    movingArea[row][5] = 'B';
+                    movingArea[row][6] = 'E';
+                    movingArea[row][7] = 'D';
+                }
+                if (row == getHeight() / 2 && col == 0)
+                {
+                    movingArea[row][col] = '=';
+                }
+                if (row == 1 && col > 0 && col <= 10)
+                {
+                    movingArea[row][col] = '_';
+                }
+                if (row <= 1 && col == 11)
+                {
+                    movingArea[row][col] = '|';
+                }
             }
         }
-
-        System.out.println();
     }
 
-    protected static void clearScreen()
+    //Create a 2D array for printing Room
+    protected void initializeMovingArea()
     {
-        System.out.println(new String(new char[30]).replace('\0', '\n'));
+        this.movingArea = new char[getHeight() - 1][getWidth()];
+        rowInitialCoord = 0;
+        colInitialCoord = movingArea[0].length / 2;
+
+        //Make sure NPCs are not placed in invalid area (e.g. player cannot touch)
+        for (int i = 0; i < this.getHeight() - 2; i++)
+        {
+            for (int j = 0; j < this.getWidth(); j++)
+            {
+                if (j == 0 || j == getWidth() - 1)
+                {
+                    movingArea[i][j] = '|';
+                }
+                else if (i == 0 && j == getWidth() / 2)
+                {
+                    movingArea[i][j] = 'P';
+                }
+                else
+                {
+                    movingArea[i][j] = ' ';
+                }
+            }
+        }
     }
 
     protected void positionNPC(char person)
@@ -224,43 +203,13 @@ public abstract class Room
         movingArea[row][col] = person;
     }
 
-    //Create a 2D array for printing Room
-    protected void initializeMovingArea()
-    {
-        this.movingArea = new char[getHeight() - 1][getWidth()];
-        setxInitial(0);
-        setyInitial(movingArea[0].length / 2);
-
-        //Make sure NPCs are not placed in invalid area (e.g. player cannot touch)
-        for (int i = 0; i < this.getHeight() - 2; i++)
-        {
-            for (int j = 0; j < this.getWidth(); j++)
-            {
-                if (j == 0 || j == getWidth() - 1)
-                {
-                    movingArea[i][j] = '|';
-                }
-                else if (i == 0 && j == getWidth() / 2)
-                {
-                    movingArea[i][j] = 'P';
-                }
-                else
-                {
-                    movingArea[i][j] = ' ';
-                }
-            }
-        }
-
-        printBed();
-    }
-
     protected void printRoom(String door)
     {
         clearScreen();
 
         //Print first line
-        printLeftEntranceAndRoomName(door);
-        printRightEntrance(name);
+        printTopWallLeftSide(door);
+        printTopWallRightSide(name);
 
         //Print middle lines
         for (int i = 0; i < this.getHeight() - 2; i++)
@@ -274,39 +223,51 @@ public abstract class Room
         }
 
         //print last line
-        printWall();
+        printBottomWall();
+    }
+
+    protected void printTopWallLeftSide(String roomName)
+    {
+        //Print left entrance
+        for (int pos = 0; pos < this.getWidth() / 2 - (roomName.length() / 2 + 1); pos++)
+        {
+            System.out.print("_");
+        }
+
+        //Print room name
+        System.out.print(String.format("|%s|", roomName));
+    }
+
+    protected void printTopWallRightSide(String roomName)
+    {
+        for (int pos = this.getWidth() / 2 + (roomName.length() / 2 + 2); pos < this.getWidth(); pos++)
+        {
+            System.out.print("_");
+        }
+
+        System.out.println();
+    }
+
+    protected void printBottomWall()
+    {
+        for (int wid = 0; wid < this.getWidth(); wid++)
+        {
+            if (wid == 0 || wid == getWidth() - 1)
+            {
+                System.out.print("|");
+            }
+            else
+            {
+                System.out.print("_");
+            }
+        }
+
+        System.out.println();
     }
     // </editor-fold>
 
-    private void printBed()
+    private void clearScreen()
     {
-        if (name == "Maid's Room" || name == "Butler's Room")
-        {
-            for (int row = 0; row < getHeight(); row++)
-            {
-                for (int col = 0; col < getWidth(); col++)
-                {
-                    if (row == 0)
-                    {
-                        movingArea[row][5] = 'B';
-                        movingArea[row][6] = 'E';
-                        movingArea[row][7] = 'D';
-                    }
-                    if (row == getHeight() / 2 && col == 0)
-                    {
-                        movingArea[row][col] = '=';
-                    }
-
-                    if (row == 1 && col > 0 && col <= 10)
-                    {
-                        movingArea[row][col] = '_';
-                    }
-                    if (row <= 1 && col == 11)
-                    {
-                        movingArea[row][col] = '|';
-                    }
-                }
-            }
-        }
+        System.out.println(new String(new char[30]).replace('\0', '\n'));
     }
 }

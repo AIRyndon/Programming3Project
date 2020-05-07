@@ -16,18 +16,26 @@ public class Game
     public final static Scanner SYSTEMINPUT = new Scanner(System.in);
     public final static Random RANDOM = new Random();
     private final Story story = new Story();
-    private final Ground ground = new Ground("Ground", null, new NPCSpawnBoundary(7, 20), new NPCSpawnBoundary(35, 50));
+
+    private final Ground ground = new Ground("Ground", null,
+                    new NPCSpawnBoundary(7, 20), new NPCSpawnBoundary(35, 50));
     private final House house = new House("House", ground);
-    private final RoomMaid roomMaid = new RoomMaid("Maid's Room", house, new NPCSpawnBoundary(2, 4), new NPCSpawnBoundary(20, 45));
-    private final RoomButler roomButler = new RoomButler("Butler's Room", house, new NPCSpawnBoundary(2, 4), new NPCSpawnBoundary(20, 45));
-    private final RoomWife roomWife = new RoomWife("Wife's Room", house, new NPCSpawnBoundary(5, 10), new NPCSpawnBoundary(15, 45));
-    private final RoomWorking roomWorking = new RoomWorking("Work Room", house, new NPCSpawnBoundary(2, 5), new NPCSpawnBoundary(25, 45));
+    private final RoomMaid roomMaid = new RoomMaid("Maid's Room", house,
+                    new NPCSpawnBoundary(2, 4), new NPCSpawnBoundary(20, 45));
+    private final RoomButler roomButler = new RoomButler("Butler's Room", house,
+                    new NPCSpawnBoundary(2, 4), new NPCSpawnBoundary(20, 45));
+    private final RoomWife roomWife = new RoomWife("Wife's Room", house,
+                    new NPCSpawnBoundary(5, 10), new NPCSpawnBoundary(15, 45));
+    private final RoomWorking roomWorking = new RoomWorking("Work Room", house,
+                    new NPCSpawnBoundary(2, 5), new NPCSpawnBoundary(25, 45));
+
     private final Victim victim = new Victim("Bosh", "President of KPI Cooperation",
             55, 'M', "His working room");
-    private int conversationLevel = 1;
-    private String unlockNPC = "";
     private Detective detective;
     private NPC daughter, wife, maid, butler, assistant;
+
+    private int conversationLevel = 1;
+    private String unlockNPC = "";
     private KeyPassword headLockedArea, tailLockedArea, headDogHouse, tailDogHouse;
     // </editor-fold>
 
@@ -46,39 +54,6 @@ public class Game
     public static String getCompletePath(String fileName)
     {
         return System.getProperty("user.dir") + "/FileDB/" + fileName;
-    }
-
-    public static void pauseScreen(int time)
-    {
-        try
-        {
-            Thread.sleep(time);
-        } catch (InterruptedException ex)
-        {
-            ex.printStackTrace(System.out);
-        }
-    }
-
-    public static void printSavedHints(int pausedTime)
-    {
-        LinkedList<Hint> savedHints = Hint.getSavedHints();
-
-        if (savedHints.size() > 0)
-        {
-            System.out.println("\nOpening your saved hints...");
-            pauseScreen(savedHints.size() * pausedTime);
-
-            for (int index = 0; index < savedHints.size(); index++)
-            {
-                System.out.println(savedHints.get(index));
-            }
-        }
-        else
-        {
-            System.out.println("\nYou haven't saved any hints yet!");
-        }
-
-        System.out.println();
     }
 
     public static void printSavedKeyPasswords(int pausedTime)
@@ -103,7 +78,7 @@ public class Game
         System.out.println();
     }
 
-    public static void printSavedNPCLines(int pausedTime)
+    private static void printSavedNPCLines(int pausedTime)
     {
         LinkedList<String> savedLines = NPCLine.getSavedLines();
 
@@ -139,7 +114,7 @@ public class Game
         setupNPC();
         setupPasswordCodes();
         setupPlayerInfo();
-        //introduceStory(detective);
+        introduceStory(detective);
         startGameLoop();
     }
     // </editor-fold>
@@ -181,6 +156,39 @@ public class Game
             System.out.print("Press h again to close your logbook. ");
             input = SYSTEMINPUT.next().charAt(0);
         } while (!(input == 'h' || input == 'H'));
+    }
+
+    private static void pauseScreen(int time)
+    {
+        try
+        {
+            Thread.sleep(time);
+        } catch (InterruptedException ex)
+        {
+            ex.printStackTrace(System.out);
+        }
+    }
+
+    private static void printSavedHints(int pausedTime)
+    {
+        LinkedList<Hint> savedHints = Hint.getSavedHints();
+
+        if (savedHints.size() > 0)
+        {
+            System.out.println("\nOpening your saved hints...");
+            pauseScreen(savedHints.size() * pausedTime);
+
+            for (int index = 0; index < savedHints.size(); index++)
+            {
+                System.out.println(savedHints.get(index));
+            }
+        }
+        else
+        {
+            System.out.println("\nYou haven't saved any hints yet!");
+        }
+
+        System.out.println();
     }
 
     private void clearWritableFiles()
@@ -361,15 +369,14 @@ public class Game
             {
                 detective.getCurrentRoom().hints.forEach(hint ->
                 {
-                    if (hint.getxLocation() == detective.getxCoord()
-                            && hint.getyLocation() == detective.getyCoord())
+                    if (hint.getRowCoord() == detective.getRowCoord()
+                            && hint.getColCoord() == detective.getColCoord())
                     {
                         System.out.println("\nYou found something. . ." + hint.toString());
                         Hint.saveHint(hint);
                         detective.incrementGrabbedHints();
                     }
 
-                    //When user hits Old Picture, Butler talk unlock.
                     if (hint.getName().equals("Old Picture"))
                     {
                         butler.unlockLines();
@@ -384,41 +391,36 @@ public class Game
                 if (detective.getCurrentRoom().getClass() == ground.getClass())
                 {
                     //check if in front of the house
-                    if ((detective.getyCoord() >= 25 && detective.getyCoord() <= 27)
-                            && detective.getxCoord() == 6)
+                    if ((detective.getColCoord() >= 25 && detective.getColCoord() <= 27)
+                            && detective.getRowCoord() == 6)
                     {
                         detective.moveToAnotherRoom(house);
                         detective.setLocationToNewRoom();
                     }
-
-
                 }
                 //check if inside the House
                 else if (detective.getCurrentRoom().getClass() == house.getClass())
                 {
                     //in front of maid's room
-                    if (detective.getxCoord() == 2 && detective.getyCoord() == 24)
+                    if (detective.getRowCoord() == 2 && detective.getColCoord() == 24)
                     {
                         detective.moveToAnotherRoom(roomMaid);
                         detective.setLocationToNewRoom();
-
-                        //in front of butler's room
                     }
-                    else if (detective.getxCoord() == 5 && detective.getyCoord() == 24)
+                    //in front of butler's room
+                    else if (detective.getRowCoord() == 5 && detective.getColCoord() == 24)
                     {
                         detective.moveToAnotherRoom(roomButler);
                         detective.setLocationToNewRoom();
-
-                        //in front of wife's room
                     }
-                    else if (detective.getxCoord() == 9 && detective.getyCoord() == 24)
+                    //in front of wife's room
+                    else if (detective.getRowCoord() == 9 && detective.getColCoord() == 24)
                     {
                         detective.moveToAnotherRoom(roomWife);
                         detective.setLocationToNewRoom();
-
-                        //in front of working area
                     }
-                    else if (detective.getxCoord() == 11 && detective.getyCoord() == 24)
+                    //in front of working area
+                    else if (detective.getRowCoord() == 11 && detective.getColCoord() == 24)
                     {
                         detective.moveToAnotherRoom(roomWorking);
                         detective.setLocationToNewRoom();
@@ -625,7 +627,7 @@ public class Game
 
     private void startGameLoop() throws IOException
     {
-        //clear console
+        //Clear buffer
         SYSTEMINPUT.nextLine();
         boolean playing = true;
 
