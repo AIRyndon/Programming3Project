@@ -1,35 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package programming3project;
 
-/**
- * @author pc
- */
 public class Ground extends Room
 {
-    public Ground(String name, Room previous)
+    // <editor-fold desc="Constructor">
+    /**
+     * @param name        the room's name
+     * @param previous    the previous room this room is connected to
+     * @param rowBoundary the row boundary of NPCs in this room
+     * @param colBoundary the column boundary of NPCs in this room
+     */
+    public Ground(String name, Room previous, NPCSpawnBoundary rowBoundary, NPCSpawnBoundary colBoundary)
     {
-        super(previous);
+        super(previous, rowBoundary, colBoundary);
         this.setLock(new Password());
         setName(name);
         setHeight(24);
         setWidth(52);
         initializeMovingArea();
     }
+    // </editor-fold>
 
-    /**
-     * initialize MovingArea Create a 2D array representing for hints(X), space(
-     * ), and player(P) to allow and show moving
-     */
+    // <editor-fold defaultstate="collapsed" desc="Protected methods">
     @Override
     protected void initializeMovingArea()
     {
         super.initializeMovingArea();
 
-        //Assign dog's place
+        //Dog's place
         movingArea[0][getWidth() - 15] = '|';
         movingArea[1][getWidth() - 15] = '#';
         movingArea[1][getWidth() - 14] = ' ';
@@ -43,93 +40,62 @@ public class Ground extends Room
             movingArea[2][i] = '_';
         }
 
-        /**
-         * Assign HouseArea (because the house is on the ground)
-         * Player cannot move in this area, just access through the door.
-         */
-        for (int i = 7; i <= 14; i++)
+        //House area
+        for (int height = 7; height <= 14; height++)
         {
-            for (int j = 17; j < 35; j++)
+            for (int width = 17; width < 35; width++)
             {
-                if (i == 7) //House's door
+                if (height == 7) //House's door
                 {
-                    if (j <= 17 + 6 || j >= 17 + 12)
+                    if (width <= 17 + 6 || width >= 17 + 12)
                     {
-                        movingArea[i][j] = '_';
+                        movingArea[height][width] = '_';
                     }
-                    else if (j == (17 + 7) || j == (17 + 11))
+                    else if (width == (17 + 7) || width == (17 + 11))
                     {
-                        movingArea[i][j] = '|';
+                        movingArea[height][width] = '|';
                     }
                     else
                     {
-                        movingArea[i][j] = '/';
+                        movingArea[height][width] = '/';
                     }
                 }
-                else if (i == 14)
+                else if (height == 14) //House's vertical walls
                 {
-                    if (j == 17 || j == 34)
+                    if (width == 17 || width == 34)
                     {
-                        movingArea[i][j] = '|';
+                        movingArea[height][width] = '|';
                     }
                     else
                     {
-                        movingArea[i][j] = '_';
+                        movingArea[height][width] = '_';
                     }
                 }
-                else //House's area
+                else
                 {
-                    if (j == 17 || j == 34) //House's left and right wall (barrier)
+                    if (width == 17 || width == 34) //House's horizontal walls
                     {
-                        movingArea[i][j] = '|';
+                        movingArea[height][width] = '|';
                     }
                     else //Empty area inside the house
                     {
-                        movingArea[i][j] = ' ';
+                        movingArea[height][width] = ' ';
                     }
                 }
             }
         }
 
-        //Printing the word "HOUSE"
+        //Assign "HOUSE"
         movingArea[11][24] = 'H';
         movingArea[11][25] = 'O';
         movingArea[11][26] = 'U';
         movingArea[11][27] = 'S';
         movingArea[11][28] = 'E';
 
+        //KeyPassword position
         movingArea[18][9] = '!';
 
-        //The butler is in the ground
         positionNPC('B');
     }
-
-    @Override
-    protected void positionNPC(char person)
-    {
-        super.positionNPC(person);
-        boolean stop = false;
-
-        while (!stop)
-        {
-            for (int i = 0; i <= getHeight() - 2; i++)
-            {
-                for (int j = 0; j <= getWidth() - 2; j++)
-                {
-                    if (movingArea[i][j] == person)
-                    {
-                        if ((i < 3 && j > getWidth() - 12) || (i >= 7 && i <= 14 && j >= 17 && j <= 34))
-                        {
-                            movingArea[i][j] = ' ';
-                            super.positionNPC(person);
-                        }
-                        else
-                        {
-                            stop = true;
-                        }
-                    }
-                }
-            }
-        }
-    }
+    // </editor-fold>
 }

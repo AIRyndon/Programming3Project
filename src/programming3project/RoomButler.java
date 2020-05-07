@@ -1,88 +1,34 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package programming3project;
 
-/**
- *
- * @author pc
- */
 public class RoomButler extends Room
 {
-
-    public RoomButler(String name, Room previous)
+    // <editor-fold defaultstate="collapsed" desc="Constructor">
+    /**
+     * @param name        the room's name
+     * @param previous    the previous room this room is connected to
+     * @param rowBoundary the row boundary of NPCs in this room
+     * @param colBoundary the column boundary of NPCs in this room
+     */
+    public RoomButler(String name, Room previous, NPCSpawnBoundary rowBoundary, NPCSpawnBoundary colBoundary)
     {
-        super(previous);
+        super(previous, rowBoundary, colBoundary);
         setName(name);
         setHeight(7);
         setWidth(48);
 
         initializeMovingArea();
     }
-    
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Protected Methods">
+    @Override
     protected void initializeMovingArea()
     {
         super.initializeMovingArea();
-
-        for (int row = 0; row < getHeight(); row++)
-        {
-            for (int col = 0; col < getWidth(); col++)
-            {
-                if (row == 0)
-                {
-                    movingArea[row][5] = 'B';
-                    movingArea[row][6] = 'E';
-                    movingArea[row][7] = 'D';
-                }
-                if (row == getHeight() / 2 && col == 0)
-                {
-                    movingArea[row][col] = '=';
-                }
-
-                if (row == 1 && col > 0 && col <= 10)
-                {
-                    movingArea[row][col] = '_';
-                }
-                if (row <= 1 && col == 11)
-                {
-                    movingArea[row][col] = '|';
-                }
-            }
-        }
-        
+        addBed();
         movingArea[2][1] = '0';
-        
+
         positionNPC('A');
     }
-    
-    @Override
-    protected void positionNPC(char person)
-    {
-        super.positionNPC(person);
-        boolean stop = false;
-        
-        while(!stop)
-        {
-            for (int i = 0; i <= getHeight() - 2; i++)
-            {   
-                for (int j = 0; j <= getWidth() - 2; j++)
-                {
-                    if(movingArea[i][j] == person)
-                    {
-                        if(i < 2 && j < 11)
-                        {
-                            movingArea[i][j] = ' ';
-                            super.positionNPC(person);
-                        }
-                        else
-                        {
-                            stop = true;
-                        }
-                    }
-                }
-            }
-        }
-    }
+    // </editor-fold>
 }

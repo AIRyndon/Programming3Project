@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package programming3project;
 
 import java.io.File;
@@ -15,30 +10,36 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
 
-/**
- * @author airyn
- */
 public class Game
 {
-
-    //Required game fields
+    // <editor-fold defaultstate="collapsed" desc="Required game fields">
     public final static Scanner SYSTEMINPUT = new Scanner(System.in);
     public final static Random RANDOM = new Random();
-    private final Story storyIntro = new Story();
-    private final Ground ground = new Ground("Ground", null);
+    private final Story story = new Story();
+
+    private final Ground ground = new Ground("Ground", null,
+                    new NPCSpawnBoundary(7, 20), new NPCSpawnBoundary(35, 50));
     private final House house = new House("House", ground);
-    private final RoomMaid roomMaid = new RoomMaid("Maid's Room", house);
-    private final RoomButler roomButler = new RoomButler("Butler's Room", house);
-    private final RoomWife roomWife = new RoomWife("Wife's Room", house);
-    private final RoomWorking roomWorking = new RoomWorking("Work Room", house);
+    private final RoomMaid roomMaid = new RoomMaid("Maid's Room", house,
+                    new NPCSpawnBoundary(2, 4), new NPCSpawnBoundary(20, 45));
+    private final RoomButler roomButler = new RoomButler("Butler's Room", house,
+                    new NPCSpawnBoundary(2, 4), new NPCSpawnBoundary(20, 45));
+    private final RoomWife roomWife = new RoomWife("Wife's Room", house,
+                    new NPCSpawnBoundary(5, 10), new NPCSpawnBoundary(15, 45));
+    private final RoomWorking roomWorking = new RoomWorking("Work Room", house,
+                    new NPCSpawnBoundary(2, 5), new NPCSpawnBoundary(25, 45));
+
     private final Victim victim = new Victim("Bosh", "President of KPI Cooperation",
             55, 'M', "His working room");
-    private int conversationLevel = 1;
-    private String unlockNPC = "";
     private Detective detective;
     private NPC daughter, wife, maid, butler, assistant;
-    private KeyPassword headLockedArea, tailLockedArea, headDogHouse, tailDogHouse;
 
+    private int conversationLevel = 1;
+    private String unlockNPC = "";
+    private KeyPassword headLockedArea, tailLockedArea, headDogHouse, tailDogHouse;
+    // </editor-fold>
+
+    // <editor-fold desc="Constructor">
     public Game() throws IOException
     {
         //Setup writable game files
@@ -47,103 +48,15 @@ public class Game
         clearWritableFiles();
         resetStaticVariables();
     }
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="Public Methods">
     public static String getCompletePath(String fileName)
     {
         return System.getProperty("user.dir") + "/FileDB/" + fileName;
     }
 
-    public boolean playAgain()
-    {
-        SYSTEMINPUT.nextLine();
-        System.out.println(".");
-        System.out.println(".");
-        System.out.println(".\n");
-        System.out.println("Do you want to play again (press 'y')? ");
-
-        return "y".equalsIgnoreCase(SYSTEMINPUT.nextLine());
-    }
-
-    public void startGame() throws IOException
-    {
-        setupNPC();
-        setupPasswordCodes();
-        setupPlayerInfo();
-        introduceStory(detective);
-        startGameLoop();
-    }
-
-    private static void openLogBook()
-    {
-        int page = 0;
-
-        do
-        {
-            System.out.print("\nWhat page do you want to open? (1-3) ");
-            if (SYSTEMINPUT.hasNextInt())
-            {
-                page = SYSTEMINPUT.nextInt();
-            }
-            Game.SYSTEMINPUT.nextLine();
-        } while (page < 1 || page > 3);
-
-        switch (page)
-        {
-            case 1:
-                printSavedNPCLines(1000);
-                break;
-            case 2:
-                printSavedHints(1000);
-                break;
-            case 3:
-                printSavedKeyPassword(1000);
-                break;
-            default:
-                break;
-        }
-
-        char input = '\0';
-        do
-        {
-            System.out.print("Press h again to close your logbook. ");
-            input = SYSTEMINPUT.next().charAt(0);
-        } while (!(input == 'h' || input == 'H'));
-    }
-
-    private static void pauseScreen(int time)
-    {
-        try
-        {
-            Thread.sleep(time);
-        } catch (InterruptedException ex)
-        {
-            ex.printStackTrace(System.out);
-        }
-    }
-
-    private static void printSavedHints(int pausedTime)
-    {
-        LinkedList<GroundHint> savedHints = GroundHint.getSavedHints();
-
-        if (savedHints.size() > 0)
-        {
-            System.out.println("\nOpening your saved hints...");
-            pauseScreen(savedHints.size() * pausedTime);
-
-            for (int index = 0; index < savedHints.size(); index++)
-            {
-                System.out.println(savedHints.get(index));
-            }
-        }
-        else
-        {
-            System.out.println("\nYou haven't saved any hints yet!");
-        }
-
-        System.out.println();
-    }
-
-    public static void printSavedKeyPassword(int pausedTime)
+    public static void printSavedKeyPasswords(int pausedTime)
     {
         LinkedList<String> savedCodes = KeyPassword.getSavedCodes();
 
@@ -185,39 +98,128 @@ public class Game
         }
     }
 
+    public boolean playAgain()
+    {
+        SYSTEMINPUT.nextLine();
+        System.out.println(".");
+        System.out.println(".");
+        System.out.println(".\n");
+        System.out.println("Do you want to play again (press 'y')? ");
+
+        return "y".equalsIgnoreCase(SYSTEMINPUT.nextLine());
+    }
+
+    public void startGame() throws IOException
+    {
+        setupNPC();
+        setupPasswordCodes();
+        setupPlayerInfo();
+        introduceStory(detective);
+        startGameLoop();
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Private methods">
+    private static void openLogBook()
+    {
+        int page = 0;
+
+        do
+        {
+            System.out.print("\nWhat page do you want to open? (1-3) ");
+            if (SYSTEMINPUT.hasNextInt())
+            {
+                page = SYSTEMINPUT.nextInt();
+            }
+
+            Game.SYSTEMINPUT.nextLine();
+        } while (page < 1 || page > 3);
+
+        switch (page)
+        {
+            case 1:
+                printSavedNPCLines(1000);
+                break;
+            case 2:
+                printSavedHints(1000);
+                break;
+            case 3:
+                printSavedKeyPasswords(1000);
+                break;
+            default:
+                break;
+        }
+
+        char input = '\0';
+        do
+        {
+            System.out.print("Press h again to close your logbook. ");
+            input = SYSTEMINPUT.next().charAt(0);
+        } while (!(input == 'h' || input == 'H'));
+    }
+
+    private static void pauseScreen(int time)
+    {
+        try
+        {
+            Thread.sleep(time);
+        } catch (InterruptedException ex)
+        {
+            ex.printStackTrace(System.out);
+        }
+    }
+
+    private static void printSavedHints(int pausedTime)
+    {
+        LinkedList<Hint> savedHints = Hint.getSavedHints();
+
+        if (savedHints.size() > 0)
+        {
+            System.out.println("\nOpening your saved hints...");
+            pauseScreen(savedHints.size() * pausedTime);
+
+            for (int index = 0; index < savedHints.size(); index++)
+            {
+                System.out.println(savedHints.get(index));
+            }
+        }
+        else
+        {
+            System.out.println("\nYou haven't saved any hints yet!");
+        }
+
+        System.out.println();
+    }
+
     private void clearWritableFiles()
     {
         try
         {
             new FileWriter(getCompletePath("Conversations.txt"), false).close();
             new FileWriter(getCompletePath("PasswordHints.txt"), false).close();
-            new FileWriter(getCompletePath("GroundHints.txt"), false).close();
+            new FileWriter(getCompletePath("Hints.txt"), false).close();
         } catch (IOException ex)
         {
             System.out.println(ex.getMessage());
         }
     }
 
-    private boolean confirmKiller(int guess)
+    private boolean confirmKiller(int guess) throws IOException
     {
         if (guess == 3)
         {
-            System.out.println("\nFantastic! The daughter is the killer!");
-            System.out.println("She left without the cheesecake and the victim "
-                    + "\nate a piece of this - killing him - before he got stabbled by the Maid.");
-            System.out.println("After stabbing the victim, the Maid cleaned the Working room"
-                    + "\nand threw the cheesecake in the dog's house.");
-            System.out.println("YOU WIN THE GAME!\n");
+            System.out.println(story.getEnding());
+            System.out.println("\nYOU WIN THE GAME!\n");
         }
         else
         {
-            System.out.println("\nThe killer is a different person. YOU LOST THE GAME!\n");
+            System.out.println("\nThe killer is a different person. \nYOU LOST THE GAME!\n");
         }
 
         return false;
     }
 
-    private boolean guessKiller()
+    private boolean guessKiller() throws IOException
     {
         System.out.println("\nCongratulations! You have unlocked all the hints in the game!\n");
         System.out.println("................Time to guess who is the murderer................\n");
@@ -252,7 +254,7 @@ public class Game
             case 'B':
             {
                 System.out.println(butler.toString());
-                boolean playerOpenedTalk = butler.getNPCLine().talk();
+                boolean playerOpenedTalk = butler.talk();
 
                 if (playerOpenedTalk)
                 {
@@ -266,7 +268,8 @@ public class Game
             case 'W':
             {
                 System.out.println(wife.toString());
-                boolean playerOpenedTalk = wife.getNPCLine().talk();
+                boolean playerOpenedTalk = wife.talk();
+
 
                 if (playerOpenedTalk)
                 {
@@ -280,7 +283,7 @@ public class Game
             case 'A':
             {
                 System.out.println(assistant.toString());
-                boolean playerOpenedTalk = assistant.getNPCLine().talk();
+                boolean playerOpenedTalk = assistant.talk();
 
                 if (playerOpenedTalk)
                 {
@@ -293,7 +296,8 @@ public class Game
             case 'M':
             {
                 System.out.println(maid.toString());
-                boolean playerOpenedTalk = maid.getNPCLine().talk();
+
+                boolean playerOpenedTalk = maid.talk();
 
                 if (playerOpenedTalk)
                 {
@@ -306,7 +310,7 @@ public class Game
             case 'D':
             {
                 System.out.println(daughter.toString());
-                boolean playerOpenedTalk = daughter.getNPCLine().talk();
+                boolean playerOpenedTalk = daughter.talk();
 
                 if (playerOpenedTalk)
                 {
@@ -320,25 +324,13 @@ public class Game
             case 'V':
             {
                 System.out.println('\n' + victim.toString());
-
                 break;
             }
             case 'd':
-            {
-                System.out.println("\nOh wait! The dog is dead!");
-
-                break;
-            }
             case 'o':
-            {
-                System.out.println("\nOh wait! The dog is dead!");
-
-                break;
-            }
             case 'g':
             {
                 System.out.println("\nOh wait! The dog is dead!");
-
                 break;
             }
             case '*':
@@ -348,22 +340,20 @@ public class Game
                     detective.moveToAnotherRoom(detective.getCurrentRoom().previousRoom);
                     detective.setLocationToPreviousRoom();
                 }
-
                 break;
             }
             case 'X':
             {
                 detective.getCurrentRoom().hints.forEach(hint ->
                 {
-                    if (hint.getxLocation() == detective.getxCoord()
-                            && hint.getyLocation() == detective.getyCoord())
+                    if (hint.getRowCoord() == detective.getRowCoord()
+                            && hint.getColCoord() == detective.getColCoord())
                     {
                         System.out.println("\nYou found something. . ." + hint.toString());
-                        GroundHint.saveGroundHint(hint);
+                        Hint.saveHint(hint);
                         detective.incrementGrabbedHints();
                     }
 
-                    //When user hits Old Picture, Butler talk unlock.
                     if (hint.getName().equals("Old Picture"))
                     {
                         butler.unlockLines();
@@ -378,40 +368,36 @@ public class Game
                 if (detective.getCurrentRoom().getClass() == ground.getClass())
                 {
                     //check if in front of the house
-                    if ((detective.getyCoord() >= 25 && detective.getyCoord() <= 27)
-                            && detective.getxCoord() == 6)
+                    if ((detective.getColCoord() >= 25 && detective.getColCoord() <= 27)
+                            && detective.getRowCoord() == 6)
                     {
                         detective.moveToAnotherRoom(house);
                         detective.setLocationToNewRoom();
                     }
-
-                    //check if inside the House
                 }
+                //check if inside the House
                 else if (detective.getCurrentRoom().getClass() == house.getClass())
                 {
                     //in front of maid's room
-                    if (detective.getxCoord() == 2 && detective.getyCoord() == 24)
+                    if (detective.getRowCoord() == 2 && detective.getColCoord() == 24)
                     {
                         detective.moveToAnotherRoom(roomMaid);
                         detective.setLocationToNewRoom();
-
-                        //in front of butler's room
                     }
-                    else if (detective.getxCoord() == 5 && detective.getyCoord() == 24)
+                    //in front of butler's room
+                    else if (detective.getRowCoord() == 5 && detective.getColCoord() == 24)
                     {
                         detective.moveToAnotherRoom(roomButler);
                         detective.setLocationToNewRoom();
-
-                        //in front of wife's room
                     }
-                    else if (detective.getxCoord() == 9 && detective.getyCoord() == 24)
+                    //in front of wife's room
+                    else if (detective.getRowCoord() == 9 && detective.getColCoord() == 24)
                     {
                         detective.moveToAnotherRoom(roomWife);
                         detective.setLocationToNewRoom();
-
-                        //in front of working area
                     }
-                    else if (detective.getxCoord() == 11 && detective.getyCoord() == 24)
+                    //in front of working area
+                    else if (detective.getRowCoord() == 11 && detective.getColCoord() == 24)
                     {
                         detective.moveToAnotherRoom(roomWorking);
                         detective.setLocationToNewRoom();
@@ -486,12 +472,12 @@ public class Game
 
         //Story begins
         pauseScreen(1000);
-        System.out.println(storyIntro.getStory().get(0));
+        System.out.println(story.getStory().get(0));
         pauseScreen(2000);
         System.out.println(((detective.getGender() == 'M' || detective.getGender() == 'm')
-                ? "\"Sir " : "\"Madam ") + detective.getName() + storyIntro.getStory().get(1));
+                ? "\"Sir " : "\"Madam ") + detective.getName() + story.getStory().get(1));
         pauseScreen(2000);
-        System.out.println(storyIntro.getStory().get(2));
+        System.out.println(story.getStory().get(2));
         pauseScreen(2000);
 
         char enterPremises = '\0';
@@ -503,36 +489,35 @@ public class Game
         }
 
         pauseScreen(1000);
-        //If player does not want to enter the compound
         if (enterPremises != 'Y' && enterPremises != 'y')
         {
-            System.out.println("\n" + storyIntro.getStory().get(4));
+            System.out.println("\n" + story.getStory().get(4));
 
             pauseScreen(2000);
-            System.out.println(storyIntro.getStory().get(5) + victim.getName() + ".");
+            System.out.println(story.getStory().get(5) + victim.getName() + ".");
 
             pauseScreen(2000);
-            System.out.println(storyIntro.getStory().get(6));
+            System.out.println(story.getStory().get(6));
 
             pauseScreen(2000);
-            System.out.println(storyIntro.getStory().get(7));
+            System.out.println(story.getStory().get(7));
         }
         else
         {
-            System.out.println("\n" + storyIntro.getStory().get(9));
+            System.out.println("\n" + story.getStory().get(9));
 
             pauseScreen(2000);
-            System.out.println(storyIntro.getStory().get(10));
+            System.out.println(story.getStory().get(10));
 
             pauseScreen(2000);
-            System.out.println(storyIntro.getStory().get(11));
+            System.out.println(story.getStory().get(11));
         }
 
         pauseScreen(2000);
         System.out.println("\n" + victim.toString());
 
         pauseScreen(2000);
-        System.out.println(storyIntro.getStory().get(13));
+        System.out.println("\n" + story.getStory().get(13));
 
         pauseScreen(2500);
         ground.printRoom(ground.getName());
@@ -557,7 +542,7 @@ public class Game
     private void resetStaticVariables()
     {
         KeyPassword.SAVEDCODES.clear();
-        GroundHint.SAVEDHINTS.clear();
+        Hint.SAVEDHINTS.clear();
         NPCLine.SAVEDLINES.clear();
     }
 
@@ -580,7 +565,6 @@ public class Game
 
     private void setupPlayerInfo()
     {
-        //Promt user input
         System.out.print("Please enter a name: ");
         String userName = SYSTEMINPUT.nextLine();
 
@@ -615,13 +599,12 @@ public class Game
         detective = new Detective(userName, userGender, userAge, ground);
         detective.setBackground("Mysterious fellow");
         detective.setCurrentRoom(ground);
-        detective.setPreviousRoom(null);
         detective.setPlayArea(ground.movingArea);
     }
 
     private void startGameLoop() throws IOException
     {
-        //clear console
+        //Clear buffer
         SYSTEMINPUT.nextLine();
         boolean playing = true;
 
@@ -629,7 +612,6 @@ public class Game
         {
             String keyPress = " ";
 
-            //access ground => print ground
             do
             {
                 System.out.println("\nPress h then enter to access your logbook.");
@@ -695,4 +677,5 @@ public class Game
             }
         }
     }
+    // </editor-fold>
 }

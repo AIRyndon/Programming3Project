@@ -1,27 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package programming3project;
 
-/**
- *
- * @author pc
- */
-public class RoomWorking extends Room 
+public class RoomWorking extends Room
 {
-    public RoomWorking(String name, Room previous)
+    // <editor-fold defaultstate="collapsed" desc="Constructor">
+    /**
+     * @param name        the room's name
+     * @param previous    the previous room this room is connected to
+     * @param rowBoundary the row boundary of NPCs in this room
+     * @param colBoundary the column boundary of NPCs in this room
+     */
+    public RoomWorking(String name, Room previous, NPCSpawnBoundary rowBoundary, NPCSpawnBoundary colBoundary)
     {
-        super(previous);
+        super(previous, rowBoundary, colBoundary);
         this.setLock(new Password());
         setName(name);
         setHeight(12);
         setWidth(72);
 
-        initializeMovingArea();        
+        initializeMovingArea();
     }
-    
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Protected Methods">
+
     @Override
     protected void initializeMovingArea()
     {
@@ -32,47 +33,47 @@ public class RoomWorking extends Room
         {
             for (int width = 0; width < getWidth(); width++)
             {
-                if(width == getWidth() / 4)
+                if (width == getWidth() / 4)
                 {
                     movingArea[height][width] = '|';
                 }
-                
+
                 //Wall of Book room
-                if(width == getWidth() / 2 + 15 && height != 9)
+                if (width == getWidth() / 2 + 15 && height != 9)
                 {
                     movingArea[height][width] = '|';
                 }
-                
-                if(width == getWidth() - 1)
+
+                if (width == getWidth() - 1)
                 {
                     movingArea[height][width] = ' ';
                 }
-                
+
                 //Book Room's wall
-                if(width == getWidth() / 2 + 15 + height * 2)
+                if (width == getWidth() / 2 + 15 + height * 2)
                 {
                     movingArea[height][width] = '\\';
-                    
-                    if(height < getHeight() - 2)
+
+                    if (height < getHeight() - 2)
                     {
                         movingArea[height][width + 1] = '.';
                     }
                 }
             }
         }
-        
+
         //Hints in Book room
         movingArea[9][getWidth() / 2 - 30] = '@';
-        
+
         //Locked area
         movingArea[getHeight() / 2 - 1][getWidth() / 4] = '#';
-        
+
         //Drawing table
-        for(int row = getWidth() / 2 - 2; row < getWidth() / 2 + 3; row++)
+        for (int row = getWidth() / 2 - 2; row < getWidth() / 2 + 3; row++)
         {
             movingArea[getHeight() - 4][row] = '_';
         }
-        
+
         movingArea[getHeight() - 3][getWidth() / 2 - 3] = '|';
         movingArea[getHeight() - 3][getWidth() / 2 - 2] = 'C';
         movingArea[getHeight() - 3][getWidth() / 2 - 1] = 'h';
@@ -80,77 +81,31 @@ public class RoomWorking extends Room
         movingArea[getHeight() - 3][getWidth() / 2 + 1] = 'i';
         movingArea[getHeight() - 3][getWidth() / 2 + 2] = 'r';
         movingArea[getHeight() - 3][getWidth() / 2 + 3] = '|';
-        
+
         positionNPC('V');
     }
-    
-    @Override
-    protected void positionNPC(char person)
-    {
-        super.positionNPC(person);
-        boolean stop = false;
-        
-        while(!stop)
-        {
-            for (int i = 0; i <= getHeight() - 2; i++)
-            {
-                for (int j = 0; j <= getWidth() - 2; j++)
-                {
-                    if(movingArea[i][j] == person)
-                    {
-                        if(j < getWidth() / 4 + 3 || j > getWidth() / 2 + 12)
-                        {
-                            movingArea[i][j] = ' ';
-                            super.positionNPC(person);
-                        }
-                        else
-                        {
-                            stop = true;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    @Override
-    public void printEntrance(String roomName)
-    {
-        //Print left side
-        //Divide the width and roomName length in half to print in the middle
-        //The +1 is for the | character
-        for (int pos = 0; pos < this.getWidth() / 2 - (roomName.length() / 2 + 1); pos++)
-        {
-            System.out.print("_");
-        }
 
-        //Print room name in the middle
-        System.out.print(String.format("|%s|", roomName));
-
-        //Print right side
-        //The +2 is for the | character and the next position
+    @Override
+    protected void printTopWallRightSide(String roomName)
+    {
         for (int pos = this.getWidth() / 2 + (roomName.length() / 2 + 2); pos < this.getWidth() - 20; pos++)
         {
             System.out.print("_");
         }
 
-        System.out.println("");
+        System.out.println();
     }
 
-    /**
-     * Printing the wall
-     */
     @Override
-    protected void printWall()
+    protected void printBottomWall()
     {
-        //Print gate and wall (first row)
         for (int wid = 0; wid < this.getWidth(); wid++)
         {
             if (wid == 0 || wid == getWidth() - 1 || wid == 18 || wid == getWidth() / 2 + 15
                     || wid == getWidth() / 2 - 3 || wid == getWidth() / 2 + 3)
             {
                 System.out.print("|");
-            } 
+            }
             else
             {
                 System.out.print("_");
@@ -159,4 +114,5 @@ public class RoomWorking extends Room
 
         System.out.println();
     }
+    // </editor-fold>
 }

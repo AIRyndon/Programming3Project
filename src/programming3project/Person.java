@@ -1,48 +1,36 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package programming3project;
 
-/**
- * @author angel
- */
 public abstract class Person
 {
+    // <editor-fold defaultstate="collapsed" desc="Person Attributes">
     private String name;
     private char gender;
     private int age;
-
+    // </editor-fold>
+    
+    // <editor-fold desc="Constructor">
     public Person(String name, char gender, int age)
     {
         this.name = name;
         this.gender = gender;
         this.age = age;
     }
+    // </editor-fold>
 
-    /**
-     * @return the age
-     */
-    public int getAge()
-    {
-        return age;
-    }
-
-    /**
-     * @return the gender
-     */
-    public char getGender()
-    {
-        return gender;
-    }
-
-    /**
-     * @return the name
-     */
+    // <editor-fold defaultstate="collapsed" desc="Getter methods">
     public String getName()
     {
         return name;
     }
-
+    
+    public char getGender()
+    {
+        return gender;
+    }
+    
+    public int getAge()
+    {
+        return age;
+    }
+    // </editor-fold>
 }

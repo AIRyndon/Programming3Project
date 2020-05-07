@@ -1,40 +1,54 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package programming3project;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-/**
- *
- * @author pc
- */
 public final class NPCLine
 {
+    // <editor-fold defaultstate="collapsed" desc="NPCLine Attributes">
     public static LinkedList<String> SAVEDLINES = new LinkedList<>();
     private boolean unlocked;
     private NPC npc;
     private String firstLine;
     private String secondLine;
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="Constructor">
     public NPCLine(NPC npc) throws IOException
     {
         firstLine = "";
         secondLine = "";
         unlocked = false;
-        
-        setNPC(npc);
-        ReadNPCLines();
+
+        this.npc = npc;
+        readNPCLines();
     }
 
+    public String getFirstLine()
+    {
+        return firstLine;
+    }
+
+    public String getSecondLine()
+    {
+        return secondLine;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Getter methods">
+    public boolean isUnlocked()
+    {
+        return unlocked;
+    }
+
+    public NPC getNPC()
+    {
+        return npc;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Public Methods">
     public static LinkedList<String> getSavedLines()
     {
         LinkedList<String> copy = new LinkedList<>();
@@ -48,6 +62,16 @@ public final class NPCLine
         return copy;
     }
 
+    public void setFirstLine(String firstLine)
+    {
+        this.firstLine = firstLine;
+    }
+
+    public void setSecondLine(String secondLine)
+    {
+        this.secondLine = secondLine;
+    }
+
     public boolean talk() throws IOException
     {
         //Ask if player wants to talk
@@ -59,19 +83,19 @@ public final class NPCLine
         {
             if (!isUnlocked())
             {
-                getNPC().talkedWithPlayer();
-                System.out.println("\n" + getFirstLine());
+                npc.talkedWithPlayer();
+                System.out.println("\n" + firstLine);
 
-                saveNPCLines(getFirstLine());
-            } 
+                saveNPCLines(firstLine);
+            }
             else
             {
-                System.out.println("\n" + getSecondLine());
-                saveNPCLines(getSecondLine());
+                System.out.println("\n" + secondLine);
+                saveNPCLines(secondLine);
 
                 //After printing talk 2, talk 2 = talk 1
                 //Player is unable to see talk 2 again
-                this.setSecondLine(getFirstLine());
+                secondLine = firstLine;
             }
 
             return true;
@@ -82,77 +106,15 @@ public final class NPCLine
 
     public void unlock()
     {
-        setUnlocked(true);
+        this.unlocked = true;
     }
+    // </editor-fold>
 
-    /**
-     * @return the unlocked
-     */
-    public boolean isUnlocked()
-    {
-        return unlocked;
-    }
-
-    /**
-     * @param unlocked the unlocked to set
-     */
-    public void setUnlocked(boolean unlocked)
-    {
-        this.unlocked = unlocked;
-    }
-
-    /**
-     * @return the firstConversation
-     */
-    public String getFirstLine()
-    {
-        return firstLine;
-    }
-
-    /**
-     * @param line the firstConversation to set
-     */
-    public void setFirstLine(String line)
-    {
-        firstLine = line;
-    }
-
-    /**
-     * @return the secondConversation
-     */
-    public String getSecondLine()
-    {
-        return secondLine;
-    }
-
-    /**
-     * @param line the secondConversation to set
-     */
-    public void setSecondLine(String line)
-    {
-        secondLine = line;
-    }
-
-    /**
-     * @return the npc
-     */
-    public NPC getNPC()
-    {
-        return npc;
-    }
-
-    /**
-     * @param npc the npc to set
-     */
-    public void setNPC(NPC npc)
-    {
-        this.npc = npc;
-    }
-
-    public void ReadNPCLines() throws IOException
+    // <editor-fold defaultstate="collapsed" desc="Private Methods">
+    private void readNPCLines() throws IOException
     {
         BufferedReader br = new BufferedReader(new FileReader(
-                Game.getCompletePath(getNPC().getRole() + ".txt")));
+                Game.getCompletePath(npc.getRole() + ".txt")));
 
         String line;
 
@@ -160,15 +122,15 @@ public final class NPCLine
         {
             if (!line.isEmpty())
             {
-                setFirstLine(getFirstLine() + line + '\n');
-            } 
+                firstLine += line + '\n';
+            }
             else
             {
                 secondLine += line;
 
                 while ((line = br.readLine()) != null)
                 {
-                    setSecondLine(getSecondLine() + line + '\n');
+                    secondLine += line + '\n';
                 }
 
                 break;
@@ -176,7 +138,7 @@ public final class NPCLine
         }
     }
 
-    private void saveNPCLines(String conversation)
+    public void saveNPCLines(String conversation)
     {
         System.out.print("Do you want to save this conversations (y)? ");
 
@@ -184,11 +146,10 @@ public final class NPCLine
 
         if (save)
         {
-            //If this conversation has been saved already
             if (SAVEDLINES.contains(npc.getName() + ":\n" + conversation))
             {
                 System.out.println("You already have this on file...");
-            } 
+            }
             else
             {
                 if (SAVEDLINES.size() == 3)
@@ -217,7 +178,7 @@ public final class NPCLine
 
                 SAVEDLINES.add(npc.getName() + ":\n" + conversation);
 
-                try(BufferedWriter bw = new BufferedWriter(new FileWriter(
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter(
                         Game.getCompletePath("Conversations.txt"))))
                 {
                     for (int index = 0; index < SAVEDLINES.size(); index++)
@@ -226,12 +187,12 @@ public final class NPCLine
                     }
 
                     System.out.println("The conversation has been saved!");
-                }
-                catch (IOException ex)
+                } catch (IOException ex)
                 {
                     System.out.println(ex.getMessage());
                 }
             }
         }
     }
+    // </editor-fold>
 }

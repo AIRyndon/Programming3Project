@@ -1,74 +1,33 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package programming3project;
 
-/**
- * @author pc
- */
 public class Password
 {
+    // <editor-fold defaultstate="collapsed" desc="Password Attributes">
     private boolean unlock;
     private String password;
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="Constructor">
     public Password()
     {
-        this.setUnlock(false);
-
+        unlock = false;
         initialisePassword();
     }
+    // </editor-fold>
 
-    /**
-     * @return the password
-     */
-    public String getPassword()
-    {
-        return password;
-    }
-
-    /**
-     * @param password the password to set
-     */
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
-
-    private void initialisePassword()
-    {
-        //Choose four random numbers between 0 to 9
-        int first = Game.RANDOM.nextInt(10);
-        int second = Game.RANDOM.nextInt(10);
-        int third = Game.RANDOM.nextInt(10);
-        int fourth = Game.RANDOM.nextInt(10);
-
-        String pass = Integer.toString(first) + second +
-                third + fourth;
-
-        this.setPassword(pass);
-    }
-
-    /**
-     * @return unlock status
-     */
+    // <editor-fold defaultstate="collapsed" desc="Getter">
     public boolean isUnlock()
     {
         return unlock;
     }
+    // </editor-fold>
 
-    /**
-     * @param unlock the unlock to set
-     */
-    public void setUnlock(boolean unlock)
-    {
-        this.unlock = unlock;
-    }
-
+    // <editor-fold defaultstate="collapsed" desc="Public methods">
     public void promtPassword()
     {
+        //todo - delete the below line -> Hide password
         System.out.println(this.password);
+
         System.out.print("Press y to enter password, any character to leave: ");
         boolean enterPass = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
 
@@ -79,9 +38,9 @@ public class Password
 
             do
             {
-                if (userInput.equalsIgnoreCase(this.getPassword()))
+                if (userInput.equals(password))
                 {
-                    this.setUnlock(true);
+                    unlock = true;
                     userInput = "q";
                 }
                 else
@@ -98,7 +57,23 @@ public class Password
     @Override
     public String toString()
     {
-        return this.getPassword();
+        return password;
     }
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="Private Method">
+    private void initialisePassword()
+    {
+        //Choose four random numbers between 0 to 9
+        int first = Game.RANDOM.nextInt(10);
+        int second = Game.RANDOM.nextInt(10);
+        int third = Game.RANDOM.nextInt(10);
+        int fourth = Game.RANDOM.nextInt(10);
+
+        String pass = Integer.toString(first) + second +
+                third + fourth;
+
+        password = pass;
+    }
+    // </editor-fold>
 }

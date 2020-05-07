@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package programming3project;
 
 import java.io.BufferedReader;
@@ -12,11 +7,9 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-/**
- * @author pc
- */
 public class KeyPassword
 {
+    // <editor-fold defaultstate="collapsed" desc="KeyPassword Attributes">
     public static LinkedList<String> SAVEDCODES = new LinkedList<>();
     private KeyPasswordType function;
     private Password lock;
@@ -25,18 +18,22 @@ public class KeyPassword
     private String keyPassword;
     private String beforeQuestion;
     private int order;
+    // </editor-fold>
 
+    // <editor-fold desc="Constructor">
     public KeyPassword(KeyPasswordType function, Password lock, int order, String answer) throws IOException
     {
-        this.setFunction(function);
-        this.setLock(lock);
-        this.setOrder(order);
+        this.function = function;
+        this.lock = lock;
+        this.order = order;
 
         setupHint();
         setupQuestionAndAnswer(answer);
         setupTrivias();
     }
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="Public Methods">
     public static LinkedList<String> getSavedCodes()
     {
         LinkedList<String> copy = new LinkedList<>();
@@ -61,7 +58,7 @@ public class KeyPassword
     public void deleteCode()
     {
         System.out.println("\nYou can only save 2 key passwords!");
-        Game.printSavedKeyPassword(0);
+        Game.printSavedKeyPasswords(0);
 
         boolean isDelete = false;
 
@@ -75,118 +72,6 @@ public class KeyPassword
         }
     }
 
-    /**
-     * @return the answer
-     */
-    public String getAnswer()
-    {
-        return answer;
-    }
-
-    /**
-     * @param answer the answer to set
-     */
-    public void setAnswer(String answer)
-    {
-        this.answer = answer;
-    }
-
-    /**
-     * @return the beforeQuestion
-     */
-    public String getBeforeQuestion()
-    {
-        return beforeQuestion;
-    }
-
-    /**
-     * @param printQuestion the beforeQuestion to set
-     */
-    public void setBeforeQuestion(String printQuestion)
-    {
-        this.beforeQuestion = printQuestion;
-    }
-
-    /**
-     * @return the function
-     */
-    public KeyPasswordType getFunction()
-    {
-        return function;
-    }
-
-    /**
-     * @param function the function to set
-     */
-    public void setFunction(KeyPasswordType function)
-    {
-        this.function = function;
-    }
-
-    /**
-     * @return the keyPassword
-     */
-    public String getHint()
-    {
-        return keyPassword;
-    }
-
-    /**
-     * @param printHint the keyPassword to set
-     */
-    public void setHint(String printHint)
-    {
-        this.keyPassword = printHint;
-    }
-
-    /**
-     * @return the lock
-     */
-    public Password getLock()
-    {
-        return lock;
-    }
-
-    /**
-     * @param lock the lock to set
-     */
-    public void setLock(Password lock)
-    {
-        this.lock = lock;
-    }
-
-    /**
-     * @return the order
-     */
-    public int getOrder()
-    {
-        return order;
-    }
-
-    /**
-     * @param order the order to set
-     */
-    public void setOrder(int order)
-    {
-        this.order = order;
-    }
-
-    /**
-     * @return the question
-     */
-    public String getQuestion()
-    {
-        return question;
-    }
-
-    /**
-     * @param question the question to set
-     */
-    public void setQuestion(String question)
-    {
-        this.question = question;
-    }
-
     public boolean promptAnswer()
     {
         boolean correct = false;
@@ -196,17 +81,17 @@ public class KeyPassword
 
         if (enterPass)
         {
-            System.out.println(this.getBeforeQuestion());
-            System.out.println(this.getQuestion());
+            System.out.println(beforeQuestion);
+            System.out.println(question);
             System.out.print("> ");
             String userInput = Game.SYSTEMINPUT.nextLine();
 
             do
             {
-                if (userInput.equalsIgnoreCase(this.getAnswer()))
+                if (userInput.equalsIgnoreCase(answer))
                 {
                     System.out.println("You are right! Great job!");
-                    System.out.println("Key password: " + this.getHint());
+                    System.out.println("Key password: " + keyPassword);
                     correct = true;
                     userInput = "q";
                 }
@@ -236,7 +121,7 @@ public class KeyPassword
 
             if (SAVEDCODES.size() < 2)
             {
-                SAVEDCODES.add(this.getHint());
+                SAVEDCODES.add(keyPassword);
 
                 try (FileWriter pw = new FileWriter(
                         Game.getCompletePath("PasswordHints.txt")))
@@ -256,21 +141,31 @@ public class KeyPassword
         }
     }
 
-    public void setupHint()
+    @Override
+    public String toString()
+    {
+        return keyPassword;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Public Methods">
+    private void setupHint()
     {
         String aHint = "";
-        if (getFunction() == KeyPasswordType.KEYHEAD)
+
+        if (function == KeyPasswordType.KEYHEAD)
         {
-            aHint = this.getLock().toString().substring(0, 2) + "XX";
+            aHint = lock.toString().substring(0, 2) + "XX";
         }
         else
         {
-            aHint = "XX" + this.getLock().toString().substring(2);
+            aHint = "XX" + lock.toString().substring(2);
         }
-        this.setHint(aHint);
+
+        this.keyPassword = aHint;
     }
 
-    public void setupQuestionAndAnswer(String answer) throws IOException
+    private void setupQuestionAndAnswer(String answer) throws IOException
     {
         BufferedReader br = new BufferedReader(new FileReader(
                 Game.getCompletePath("Questions.txt")));
@@ -278,17 +173,17 @@ public class KeyPassword
 
         while ((line = br.readLine()) != null)
         {
-            if (line.contains(Integer.toString(this.getOrder())))
+            if (line.contains(Integer.toString(order)))
             {
-                this.setQuestion(line.substring(1));
-                this.setAnswer(answer);
+                question = line.substring(1);
+                this.answer = answer;
 
                 break;
             }
         }
     }
 
-    public void setupTrivias() throws IOException
+    private void setupTrivias() throws IOException
     {
         BufferedReader br = new BufferedReader(new FileReader(
                 Game.getCompletePath("BeforeQuestion.txt")));
@@ -297,7 +192,7 @@ public class KeyPassword
 
         while ((line = br.readLine()) != null)
         {
-            if (line.contains(Integer.toString(this.getOrder())))
+            if (line.contains(Integer.toString(order)))
             {
                 while (!(line = br.readLine()).isEmpty())
                 {
@@ -308,12 +203,7 @@ public class KeyPassword
             }
         }
 
-        this.setBeforeQuestion(beforeQuestions);
+        beforeQuestion = beforeQuestions;
     }
-
-    @Override
-    public String toString()
-    {
-        return this.getHint();
-    }
+    // </editor-fold>
 }
