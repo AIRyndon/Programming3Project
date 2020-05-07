@@ -61,7 +61,6 @@ public abstract class Room
         this.lock = lock;
     }
 
-
     public String getName()
     {
         return name;

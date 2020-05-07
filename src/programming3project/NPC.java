@@ -27,12 +27,7 @@ public class NPC extends Person
     {
         return talkedWithPlayer;
     }
-    
-    public void talkedWithPlayer()
-    {
-        talkedWithPlayer = true;
-    }
-    
+
     public NPCLine getNPCLine()
     {
         return NPCLine;
@@ -59,23 +54,22 @@ public class NPC extends Person
         
         if (talk)
         {
+            String firstLine = getNPCLine().getFirstLine();
             if (!getNPCLine().isUnlocked())
             {
-                getNPCLine().getNPC().talkedWithPlayer();
-                System.out.println("\n" + getNPCLine().getFirstLine());
-                
-                getNPCLine().saveNPCLines(getNPCLine().getFirstLine());
+                talkedWithPlayer = true;
+                System.out.println("\n" + firstLine);
+                getNPCLine().saveNPCLines(firstLine);
             }
             else
             {
-                System.out.println("\n" + getNPCLine().getSecondLine());
-                getNPCLine().saveNPCLines(getNPCLine().getSecondLine());
-                
-                //After printing talk 2, talk 2 = talk 1
-                //Player is unable to see talk 2 again
-                getNPCLine().setSecondLine(getNPCLine().getFirstLine());
+                String secondLine = getNPCLine().getSecondLine();
+                System.out.println("\n" + secondLine);
+
+                getNPCLine().saveNPCLines(secondLine);
+                getNPCLine().setSecondLine(firstLine);
             }
-            
+
             return true;
         }
         

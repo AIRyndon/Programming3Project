@@ -24,7 +24,9 @@ public final class NPCLine
         this.npc = npc;
         readNPCLines();
     }
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="Getter and Setter methods">
     public String getFirstLine()
     {
         return firstLine;
@@ -34,17 +36,20 @@ public final class NPCLine
     {
         return secondLine;
     }
-    // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Getter methods">
+    public void setSecondLine(String secondLine)
+    {
+        this.secondLine = secondLine;
+    }
+
     public boolean isUnlocked()
     {
         return unlocked;
     }
 
-    public NPC getNPC()
+    public void unlock()
     {
-        return npc;
+        this.unlocked = true;
     }
     // </editor-fold>
 
@@ -60,53 +65,6 @@ public final class NPCLine
         }
 
         return copy;
-    }
-
-    public void setFirstLine(String firstLine)
-    {
-        this.firstLine = firstLine;
-    }
-
-    public void setSecondLine(String secondLine)
-    {
-        this.secondLine = secondLine;
-    }
-
-    public boolean talk() throws IOException
-    {
-        //Ask if player wants to talk
-        System.out.print("Press y then enter to get some information, any character to ignore: ");
-
-        boolean talk = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
-
-        if (talk)
-        {
-            if (!isUnlocked())
-            {
-                npc.talkedWithPlayer();
-                System.out.println("\n" + firstLine);
-
-                saveNPCLines(firstLine);
-            }
-            else
-            {
-                System.out.println("\n" + secondLine);
-                saveNPCLines(secondLine);
-
-                //After printing talk 2, talk 2 = talk 1
-                //Player is unable to see talk 2 again
-                secondLine = firstLine;
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    public void unlock()
-    {
-        this.unlocked = true;
     }
     // </editor-fold>
 
