@@ -18,9 +18,9 @@ public class Game
     private final Story story = new Story();
     private final Ground ground = new Ground("Ground", null, new NPCSpawnBoundary(7, 20), new NPCSpawnBoundary(35, 50));
     private final House house = new House("House", ground);
-    private final RoomMaid roomMaid = new RoomMaid("Maid's Room", house, new NPCSpawnBoundary(2, 6), new NPCSpawnBoundary(20, 45));
-    private final RoomButler roomButler = new RoomButler("Butler's Room", house, new NPCSpawnBoundary(2, 6), new NPCSpawnBoundary(20, 45));
-    private final RoomWife roomWife = new RoomWife("Wife's Room", house, new NPCSpawnBoundary(5, 12), new NPCSpawnBoundary(15, 45));
+    private final RoomMaid roomMaid = new RoomMaid("Maid's Room", house, new NPCSpawnBoundary(2, 4), new NPCSpawnBoundary(20, 45));
+    private final RoomButler roomButler = new RoomButler("Butler's Room", house, new NPCSpawnBoundary(2, 4), new NPCSpawnBoundary(20, 45));
+    private final RoomWife roomWife = new RoomWife("Wife's Room", house, new NPCSpawnBoundary(5, 10), new NPCSpawnBoundary(15, 45));
     private final RoomWorking roomWorking = new RoomWorking("Work Room", house, new NPCSpawnBoundary(2, 5), new NPCSpawnBoundary(25, 45));
     private final Victim victim = new Victim("Bosh", "President of KPI Cooperation",
             55, 'M', "His working room");
