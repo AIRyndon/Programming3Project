@@ -8,7 +8,7 @@ public abstract class Person
     private int age;
     // </editor-fold>
     
-    // <editor-fold defaultstate="collapsed" desc="Constructor">
+    // <editor-fold desc="Constructor">
     public Person(String name, char gender, int age)
     {
         this.name = name;
@@ -17,7 +17,7 @@ public abstract class Person
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Getting methods">
+    // <editor-fold defaultstate="collapsed" desc="Getter methods">
     public String getName()
     {
         return name;

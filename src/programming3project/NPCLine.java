@@ -26,7 +26,7 @@ public final class NPCLine
         unlocked = false;
         
         setNPC(npc);
-        ReadNPCLines();
+        readNPCLines();
     }
     // </editor-fold>
 
@@ -85,34 +85,7 @@ public final class NPCLine
         
         return copy;
     }
-    
-    public void ReadNPCLines() throws IOException
-    {
-        BufferedReader br = new BufferedReader(new FileReader(
-                Game.getCompletePath(getNPC().getRole() + ".txt")));
 
-        String line;
-
-        while ((line = br.readLine()) != null)
-        {
-            if (!line.isEmpty())
-            {
-                setFirstLine(getFirstLine() + line + '\n');
-            } 
-            else
-            {
-                secondLine += line;
-
-                while ((line = br.readLine()) != null)
-                {
-                    setSecondLine(getSecondLine() + line + '\n');
-                }
-
-                break;
-            }
-        }
-    }
-    
     public boolean talk() throws IOException
     {
         //Ask if player wants to talk
@@ -124,7 +97,7 @@ public final class NPCLine
         {
             if (!isUnlocked())
             {
-                getNPC().talkedWithPlayer();
+                npc.talkedWithPlayer();
                 System.out.println("\n" + getFirstLine());
                 
                 saveNPCLines(getFirstLine());
@@ -152,6 +125,33 @@ public final class NPCLine
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Private Methods">
+    private void readNPCLines() throws IOException
+    {
+        BufferedReader br = new BufferedReader(new FileReader(
+                Game.getCompletePath(npc.getRole() + ".txt")));
+
+        String line;
+
+        while ((line = br.readLine()) != null)
+        {
+            if (!line.isEmpty())
+            {
+                setFirstLine(getFirstLine() + line + '\n');
+            }
+            else
+            {
+                secondLine += line;
+
+                while ((line = br.readLine()) != null)
+                {
+                    setSecondLine(getSecondLine() + line + '\n');
+                }
+
+                break;
+            }
+        }
+    }
+
     private void saveNPCLines(String conversation)
     {
         System.out.print("Do you want to save this conversations (y)? ");

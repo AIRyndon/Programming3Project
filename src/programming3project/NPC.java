@@ -51,13 +51,13 @@ public class NPC extends Person
     
     // <editor-fold defaultstate="collapsed" desc="Public Methods">
     public void tryToPlaceHint(Room room, String name, String description,
-            int xCoord, int yCoord)
+            int row, int col)
     {
         if (getNPCLine().isUnlocked() && !placedHint)
         {
             placedHint = true;
-            room.hints.add(new Hint(name, description, xCoord, yCoord));
-            room.movingArea[xCoord][yCoord] = 'X';
+            room.hints.add(new Hint(name, description, row, col));
+            room.movingArea[row][col] = 'X';
             
             System.out.println("\nHey! An item popped up somewhere..."
                     + " maybe it can help you with this case.");
