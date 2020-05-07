@@ -50,6 +50,38 @@ public class NPC extends Person
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Public Methods">
+    public boolean talk() throws IOException
+    {
+        //Ask if player wants to talk
+        System.out.print("Press y then enter to get some information, any character to ignore: ");
+        
+        boolean talk = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
+        
+        if (talk)
+        {
+            if (!getNPCLine().isUnlocked())
+            {
+                getNPCLine().getNPC().talkedWithPlayer();
+                System.out.println("\n" + getNPCLine().getFirstLine());
+                
+                getNPCLine().saveNPCLines(getNPCLine().getFirstLine());
+            }
+            else
+            {
+                System.out.println("\n" + getNPCLine().getSecondLine());
+                getNPCLine().saveNPCLines(getNPCLine().getSecondLine());
+                
+                //After printing talk 2, talk 2 = talk 1
+                //Player is unable to see talk 2 again
+                getNPCLine().setSecondLine(getNPCLine().getFirstLine());
+            }
+            
+            return true;
+        }
+        
+        return false;
+    }
+    
     public void tryToPlaceHint(Room room, String name, String description,
             int xCoord, int yCoord)
     {

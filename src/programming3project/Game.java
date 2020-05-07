@@ -248,7 +248,7 @@ public class Game
             case 'B':
             {
                 System.out.println(butler.toString());
-                boolean playerOpenedTalk = butler.getNPCLine().talk();
+                boolean playerOpenedTalk = butler.talk();
                 
                 if (playerOpenedTalk)
                 {
@@ -262,7 +262,7 @@ public class Game
             case 'W':
             {
                 System.out.println(wife.toString());
-                boolean playerOpenedTalk = wife.getNPCLine().talk();
+                boolean playerOpenedTalk = wife.talk();
                 
                 if (playerOpenedTalk)
                 {
@@ -276,7 +276,7 @@ public class Game
             case 'A':
             {
                 System.out.println(assistant.toString());
-                boolean playerOpenedTalk = assistant.getNPCLine().talk();
+                boolean playerOpenedTalk = assistant.talk();
                 
                 if (playerOpenedTalk)
                 {
@@ -289,7 +289,7 @@ public class Game
             case 'M':
             {
                 System.out.println(maid.toString());
-                boolean playerOpenedTalk = maid.getNPCLine().talk();
+                boolean playerOpenedTalk = maid.talk();
                 
                 if (playerOpenedTalk)
                 {
@@ -302,7 +302,7 @@ public class Game
             case 'D':
             {
                 System.out.println(daughter.toString());
-                boolean playerOpenedTalk = daughter.getNPCLine().talk();
+                boolean playerOpenedTalk = daughter.talk();
                 
                 if (playerOpenedTalk)
                 {
