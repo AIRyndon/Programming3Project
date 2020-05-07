@@ -26,7 +26,7 @@ public final class NPCLine
         unlocked = false;
         
         setNPC(npc);
-        ReadNPCLines();
+        readNPCLines();
     }
     // </editor-fold>
 
@@ -85,12 +85,54 @@ public final class NPCLine
         
         return copy;
     }
+
+<<<<<<< HEAD
+=======
+    public boolean talk() throws IOException
+    {
+        //Ask if player wants to talk
+        System.out.print("Press y then enter to get some information, any character to ignore: ");
+        
+        boolean talk = "y".equalsIgnoreCase(Game.SYSTEMINPUT.nextLine());
+        
+        if (talk)
+        {
+            if (!isUnlocked())
+            {
+                npc.talkedWithPlayer();
+                System.out.println("\n" + getFirstLine());
+                
+                saveNPCLines(getFirstLine());
+            }
+            else
+            {
+                System.out.println("\n" + getSecondLine());
+                saveNPCLines(getSecondLine());
+                
+                //After printing talk 2, talk 2 = talk 1
+                //Player is unable to see talk 2 again
+                this.setSecondLine(getFirstLine());
+            }
+            
+            return true;
+        }
+        
+        return false;
+    }
     
-    public void ReadNPCLines() throws IOException
+    public void unlock()
+    {
+        setUnlocked(true);
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Private Methods">
+    private void readNPCLines() throws IOException
     {
         BufferedReader br = new BufferedReader(new FileReader(
-                Game.getCompletePath(getNPC().getRole() + ".txt")));
+                Game.getCompletePath(npc.getRole() + ".txt")));
 
+>>>>>>> da20b8509c4a2898bda506c077bd14069b867ad2
         String line;
 
         while ((line = br.readLine()) != null)
@@ -98,7 +140,11 @@ public final class NPCLine
             if (!line.isEmpty())
             {
                 setFirstLine(getFirstLine() + line + '\n');
+<<<<<<< HEAD
             } 
+=======
+            }
+>>>>>>> da20b8509c4a2898bda506c077bd14069b867ad2
             else
             {
                 secondLine += line;
@@ -112,8 +158,13 @@ public final class NPCLine
             }
         }
     }
+<<<<<<< HEAD
     
     public void saveNPCLines(String conversation)
+=======
+
+    private void saveNPCLines(String conversation)
+>>>>>>> da20b8509c4a2898bda506c077bd14069b867ad2
     {
         System.out.print("Do you want to save this conversations (y)? ");
         

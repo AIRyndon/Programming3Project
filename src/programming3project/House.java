@@ -5,7 +5,7 @@ public class House extends Room
     // <editor-fold defaultstate="collapsed" desc="Constructor">
     public House(String name, Room previous)
     {
-        super(previous);
+        super(previous, null, null);
         setName(name);
         setHeight(20);
         setWidth(52);
@@ -18,7 +18,7 @@ public class House extends Room
     protected void initializeMovingArea()
     {
         super.initializeMovingArea();
-        
+
         //Inside the house
         for (int i = 0; i < getHeight() - 1; i++)
         {
@@ -47,7 +47,7 @@ public class House extends Room
                         {
                             movingArea[i][j] = '_';
                         }
-                        
+
                         //Kitchen
                         movingArea[i][getWidth() / 2 - 3] = '/';
                         movingArea[i][getWidth() / 2 + 11] = 'K';
@@ -58,14 +58,15 @@ public class House extends Room
                         movingArea[i][getWidth() / 2 + 16] = 'E';
                         movingArea[i][getWidth() / 2 + 17] = 'N';
                         movingArea[i][getWidth() - 1] = '=';
-                        
+
                     }
                     else if (i == 5)
                     {
                         if ((j >= 1 && j <= getWidth() / 2 - 4) || (j >= getWidth() / 2 + 11 && j < getWidth() - 1))
                         {
                             movingArea[i][j] = '_';
-                        } else
+                        }
+                        else
                         {
                             movingArea[i][getWidth() / 2 - 3] = '/';
                         }
@@ -87,7 +88,7 @@ public class House extends Room
                         movingArea[i][16] = 'O';
                         movingArea[i][17] = 'M';
                     }
-                    
+
                     if (j == getWidth() / 2 - 3 || j == getWidth() / 2 + 3)
                     {
                         movingArea[i][j] = '|';
@@ -109,10 +110,10 @@ public class House extends Room
                         movingArea[i][14] = 'O';
                         movingArea[i][15] = 'O';
                         movingArea[i][16] = 'M';
-                        
+
                         //Door
                         movingArea[i][getWidth() / 2 - 3] = '/';
-                        
+
                         //Living room
                         movingArea[i][getWidth() / 2 + 6] = 'L';
                         movingArea[i][getWidth() / 2 + 7] = 'I';
@@ -131,7 +132,7 @@ public class House extends Room
                         {
                             movingArea[i][j] = '_';
                         }
-                        
+
                         movingArea[i][getWidth() / 2 - 3] = '|';
                         movingArea[i][getWidth() / 2 - 2] = '/';
                     }
@@ -159,10 +160,10 @@ public class House extends Room
                     movingArea[i][6] = 'K';
                     movingArea[i][7] = 'E';
                     movingArea[i][8] = 'D';
-                    
+
                     //Locked door
                     movingArea[i][12] = '#';
-                    
+
                     //Working room
                     movingArea[i][getWidth() / 2 - 6] = 'W';
                     movingArea[i][getWidth() / 2 - 5] = 'O';
@@ -171,7 +172,7 @@ public class House extends Room
                     movingArea[i][getWidth() / 2 - 2] = 'I';
                     movingArea[i][getWidth() / 2 - 1] = 'N';
                     movingArea[i][getWidth() / 2] = 'G';
-                    
+
                     //Book room
                     movingArea[i][getWidth() / 2 + 9] = '|';
                     movingArea[i][getWidth() / 2 + 10] = 'B';
@@ -184,16 +185,16 @@ public class House extends Room
                     movingArea[i][5] = 'R';
                     movingArea[i][6] = 'E';
                     movingArea[i][7] = 'A';
-                    
+
                     //Wall
                     movingArea[i][12] = '|';
-                    
+
                     //Working room
                     movingArea[i][getWidth() / 2 - 4] = 'R';
                     movingArea[i][getWidth() / 2 - 3] = 'O';
                     movingArea[i][getWidth() / 2 - 2] = 'O';
                     movingArea[i][getWidth() / 2 - 1] = 'M';
-                    
+
                     //Book room
                     movingArea[i][getWidth() / 2 + 9] = '/';
                     movingArea[i][getWidth() / 2 + 10] = 'O';
@@ -204,7 +205,7 @@ public class House extends Room
                 {
                     //Wall
                     movingArea[i][12] = '|';
-                    
+
                     //Book room
                     movingArea[i][getWidth() / 2 + 9] = '|';
                     movingArea[i][getWidth() / 2 + 10] = 'K';
@@ -220,11 +221,11 @@ public class House extends Room
                 }
             }
         }
-        
+
         //KeyPassword position
         movingArea[1][50] = '$';
     }
-  
+
     @Override
     protected void printWall()
     {
@@ -240,7 +241,7 @@ public class House extends Room
                 System.out.print("_");
             }
         }
-        
+
         System.out.println();
     }
     // </editor-fold>

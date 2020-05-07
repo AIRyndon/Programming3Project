@@ -8,7 +8,7 @@ import java.util.LinkedList;
 
 public class Hint implements Cloneable
 {
-    // <editor-fold desc="Hint Attributes">
+    // <editor-fold defaultstate="collapsed" desc="Hint Attributes">
     public static LinkedList<Hint> SAVEDHINTS = new LinkedList<>();
     private String name;
     private String description;
@@ -26,12 +26,7 @@ public class Hint implements Cloneable
     }
     // </editor-fold>
 
-    // <editor-fold desc="Getting Methods">
-    public String getDescription()
-    {
-        return description;
-    }
-    
+    // <editor-fold desc="Getter Methods">
     public String getName()
     {
         return name;
@@ -131,7 +126,7 @@ public class Hint implements Cloneable
     public String toString()
     {
         return "\nItem name: " + getName()
-                + "\nItem description: " + getDescription();
+                + "\nItem description: " + description;
     }
     // </editor-fold>
 }

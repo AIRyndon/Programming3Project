@@ -20,7 +20,7 @@ public class KeyPassword
     private int order;
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Constructor">
+    // <editor-fold desc="Constructor">
     public KeyPassword(KeyPasswordType function, Password lock, int order, String answer) throws IOException
     {
         this.setFunction(function);
@@ -34,16 +34,6 @@ public class KeyPassword
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Getters and Setters">
-    public String getAnswer()
-    {
-        return answer;
-    }
-    
-    public void setAnswer(String answer)
-    {
-        this.answer = answer;
-    }
-    
     public String getBeforeQuestion()
     {
         return beforeQuestion;
@@ -160,7 +150,7 @@ public class KeyPassword
             
             do
             {
-                if (userInput.equalsIgnoreCase(this.getAnswer()))
+                if (userInput.equalsIgnoreCase(answer))
                 {
                     System.out.println("You are right! Great job!");
                     System.out.println("Key password: " + this.getHint());
@@ -241,7 +231,7 @@ public class KeyPassword
             if (line.contains(Integer.toString(this.getOrder())))
             {
                 this.setQuestion(line.substring(1));
-                this.setAnswer(answer);
+                this.answer = answer;
                 
                 break;
             }
