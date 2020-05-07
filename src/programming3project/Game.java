@@ -254,13 +254,8 @@ public class Game
             case 'B':
             {
                 System.out.println(butler.toString());
-<<<<<<< HEAD
                 boolean playerOpenedTalk = butler.talk();
-                
-=======
-                boolean playerOpenedTalk = butler.getNPCLine().talk();
 
->>>>>>> da20b8509c4a2898bda506c077bd14069b867ad2
                 if (playerOpenedTalk)
                 {
                     unlockNPC = butler.getUnlockNPC();
@@ -273,13 +268,9 @@ public class Game
             case 'W':
             {
                 System.out.println(wife.toString());
-<<<<<<< HEAD
                 boolean playerOpenedTalk = wife.talk();
-                
-=======
-                boolean playerOpenedTalk = wife.getNPCLine().talk();
 
->>>>>>> da20b8509c4a2898bda506c077bd14069b867ad2
+
                 if (playerOpenedTalk)
                 {
                     unlockNPC = wife.getUnlockNPC();
@@ -292,13 +283,8 @@ public class Game
             case 'A':
             {
                 System.out.println(assistant.toString());
-<<<<<<< HEAD
                 boolean playerOpenedTalk = assistant.talk();
-                
-=======
-                boolean playerOpenedTalk = assistant.getNPCLine().talk();
 
->>>>>>> da20b8509c4a2898bda506c077bd14069b867ad2
                 if (playerOpenedTalk)
                 {
                     unlockNPC = assistant.getUnlockNPC();
@@ -310,13 +296,9 @@ public class Game
             case 'M':
             {
                 System.out.println(maid.toString());
-<<<<<<< HEAD
-                boolean playerOpenedTalk = maid.talk();
-                
-=======
-                boolean playerOpenedTalk = maid.getNPCLine().talk();
 
->>>>>>> da20b8509c4a2898bda506c077bd14069b867ad2
+                boolean playerOpenedTalk = maid.talk();
+
                 if (playerOpenedTalk)
                 {
                     unlockNPC = maid.getUnlockNPC();
@@ -328,13 +310,8 @@ public class Game
             case 'D':
             {
                 System.out.println(daughter.toString());
-<<<<<<< HEAD
                 boolean playerOpenedTalk = daughter.talk();
-                
-=======
-                boolean playerOpenedTalk = daughter.getNPCLine().talk();
 
->>>>>>> da20b8509c4a2898bda506c077bd14069b867ad2
                 if (playerOpenedTalk)
                 {
                     unlockNPC = daughter.getUnlockNPC();
