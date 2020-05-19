@@ -1,4 +1,4 @@
-package programming3project;
+package cui_project;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

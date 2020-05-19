@@ -1,4 +1,4 @@
-package programming3project;
+package cui_project;
 
 /**
  * This class makes sure an NPC won't randomly spawn in the wrong place

@@ -1,6 +1,6 @@
-package programming3project;
+package cui_project;
 
-public class RoomMaid extends Room
+public class RoomButler extends Room
 {
     // <editor-fold defaultstate="collapsed" desc="Constructor">
     /**
@@ -9,7 +9,7 @@ public class RoomMaid extends Room
      * @param rowBoundary the row boundary of NPCs in this room
      * @param colBoundary the column boundary of NPCs in this room
      */
-    public RoomMaid(String name, Room previous, NPCSpawnBoundary rowBoundary, NPCSpawnBoundary colBoundary)
+    public RoomButler(String name, Room previous, NPCSpawnBoundary rowBoundary, NPCSpawnBoundary colBoundary)
     {
         super(previous, rowBoundary, colBoundary);
         setName(name);
@@ -20,13 +20,15 @@ public class RoomMaid extends Room
     }
     // </editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc="Protected Methods">
+    // <editor-fold defaultstate="collapsed" desc="Protected Methods">
     @Override
     protected void initializeMovingArea()
     {
         super.initializeMovingArea();
         addBed();
-        positionNPC('M');
+        movingArea[2][1] = '0';
+
+        positionNPC('A');
     }
-//</editor-fold>
+    // </editor-fold>
 }
