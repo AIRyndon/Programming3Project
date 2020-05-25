@@ -7,19 +7,19 @@ package gui_project.View;
 
 import gui_project.ModelController.DetectiveController;
 import gui_project.ModelController.MainController;
-import gui_project.ModelController.NPC;
 import gui_project.ModelController.NPCController;
 import gui_project.ModelController.RoomController;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 /**
  *
  * @author Angelo
  */
-public class RoomView extends javax.swing.JPanel
+public class RoomView extends javax.swing.JPanel implements ComponentListener
 {
-
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final NPCController butlerCtrl;
@@ -32,12 +32,15 @@ public class RoomView extends javax.swing.JPanel
             DetectiveController detectiveCtrl,
             NPCController butlerCtrl,
             RoomController roomCtrl)
-    {
+    {     
         this.mainCtrl = mainCtrl;
         this.detectiveCtrl = detectiveCtrl;
         this.butlerCtrl = butlerCtrl;
         this.roomCtrl = roomCtrl;
+        
         initComponents();
+        addComponentListener(this);
+        setFocusable(true);
     }
 
     @Override
@@ -51,6 +54,30 @@ public class RoomView extends javax.swing.JPanel
         butlerCtrl.draw(g2);
     }
 
+    @Override
+    public void componentShown(ComponentEvent e)
+    {
+       requestFocusInWindow();
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent e)
+    {
+        
+    }
+
+    @Override
+    public void componentResized(ComponentEvent e)
+    {
+        
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent e)
+    {
+       
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -64,7 +91,6 @@ public class RoomView extends javax.swing.JPanel
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(204, 255, 102));
         setName("RoomOne"); // NOI18N
         addKeyListener(new java.awt.event.KeyAdapter()
         {
@@ -115,4 +141,5 @@ public class RoomView extends javax.swing.JPanel
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+ 
 }

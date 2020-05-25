@@ -8,12 +8,14 @@ package gui_project.View;
 import gui_project.ModelController.*;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 /**
  *
  * @author Angelo
  */
-public class RoomTwoView extends javax.swing.JPanel
+public class RoomTwoView extends javax.swing.JPanel implements ComponentListener
 {
 
     private final MainController mainCtrl;
@@ -38,6 +40,8 @@ public class RoomTwoView extends javax.swing.JPanel
         //our view should also implement Observer Interfaces if it needs data
         //from a model
         initComponents();
+        addComponentListener(this);
+        setFocusable(true);
     }
 
     @Override
@@ -50,6 +54,29 @@ public class RoomTwoView extends javax.swing.JPanel
         wifeCtrl.draw(g2);
     }
 
+    @Override
+    public void componentShown(ComponentEvent e)
+    {
+        requestFocusInWindow();
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent e)
+    {
+    }
+    
+    @Override
+    public void componentResized(ComponentEvent e)
+    {
+        
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent e)
+    {
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -63,7 +90,6 @@ public class RoomTwoView extends javax.swing.JPanel
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(255, 51, 51));
         setName("RoomTwo"); // NOI18N
         addKeyListener(new java.awt.event.KeyAdapter()
         {
@@ -99,11 +125,13 @@ public class RoomTwoView extends javax.swing.JPanel
 
     private void formKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyPressed
     {//GEN-HEADEREND:event_formKeyPressed
+        detectiveCtrl.keyPressed(evt);
         repaint();
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyReleased
     {//GEN-HEADEREND:event_formKeyReleased
+        detectiveCtrl.keyPressed(evt);
         repaint();
     }//GEN-LAST:event_formKeyReleased
 
@@ -111,4 +139,5 @@ public class RoomTwoView extends javax.swing.JPanel
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+
 }
