@@ -15,6 +15,40 @@ import java.util.ArrayList;
 public class BaseModel
 {
     private ArrayList<BaseObserver> observers = new ArrayList<>();
+    private int locationY;
+    private int locationX;
+     
+       /**
+     * @return the locationY
+     */
+    public int getLocationY()
+    {
+        return locationY;
+    }
+
+    /**
+     * @param locationY the locationY to set
+     */
+    void setLocationY(int locationY)
+    {
+        this.locationY = locationY;
+    }
+
+    /**
+     * @return the locationX
+     */
+    public int getLocationX()
+    {
+        return locationX;
+    }
+
+    /**
+     * @param locationX the locationX to set
+     */
+    void setLocationX(int locationX)
+    {
+        this.locationX = locationX;
+    }
 
     public void registerObserver(BaseObserver obs)
     {

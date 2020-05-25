@@ -5,6 +5,10 @@
  */
 package gui_project.View;
 
+import gui_project.ModelController.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 /**
  *
  * @author Angelo
@@ -12,16 +16,38 @@ package gui_project.View;
 public class RoomTwoView extends javax.swing.JPanel
 {
 
+    private final MainController mainCtrl;
+    private final DetectiveController detectiveCtrl;
+    private final NPCController wifeCtrl;
+    private final RoomTwoController roomCtrl;
+
     /**
      * Creates new form RoomTwoView
      */
-    public RoomTwoView()
+    public RoomTwoView(MainController mainCtrl,
+            DetectiveController detectiveCtrl,
+            NPCController wifeCtrl,
+            RoomTwoController roomCtrl)
     {
-        //we should have access to a controller here - pass it via constructor
-        
+
+        this.mainCtrl = mainCtrl;
+        this.detectiveCtrl = detectiveCtrl;
+        this.wifeCtrl = wifeCtrl;
+        this.roomCtrl = roomCtrl;
+
         //our view should also implement Observer Interfaces if it needs data
         //from a model
         initComponents();
+    }
+
+    @Override
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
+
+        Graphics2D g2 = (Graphics2D) g;
+        detectiveCtrl.draw(g2);
+        wifeCtrl.draw(g2);
     }
 
     /**
@@ -39,6 +65,17 @@ public class RoomTwoView extends javax.swing.JPanel
 
         setBackground(new java.awt.Color(255, 51, 51));
         setName("RoomTwo"); // NOI18N
+        addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt)
+            {
+                formKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt)
+            {
+                formKeyReleased(evt);
+            }
+        });
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton1.setText("jButton1");
@@ -57,9 +94,18 @@ public class RoomTwoView extends javax.swing.JPanel
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
     {//GEN-HEADEREND:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        mainCtrl.showPanel("RoomOne");
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void formKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyPressed
+    {//GEN-HEADEREND:event_formKeyPressed
+        repaint();
+    }//GEN-LAST:event_formKeyPressed
+
+    private void formKeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyReleased
+    {//GEN-HEADEREND:event_formKeyReleased
+        repaint();
+    }//GEN-LAST:event_formKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

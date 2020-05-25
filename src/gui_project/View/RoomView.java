@@ -5,6 +5,14 @@
  */
 package gui_project.View;
 
+import gui_project.ModelController.DetectiveController;
+import gui_project.ModelController.MainController;
+import gui_project.ModelController.NPC;
+import gui_project.ModelController.NPCController;
+import gui_project.ModelController.RoomController;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 /**
  *
  * @author Angelo
@@ -12,12 +20,35 @@ package gui_project.View;
 public class RoomView extends javax.swing.JPanel
 {
 
+    private final MainController mainCtrl;
+    private final DetectiveController detectiveCtrl;
+    private final NPCController butlerCtrl;
+    private final RoomController roomCtrl;
+
     /**
      * Creates new form RoomView
      */
-    public RoomView()
+    public RoomView(MainController mainCtrl,
+            DetectiveController detectiveCtrl,
+            NPCController butlerCtrl,
+            RoomController roomCtrl)
     {
+        this.mainCtrl = mainCtrl;
+        this.detectiveCtrl = detectiveCtrl;
+        this.butlerCtrl = butlerCtrl;
+        this.roomCtrl = roomCtrl;
         initComponents();
+    }
+
+    @Override
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
+        
+        Graphics2D g2 = (Graphics2D) g;
+        
+        detectiveCtrl.draw(g2);
+        butlerCtrl.draw(g2);
     }
 
     /**
@@ -35,14 +66,49 @@ public class RoomView extends javax.swing.JPanel
 
         setBackground(new java.awt.Color(204, 255, 102));
         setName("RoomOne"); // NOI18N
+        addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt)
+            {
+                formKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt)
+            {
+                formKeyReleased(evt);
+            }
+        });
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButton1ActionPerformed(evt);
+            }
+        });
         add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, -1, -1));
 
         jLabel1.setText("jLabel1");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 150, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyPressed
+    {//GEN-HEADEREND:event_formKeyPressed
+        detectiveCtrl.keyPressed(evt);
+        repaint();
+    }//GEN-LAST:event_formKeyPressed
+
+    private void formKeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyReleased
+    {//GEN-HEADEREND:event_formKeyReleased
+        detectiveCtrl.keyPressed(evt);
+        repaint();
+    }//GEN-LAST:event_formKeyReleased
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
+    {//GEN-HEADEREND:event_jButton1ActionPerformed
+        mainCtrl.showPanel("RoomTwo");
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

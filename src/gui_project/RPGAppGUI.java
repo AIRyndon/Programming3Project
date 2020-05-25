@@ -5,11 +5,8 @@
  */
 package gui_project;
 
-import gui_project.ModelController.BaseController;
-import gui_project.View.MainView;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import gui_project.ModelController.Detective;
+import gui_project.ModelController.MainController;
 
 /**
  *
@@ -17,20 +14,15 @@ import java.util.logging.Logger;
  */
 public class RPGAppGUI
 {
-     public static void main(String args[])
+
+    public static void main(String args[])
     {
         java.awt.EventQueue.invokeLater(new Runnable()
         {
-            public void run() 
+            public void run()
             {
-                try 
-                {
-                    new BaseController();
-                } 
-                catch (IOException ex) 
-                {
-                    Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                Detective detective = new Detective();
+                new MainController(detective);
             }
         });
     }

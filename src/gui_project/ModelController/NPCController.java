@@ -5,6 +5,9 @@
  */
 package gui_project.ModelController;
 
+import gui_project.View.NPCView;
+import java.awt.Graphics2D;
+
 /**
  *
  * @author Angelo
@@ -12,11 +15,17 @@ package gui_project.ModelController;
 public class NPCController
 {
     private final NPC npc;
+    private final NPCView view;
 
     public NPCController(NPC npc)
     {
         this.npc = npc;
+        view = new NPCView(npc, this);
+    }
 
+    public void draw(Graphics2D graphics2D)
+    {
+        view.draw(graphics2D, npc.getRole());
     }
 
     public void setLocationX(int locationX)

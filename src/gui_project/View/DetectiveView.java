@@ -3,23 +3,24 @@ package gui_project.View;
 import gui_project.ModelController.BaseObserver;
 import gui_project.ModelController.Detective;
 import gui_project.ModelController.DetectiveController;
+import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
-public class DetectiveView extends NPCView implements BaseObserver
+public class DetectiveView implements BaseObserver
 {
-    private DetectiveController controller;
     private Detective detective;
+    private DetectiveController controller;
 
     public DetectiveView(Detective detective, DetectiveController controller)
     {
-        super(detective,controller);
         this.controller = controller;
         this.detective = detective;
-        detective.registerObserver(this);
+        detective.registerObserver((BaseObserver) this);
     }
 
     @Override
@@ -27,13 +28,12 @@ public class DetectiveView extends NPCView implements BaseObserver
     {
         controller.setLocationX(detective.getLocationX() + detective.getVelX());
         controller.setLocationY(detective.getLocationY() + detective.getVelY());
-        checkCollisions();
     }
 
     public void draw(Graphics2D graphics2D)
     {
-        graphics2D.drawImage(getPlayerImage(), npc.getLocationX(), npc.getLocationY(), null);
-    }   
+        graphics2D.drawImage(getPlayerImage(), detective.getLocationX(), detective.getLocationY(), null);
+    }
 
     public Image getPlayerImage()
     {
@@ -49,80 +49,34 @@ public class DetectiveView extends NPCView implements BaseObserver
     {
         int key = e.getKeyCode();
 
-        if (npc.getLocationX() <= 20 || npc.getLocationX() >= 560 || npc.getLocationY() <= 20 || npc.getLocationY() >= 420
-                || getBound().intersects(GroundView.dogHouse.getBound()))
-        {
-            System.out.println("No move");
-
-            switch (key)
-            {
-                case KeyEvent.VK_W:
-                    controller.setVelY(detective.getVelY() + 10);
-                    break;
-                case KeyEvent.VK_S:
-                    controller.setVelY(detective.getVelY() - 10);
-                    break;
-                case KeyEvent.VK_A:
-                    controller.setVelX(detective.getVelX() + 10);
-                    break;
-                case KeyEvent.VK_D:
-                    controller.setVelX(detective.getVelX() - 10);
-                    break;
-                default:
-                    break;
-            }
-        } else if (key == KeyEvent.VK_W)
-        {
-            controller.setVelY(-(detective.getSpeed()));
-        } else if (key == KeyEvent.VK_S)
-        {
-            controller.setVelY(detective.getSpeed());
-        } else if (key == KeyEvent.VK_A)
-        {
-            controller.setVelX(-(detective.getSpeed()));
-        } else if (key == KeyEvent.VK_D)
-        {
-            controller.setVelX(detective.getSpeed());
-        }
-    }
-
-    public void keyReleased(KeyEvent e)
-    {
-        int key = e.getKeyCode();
-
         switch (key)
         {
             case KeyEvent.VK_W:
-                controller.setVelY(0);
+                controller.setVelY(-(detective.getSpeed()));
                 break;
             case KeyEvent.VK_S:
-                controller.setVelY(0);
+                controller.setVelY(detective.getSpeed());
                 break;
             case KeyEvent.VK_A:
-                controller.setVelX(0);
+                controller.setVelX(-(detective.getSpeed()));
                 break;
             case KeyEvent.VK_D:
-                controller.setVelX(0);
+                controller.setVelX(detective.getSpeed());
                 break;
             default:
                 break;
         }
     }
 
-    public void checkCollisions()
+    public void keyReleased(KeyEvent e)
     {
-        if (getBound().intersects(GroundView.butler.getBound()))
-        {
-            GroundView.butler.npcController.setHasTalked(true);
-        } else if (getBound().intersects(GroundView.hint.getBound()))
-        {
-            GroundView.dogHouse.setLock(true);
-        }
+        controller.setVelY(0);
+        controller.setVelX(0);
     }
 
     public Rectangle getBound()
     {
-        return new Rectangle(npc.getLocationX(), npc.getLocationY(),
+        return new Rectangle(detective.getLocationX(), detective.getLocationY(),
                 getPlayerImage().getWidth(null), getPlayerImage().getHeight(null));
     }
 }

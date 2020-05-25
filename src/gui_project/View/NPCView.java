@@ -7,20 +7,15 @@ import java.awt.Rectangle;
 
 public class NPCView 
 {
-    protected NPC npc;
-    protected NPCController npcController;
+    private final NPC npc;
+    private final NPCController npcController;
       
     public NPCView(NPC npc,NPCController controller) 
     {
         this.npc = npc;
         npcController = controller;
     }
-
-    public void update() 
-    {
-        
-    }
-
+    
     public void draw(Graphics2D graphics2D,String symbol) 
     {
         graphics2D.drawString(symbol, npc.getLocationX(), npc.getLocationY());

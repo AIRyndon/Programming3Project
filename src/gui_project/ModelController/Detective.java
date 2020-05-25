@@ -9,9 +9,8 @@ package gui_project.ModelController;
  *
  * @author Angelo
  */
-public class Detective extends NPC
+public class Detective extends BaseModel
 {
-
     private int velX = 0;
     private int velY = 0;
     private int speed = 5;
@@ -54,6 +53,7 @@ public class Detective extends NPC
     void setVelX(int velX)
     {
         this.velX = velX;
+        super.notifyObservers();
     }
 
     /**
@@ -70,19 +70,6 @@ public class Detective extends NPC
     void setVelY(int velY)
     {
         this.velY = velY;
-    }
-
-    @Override
-    void setLocationY(int locationY)
-    {
-        super.setLocationY(locationY);
-        super.notifyObservers();
-    }
-
-    @Override
-    void setLocationX(int locationX)
-    {
-        super.setLocationX(locationX);
         super.notifyObservers();
     }
 }

@@ -12,41 +12,18 @@ package gui_project.ModelController;
 public class NPC extends BaseModel
 {
     private boolean hasTalked;
-    private int locationX = 0;
-    private int locationY = 0;
-
-    /**
-     * @return the locationY
-     */
-    public int getLocationY()
-    {
-        return locationY;
+    private final String role;
+    
+    public NPC(String role){
+        this.role = role;
     }
-
-    /**
-     * @param locationY the locationY to set
-     */
-    void setLocationY(int locationY)
-    {
-        this.locationY = locationY;
+    
+    
+    public String getRole(){
+        return role;
     }
-
-    /**
-     * @return the locationX
-     */
-    public int getLocationX()
-    {
-        return locationX;
-    }
-
-    /**
-     * @param locationX the locationX to set
-     */
-    void setLocationX(int locationX)
-    {
-        this.locationX = locationX;
-    }
-
+    
+ 
     /**
      * @return the hasTalked
      */

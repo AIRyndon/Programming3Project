@@ -1,36 +1,20 @@
 package gui_project.View;
 
-import gui_project.ModelController.BaseController;
 import java.awt.CardLayout;
 import java.awt.Dimension;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class MainView
 {
-    private final BaseController controller;
     private final JFrame frame;
     private final JPanel mainPanel;
-    private final RoomView roomOne;
-    private final RoomTwoView roomTwo;
 
-    /**
-     * Creates new form ViewGame
-     */
-    public MainView(BaseController controller)
+    public MainView()
     {
-        this.controller = controller;
         frame = new JFrame("RPG Game");
-        roomOne = new RoomView();
-        roomTwo = new RoomTwoView();
         mainPanel = new JPanel(new CardLayout());
-        mainPanel.setPreferredSize(new Dimension(500,500));
-        mainPanel.add(roomOne,roomOne.getName());
-        mainPanel.add(roomTwo,roomTwo.getName());
-        
+        mainPanel.setPreferredSize(new Dimension(500, 500));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
@@ -41,8 +25,14 @@ public class MainView
         frame.setVisible(true);
     }
 
-    public void addPanel(JPanel panel)
+    public void addPanel(JPanel panel, String name)
     {
-        mainPanel.add(panel, panel.getName());
+        mainPanel.add(panel, name);
+    }
+
+    public void showPanel(String panelName)
+    {
+        CardLayout layout = (CardLayout) mainPanel.getLayout();
+        layout.show(mainPanel, panelName);
     }
 }
