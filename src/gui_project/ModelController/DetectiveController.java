@@ -52,11 +52,30 @@ public class DetectiveController
 
     public void keyPressed(KeyEvent e)
     {
-        view.keyPressed(e);
+        int key = e.getKeyCode();
+
+        switch (key)
+        {
+            case KeyEvent.VK_W:
+                setVelY(-(detective.getSpeed()));
+                break;
+            case KeyEvent.VK_S:
+                setVelY(detective.getSpeed());
+                break;
+            case KeyEvent.VK_A:
+                setVelX(-(detective.getSpeed()));
+                break;
+            case KeyEvent.VK_D:
+                setVelX(detective.getSpeed());
+                break;
+            default:
+                break;
+        }
     }
 
     public void keyReleased(KeyEvent e)
     {
-        view.keyReleased(e);
+        setVelY(0);
+        setVelX(0);
     }
 }

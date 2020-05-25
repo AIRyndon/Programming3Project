@@ -57,12 +57,21 @@ public class RoomView extends javax.swing.JPanel implements ComponentListener
     @Override
     public void componentShown(ComponentEvent e)
     {
+        /*we can use this method to setup the view before it is shown in the main panel
+        *the requestFocus is the one used to keep the detective moving
+        */
        requestFocusInWindow();
     }
 
     @Override
     public void componentHidden(ComponentEvent e)
     {
+        /*
+        we can use this to set up things before the view gets off screen
+        -- I'm thinking like saving the detective's last location before leaving
+        this room - so when he comes back, we can set his correct location on
+        componentShown
+        */
         
     }
 
@@ -121,13 +130,18 @@ public class RoomView extends javax.swing.JPanel implements ComponentListener
 
     private void formKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyPressed
     {//GEN-HEADEREND:event_formKeyPressed
+         //I think we can check for the boundaries here -- if going outside the bounds
+        //we wont call the keyPress
+        
         detectiveCtrl.keyPressed(evt);
         repaint();
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyReleased
     {//GEN-HEADEREND:event_formKeyReleased
-        detectiveCtrl.keyPressed(evt);
+        //I think we can check for the boundaries here -- if going outside the bounds
+        //we wont call the keyPress
+        detectiveCtrl.keyReleased(evt);
         repaint();
     }//GEN-LAST:event_formKeyReleased
 

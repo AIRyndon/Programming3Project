@@ -26,6 +26,9 @@ public class DetectiveView implements BaseObserver
     @Override
     public void update()
     {
+        /*I did this here to show the Observer Pattern - we should actually
+        set this in DetectiveController and avoid this roundabout :D
+        */
         controller.setLocationX(detective.getLocationX() + detective.getVelX());
         controller.setLocationY(detective.getLocationY() + detective.getVelY());
     }
@@ -43,35 +46,6 @@ public class DetectiveView implements BaseObserver
         imageIcon = new ImageIcon(changeImageSize);
         image = imageIcon.getImage();
         return image;
-    }
-
-    public void keyPressed(KeyEvent e)
-    {
-        int key = e.getKeyCode();
-
-        switch (key)
-        {
-            case KeyEvent.VK_W:
-                controller.setVelY(-(detective.getSpeed()));
-                break;
-            case KeyEvent.VK_S:
-                controller.setVelY(detective.getSpeed());
-                break;
-            case KeyEvent.VK_A:
-                controller.setVelX(-(detective.getSpeed()));
-                break;
-            case KeyEvent.VK_D:
-                controller.setVelX(detective.getSpeed());
-                break;
-            default:
-                break;
-        }
-    }
-
-    public void keyReleased(KeyEvent e)
-    {
-        controller.setVelY(0);
-        controller.setVelX(0);
     }
 
     public Rectangle getBound()
