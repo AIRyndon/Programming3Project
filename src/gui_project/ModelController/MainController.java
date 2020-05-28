@@ -13,7 +13,6 @@ import gui_project.View.*;
  */
 public class MainController
 {
-
     private final MainView view;
 
     public MainController(Detective detective)
@@ -23,18 +22,30 @@ public class MainController
         //we setup our NPCs here
         DetectiveController detectiveCtrl = new DetectiveController(detective);
         NPCController butlerCtrl = new NPCController(new NPC("Butler"));
+        NPCController maidCtrl = new NPCController(new NPC("Maid"));
+        NPCController assistantCtrl = new NPCController(new NPC("Assistant"));
         NPCController wifeCtrl = new NPCController(new NPC("Wife"));
+        NPCController daughterCtrl = new NPCController(new NPC("Daughter"));
 
         /*We setup the rooms here - the room names will be Ground, House, Etc -
         we can create the panels using the GUI builder now because 
         we have some code separation, 
         we just add the panel here at project start
          */
-        RoomController roomCtrl = new RoomController(this, detectiveCtrl, butlerCtrl);
-        RoomTwoController roomTwoCtrl = new RoomTwoController(this, detectiveCtrl, wifeCtrl);
+        RoomGroundController groundCtrl = new RoomGroundController(this, detectiveCtrl, butlerCtrl);
+        RoomHouseController houseCtrl = new RoomHouseController(this, detectiveCtrl, wifeCtrl);
+        RoomMaidController maidRoomCtrl = new RoomMaidController(this, detectiveCtrl, maidCtrl);
+        RoomButlerController butlerRoomCtrl = new RoomButlerController(this, detectiveCtrl, assistantCtrl);
+        RoomWifeController wifeRoomCtrl = new RoomWifeController(this, detectiveCtrl, wifeCtrl);
+        RoomWorkingController workingRoomCtrl = new RoomWorkingController(this, detectiveCtrl, wifeCtrl);
+        
 
-        view.addPanel(roomCtrl.getView(), roomCtrl.getView().getName());
-        view.addPanel(roomTwoCtrl.getView(), roomTwoCtrl.getView().getName());
+        view.addPanel(groundCtrl.getView(), groundCtrl.getView().getName());
+        view.addPanel(houseCtrl.getView(), houseCtrl.getView().getName());
+        view.addPanel(maidRoomCtrl.getView(), maidRoomCtrl.getView().getName());
+        view.addPanel(butlerRoomCtrl.getView(), butlerRoomCtrl.getView().getName());
+        view.addPanel(wifeRoomCtrl.getView(), wifeRoomCtrl.getView().getName());
+        view.addPanel(workingRoomCtrl.getView(), workingRoomCtrl.getView().getName());
 
         view.renderView();
     }

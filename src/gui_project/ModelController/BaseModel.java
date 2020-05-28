@@ -17,8 +17,8 @@ public class BaseModel
     private ArrayList<BaseObserver> observers = new ArrayList<>();
     private int locationY;
     private int locationX;
-     
-       /**
+    
+    /**
      * @return the locationY
      */
     public int getLocationY()

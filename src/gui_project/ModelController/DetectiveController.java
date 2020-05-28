@@ -15,7 +15,6 @@ import java.awt.event.KeyEvent;
  */
 public class DetectiveController
 {
-
     private final Detective detective;
     private final DetectiveView view;
 

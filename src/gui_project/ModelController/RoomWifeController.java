@@ -5,27 +5,26 @@
  */
 package gui_project.ModelController;
 
-import gui_project.View.RoomTwoView;
-import gui_project.View.RoomView;
+import gui_project.View.RoomWifeView;
 
 /**
  *
- * @author Angelo
+ * @author pc
  */
-public class RoomTwoController
+public class RoomWifeController 
 {
-    private RoomTwoView view;
-
-    public RoomTwoController(MainController mainCtrl,
+    private final RoomWifeView view;
+  
+    public RoomWifeController(MainController mainCtrl, 
             DetectiveController detectiveCtrl,
             NPCController wifeCtrl)
     {
-        view = new RoomTwoView(mainCtrl,
+        view = new RoomWifeView(mainCtrl, 
                 detectiveCtrl, 
-                wifeCtrl,this);
+                wifeCtrl, this);
     }
 
-    public RoomTwoView getView()
+    public RoomWifeView getView()
     {
         return view;
     }

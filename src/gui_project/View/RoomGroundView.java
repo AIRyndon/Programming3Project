@@ -8,7 +8,7 @@ package gui_project.View;
 import gui_project.ModelController.DetectiveController;
 import gui_project.ModelController.MainController;
 import gui_project.ModelController.NPCController;
-import gui_project.ModelController.RoomController;
+import gui_project.ModelController.RoomGroundController;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ComponentEvent;
@@ -18,20 +18,20 @@ import java.awt.event.ComponentListener;
  *
  * @author Angelo
  */
-public class RoomView extends javax.swing.JPanel implements ComponentListener
+public class RoomGroundView extends javax.swing.JPanel implements ComponentListener
 {
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final NPCController butlerCtrl;
-    private final RoomController roomCtrl;
+    private final RoomGroundController roomCtrl;
 
     /**
      * Creates new form RoomView
      */
-    public RoomView(MainController mainCtrl,
+    public RoomGroundView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
             NPCController butlerCtrl,
-            RoomController roomCtrl)
+            RoomGroundController roomCtrl)
     {     
         this.mainCtrl = mainCtrl;
         this.detectiveCtrl = detectiveCtrl;
@@ -41,17 +41,6 @@ public class RoomView extends javax.swing.JPanel implements ComponentListener
         initComponents();
         addComponentListener(this);
         setFocusable(true);
-    }
-
-    @Override
-    public void paintComponent(Graphics g)
-    {
-        super.paintComponent(g);
-        
-        Graphics2D g2 = (Graphics2D) g;
-        
-        detectiveCtrl.draw(g2);
-        butlerCtrl.draw(g2);
     }
 
     @Override
@@ -87,6 +76,17 @@ public class RoomView extends javax.swing.JPanel implements ComponentListener
        
     }
     
+    @Override
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
+        
+        Graphics2D g2 = (Graphics2D) g;
+        
+        detectiveCtrl.draw(g2);
+        butlerCtrl.draw(g2);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -94,31 +94,25 @@ public class RoomView extends javax.swing.JPanel implements ComponentListener
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        setName("RoomOne"); // NOI18N
-        addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
+        setName("Ground"); // NOI18N
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
             }
-            public void keyReleased(java.awt.event.KeyEvent evt)
-            {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
                 formKeyReleased(evt);
             }
         });
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
@@ -141,13 +135,14 @@ public class RoomView extends javax.swing.JPanel implements ComponentListener
     {//GEN-HEADEREND:event_formKeyReleased
         //I think we can check for the boundaries here -- if going outside the bounds
         //we wont call the keyPress
+        
         detectiveCtrl.keyReleased(evt);
         repaint();
     }//GEN-LAST:event_formKeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
     {//GEN-HEADEREND:event_jButton1ActionPerformed
-        mainCtrl.showPanel("RoomTwo");
+        mainCtrl.showPanel("House");
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

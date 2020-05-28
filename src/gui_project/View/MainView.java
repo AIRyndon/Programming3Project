@@ -14,7 +14,7 @@ public class MainView
     {
         frame = new JFrame("RPG Game");
         mainPanel = new JPanel(new CardLayout());
-        mainPanel.setPreferredSize(new Dimension(500, 500));
+        mainPanel.setPreferredSize(new Dimension(800, 800));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 

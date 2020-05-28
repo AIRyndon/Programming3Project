@@ -5,7 +5,7 @@
  */
 package gui_project.ModelController;
 
-import gui_project.View.RoomView;
+import gui_project.View.RoomGroundView;
 import java.awt.Graphics2D;
 
 /**
@@ -15,20 +15,20 @@ import java.awt.Graphics2D;
 //Pass the detective controller to other controllers cuz we want to manage the detective
 //in every view
 //We pass the MainController so we can change panels
-public class RoomController
+public class RoomGroundController
 {   
-    private final RoomView view;
+    private final RoomGroundView view;
   
-    public RoomController(MainController mainCtrl, 
+    public RoomGroundController(MainController mainCtrl, 
             DetectiveController detectiveCtrl,
             NPCController butlerCtrl)
     {
-        view = new RoomView(mainCtrl, 
+        view = new RoomGroundView(mainCtrl, 
                 detectiveCtrl, 
                 butlerCtrl, this);
     }
 
-    public RoomView getView()
+    public RoomGroundView getView()
     {
         return view;
     }

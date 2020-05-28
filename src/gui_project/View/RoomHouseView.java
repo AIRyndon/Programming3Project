@@ -15,23 +15,22 @@ import java.awt.event.ComponentListener;
  *
  * @author Angelo
  */
-public class RoomTwoView extends javax.swing.JPanel implements ComponentListener
+public class RoomHouseView extends javax.swing.JPanel implements ComponentListener
 {
 
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final NPCController wifeCtrl;
-    private final RoomTwoController roomCtrl;
+    private final RoomHouseController roomCtrl;
 
     /**
      * Creates new form RoomTwoView
      */
-    public RoomTwoView(MainController mainCtrl,
+    public RoomHouseView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
             NPCController wifeCtrl,
-            RoomTwoController roomCtrl)
+            RoomHouseController roomCtrl)
     {
-
         this.mainCtrl = mainCtrl;
         this.detectiveCtrl = detectiveCtrl;
         this.wifeCtrl = wifeCtrl;
@@ -84,31 +83,25 @@ public class RoomTwoView extends javax.swing.JPanel implements ComponentListener
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        setName("RoomTwo"); // NOI18N
-        addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
+        setName("House"); // NOI18N
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
             }
-            public void keyReleased(java.awt.event.KeyEvent evt)
-            {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
                 formKeyReleased(evt);
             }
         });
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
@@ -120,7 +113,7 @@ public class RoomTwoView extends javax.swing.JPanel implements ComponentListener
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
     {//GEN-HEADEREND:event_jButton1ActionPerformed
-        mainCtrl.showPanel("RoomOne");
+        mainCtrl.showPanel("MaidRoom");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyPressed
