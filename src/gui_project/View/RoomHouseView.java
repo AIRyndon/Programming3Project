@@ -169,15 +169,15 @@ public class RoomHouseView extends javax.swing.JPanel implements ComponentListen
         {
             mainCtrl.showPanel("MaidRoom");
         }
-        if(detectiveCtrl.getView().getBound().intersects(butlerRoomDoor.getBounds()))
+        else if(detectiveCtrl.getView().getBound().intersects(butlerRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("ButlerRoom");
         }
-        if(detectiveCtrl.getView().getBound().intersects(wifeRoomDoor.getBounds()))
+        else if(detectiveCtrl.getView().getBound().intersects(wifeRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("WifeRoom");
         }
-        if(detectiveCtrl.getView().getBound().intersects(workingRoomDoor.getBounds()))
+        else if(detectiveCtrl.getView().getBound().intersects(workingRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("WorkingRoom");
         }

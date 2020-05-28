@@ -12,8 +12,10 @@ import gui_project.ModelController.RoomGroundController;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
 /**
@@ -22,8 +24,9 @@ import javax.swing.ImageIcon;
  */
 public class RoomGroundView extends javax.swing.JPanel implements ComponentListener
 {
-    private final int houseLocationX = 84;
-    private final int houseLocationY = 187;
+    int count = 0;
+    private int housePositionX;
+    private int housePositionY;
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final NPCController butlerCtrl;
@@ -90,7 +93,13 @@ public class RoomGroundView extends javax.swing.JPanel implements ComponentListe
         
         return image;
     }
-        
+    
+    public Rectangle getHouseBound()
+    {
+        return new Rectangle(housePositionX, housePositionY, 
+                getHouseImage().getWidth(null), getHouseImage().getHeight(null));
+    }
+    
     @Override
     public void paintComponent(Graphics g)
     {
@@ -101,9 +110,12 @@ public class RoomGroundView extends javax.swing.JPanel implements ComponentListe
         detectiveCtrl.draw(g2);
         butlerCtrl.draw(g2);
         
+        housePositionX = doorHouse.getLocation().x - 84;
+        housePositionY = doorHouse.getLocation().y - 187;
+        
         //Do we need to separate house and door to another class?
-        g.drawImage(getHouseImage(), doorHouse.getLocation().x - houseLocationX, 
-                doorHouse.getLocation().y - houseLocationY, null);
+        g.drawImage(getHouseImage(), housePositionX, housePositionY, null);
+        g2.draw(getHouseBound());
     }
     
     /**
@@ -134,7 +146,7 @@ public class RoomGroundView extends javax.swing.JPanel implements ComponentListe
 
         doorHouse.setText("_____");
         doorHouse.setName("DoorHouse"); // NOI18N
-        add(doorHouse, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 150, -1, -1));
+        add(doorHouse, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 300, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyPressed
@@ -142,7 +154,18 @@ public class RoomGroundView extends javax.swing.JPanel implements ComponentListe
          //I think we can check for the boundaries here -- if going outside the bounds
         //we wont call the keyPress
         
-        detectiveCtrl.keyPressed(evt);
+        //check house collision
+        boolean validMove = true;
+        
+        if(detectiveCtrl.getView().getBound().intersects(getHouseBound()))
+        {
+            System.out.println("House intersection " + count);
+            count++;
+            
+            validMove = false;
+        }
+        
+        detectiveCtrl.keyPressed(evt, getHouseBound(), validMove);
         repaint();
     }//GEN-LAST:event_formKeyPressed
 

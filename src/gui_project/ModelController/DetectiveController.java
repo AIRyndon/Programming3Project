@@ -7,6 +7,7 @@ package gui_project.ModelController;
 
 import gui_project.View.DetectiveView;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 /**
@@ -49,24 +50,68 @@ public class DetectiveController
         getView().draw(graphics2D);
     }
 
-    public void keyPressed(KeyEvent e)
+    public void keyPressed(KeyEvent e, Rectangle itemBlock, boolean validMove)
     {
         int key = e.getKeyCode();
 
         switch (key)
         {
             case KeyEvent.VK_W:
-                setVelY(-(detective.getSpeed()));
+            {
+                if(!validMove && view.getBound().getMinY() > itemBlock.getMinY())
+                {
+                    System.out.println(view.getBound().getMinY());
+                    System.out.println(itemBlock.getMaxY());
+                    System.out.println("W");
+                    setVelY(0);
+                }
+                else 
+                    setVelY(-(detective.getSpeed()));
+                
                 break;
+            }
             case KeyEvent.VK_S:
-                setVelY(detective.getSpeed());
+            {
+                if(!validMove && view.getBound().getMaxY() < itemBlock.getMaxY())
+                {
+                    System.out.println(view.getBound().getMaxY());
+                    System.out.println(itemBlock.getMinY());
+                    System.out.println("S");
+                    setVelY(0);
+                }
+                else 
+                    setVelY(detective.getSpeed());
+                
                 break;
+            }
             case KeyEvent.VK_A:
-                setVelX(-(detective.getSpeed()));
+            {
+                if(!validMove && view.getBound().getMinX() > itemBlock.getMinX())
+                {
+                    System.out.println(view.getBound().getMinX());
+                    System.out.println(itemBlock.getMaxX());
+                    System.out.println("A");
+                    setVelY(0);
+                }
+                else
+                    setVelX(-(detective.getSpeed()));
+                
                 break;
+            }
             case KeyEvent.VK_D:
-                setVelX(detective.getSpeed());
+            {
+                if(!validMove && view.getBound().getMaxX() < itemBlock.getMaxX())
+                {
+                    System.out.println(view.getBound().getMaxX());
+                    System.out.println(itemBlock.getMinX());
+                    System.out.println("D");
+                    setVelY(0);
+                }
+                else
+                    setVelX(detective.getSpeed());
+                
                 break;
+            }
             default:
                 break;
         }

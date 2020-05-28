@@ -25,6 +25,8 @@ public class RoomGroundController
         view = new RoomGroundView(mainCtrl, 
                 detectiveCtrl, 
                 butlerCtrl, this);
+        
+        
     }
 
     public RoomGroundView getView()
