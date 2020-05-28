@@ -11,8 +11,10 @@ import gui_project.ModelController.NPCController;
 import gui_project.ModelController.RoomGroundController;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -20,6 +22,8 @@ import java.awt.event.ComponentListener;
  */
 public class RoomGroundView extends javax.swing.JPanel implements ComponentListener
 {
+    private final int houseLocationX = 84;
+    private final int houseLocationY = 187;
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final NPCController butlerCtrl;
@@ -49,7 +53,7 @@ public class RoomGroundView extends javax.swing.JPanel implements ComponentListe
         /*we can use this method to setup the view before it is shown in the main panel
         *the requestFocus is the one used to keep the detective moving
         */
-       requestFocusInWindow();
+        requestFocusInWindow();
     }
 
     @Override
@@ -76,6 +80,17 @@ public class RoomGroundView extends javax.swing.JPanel implements ComponentListe
        
     }
     
+    public Image getHouseImage()
+    {
+        ImageIcon imageIcon = new ImageIcon("./Images/House.png");
+        Image image = imageIcon.getImage();
+        Image changeImageSize = image.getScaledInstance(200, 200, 4);
+        imageIcon = new ImageIcon(changeImageSize);
+        image = imageIcon.getImage();
+        
+        return image;
+    }
+        
     @Override
     public void paintComponent(Graphics g)
     {
@@ -85,6 +100,10 @@ public class RoomGroundView extends javax.swing.JPanel implements ComponentListe
         
         detectiveCtrl.draw(g2);
         butlerCtrl.draw(g2);
+        
+        //Do we need to separate house and door to another class?
+        g.drawImage(getHouseImage(), doorHouse.getLocation().x - houseLocationX, 
+                doorHouse.getLocation().y - houseLocationY, null);
     }
     
     /**
@@ -96,8 +115,8 @@ public class RoomGroundView extends javax.swing.JPanel implements ComponentListe
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        roomName = new javax.swing.JLabel();
+        doorHouse = new javax.swing.JLabel();
 
         setName("Ground"); // NOI18N
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -110,16 +129,12 @@ public class RoomGroundView extends javax.swing.JPanel implements ComponentListe
         });
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, -1, -1));
+        roomName.setText("Ground");
+        add(roomName, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 40, -1, -1));
 
-        jLabel1.setText("jLabel1");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 150, -1, -1));
+        doorHouse.setText("_____");
+        doorHouse.setName("DoorHouse"); // NOI18N
+        add(doorHouse, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 150, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyPressed
@@ -137,18 +152,19 @@ public class RoomGroundView extends javax.swing.JPanel implements ComponentListe
         //we wont call the keyPress
         
         detectiveCtrl.keyReleased(evt);
+        
+        //check doorHouse collision
+        if(detectiveCtrl.getView().getBound().intersects(doorHouse.getBounds()))
+        {
+            mainCtrl.showPanel("House");
+        }
+        
         repaint();
     }//GEN-LAST:event_formKeyReleased
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
-    {//GEN-HEADEREND:event_jButton1ActionPerformed
-        mainCtrl.showPanel("House");
-    }//GEN-LAST:event_jButton1ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel doorHouse;
+    private javax.swing.JLabel roomName;
     // End of variables declaration//GEN-END:variables
- 
 }

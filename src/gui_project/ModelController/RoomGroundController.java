@@ -6,7 +6,6 @@
 package gui_project.ModelController;
 
 import gui_project.View.RoomGroundView;
-import java.awt.Graphics2D;
 
 /**
  *

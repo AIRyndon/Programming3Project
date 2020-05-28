@@ -6,6 +6,7 @@
 package gui_project.View;
 
 import gui_project.ModelController.*;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ComponentEvent;
@@ -85,8 +86,16 @@ public class RoomHouseView extends javax.swing.JPanel implements ComponentListen
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        maidRoomWall = new javax.swing.JLabel();
+        butlerRoomWall = new javax.swing.JLabel();
+        wifeRoomWall = new javax.swing.JLabel();
+        workingRoomWall = new javax.swing.JLabel();
+        maidRoomDoor = new javax.swing.JLabel();
+        butlerRoomDoor = new javax.swing.JLabel();
+        wifeRoomDoor = new javax.swing.JLabel();
+        workingRoomDoor = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setName("House"); // NOI18N
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -99,22 +108,53 @@ public class RoomHouseView extends javax.swing.JPanel implements ComponentListen
         });
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, -1, -1));
+        jLabel1.setText("House");
+        jLabel1.setName("HouseLabel"); // NOI18N
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 60, 40));
 
-        jLabel1.setText("jLabel1");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 120, 40));
+        maidRoomWall.setText("      MaidRoom");
+        maidRoomWall.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        maidRoomWall.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        maidRoomWall.setName("MaidRoomLabel"); // NOI18N
+        add(maidRoomWall, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 160, 80));
+
+        butlerRoomWall.setText("     ButlerRoom");
+        butlerRoomWall.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        butlerRoomWall.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        butlerRoomWall.setName("MaidRoomLabel"); // NOI18N
+        add(butlerRoomWall, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 250, 110));
+
+        wifeRoomWall.setText("      WifeRoom");
+        wifeRoomWall.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        wifeRoomWall.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        wifeRoomWall.setName("MaidRoomLabel"); // NOI18N
+        add(wifeRoomWall, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 250, 110));
+
+        workingRoomWall.setText("      WorkingRoom");
+        workingRoomWall.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        workingRoomWall.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        workingRoomWall.setName("MaidRoomLabel"); // NOI18N
+        add(workingRoomWall, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 540, 120));
+
+        maidRoomDoor.setText("*");
+        maidRoomDoor.setFocusCycleRoot(true);
+        maidRoomDoor.setName("MaidRoomDoor"); // NOI18N
+        add(maidRoomDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 10, -1));
+
+        butlerRoomDoor.setText("*");
+        butlerRoomDoor.setName("ButlerRoomDoor"); // NOI18N
+        add(butlerRoomDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 190, 10, -1));
+
+        wifeRoomDoor.setText("*");
+        wifeRoomDoor.setName("WifeRoomDoor"); // NOI18N
+        add(wifeRoomDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, 10, -1));
+
+        workingRoomDoor.setText("*");
+        add(workingRoomDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 330, 10, -1));
+
+        jLabel2.setText("Kitchen");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
-    {//GEN-HEADEREND:event_jButton1ActionPerformed
-        mainCtrl.showPanel("MaidRoom");
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyPressed
     {//GEN-HEADEREND:event_formKeyPressed
@@ -122,6 +162,26 @@ public class RoomHouseView extends javax.swing.JPanel implements ComponentListen
         //I think we can check for the boundaries here -- if going outside the bounds
         //we wont call the keyPress
         detectiveCtrl.keyPressed(evt);
+        
+        //check if the player wants to access a room
+        
+        if(detectiveCtrl.getView().getBound().intersects(maidRoomDoor.getBounds()))
+        {
+            mainCtrl.showPanel("MaidRoom");
+        }
+        if(detectiveCtrl.getView().getBound().intersects(butlerRoomDoor.getBounds()))
+        {
+            mainCtrl.showPanel("ButlerRoom");
+        }
+        if(detectiveCtrl.getView().getBound().intersects(wifeRoomDoor.getBounds()))
+        {
+            mainCtrl.showPanel("WifeRoom");
+        }
+        if(detectiveCtrl.getView().getBound().intersects(workingRoomDoor.getBounds()))
+        {
+            mainCtrl.showPanel("WorkingRoom");
+        }
+        
         repaint();
     }//GEN-LAST:event_formKeyPressed
 
@@ -135,8 +195,16 @@ public class RoomHouseView extends javax.swing.JPanel implements ComponentListen
     }//GEN-LAST:event_formKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel butlerRoomDoor;
+    private javax.swing.JLabel butlerRoomWall;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel maidRoomDoor;
+    private javax.swing.JLabel maidRoomWall;
+    private javax.swing.JLabel wifeRoomDoor;
+    private javax.swing.JLabel wifeRoomWall;
+    private javax.swing.JLabel workingRoomDoor;
+    private javax.swing.JLabel workingRoomWall;
     // End of variables declaration//GEN-END:variables
 
 }

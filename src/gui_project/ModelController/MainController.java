@@ -37,9 +37,8 @@ public class MainController
         RoomMaidController maidRoomCtrl = new RoomMaidController(this, detectiveCtrl, maidCtrl);
         RoomButlerController butlerRoomCtrl = new RoomButlerController(this, detectiveCtrl, assistantCtrl);
         RoomWifeController wifeRoomCtrl = new RoomWifeController(this, detectiveCtrl, wifeCtrl);
-        RoomWorkingController workingRoomCtrl = new RoomWorkingController(this, detectiveCtrl, wifeCtrl);
+        RoomWorkingController workingRoomCtrl = new RoomWorkingController(this, detectiveCtrl, daughterCtrl);
         
-
         view.addPanel(groundCtrl.getView(), groundCtrl.getView().getName());
         view.addPanel(houseCtrl.getView(), houseCtrl.getView().getName());
         view.addPanel(maidRoomCtrl.getView(), maidRoomCtrl.getView().getName());

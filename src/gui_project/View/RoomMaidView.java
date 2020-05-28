@@ -89,8 +89,8 @@ public class RoomMaidView extends javax.swing.JPanel implements ComponentListene
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        houseDoor = new javax.swing.JLabel();
 
         setName("MaidRoom"); // NOI18N
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -103,27 +103,25 @@ public class RoomMaidView extends javax.swing.JPanel implements ComponentListene
         });
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(279, 231, -1, -1));
-
         jLabel1.setText("MaidRoom");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(294, 124, -1, -1));
-    }// </editor-fold>//GEN-END:initComponents
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, -1, 30));
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        mainCtrl.showPanel("ButlerRoom");
-    }//GEN-LAST:event_jButton1ActionPerformed
+        houseDoor.setText("*");
+        houseDoor.setFocusCycleRoot(true);
+        houseDoor.setName("MaidRoomDoor"); // NOI18N
+        add(houseDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 73, 10, 20));
+    }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here: 
         
         detectiveCtrl.keyPressed(evt);
+        
+        if(detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))
+        {
+            mainCtrl.showPanel("House");
+        }
+        
         repaint();
     }//GEN-LAST:event_formKeyPressed
 
@@ -136,7 +134,7 @@ public class RoomMaidView extends javax.swing.JPanel implements ComponentListene
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel houseDoor;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

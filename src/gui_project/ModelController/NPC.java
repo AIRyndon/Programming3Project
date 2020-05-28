@@ -5,24 +5,28 @@
  */
 package gui_project.ModelController;
 
+import java.util.Random;
+
 /**
  *
  * @author Angelo
  */
 public class NPC extends BaseModel
 {
+    public static Random random = new Random();
+    
     private boolean hasTalked;
     private final String role;
     
-    public NPC(String role){
+    public NPC(String role)
+    {
         this.role = role;
     }
     
-    
-    public String getRole(){
+    public String getRole()
+    {
         return role;
     }
-    
  
     /**
      * @return the hasTalked
@@ -38,5 +42,11 @@ public class NPC extends BaseModel
     void setHasTalked(boolean hasTalked)
     {
         this.hasTalked = hasTalked;
+    }
+    
+    public void generateRandomPosition()
+    {
+        this.setLocationX(100);
+        this.setLocationY(100);
     }
 }

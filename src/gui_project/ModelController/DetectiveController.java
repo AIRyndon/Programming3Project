@@ -46,7 +46,7 @@ public class DetectiveController
 
     public void draw(Graphics2D graphics2D)
     {
-        view.draw(graphics2D);
+        getView().draw(graphics2D);
     }
 
     public void keyPressed(KeyEvent e)
@@ -76,5 +76,10 @@ public class DetectiveController
     {
         setVelY(0);
         setVelX(0);
+    }
+
+    public DetectiveView getView() 
+    {
+        return view;
     }
 }

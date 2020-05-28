@@ -36,6 +36,7 @@ public class DetectiveView implements BaseObserver
     public void draw(Graphics2D graphics2D)
     {
         graphics2D.drawImage(getPlayerImage(), detective.getLocationX(), detective.getLocationY(), null);
+        //graphics2D.draw(getBound());
     }
 
     public Image getPlayerImage()
@@ -50,7 +51,7 @@ public class DetectiveView implements BaseObserver
 
     public Rectangle getBound()
     {
-        return new Rectangle(detective.getLocationX(), detective.getLocationY(),
-                getPlayerImage().getWidth(null), getPlayerImage().getHeight(null));
+        return new Rectangle(detective.getLocationX() + 10, detective.getLocationY() + 15,
+                getPlayerImage().getWidth(null) - 20, getPlayerImage().getHeight(null) - 20);
     }
 }

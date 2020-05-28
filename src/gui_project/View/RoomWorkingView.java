@@ -97,7 +97,7 @@ public class RoomWorkingView extends javax.swing.JPanel implements ComponentList
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        houseDoor = new javax.swing.JLabel();
 
         setName("WorkingRoom"); // NOI18N
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -111,32 +111,32 @@ public class RoomWorkingView extends javax.swing.JPanel implements ComponentList
 
         jLabel1.setText("WorkingRoom");
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        houseDoor.setText("*");
+        houseDoor.setFocusCycleRoot(true);
+        houseDoor.setName("MaidRoomDoor"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(294, 294, 294)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel1))
-                .addContainerGap(296, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(292, 292, 292)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(341, 341, 341)
+                        .addComponent(houseDoor)))
+                .addContainerGap(385, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(121, 121, 121)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(77, 77, 77)
-                .addComponent(jButton1)
-                .addContainerGap(221, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(houseDoor)
+                .addContainerGap(384, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -144,6 +144,12 @@ public class RoomWorkingView extends javax.swing.JPanel implements ComponentList
         // TODO add your handling code here:
         
         detectiveCtrl.keyPressed(evt);
+        
+        if(detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))
+        {
+            mainCtrl.showPanel("House");
+        }
+        
         repaint();
     }//GEN-LAST:event_formKeyPressed
 
@@ -154,15 +160,9 @@ public class RoomWorkingView extends javax.swing.JPanel implements ComponentList
         repaint();
     }//GEN-LAST:event_formKeyReleased
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        
-        mainCtrl.showPanel("House");
-    }//GEN-LAST:event_jButton1ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel houseDoor;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
