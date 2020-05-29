@@ -6,6 +6,8 @@
 package gui_project.View;
 
 import gui_project.ModelController.DetectiveController;
+import gui_project.ModelController.ItemBlock;
+import gui_project.ModelController.ItemBlockController;
 import gui_project.ModelController.MainController;
 import gui_project.ModelController.NPCController;
 import gui_project.ModelController.RoomGroundController;
@@ -15,7 +17,6 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
 /**
@@ -24,7 +25,7 @@ import javax.swing.ImageIcon;
  */
 public class RoomGroundView extends javax.swing.JPanel implements ComponentListener
 {
-    int count = 0;
+    int checkCollision = 0;
     private int housePositionX;
     private int housePositionY;
     private final MainController mainCtrl;
@@ -83,6 +84,12 @@ public class RoomGroundView extends javax.swing.JPanel implements ComponentListe
        
     }
     
+    public Rectangle getBound()
+    {
+        return new Rectangle(10, 15, 
+                this.getSize().width - 30, this.getSize().height - 30);
+    }
+    
     public Image getHouseImage()
     {
         ImageIcon imageIcon = new ImageIcon("./Images/House.png");
@@ -94,11 +101,12 @@ public class RoomGroundView extends javax.swing.JPanel implements ComponentListe
         return image;
     }
     
-    public Rectangle getHouseBound()
-    {
-        return new Rectangle(housePositionX, housePositionY, 
-                getHouseImage().getWidth(null), getHouseImage().getHeight(null));
-    }
+    //This method has not been used anywhere
+//    public Rectangle getHouseImageBound()
+//    {
+//        return new Rectangle(housePositionX, housePositionY, 
+//                getHouseImage().getWidth(null), getHouseImage().getHeight(null));
+//    }
     
     @Override
     public void paintComponent(Graphics g)
@@ -109,13 +117,21 @@ public class RoomGroundView extends javax.swing.JPanel implements ComponentListe
         
         detectiveCtrl.draw(g2);
         butlerCtrl.draw(g2);
+        g2.draw(getBound());
+        
+        for(ItemBlockController itemBlockCtrl : roomCtrl.getItemBlockCtrls())
+        {
+            g2.draw(itemBlockCtrl.getItemBlock().getBound());
+        }
         
         housePositionX = doorHouse.getLocation().x - 84;
         housePositionY = doorHouse.getLocation().y - 187;
         
-        //Do we need to separate house and door to another class?
+        //Add houseImage as an itemBlock
+        roomCtrl.addItemBlock(new ItemBlockController(new ItemBlock(housePositionX, housePositionY, 
+                getHouseImage().getWidth(null), getHouseImage().getHeight(null))));
+        
         g.drawImage(getHouseImage(), housePositionX, housePositionY, null);
-        g2.draw(getHouseBound());
     }
     
     /**
@@ -146,26 +162,18 @@ public class RoomGroundView extends javax.swing.JPanel implements ComponentListe
 
         doorHouse.setText("_____");
         doorHouse.setName("DoorHouse"); // NOI18N
-        add(doorHouse, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 300, -1, -1));
+        add(doorHouse, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 270, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyPressed
     {//GEN-HEADEREND:event_formKeyPressed
-         //I think we can check for the boundaries here -- if going outside the bounds
+        //I think we can check for the boundaries here -- if going outside the bounds
         //we wont call the keyPress
         
         //check house collision
-        boolean validMove = true;
+        roomCtrl.checkCollisions(evt.getKeyCode(), roomCtrl.getItemBlockCtrls(), 
+                detectiveCtrl, getBound());
         
-        if(detectiveCtrl.getView().getBound().intersects(getHouseBound()))
-        {
-            System.out.println("House intersection " + count);
-            count++;
-            
-            validMove = false;
-        }
-        
-        detectiveCtrl.keyPressed(evt, getHouseBound(), validMove);
         repaint();
     }//GEN-LAST:event_formKeyPressed
 
@@ -184,7 +192,6 @@ public class RoomGroundView extends javax.swing.JPanel implements ComponentListe
         
         repaint();
     }//GEN-LAST:event_formKeyReleased
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel doorHouse;

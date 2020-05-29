@@ -6,11 +6,13 @@
 package gui_project.View;
 
 import gui_project.ModelController.DetectiveController;
+import gui_project.ModelController.ItemBlockController;
 import gui_project.ModelController.MainController;
 import gui_project.ModelController.NPCController;
 import gui_project.ModelController.RoomWorkingController;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
@@ -76,6 +78,12 @@ public class RoomWorkingView extends javax.swing.JPanel implements ComponentList
        
     }
     
+    public Rectangle getBound()
+    {
+        return new Rectangle(10, 15, 
+                this.getSize().width - 30, this.getSize().height - 30);
+    }
+    
     @Override
     public void paintComponent(Graphics g)
     {
@@ -85,6 +93,13 @@ public class RoomWorkingView extends javax.swing.JPanel implements ComponentList
         
         detectiveCtrl.draw(g2);
         wifeCtrl.draw(g2);
+        
+        g2.draw(getBound());
+        
+        for(ItemBlockController itemBlockCtrl : roomCtrl.getItemBlockCtrls())
+        {
+            g2.draw(itemBlockCtrl.getItemBlock().getBound());
+        }
     }
 
     /**
@@ -143,12 +158,26 @@ public class RoomWorkingView extends javax.swing.JPanel implements ComponentList
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
         
-        detectiveCtrl.keyPressed(evt);
+        //CHECK COLLISIONS
+        boolean itemBlockCollision = false;
+        boolean groundCollision = false;
+        Rectangle boundaryCollision = null;
         
-        if(detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))
+        for(ItemBlockController itemBlockCtrl : roomCtrl.getItemBlockCtrls())
         {
-            mainCtrl.showPanel("House");
+            if(detectiveCtrl.getView().getBound().intersects(itemBlockCtrl.getItemBlock().getBound()))
+            {
+                itemBlockCollision = true;
+                boundaryCollision = itemBlockCtrl.getItemBlock().getBound();
+            }
+            else if(!getBound().contains(detectiveCtrl.getView().getBound()))
+            {
+                groundCollision = true;
+                boundaryCollision = this.getBound();
+            }
         }
+        
+        detectiveCtrl.keyPressed(evt.getKeyCode(), boundaryCollision, itemBlockCollision, groundCollision);
         
         repaint();
     }//GEN-LAST:event_formKeyPressed
@@ -157,6 +186,12 @@ public class RoomWorkingView extends javax.swing.JPanel implements ComponentList
         // TODO add your handling code here:
         
         detectiveCtrl.keyReleased(evt);
+        
+        if(detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))
+        {
+            mainCtrl.showPanel("House");
+        }
+        
         repaint();
     }//GEN-LAST:event_formKeyReleased
 

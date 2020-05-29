@@ -6,15 +6,14 @@
 package gui_project.ModelController;
 
 import gui_project.View.RoomHouseView;
-import gui_project.View.RoomGroundView;
 
 /**
  *
  * @author Angelo
  */
-public class RoomHouseController
+public class RoomHouseController extends ControlItemBlocks
 {
-    private RoomHouseView view;
+    private final RoomHouseView view;
 
     public RoomHouseController(MainController mainCtrl,
             DetectiveController detectiveCtrl,
@@ -24,7 +23,7 @@ public class RoomHouseController
                 detectiveCtrl, 
                 wifeCtrl,this);
     }
-
+    
     public RoomHouseView getView()
     {
         return view;

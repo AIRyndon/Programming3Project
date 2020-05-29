@@ -17,6 +17,8 @@ public class Detective extends BaseModel
 
     public Detective()
     {
+        this.setLocationX(50);
+        this.setLocationY(50);
     }
 
     /**

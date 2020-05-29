@@ -26,7 +26,8 @@ public class MainController
         NPCController assistantCtrl = new NPCController(new NPC("Assistant"));
         NPCController wifeCtrl = new NPCController(new NPC("Wife"));
         NPCController daughterCtrl = new NPCController(new NPC("Daughter"));
-
+        NPCController victimCtrl = new NPCController(new NPC("Victim"));
+        
         /*We setup the rooms here - the room names will be Ground, House, Etc -
         we can create the panels using the GUI builder now because 
         we have some code separation, 
@@ -36,8 +37,27 @@ public class MainController
         RoomHouseController houseCtrl = new RoomHouseController(this, detectiveCtrl, wifeCtrl);
         RoomMaidController maidRoomCtrl = new RoomMaidController(this, detectiveCtrl, maidCtrl);
         RoomButlerController butlerRoomCtrl = new RoomButlerController(this, detectiveCtrl, assistantCtrl);
-        RoomWifeController wifeRoomCtrl = new RoomWifeController(this, detectiveCtrl, wifeCtrl);
-        RoomWorkingController workingRoomCtrl = new RoomWorkingController(this, detectiveCtrl, daughterCtrl);
+        RoomWifeController wifeRoomCtrl = new RoomWifeController(this, detectiveCtrl, wifeCtrl, daughterCtrl);
+        RoomWorkingController workingRoomCtrl = new RoomWorkingController(this, detectiveCtrl, victimCtrl);
+        
+        //Setup ItemBlocks (eg. DogHouse, room walls, etc.) to advoid player access
+        ItemBlockController dogHouse = new ItemBlockController(new ItemBlock(630, 15, 150, 100));
+        ItemBlockController maidRoomWall = new ItemBlockController(new ItemBlock(10, 15, 200, 110));
+        ItemBlockController wifeRoomWall = new ItemBlockController(new ItemBlock(10, 125, 200, 110));
+        ItemBlockController butlerRoomWall = new ItemBlockController(new ItemBlock(10, 235, 200, 110));
+        ItemBlockController workringRoomWall = new ItemBlockController(new ItemBlock(10, 345, 450, 140));
+        ItemBlockController bed = new ItemBlockController(new ItemBlock(10, 15, 100, 100));
+        ItemBlockController lockedArea = new ItemBlockController(new ItemBlock(10, 15, 200, 100));
+        
+        groundCtrl.addItemBlock(dogHouse);
+        houseCtrl.addItemBlock(maidRoomWall);
+        houseCtrl.addItemBlock(wifeRoomWall);
+        houseCtrl.addItemBlock(butlerRoomWall);
+        houseCtrl.addItemBlock(workringRoomWall);
+        maidRoomCtrl.addItemBlock(bed);
+        butlerRoomCtrl.addItemBlock(bed);
+        wifeRoomCtrl.addItemBlock(bed);
+        workingRoomCtrl.addItemBlock(lockedArea);
         
         view.addPanel(groundCtrl.getView(), groundCtrl.getView().getName());
         view.addPanel(houseCtrl.getView(), houseCtrl.getView().getName());

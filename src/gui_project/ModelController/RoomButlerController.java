@@ -15,7 +15,7 @@ import java.awt.Graphics2D;
 //Pass the detective controller to other controllers cuz we want to manage the detective
 //in every view
 //We pass the MainController so we can change panels
-public class RoomButlerController
+public class RoomButlerController extends ControlItemBlocks
 {   
     private final RoomButlerView view;
   

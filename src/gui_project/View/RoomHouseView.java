@@ -6,9 +6,9 @@
 package gui_project.View;
 
 import gui_project.ModelController.*;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
@@ -18,7 +18,7 @@ import java.awt.event.ComponentListener;
  */
 public class RoomHouseView extends javax.swing.JPanel implements ComponentListener
 {
-
+    public int checkCollision = 0;
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final NPCController wifeCtrl;
@@ -45,28 +45,7 @@ public class RoomHouseView extends javax.swing.JPanel implements ComponentListen
     }
 
     @Override
-    public void paintComponent(Graphics g)
-    {
-        super.paintComponent(g);
-
-        Graphics2D g2 = (Graphics2D) g;
-        detectiveCtrl.draw(g2);
-        wifeCtrl.draw(g2);
-    }
-
-    @Override
-    public void componentShown(ComponentEvent e)
-    {
-        requestFocusInWindow();
-    }
-
-    @Override
     public void componentHidden(ComponentEvent e)
-    {
-    }
-    
-    @Override
-    public void componentResized(ComponentEvent e)
     {
         
     }
@@ -75,6 +54,40 @@ public class RoomHouseView extends javax.swing.JPanel implements ComponentListen
     public void componentMoved(ComponentEvent e)
     {
         
+    }
+    
+    @Override
+    public void componentResized(ComponentEvent e)
+    {
+        
+    }
+    
+    @Override
+    public void componentShown(ComponentEvent e)
+    {
+        requestFocusInWindow();
+    }
+    
+    public Rectangle getBound()
+    {
+        return new Rectangle(10, 15, 
+                this.getSize().width - 30, this.getSize().height - 30);
+    }
+    
+    @Override
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
+
+        Graphics2D g2 = (Graphics2D) g;
+        detectiveCtrl.draw(g2);
+        wifeCtrl.draw(g2);
+        g2.draw(getBound());
+        
+        for(ItemBlockController itemBlockCtrl : roomCtrl.getItemBlockCtrls())
+        {
+            g2.draw(itemBlockCtrl.getItemBlock().getBound());
+        }
     }
     
     /**
@@ -87,10 +100,7 @@ public class RoomHouseView extends javax.swing.JPanel implements ComponentListen
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        maidRoomWall = new javax.swing.JLabel();
-        butlerRoomWall = new javax.swing.JLabel();
-        wifeRoomWall = new javax.swing.JLabel();
-        workingRoomWall = new javax.swing.JLabel();
+        groundDoor = new javax.swing.JLabel();
         maidRoomDoor = new javax.swing.JLabel();
         butlerRoomDoor = new javax.swing.JLabel();
         wifeRoomDoor = new javax.swing.JLabel();
@@ -112,45 +122,26 @@ public class RoomHouseView extends javax.swing.JPanel implements ComponentListen
         jLabel1.setName("HouseLabel"); // NOI18N
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 60, 40));
 
-        maidRoomWall.setText("      MaidRoom");
-        maidRoomWall.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        maidRoomWall.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        maidRoomWall.setName("MaidRoomLabel"); // NOI18N
-        add(maidRoomWall, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 160, 80));
-
-        butlerRoomWall.setText("     ButlerRoom");
-        butlerRoomWall.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        butlerRoomWall.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        butlerRoomWall.setName("MaidRoomLabel"); // NOI18N
-        add(butlerRoomWall, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 250, 110));
-
-        wifeRoomWall.setText("      WifeRoom");
-        wifeRoomWall.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        wifeRoomWall.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        wifeRoomWall.setName("MaidRoomLabel"); // NOI18N
-        add(wifeRoomWall, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 250, 110));
-
-        workingRoomWall.setText("      WorkingRoom");
-        workingRoomWall.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        workingRoomWall.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        workingRoomWall.setName("MaidRoomLabel"); // NOI18N
-        add(workingRoomWall, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 540, 120));
+        groundDoor.setText("*");
+        groundDoor.setFocusCycleRoot(true);
+        groundDoor.setName("GroundDoor"); // NOI18N
+        add(groundDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 40, 10, -1));
 
         maidRoomDoor.setText("*");
         maidRoomDoor.setFocusCycleRoot(true);
         maidRoomDoor.setName("MaidRoomDoor"); // NOI18N
-        add(maidRoomDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 10, -1));
+        add(maidRoomDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 10, -1));
 
         butlerRoomDoor.setText("*");
         butlerRoomDoor.setName("ButlerRoomDoor"); // NOI18N
-        add(butlerRoomDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 190, 10, -1));
+        add(butlerRoomDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 10, -1));
 
         wifeRoomDoor.setText("*");
         wifeRoomDoor.setName("WifeRoomDoor"); // NOI18N
-        add(wifeRoomDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, 10, -1));
+        add(wifeRoomDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 290, 10, -1));
 
         workingRoomDoor.setText("*");
-        add(workingRoomDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 330, 10, -1));
+        add(workingRoomDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 330, 10, -1));
 
         jLabel2.setText("Kitchen");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, -1, -1));
@@ -161,11 +152,41 @@ public class RoomHouseView extends javax.swing.JPanel implements ComponentListen
         
         //I think we can check for the boundaries here -- if going outside the bounds
         //we wont call the keyPress
-        detectiveCtrl.keyPressed(evt);
         
+        //CHECK COLLISIONS
+//        boolean itemBlockCollision = false;
+//        boolean groundCollision = false;
+//        Rectangle boundaryCollision = null;
+//        
+//        for(ItemBlockController itemBlockCtrl : roomCtrl.getItemBlockCtrls())
+//        {
+//            if(detectiveCtrl.getView().getBound().intersects(itemBlockCtrl.getItemBlock().getBound()))
+//            {
+//                System.out.println("ItemBlock intersection " + checkCollision);
+//                checkCollision++;
+//
+//                itemBlockCollision = true;
+//                boundaryCollision = itemBlockCtrl.getItemBlock().getBound();
+//            }
+//            else if(!getBound().contains(detectiveCtrl.getView().getBound()))
+//            {
+//                groundCollision = true;
+//                boundaryCollision = this.getBound();
+//            }
+//        }
+//        
+//        detectiveCtrl.keyPressed(evt.getKeyCode(), boundaryCollision, itemBlockCollision, groundCollision);
+//        
+        
+        roomCtrl.checkCollisions(evt.getKeyCode(), roomCtrl.getItemBlockCtrls(), 
+                detectiveCtrl, getBound());
+                
         //check if the player wants to access a room
-        
-        if(detectiveCtrl.getView().getBound().intersects(maidRoomDoor.getBounds()))
+        if(detectiveCtrl.getView().getBound().intersects(groundDoor.getBounds()))
+        {
+            mainCtrl.showPanel("Ground");
+        }
+        else if(detectiveCtrl.getView().getBound().intersects(maidRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("MaidRoom");
         }
@@ -196,15 +217,11 @@ public class RoomHouseView extends javax.swing.JPanel implements ComponentListen
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel butlerRoomDoor;
-    private javax.swing.JLabel butlerRoomWall;
+    private javax.swing.JLabel groundDoor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel maidRoomDoor;
-    private javax.swing.JLabel maidRoomWall;
     private javax.swing.JLabel wifeRoomDoor;
-    private javax.swing.JLabel wifeRoomWall;
     private javax.swing.JLabel workingRoomDoor;
-    private javax.swing.JLabel workingRoomWall;
     // End of variables declaration//GEN-END:variables
-
 }

@@ -11,7 +11,7 @@ import gui_project.View.RoomMaidView;
  *
  * @author pc
  */
-public class RoomMaidController
+public class RoomMaidController extends ControlItemBlocks
 {
     private RoomMaidView view;
 

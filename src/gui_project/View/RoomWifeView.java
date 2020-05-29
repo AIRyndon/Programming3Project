@@ -6,11 +6,13 @@
 package gui_project.View;
 
 import gui_project.ModelController.DetectiveController;
+import gui_project.ModelController.ItemBlockController;
 import gui_project.ModelController.MainController;
 import gui_project.ModelController.NPCController;
 import gui_project.ModelController.RoomWifeController;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
@@ -23,6 +25,7 @@ public class RoomWifeView extends javax.swing.JPanel implements ComponentListene
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final NPCController wifeCtrl;
+    private final NPCController daughterCtrl;
     private final RoomWifeController roomCtrl;
 
     /**
@@ -31,9 +34,11 @@ public class RoomWifeView extends javax.swing.JPanel implements ComponentListene
     public RoomWifeView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
             NPCController wifeCtrl,
+            NPCController daughterCtrl,
             RoomWifeController roomCtrl)
     {     
         this.mainCtrl = mainCtrl;
+        this.daughterCtrl = daughterCtrl;
         this.detectiveCtrl = detectiveCtrl;
         this.wifeCtrl = wifeCtrl;
         this.roomCtrl = roomCtrl;
@@ -75,6 +80,12 @@ public class RoomWifeView extends javax.swing.JPanel implements ComponentListene
     {
        
     }
+        
+    public Rectangle getBound()
+    {
+        return new Rectangle(10, 15, 
+                this.getSize().width - 30, this.getSize().height - 30);
+    }
     
     @Override
     public void paintComponent(Graphics g)
@@ -85,6 +96,14 @@ public class RoomWifeView extends javax.swing.JPanel implements ComponentListene
         
         detectiveCtrl.draw(g2);
         wifeCtrl.draw(g2);
+        daughterCtrl.draw(g2);
+        
+        g2.draw(getBound());
+        
+        for(ItemBlockController itemBlockCtrl : roomCtrl.getItemBlockCtrls())
+        {
+            g2.draw(itemBlockCtrl.getItemBlock().getBound());
+        }
     }
 
     /**
@@ -142,12 +161,8 @@ public class RoomWifeView extends javax.swing.JPanel implements ComponentListene
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
         
-        detectiveCtrl.keyPressed(evt);
-        
-        if(detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))
-        {
-            mainCtrl.showPanel("House");
-        }
+        roomCtrl.checkCollisions(evt.getKeyCode(), roomCtrl.getItemBlockCtrls(), 
+                detectiveCtrl, getBound());
         
         repaint();
     }//GEN-LAST:event_formKeyPressed
@@ -156,6 +171,12 @@ public class RoomWifeView extends javax.swing.JPanel implements ComponentListene
         // TODO add your handling code here:
         
         detectiveCtrl.keyReleased(evt);
+        
+        if(detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))
+        {
+            mainCtrl.showPanel("House");
+        }
+        
         repaint();
     }//GEN-LAST:event_formKeyReleased
 

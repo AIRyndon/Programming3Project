@@ -3,12 +3,9 @@ package gui_project.View;
 import gui_project.ModelController.BaseObserver;
 import gui_project.ModelController.Detective;
 import gui_project.ModelController.DetectiveController;
-import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
-import java.awt.RenderingHints;
-import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
 public class DetectiveView implements BaseObserver
@@ -23,6 +20,7 @@ public class DetectiveView implements BaseObserver
         detective.registerObserver((BaseObserver) this);
     }
 
+    //TODO - move it to DetectiveController
     @Override
     public void update()
     {

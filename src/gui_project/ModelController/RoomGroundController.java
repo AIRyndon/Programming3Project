@@ -14,7 +14,7 @@ import gui_project.View.RoomGroundView;
 //Pass the detective controller to other controllers cuz we want to manage the detective
 //in every view
 //We pass the MainController so we can change panels
-public class RoomGroundController
+public class RoomGroundController extends ControlItemBlocks
 {   
     private final RoomGroundView view;
   
@@ -25,10 +25,8 @@ public class RoomGroundController
         view = new RoomGroundView(mainCtrl, 
                 detectiveCtrl, 
                 butlerCtrl, this);
-        
-        
     }
-
+    
     public RoomGroundView getView()
     {
         return view;

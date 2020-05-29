@@ -11,17 +11,17 @@ import gui_project.View.RoomWifeView;
  *
  * @author pc
  */
-public class RoomWifeController 
+public class RoomWifeController extends ControlItemBlocks
 {
     private final RoomWifeView view;
   
     public RoomWifeController(MainController mainCtrl, 
             DetectiveController detectiveCtrl,
-            NPCController wifeCtrl)
+            NPCController wifeCtrl,  NPCController daughterCtrl)
     {
         view = new RoomWifeView(mainCtrl, 
                 detectiveCtrl, 
-                wifeCtrl, this);
+                wifeCtrl, daughterCtrl, this);
     }
 
     public RoomWifeView getView()

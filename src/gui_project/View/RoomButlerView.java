@@ -6,11 +6,13 @@
 package gui_project.View;
 
 import gui_project.ModelController.DetectiveController;
+import gui_project.ModelController.ItemBlockController;
 import gui_project.ModelController.MainController;
 import gui_project.ModelController.NPCController;
 import gui_project.ModelController.RoomButlerController;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
@@ -41,6 +43,51 @@ public class RoomButlerView extends javax.swing.JPanel implements ComponentListe
         initComponents();
         addComponentListener(this);
         setFocusable(true);
+    }    
+
+    @Override
+    public void componentHidden(ComponentEvent e) {
+
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent e) {
+
+    }
+    
+    @Override
+    public void componentResized(ComponentEvent e) {
+
+    }
+
+    @Override
+    public void componentShown(ComponentEvent e)
+    {
+        requestFocusInWindow();
+    }
+        
+    public Rectangle getBound()
+    {
+        return new Rectangle(10, 15, 
+                this.getSize().width - 30, this.getSize().height - 30);
+    }
+        
+    @Override
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
+        
+        Graphics2D g2 = (Graphics2D) g;
+        
+        detectiveCtrl.draw(g2);
+        assistantCtrl.draw(g2);
+        
+        g2.draw(getBound());
+        
+        for(ItemBlockController itemBlockCtrl : roomCtrl.getItemBlockCtrls())
+        {
+            g2.draw(itemBlockCtrl.getItemBlock().getBound());
+        }
     }
 
     /**
@@ -99,7 +146,9 @@ public class RoomButlerView extends javax.swing.JPanel implements ComponentListe
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
         
-        detectiveCtrl.keyPressed(evt);
+        roomCtrl.checkCollisions(evt.getKeyCode(), roomCtrl.getItemBlockCtrls(), 
+                detectiveCtrl, getBound());
+        
         repaint();
     }//GEN-LAST:event_formKeyPressed
 
@@ -121,35 +170,4 @@ public class RoomButlerView extends javax.swing.JPanel implements ComponentListe
     private javax.swing.JLabel houseDoor;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
-
-    @Override
-    public void componentResized(ComponentEvent e) {
-
-    }
-
-    @Override
-    public void componentMoved(ComponentEvent e) {
-
-    }
-
-    @Override
-    public void componentShown(ComponentEvent e) {
-        requestFocusInWindow();
-    }
-
-    @Override
-    public void componentHidden(ComponentEvent e) {
-
-    }
-        
-    @Override
-    public void paintComponent(Graphics g)
-    {
-        super.paintComponent(g);
-        
-        Graphics2D g2 = (Graphics2D) g;
-        
-        detectiveCtrl.draw(g2);
-        assistantCtrl.draw(g2);
-    }
 }
