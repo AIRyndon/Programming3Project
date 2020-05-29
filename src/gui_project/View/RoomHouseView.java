@@ -47,7 +47,7 @@ public class RoomHouseView extends javax.swing.JPanel implements ComponentListen
     @Override
     public void componentHidden(ComponentEvent e)
     {
-        
+
     }
 
     @Override
@@ -153,31 +153,6 @@ public class RoomHouseView extends javax.swing.JPanel implements ComponentListen
         //I think we can check for the boundaries here -- if going outside the bounds
         //we wont call the keyPress
         
-        //CHECK COLLISIONS
-//        boolean itemBlockCollision = false;
-//        boolean groundCollision = false;
-//        Rectangle boundaryCollision = null;
-//        
-//        for(ItemBlockController itemBlockCtrl : roomCtrl.getItemBlockCtrls())
-//        {
-//            if(detectiveCtrl.getView().getBound().intersects(itemBlockCtrl.getItemBlock().getBound()))
-//            {
-//                System.out.println("ItemBlock intersection " + checkCollision);
-//                checkCollision++;
-//
-//                itemBlockCollision = true;
-//                boundaryCollision = itemBlockCtrl.getItemBlock().getBound();
-//            }
-//            else if(!getBound().contains(detectiveCtrl.getView().getBound()))
-//            {
-//                groundCollision = true;
-//                boundaryCollision = this.getBound();
-//            }
-//        }
-//        
-//        detectiveCtrl.keyPressed(evt.getKeyCode(), boundaryCollision, itemBlockCollision, groundCollision);
-//        
-        
         roomCtrl.checkCollisions(evt.getKeyCode(), roomCtrl.getItemBlockCtrls(), 
                 detectiveCtrl, getBound());
                 
@@ -185,22 +160,29 @@ public class RoomHouseView extends javax.swing.JPanel implements ComponentListen
         if(detectiveCtrl.getView().getBound().intersects(groundDoor.getBounds()))
         {
             mainCtrl.showPanel("Ground");
+            detectiveCtrl.updateGroundHouseLocation();
+            System.out.println("Print Ground");
         }
         else if(detectiveCtrl.getView().getBound().intersects(maidRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("MaidRoom");
+            detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
+            
         }
         else if(detectiveCtrl.getView().getBound().intersects(butlerRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("ButlerRoom");
+            detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
         }
         else if(detectiveCtrl.getView().getBound().intersects(wifeRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("WifeRoom");
+            detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
         }
         else if(detectiveCtrl.getView().getBound().intersects(workingRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("WorkingRoom");
+            detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
         }
         
         repaint();

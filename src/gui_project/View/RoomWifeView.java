@@ -175,6 +175,8 @@ public class RoomWifeView extends javax.swing.JPanel implements ComponentListene
         if(detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))
         {
             mainCtrl.showPanel("House");
+            detectiveCtrl.setLocationX(detectiveCtrl.getDetective().getRoomHouseLocationX());
+            detectiveCtrl.setLocationY(detectiveCtrl.getDetective().getRoomHouseLocationY());
         }
         
         repaint();

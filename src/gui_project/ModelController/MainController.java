@@ -14,13 +14,14 @@ import gui_project.View.*;
 public class MainController
 {
     private final MainView view;
+    private DetectiveController detectiveCtrl;
 
     public MainController(Detective detective)
     {
         view = new MainView();
 
         //we setup our NPCs here
-        DetectiveController detectiveCtrl = new DetectiveController(detective);
+        detectiveCtrl = new DetectiveController(detective);
         NPCController butlerCtrl = new NPCController(new NPC("Butler"));
         NPCController maidCtrl = new NPCController(new NPC("Maid"));
         NPCController assistantCtrl = new NPCController(new NPC("Assistant"));
@@ -59,13 +60,15 @@ public class MainController
         wifeRoomCtrl.addItemBlock(bed);
         workingRoomCtrl.addItemBlock(lockedArea);
         
-        view.addPanel(groundCtrl.getView(), groundCtrl.getView().getName());
         view.addPanel(houseCtrl.getView(), houseCtrl.getView().getName());
         view.addPanel(maidRoomCtrl.getView(), maidRoomCtrl.getView().getName());
         view.addPanel(butlerRoomCtrl.getView(), butlerRoomCtrl.getView().getName());
         view.addPanel(wifeRoomCtrl.getView(), wifeRoomCtrl.getView().getName());
         view.addPanel(workingRoomCtrl.getView(), workingRoomCtrl.getView().getName());
+        view.addPanel(groundCtrl.getView(), groundCtrl.getView().getName());
 
+        showPanel("Ground");
+        
         view.renderView();
     }
 
@@ -77,6 +80,8 @@ public class MainController
      */
     public void showPanel(String panelName)
     {
+        //change location
+        
         view.showPanel(panelName);
     }
 }

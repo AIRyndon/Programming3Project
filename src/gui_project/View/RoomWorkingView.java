@@ -190,6 +190,8 @@ public class RoomWorkingView extends javax.swing.JPanel implements ComponentList
         if(detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))
         {
             mainCtrl.showPanel("House");
+            detectiveCtrl.setLocationX(detectiveCtrl.getDetective().getRoomHouseLocationX());
+            detectiveCtrl.setLocationY(detectiveCtrl.getDetective().getRoomHouseLocationY());
         }
         
         repaint();

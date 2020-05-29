@@ -64,12 +64,16 @@ public class RoomGroundView extends javax.swing.JPanel implements ComponentListe
     public void componentHidden(ComponentEvent e)
     {
         /*
-        we can use this to set up things before the view gets off screen
-        -- I'm thinking like saving the detective's last location before leaving
-        this room - so when he comes back, we can set his correct location on
-        componentShown
+            I found it is hard to save detective location here, 
+            as the method in every view is invoked from bottom to the top.
+            Eg. MainController adds GroundCtrl first, then HouseCtrl, then ButlerCtrl.
+            However, componentHidden() in ButlerCtrl was invoked at the beginning,
+            then HouseCtrl, then GroundCtrl, even before the player can move. 
+            I mean I need to initialise Detective previousLocation to fit the order.
+            
+            Thus, I created a method updateGroundHouseLocation() to save current location 
+            in DetectiveController just for now. We might change/move it in the future.
         */
-        
     }
 
     @Override
@@ -100,13 +104,6 @@ public class RoomGroundView extends javax.swing.JPanel implements ComponentListe
         
         return image;
     }
-    
-    //This method has not been used anywhere
-//    public Rectangle getHouseImageBound()
-//    {
-//        return new Rectangle(housePositionX, housePositionY, 
-//                getHouseImage().getWidth(null), getHouseImage().getHeight(null));
-//    }
     
     @Override
     public void paintComponent(Graphics g)
@@ -188,6 +185,8 @@ public class RoomGroundView extends javax.swing.JPanel implements ComponentListe
         if(detectiveCtrl.getView().getBound().intersects(doorHouse.getBounds()))
         {
             mainCtrl.showPanel("House");
+            detectiveCtrl.updateGroundHouseLocation();
+            System.out.println("Print House");
         }
         
         repaint();

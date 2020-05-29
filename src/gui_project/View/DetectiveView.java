@@ -10,6 +10,14 @@ import javax.swing.ImageIcon;
 
 public class DetectiveView implements BaseObserver
 {
+    
+    /*
+     *   Hi, I am thinking that should we declare Dective class here 
+     *   as DetectiveController already contains it?
+     *   Therefore, I assume that is the reason you declared setLocationX and setLocationY 
+     *   in both Dective and DetectiveController?
+     */
+    
     private Detective detective;
     private DetectiveController controller;
 

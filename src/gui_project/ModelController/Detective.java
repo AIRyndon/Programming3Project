@@ -14,10 +14,14 @@ public class Detective extends BaseModel
     private int velX = 0;
     private int velY = 0;
     private int speed = 5;
+    private int groundHouseLocationX = 380;
+    private int groundHouseLocationY = 50;
+    private int roomHouseLocationX;
+    private int roomHouseLocationY;
 
     public Detective()
     {
-        this.setLocationX(50);
+        this.setLocationX(200);
         this.setLocationY(50);
     }
 
@@ -40,38 +44,66 @@ public class Detective extends BaseModel
     {
         this.speed = speed;
     }
-
-    /**
-     * @return the velX
-     */
+    
     public int getVelX()
     {
         return velX;
     }
-
-    /**
-     * @param velX the velX to set
-     */
+    
     void setVelX(int velX)
     {
         this.velX = velX;
         super.notifyObservers();
     }
-
-    /**
-     * @return the velY
-     */
+    
     public int getVelY()
     {
         return velY;
     }
-
-    /**
-     * @param velY the velY to set
-     */
+    
     void setVelY(int velY)
     {
         this.velY = velY;
         super.notifyObservers();
+    }
+        
+    public int getGroundHouseLocationX()
+    {
+        return groundHouseLocationX;
+    }
+    
+    void setGroundHouseLocationX(int groundHouseLocationX) 
+    {
+        this.groundHouseLocationX = groundHouseLocationX;
+    }
+    
+    public int getGroundHouseLocationY() 
+    {
+        return groundHouseLocationY;
+    }
+    
+    void setGroundHouseLocationY(int groundHouseLocationY)
+    {
+        this.groundHouseLocationY = groundHouseLocationY;
+    }
+    
+    public int getRoomHouseLocationX() 
+    {
+        return roomHouseLocationX;
+    }
+    
+    void setRoomHouseLocationX(int roomHouseLocationX) 
+    {
+        this.roomHouseLocationX = roomHouseLocationX;
+    }
+    
+    public int getRoomHouseLocationY() 
+    {
+        return roomHouseLocationY;
+    }
+
+    void setRoomHouseLocationY(int roomHouseLocationY)
+    {
+        this.roomHouseLocationY = roomHouseLocationY;
     }
 }

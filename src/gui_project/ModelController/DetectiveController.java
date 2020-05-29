@@ -27,29 +27,77 @@ public class DetectiveController
 
     public void setVelX(int velX)
     {
-        detective.setVelX(velX);
+        getDetective().setVelX(velX);
     }
 
     public void setVelY(int velY)
     {
-        detective.setVelY(velY);
+        getDetective().setVelY(velY);
     }
 
     public void setLocationX(int locationX)
     {
-        detective.setLocationX(locationX);
+        getDetective().setLocationX(locationX);
     }
 
     public void setLocationY(int locationY)
     {
-        detective.setLocationY(locationY);
+        getDetective().setLocationY(locationY);
+    }
+    
+    public void setGroundHouseLocationX(int previousLocationX) 
+    {
+        getDetective().setGroundHouseLocationX(previousLocationX);
+    }
+    
+    public void setGroundHouseLocationY(int previousLocationY) 
+    {
+        getDetective().setGroundHouseLocationY(previousLocationY);
+    }
+    
+    public void setRoomHouseLocationX(int previousLocationX) 
+    {
+        getDetective().setRoomHouseLocationX(previousLocationX);
+    }
+    
+    public void setRoomHouseLocationY(int previousLocationY) 
+    {
+        getDetective().setRoomHouseLocationY(previousLocationY);
+    }
+    
+    public Detective getDetective() 
+    {
+        return detective;
+    }
+    
+    public DetectiveView getView() 
+    {
+        return view;
     }
 
     public void draw(Graphics2D graphics2D)
     {
         getView().draw(graphics2D);
     }
+    
+    public void updateGroundHouseLocation()
+    {
+        int previousX = getDetective().getGroundHouseLocationX();
+        int previousY = getDetective().getGroundHouseLocationY();
+        setGroundHouseLocationX(getDetective().getLocationX());
+        setGroundHouseLocationY(getDetective().getLocationY());
+        setLocationX(previousX);
+        setLocationY(previousY + 15);
+    }
 
+    public void saveHouseLocation(int newLocationX, int newLocationY)
+    {
+        setRoomHouseLocationX(getDetective().getLocationX() + 5);
+        setRoomHouseLocationY(getDetective().getLocationY() - 5);
+        setLocationX(newLocationX);
+        setLocationY(newLocationY);
+    }
+    
     public void keyPressed(int keyCode, Rectangle itemBlock, 
             boolean houseCollision, boolean roomBoundaryCollision)
     {
@@ -81,7 +129,7 @@ public class DetectiveController
                     setVelY(0);
                 }
                 else 
-                    setVelY(detective.getSpeed());
+                    setVelY(getDetective().getSpeed());
                 
                 break;
             }
@@ -111,7 +159,7 @@ public class DetectiveController
                     setVelX(0);
                 }
                 else
-                    setVelX(detective.getSpeed());
+                    setVelX(getDetective().getSpeed());
                 
                 break;
             }
@@ -125,18 +173,4 @@ public class DetectiveController
         setVelY(0);
         setVelX(0);
     }
-
-    public DetectiveView getView() 
-    {
-        return view;
-    }
-    
-//    public void update()
-//    {
-//        /*I did this here to show the Observer Pattern - we should actually
-//        set this in DetectiveController and avoid this roundabout :D
-//        */
-//        detective.setLocationX(detective.getLocationX() + detective.getVelX());
-//        detective.setLocationY(detective.getLocationY() + detective.getVelY());
-//    }
 }

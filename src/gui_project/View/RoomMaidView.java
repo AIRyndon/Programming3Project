@@ -119,12 +119,12 @@ public class RoomMaidView extends javax.swing.JPanel implements ComponentListene
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("MaidRoom");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, -1, 30));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 0, -1, 30));
 
         houseDoor.setText("*");
         houseDoor.setFocusCycleRoot(true);
         houseDoor.setName("MaidRoomDoor"); // NOI18N
-        add(houseDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 73, 10, 20));
+        add(houseDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 40, 10, 20));
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -146,6 +146,8 @@ public class RoomMaidView extends javax.swing.JPanel implements ComponentListene
         if(detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))
         {
             mainCtrl.showPanel("House");
+            detectiveCtrl.setLocationX(detectiveCtrl.getDetective().getRoomHouseLocationX());
+            detectiveCtrl.setLocationY(detectiveCtrl.getDetective().getRoomHouseLocationY());
         }
         
         repaint();

@@ -26,11 +26,10 @@ public class ControlItemBlocks
         return itemBlockCtrls;
     }
     
-    //I am not sure if View methods should be defined here    
+    //I am not sure if a View method should be defined here   
     public void checkCollisions(int keyCode, ArrayList<ItemBlockController> itemBlockCtrls,
             DetectiveController detectiveCtrl, Rectangle roomBoundary)
     {
-        //CHECK COLLISIONS
         boolean itemBlockCollision = false;
         boolean groundCollision = false;
         Rectangle boundaryCollision = null;

@@ -46,7 +46,8 @@ public class RoomButlerView extends javax.swing.JPanel implements ComponentListe
     }    
 
     @Override
-    public void componentHidden(ComponentEvent e) {
+    public void componentHidden(ComponentEvent e) 
+    {
 
     }
 
@@ -160,6 +161,8 @@ public class RoomButlerView extends javax.swing.JPanel implements ComponentListe
         if(detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))
         {
             mainCtrl.showPanel("House");
+            detectiveCtrl.setLocationX(detectiveCtrl.getDetective().getRoomHouseLocationX());
+            detectiveCtrl.setLocationY(detectiveCtrl.getDetective().getRoomHouseLocationY());
         }
         
         repaint();
