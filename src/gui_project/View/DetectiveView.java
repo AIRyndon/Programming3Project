@@ -9,13 +9,10 @@ import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 
 public class DetectiveView implements BaseObserver
-{
-    
+{   
     /*
-     *   Hi, I am thinking that should we declare Dective class here 
-     *   as DetectiveController already contains it?
-     *   Therefore, I assume that is the reason you declared setLocationX and setLocationY 
-     *   in both Dective and DetectiveController?
+     *   Hi why did you declare Dective class here 
+     *   although DetectiveController already contains it?
      */
     
     private Detective detective;
