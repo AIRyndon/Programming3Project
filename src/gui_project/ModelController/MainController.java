@@ -43,6 +43,7 @@ public class MainController
         
         //Setup ItemBlocks (eg. DogHouse, room walls, etc.) to advoid player access
         ItemBlockController dogHouse = new ItemBlockController(new ItemBlock(630, 15, 150, 100));
+        ItemBlockController houseArea = new ItemBlockController(new ItemBlock(276,83,200,200));
         ItemBlockController maidRoomWall = new ItemBlockController(new ItemBlock(10, 15, 200, 110));
         ItemBlockController wifeRoomWall = new ItemBlockController(new ItemBlock(10, 125, 200, 110));
         ItemBlockController butlerRoomWall = new ItemBlockController(new ItemBlock(10, 235, 200, 110));
@@ -51,6 +52,7 @@ public class MainController
         ItemBlockController lockedArea = new ItemBlockController(new ItemBlock(10, 15, 200, 100));
         
         groundCtrl.addItemBlock(dogHouse);
+        groundCtrl.addItemBlock(houseArea);
         houseCtrl.addItemBlock(maidRoomWall);
         houseCtrl.addItemBlock(wifeRoomWall);
         houseCtrl.addItemBlock(butlerRoomWall);

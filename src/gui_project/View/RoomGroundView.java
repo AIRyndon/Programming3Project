@@ -46,9 +46,10 @@ public class RoomGroundView extends javax.swing.JPanel implements ComponentListe
         this.butlerCtrl = butlerCtrl;
         this.roomCtrl = roomCtrl;
         
-        initComponents();
+        initComponents();     
         addComponentListener(this);
         setFocusable(true);
+        repaint();
     }
 
     @Override
@@ -121,16 +122,9 @@ public class RoomGroundView extends javax.swing.JPanel implements ComponentListe
             g2.draw(itemBlockCtrl.getItemBlock().getBound());
         }
         
-        housePositionX = doorHouse.getLocation().x - 84;
-        housePositionY = doorHouse.getLocation().y - 187;
-        
-        //Add houseImage as an itemBlock
-        roomCtrl.addItemBlock(new ItemBlockController(new ItemBlock(housePositionX, housePositionY, 
-                getHouseImage().getWidth(null), getHouseImage().getHeight(null))));
-        
-        g.drawImage(getHouseImage(), housePositionX, housePositionY, null);
+        g2.drawImage(getHouseImage(), 276, 83, null);
     }
-    
+      
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

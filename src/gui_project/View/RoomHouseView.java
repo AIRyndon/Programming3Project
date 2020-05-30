@@ -24,9 +24,6 @@ public class RoomHouseView extends javax.swing.JPanel implements ComponentListen
     private final NPCController wifeCtrl;
     private final RoomHouseController roomCtrl;
 
-    /**
-     * Creates new form RoomTwoView
-     */
     public RoomHouseView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
             NPCController wifeCtrl,
