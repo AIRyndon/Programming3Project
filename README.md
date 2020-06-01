@@ -1,8 +1,8 @@
 # Detective Game
 
 ```
-That is an RPG game where you play as a detective.
-You are able to move, get NPC talks, unlock keys, and save hints to figure our who is the killer.
+That is an RPG game where your role is a detective.
+You are able to move, get NPC talks, unlock keys, and save hints to figure out who is the killer.
 ```
 
 ## How the game works?
