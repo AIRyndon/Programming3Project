@@ -26,7 +26,7 @@ Initially, the game has
 - Victim body declared as 'V'
 - 2 locks, declared as '#' in Ground and Working room.
 - 4 key passwords to unlock those 2 locks.
-- To get a key password, player need to correctly answer a question.
+- To get a key password, player need to answer a question correctly.
 
 To-do list to finish the game:
 -> Talk with 5 NPC
