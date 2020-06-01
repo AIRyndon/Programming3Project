@@ -5,7 +5,7 @@ That is an RPG game where your role is a detective.
 You are able to move, get NPC talks, unlock keys, and save hints to figure out who is the killer.
 ```
 
-## How the game works?
+## How does the game work?
 
 ### Step 1: Introduce story
 
