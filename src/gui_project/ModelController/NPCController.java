@@ -22,12 +22,20 @@ public class NPCController
         this.npc = npc;
         view = new NPCView(npc, this);
     }
-
+     
+    public NPC getNPC(){
+        return npc;
+    }
+    
+    public NPCView getView(){
+        return view;
+    }
+    
     public void draw(Graphics2D graphics2D)
     {
         view.draw(graphics2D, npc.getRole());
     }
-
+    
     public void setLocationX(int locationX)
     {
         npc.setLocationX(locationX);

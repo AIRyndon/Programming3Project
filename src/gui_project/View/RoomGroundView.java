@@ -6,7 +6,6 @@
 package gui_project.View;
 
 import gui_project.ModelController.DetectiveController;
-import gui_project.ModelController.ItemBlock;
 import gui_project.ModelController.ItemBlockController;
 import gui_project.ModelController.MainController;
 import gui_project.ModelController.NPCController;
@@ -25,9 +24,6 @@ import javax.swing.ImageIcon;
  */
 public class RoomGroundView extends javax.swing.JPanel implements ComponentListener
 {
-    int checkCollision = 0;
-    private int housePositionX;
-    private int housePositionY;
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final NPCController butlerCtrl;
@@ -49,7 +45,6 @@ public class RoomGroundView extends javax.swing.JPanel implements ComponentListe
         initComponents();     
         addComponentListener(this);
         setFocusable(true);
-        repaint();
     }
 
     @Override
@@ -118,8 +113,8 @@ public class RoomGroundView extends javax.swing.JPanel implements ComponentListe
         g2.draw(getBound());
         
         for(ItemBlockController itemBlockCtrl : roomCtrl.getItemBlockCtrls())
-        {
-            g2.draw(itemBlockCtrl.getItemBlock().getBound());
+        { 
+            itemBlockCtrl.draw(g2);
         }
         
         g2.drawImage(getHouseImage(), 276, 83, null);

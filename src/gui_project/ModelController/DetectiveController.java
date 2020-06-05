@@ -105,8 +105,8 @@ public class DetectiveController
         {
             case KeyEvent.VK_W:
             {
-                if((houseCollision && view.getBound().getMinY() > itemBlock.getMinY()) ||
-                    (roomBoundaryCollision && view.getBound().getMinY() < itemBlock.getMinY()))
+                if((houseCollision && view.getBound().getMinY() >= itemBlock.getMinY()) ||
+                    (roomBoundaryCollision && view.getBound().getMinY() <= itemBlock.getMinY()))
                 {
                     System.out.println(view.getBound().getMinY());
                     System.out.println(itemBlock.getMaxY());
@@ -120,8 +120,8 @@ public class DetectiveController
             }
             case KeyEvent.VK_S:
             {
-                if((houseCollision && view.getBound().getMaxY() < itemBlock.getMaxY()) ||
-                    (roomBoundaryCollision && view.getBound().getMaxY() > itemBlock.getMaxY()))
+                if((houseCollision && view.getBound().getMaxY() <= itemBlock.getMaxY()) ||
+                    (roomBoundaryCollision && view.getBound().getMaxY() >= itemBlock.getMaxY()))
                 {
                     System.out.println(view.getBound().getMaxY());
                     System.out.println(itemBlock.getMinY());
@@ -129,14 +129,14 @@ public class DetectiveController
                     setVelY(0);
                 }
                 else 
-                    setVelY(getDetective().getSpeed());
+                    setVelY(detective.getSpeed());
                 
                 break;
             }
             case KeyEvent.VK_A:
             {
-                if((houseCollision && view.getBound().getMinX() > itemBlock.getMinX()) ||
-                    (roomBoundaryCollision && view.getBound().getMinX() < itemBlock.getMinX()))
+                if((houseCollision && view.getBound().getMinX() >= itemBlock.getMinX()) ||
+                    (roomBoundaryCollision && view.getBound().getMinX() <= itemBlock.getMinX()))
                 {
                     System.out.println(view.getBound().getMinX());
                     System.out.println(itemBlock.getMaxX());
@@ -150,8 +150,8 @@ public class DetectiveController
             }
             case KeyEvent.VK_D:
             {
-                if((houseCollision && view.getBound().getMaxX() < itemBlock.getMaxX()) ||
-                    (roomBoundaryCollision && view.getBound().getMaxX() > itemBlock.getMaxX()))
+                if((houseCollision && view.getBound().getMaxX() <= itemBlock.getMaxX()) ||
+                    (roomBoundaryCollision && view.getBound().getMaxX() >= itemBlock.getMaxX()))
                 {
                     System.out.println(view.getBound().getMaxX());
                     System.out.println(itemBlock.getMinX());

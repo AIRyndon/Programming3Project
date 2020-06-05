@@ -20,7 +20,7 @@ public class ItemBlockController
     public ItemBlockController(ItemBlock itemBlock)
     {
         this.itemBlock = itemBlock;
-        itemBlockView = new ItemBlockView(this.getItemBlock(), this);
+        itemBlockView = new ItemBlockView(itemBlock, this);
     }
     
     public void draw(Graphics2D graphics2D)

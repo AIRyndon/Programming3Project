@@ -18,27 +18,23 @@ import java.awt.event.ComponentListener;
  */
 public class RoomHouseView extends javax.swing.JPanel implements ComponentListener
 {
-    public int checkCollision = 0;
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
-    private final NPCController wifeCtrl;
     private final RoomHouseController roomCtrl;
 
     public RoomHouseView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
-            NPCController wifeCtrl,
             RoomHouseController roomCtrl)
     {
         this.mainCtrl = mainCtrl;
         this.detectiveCtrl = detectiveCtrl;
-        this.wifeCtrl = wifeCtrl;
         this.roomCtrl = roomCtrl;
 
         //our view should also implement Observer Interfaces if it needs data
         //from a model
         initComponents();
         addComponentListener(this);
-        setFocusable(true);
+        setFocusable(true);      
     }
 
     @Override
@@ -78,12 +74,11 @@ public class RoomHouseView extends javax.swing.JPanel implements ComponentListen
 
         Graphics2D g2 = (Graphics2D) g;
         detectiveCtrl.draw(g2);
-        wifeCtrl.draw(g2);
         g2.draw(getBound());
         
         for(ItemBlockController itemBlockCtrl : roomCtrl.getItemBlockCtrls())
         {
-            g2.draw(itemBlockCtrl.getItemBlock().getBound());
+            itemBlockCtrl.draw(g2);
         }
     }
     
@@ -94,7 +89,8 @@ public class RoomHouseView extends javax.swing.JPanel implements ComponentListen
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jLabel1 = new javax.swing.JLabel();
         groundDoor = new javax.swing.JLabel();
@@ -105,11 +101,14 @@ public class RoomHouseView extends javax.swing.JPanel implements ComponentListen
         jLabel2 = new javax.swing.JLabel();
 
         setName("House"); // NOI18N
-        addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
+        addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt)
+            {
                 formKeyPressed(evt);
             }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
+            public void keyReleased(java.awt.event.KeyEvent evt)
+            {
                 formKeyReleased(evt);
             }
         });

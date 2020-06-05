@@ -20,8 +20,7 @@ public class RoomHouseController extends ControlItemBlocks
             NPCController wifeCtrl)
     {
         view = new RoomHouseView(mainCtrl,
-                detectiveCtrl, 
-                wifeCtrl,this);
+                detectiveCtrl,this);
     }
     
     public RoomHouseView getView()

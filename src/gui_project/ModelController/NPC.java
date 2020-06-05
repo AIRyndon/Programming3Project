@@ -18,9 +18,11 @@ public class NPC extends BaseModel
     private boolean hasTalked;
     private final String role;
     
-    public NPC(String role)
+    public NPC(String role,int locationX,int locationY)
     {
         this.role = role;
+        setLocationX(locationX);
+        setLocationY(locationY);
     }
     
     public String getRole()
@@ -44,9 +46,9 @@ public class NPC extends BaseModel
         this.hasTalked = hasTalked;
     }
     
-    public void generateRandomPosition()
+    public void generateRandomPosition(int xCoord, int yCoord)
     {
-        this.setLocationX(100);
-        this.setLocationY(100);
+        this.setLocationX(xCoord);
+        this.setLocationY(yCoord);
     }
 }
