@@ -102,7 +102,7 @@ public class RoomWifeView extends javax.swing.JPanel implements ComponentListene
         
         for(ItemBlockController itemBlockCtrl : roomCtrl.getItemBlockCtrls())
         {
-            g2.draw(itemBlockCtrl.getItemBlock().getBound());
+            itemBlockCtrl.draw(g2);
         }
     }
 

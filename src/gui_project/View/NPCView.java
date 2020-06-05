@@ -14,7 +14,6 @@ public class NPCView
     {
         this.npc = npc;
         npcController = controller;
-        setValidPosition();
     }
     
     public void draw(Graphics2D graphics2D, String symbol) 
@@ -30,20 +29,6 @@ public class NPCView
     
     public Rectangle getBound() 
     {
-        return new Rectangle(npc.getLocationX() - 4, npc.getLocationY() - 12, 15, 15);
-    }
-    
-    private void setValidPosition() 
-    {        
-        npc.generateRandomPosition();
-            
-//        while(getBound().intersects(Ground.player.getBound()) ||
-//                getBound().intersects(Ground.dogHouse.getBound()) ||
-//                getBound().intersects(Ground.house.getBound()) || 
-//                getBound().intersects(Ground.hint.getBound()) ||
-//                !Ground.getBound().contains(this.getBound()))
-//        {
-//            npc.generateRandomPosition();
-//        }
+        return new Rectangle(npc.getLocationX() - 4, npc.getLocationY() - 12, 20, 20);
     }
 }
