@@ -13,6 +13,10 @@ public class DetectiveView implements BaseObserver
     /*
      *   Hi why did you declare Dective class here 
      *   although DetectiveController already contains it?
+     
+        Cuz we are using it directly here. too lazy to call get<Model> from
+        the Controller :D. Any method is fine cuz the reference all point
+        to the same object in the end
      */
     
     private Detective detective;
@@ -25,13 +29,9 @@ public class DetectiveView implements BaseObserver
         detective.registerObserver((BaseObserver) this);
     }
 
-    //TODO - move it to DetectiveController
     @Override
     public void update()
     {
-        /*I did this here to show the Observer Pattern - we should actually
-        set this in DetectiveController and avoid this roundabout :D
-        */
         controller.setLocationX(detective.getLocationX() + detective.getVelX());
         controller.setLocationY(detective.getLocationY() + detective.getVelY());
     }
@@ -39,7 +39,6 @@ public class DetectiveView implements BaseObserver
     public void draw(Graphics2D graphics2D)
     {
         graphics2D.drawImage(getPlayerImage(), detective.getLocationX(), detective.getLocationY(), null);
-        //graphics2D.draw(getBound());
     }
 
     public Image getPlayerImage()

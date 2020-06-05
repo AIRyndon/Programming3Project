@@ -11,7 +11,7 @@ import gui_project.View.RoomWifeView;
  *
  * @author pc
  */
-public class RoomWifeController extends ControlItemBlocks
+public class RoomWifeController extends BaseRoomController
 {
     private final RoomWifeView view;
   

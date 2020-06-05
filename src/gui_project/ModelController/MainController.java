@@ -13,6 +13,7 @@ import gui_project.View.*;
  */
 public class MainController
 {
+
     private final MainView view;
 
     public MainController(Detective detective)
@@ -21,13 +22,13 @@ public class MainController
 
         //we setup our NPCs here
         DetectiveController detectiveCtrl = new DetectiveController(detective);
-        NPCController butlerCtrl = new NPCController(new NPC("B",100,100));
-        NPCController maidCtrl = new NPCController(new NPC("M",200,200));
-        NPCController assistantCtrl = new NPCController(new NPC("A",240,240));
-        NPCController wifeCtrl = new NPCController(new NPC("W",230,230));
-        NPCController daughterCtrl = new NPCController(new NPC("D",150,150));
-        NPCController victimCtrl = new NPCController(new NPC("V",300,300));
-        
+        NPCController butlerCtrl = new NPCController(new NPC("Butler", "B", 100, 100, 20, 20));
+        NPCController maidCtrl = new NPCController(new NPC("Maid", "M", 200, 200, 20, 20));
+        NPCController assistantCtrl = new NPCController(new NPC("Assistant", "A", 240, 240, 20, 20));
+        NPCController wifeCtrl = new NPCController(new NPC("Wife", "W", 230, 230, 20, 20));
+        NPCController daughterCtrl = new NPCController(new NPC("Daughter", "D", 150, 150, 20, 20));
+        NPCController victimCtrl = new NPCController(new NPC("Victim", "V", 300, 300, 20, 20));
+
         /*We setup the rooms here - the room names will be Ground, House, Etc -
         we can create the panels using the GUI builder now because 
         we have some code separation, 
@@ -39,71 +40,37 @@ public class MainController
         RoomButlerController butlerRoomCtrl = new RoomButlerController(this, detectiveCtrl, assistantCtrl);
         RoomWifeController wifeRoomCtrl = new RoomWifeController(this, detectiveCtrl, wifeCtrl, daughterCtrl);
         RoomWorkingController workingRoomCtrl = new RoomWorkingController(this, detectiveCtrl, victimCtrl);
-        
+
         //Setup ItemBlocks (eg. DogHouse, room walls, etc.) to advoid player collision
-        NPCView butlerView = butlerCtrl.getView();
-        ItemBlockController butlerBlock = new ItemBlockController(new ItemBlock(butlerView.getBound().x,
-                                                                        butlerView.getBound().y,
-                                                                        butlerView.getBound().width,
-                                                                        butlerView.getBound().height));
-        ItemBlockController dogHouse = new ItemBlockController(new ItemBlock(630, 15, 150, 100));           
-        ItemBlockController houseArea = new ItemBlockController(new ItemBlock(276,83,200,200));
-            
+        ItemBlockController dogHouse = new ItemBlockController(new ItemBlock("DogHouse", 630, 15, 150, 100));
+        ItemBlockController houseArea = new ItemBlockController(new ItemBlock("HouseArea", 276, 83, 200, 200));
+        ItemBlockController maidRoomWall = new ItemBlockController(new ItemBlock("MaidWall", 10, 15, 200, 110));
+        ItemBlockController wifeRoomWall = new ItemBlockController(new ItemBlock("WifeWall", 10, 125, 200, 110));
+        ItemBlockController butlerRoomWall = new ItemBlockController(new ItemBlock("ButlerWall", 10, 235, 200, 110));
+        ItemBlockController officeRoomWall = new ItemBlockController(new ItemBlock("OfficeWall", 10, 345, 450, 140));
+        ItemBlockController lockedArea = new ItemBlockController(new ItemBlock("LockedArea", 10, 15, 200, 100));
+        ItemBlockController bed = new ItemBlockController(new ItemBlock("Bed", 10, 15, 100, 100));
+
         groundCtrl.addItemBlock(dogHouse);
-        groundCtrl.addItemBlock(butlerBlock);
+        groundCtrl.addItemBlock(butlerCtrl);
         groundCtrl.addItemBlock(houseArea);
-        
-        ItemBlockController maidRoomWall = new ItemBlockController(new ItemBlock(10, 15, 200, 110));
-        ItemBlockController wifeRoomWall = new ItemBlockController(new ItemBlock(10, 125, 200, 110));
-        ItemBlockController butlerRoomWall = new ItemBlockController(new ItemBlock(10, 235, 200, 110));
-        ItemBlockController workringRoomWall = new ItemBlockController(new ItemBlock(10, 345, 450, 140));
-        
+
         houseCtrl.addItemBlock(maidRoomWall);
         houseCtrl.addItemBlock(wifeRoomWall);
         houseCtrl.addItemBlock(butlerRoomWall);
-        houseCtrl.addItemBlock(workringRoomWall);
-                     
-        NPCView assistantView = assistantCtrl.getView();
-        ItemBlockController assistantBlock = new ItemBlockController(new ItemBlock(assistantView.getBound().x,
-                                                                        assistantView.getBound().y,
-                                                                        assistantView.getBound().width,
-                                                                        assistantView.getBound().height));
-        butlerRoomCtrl.addItemBlock(assistantBlock);
-        
-        NPCView maidView = maidCtrl.getView();
-        ItemBlockController maidBlock = new ItemBlockController(new ItemBlock(maidView.getBound().x,
-                                                                        maidView.getBound().y,
-                                                                        maidView.getBound().width,
-                                                                        maidView.getBound().height));
-        maidRoomCtrl.addItemBlock(maidBlock);
-        
-        NPCView wifeView = wifeCtrl.getView();
-        NPCView daughterView = daughterCtrl.getView();
-        ItemBlockController wifeBlock = new ItemBlockController(new ItemBlock(wifeView.getBound().x,
-                                                                        wifeView.getBound().y,
-                                                                        wifeView.getBound().width,
-                                                                        wifeView.getBound().height));       
-        ItemBlockController daughterBlock = new ItemBlockController(new ItemBlock(daughterView.getBound().x,
-                                                                        daughterView.getBound().y,
-                                                                        daughterView.getBound().width,
-                                                                        daughterView.getBound().height));
-        wifeRoomCtrl.addItemBlock(wifeBlock);
-        wifeRoomCtrl.addItemBlock(daughterBlock);
-        
-        NPCView victimView = victimCtrl.getView();
-        ItemBlockController victimBlock = new ItemBlockController(new ItemBlock(victimView.getBound().x,
-                                                                        victimView.getBound().y,
-                                                                        victimView.getBound().width,
-                                                                        victimView.getBound().height));
-        ItemBlockController lockedArea = new ItemBlockController(new ItemBlock(10, 15, 200, 100));
-        workingRoomCtrl.addItemBlock(lockedArea);
-        workingRoomCtrl.addItemBlock(victimBlock);
-        
-        ItemBlockController bed = new ItemBlockController(new ItemBlock(10, 15, 100, 100));       
-        maidRoomCtrl.addItemBlock(bed);
+        houseCtrl.addItemBlock(officeRoomWall);
+
+        butlerRoomCtrl.addItemBlock(assistantCtrl);
         butlerRoomCtrl.addItemBlock(bed);
+        maidRoomCtrl.addItemBlock(maidCtrl);
+        maidRoomCtrl.addItemBlock(bed);
+
+        wifeRoomCtrl.addItemBlock(wifeCtrl);
+        wifeRoomCtrl.addItemBlock(daughterCtrl);
         wifeRoomCtrl.addItemBlock(bed);
-      
+        workingRoomCtrl.addItemBlock(victimCtrl);
+        workingRoomCtrl.addItemBlock(lockedArea);
+
         view.addPanel(houseCtrl.getView(), houseCtrl.getView().getName());
         view.addPanel(maidRoomCtrl.getView(), maidRoomCtrl.getView().getName());
         view.addPanel(butlerRoomCtrl.getView(), butlerRoomCtrl.getView().getName());
@@ -111,15 +78,15 @@ public class MainController
         view.addPanel(workingRoomCtrl.getView(), workingRoomCtrl.getView().getName());
         view.addPanel(groundCtrl.getView(), groundCtrl.getView().getName());
 
-        showPanel("Ground");       
+        showPanel("Ground");
         view.renderView();
     }
 
     /**
      * This is what's ultimately called in the other panels to change what panel
-     * to show - that is why we pass the MainController to the other
-     * controllers
-     * @param panelName 
+     * to show - that is why we pass the MainController to the other controllers
+     *
+     * @param panelName
      */
     public void showPanel(String panelName)
     {

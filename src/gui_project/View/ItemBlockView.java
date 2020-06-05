@@ -5,10 +5,10 @@
  */
 package gui_project.View;
 
+import gui_project.NamedRectangle;
 import gui_project.ModelController.ItemBlock;
 import gui_project.ModelController.ItemBlockController;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 
 /**
  *
@@ -30,9 +30,8 @@ public class ItemBlockView
         graphics2D.draw(getBound());
     }
     
-    public Rectangle getBound() 
+    public NamedRectangle getBound() 
     {
-        return new Rectangle(itemBlock.getLocationX(), itemBlock.getLocationY(), 
-                itemBlock.getWidth(), itemBlock.getHeight());
+        return itemBlock.getBound();
     }
 }

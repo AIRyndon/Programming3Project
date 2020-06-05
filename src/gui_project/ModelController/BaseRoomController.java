@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author pc
  */
-public class ControlItemBlocks
+public class BaseRoomController
 {
     private ArrayList<ItemBlockController> itemBlockCtrls = new ArrayList<ItemBlockController>();
     

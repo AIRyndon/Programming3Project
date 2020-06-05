@@ -11,7 +11,7 @@ import gui_project.View.RoomHouseView;
  *
  * @author Angelo
  */
-public class RoomHouseController extends ControlItemBlocks
+public class RoomHouseController extends BaseRoomController
 {
     private final RoomHouseView view;
 

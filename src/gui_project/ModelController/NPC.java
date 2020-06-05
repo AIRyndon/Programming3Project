@@ -5,31 +5,43 @@
  */
 package gui_project.ModelController;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Random;
 
 /**
  *
  * @author Angelo
  */
-public class NPC extends BaseModel
+public class NPC extends ItemBlock
 {
+
     public static Random random = new Random();
-    
+
     private boolean hasTalked;
-    private final String role;
-    
-    public NPC(String role,int locationX,int locationY)
+    private final String symbol;
+    private String role;
+    private String firstLine = "";
+    private String secondLine = "";
+
+    public NPC(String role, String symbol, int locationX, int locationY,
+            int width, int height)
     {
+        super(role,locationX,locationY,width,height);
+        
         this.role = role;
+        this.symbol = symbol;
         setLocationX(locationX);
         setLocationY(locationY);
+        readNPCLines();
     }
-    
-    public String getRole()
+
+    public String getSymbol()
     {
-        return role;
+        return symbol;
     }
- 
+
     /**
      * @return the hasTalked
      */
@@ -45,10 +57,90 @@ public class NPC extends BaseModel
     {
         this.hasTalked = hasTalked;
     }
-    
+
     public void generateRandomPosition(int xCoord, int yCoord)
     {
         this.setLocationX(xCoord);
         this.setLocationY(yCoord);
+    }
+
+    private void readNPCLines()
+    {
+        try
+        {
+            BufferedReader br = new BufferedReader(new FileReader(
+                    System.getProperty("user.dir") + "/FileDB/" + (getRole() + ".txt")));
+
+            String line;
+
+            while ((line = br.readLine()) != null)
+            {
+                if (!line.isEmpty())
+                {
+                    setFirstLine(firstLine + line + '\n');
+                } else
+                {
+                    setSecondLine(secondLine + line);
+
+                    while ((line = br.readLine()) != null)
+                    {
+                        setSecondLine(secondLine + line + '\n');
+                    }
+
+                    break;
+                }
+            }
+        } catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * @return the firstLine
+     */
+    public String getFirstLine()
+    {
+        return firstLine;
+    }
+
+    /**
+     * @return the secondLine
+     */
+    public String getSecondLine()
+    {
+        return secondLine;
+    }
+
+    /**
+     * @param firstLine the firstLine to set
+     */
+    void setFirstLine(String firstLine)
+    {
+        this.firstLine = firstLine;
+    }
+
+    /**
+     * @param secondLine the secondLine to set
+     */
+    void setSecondLine(String secondLine)
+    {
+        this.secondLine = secondLine;
+    }
+
+    /**
+     * @return the role
+     */
+    public String getRole()
+    {
+        return role;
+    }
+
+    /**
+     * @param role the role to set
+     */
+    void setRole(String role)
+    {
+        this.role = role;
     }
 }

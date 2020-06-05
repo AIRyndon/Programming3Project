@@ -12,7 +12,7 @@ import gui_project.View.RoomWorkingView;
  *
  * @author pc
  */
-public class RoomWorkingController extends ControlItemBlocks
+public class RoomWorkingController extends BaseRoomController
 {
     private final RoomWorkingView view;
   
