@@ -5,15 +5,52 @@
  */
 package gui_project.ModelController;
 
+import gui_project.View.HintView;
+import java.awt.Graphics2D;
+
 /**
  *
  * @author Angelo
  */
 public class HintController extends ItemBlockController
 {
-    
-    public HintController(ItemBlock itemBlock)
+
+    private final Hint hint;
+    private final HintView view;
+
+    public HintController(Hint hint)
     {
-        super(itemBlock);
-    }   
+        super(hint);
+        this.hint = hint;
+        view = new HintView(hint, this);
+    }
+
+    public void pickup()
+    {
+        hint.setVisible(false);
+        hint.setMessage(hint.getMessage());
+        hint.sendMessage();
+    }
+
+    public void reveal()
+    {
+        hint.setVisible(true);
+    }
+
+    public void clearMessageArea()
+    {
+        hint.setMessage("");
+        hint.sendMessage();
+    }
+
+    public Hint getHint()
+    {
+        return hint;
+    }
+
+    @Override
+    public void draw(Graphics2D g2)
+    {
+        view.draw(g2);
+    }
 }

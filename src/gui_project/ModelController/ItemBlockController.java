@@ -7,7 +7,6 @@ package gui_project.ModelController;
 
 import gui_project.View.ItemBlockView;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 
 /**

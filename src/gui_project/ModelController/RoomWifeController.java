@@ -17,11 +17,12 @@ public class RoomWifeController extends BaseRoomController
   
     public RoomWifeController(MainController mainCtrl, 
             DetectiveController detectiveCtrl,
-            NPCController wifeCtrl,  NPCController daughterCtrl)
+            NPCController wifeCtrl,
+            NPCController daughterCtrl)
     {
         view = new RoomWifeView(mainCtrl, 
-                detectiveCtrl, 
-                wifeCtrl, daughterCtrl, this);
+                detectiveCtrl,wifeCtrl, 
+                daughterCtrl, this);
     }
 
     public RoomWifeView getView()

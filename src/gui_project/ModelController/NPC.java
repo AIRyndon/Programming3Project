@@ -19,17 +19,19 @@ public class NPC extends ItemBlock
 
     public static Random random = new Random();
 
-    private boolean hasTalked;
+    private boolean speaking;
     private final String symbol;
     private String role;
     private String firstLine = "";
     private String secondLine = "";
+    private String spokenLine = "";
+    private HintController ownedHint = null;
 
     public NPC(String role, String symbol, int locationX, int locationY,
             int width, int height)
     {
-        super(role,locationX,locationY,width,height);
-        
+        super(locationX, locationY, width, height);
+
         this.role = role;
         this.symbol = symbol;
         setLocationX(locationX);
@@ -43,25 +45,28 @@ public class NPC extends ItemBlock
     }
 
     /**
-     * @return the hasTalked
+     * @return the speaking
      */
-    public boolean HasTalked()
+    public boolean isSpeaking()
     {
-        return hasTalked;
+        return speaking;
     }
 
     /**
-     * @param hasTalked the hasTalked to set
+     * @param speaking the speaking to set
      */
-    void setHasTalked(boolean hasTalked)
+    void setSpeaking(boolean speaking)
     {
-        this.hasTalked = hasTalked;
-    }
+        this.speaking = speaking;
 
-    public void generateRandomPosition(int xCoord, int yCoord)
-    {
-        this.setLocationX(xCoord);
-        this.setLocationY(yCoord);
+        if (speaking)
+        {
+            spokenLine = firstLine;
+        } else
+        {
+            spokenLine = "";
+        }
+        notifyObservers();
     }
 
     private void readNPCLines()
@@ -97,22 +102,6 @@ public class NPC extends ItemBlock
     }
 
     /**
-     * @return the firstLine
-     */
-    public String getFirstLine()
-    {
-        return firstLine;
-    }
-
-    /**
-     * @return the secondLine
-     */
-    public String getSecondLine()
-    {
-        return secondLine;
-    }
-
-    /**
      * @param firstLine the firstLine to set
      */
     void setFirstLine(String firstLine)
@@ -142,5 +131,29 @@ public class NPC extends ItemBlock
     void setRole(String role)
     {
         this.role = role;
+    }
+
+    /**
+     * @return the spokenLine
+     */
+    public String getSpokenLine()
+    {
+        return spokenLine;
+    }
+
+    /**
+     * @return the ownedHint
+     */
+    public HintController getOwnedHint()
+    {
+        return ownedHint;
+    }
+
+    /**
+     * @param ownedHint the ownedHint to set
+     */
+    void setOwnedHint(HintController ownedHint)
+    {
+        this.ownedHint = ownedHint;
     }
 }

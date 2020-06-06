@@ -5,6 +5,7 @@
  */
 package gui_project.View;
 
+import gui_project.ModelController.BaseModel;
 import gui_project.ModelController.DetectiveController;
 import gui_project.ModelController.ItemBlockController;
 import gui_project.ModelController.MainController;
@@ -15,13 +16,18 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import gui_project.ModelController.BaseObserver;
+import gui_project.ModelController.Hint;
+import gui_project.ModelController.NPC;
 
 /**
  *
  * @author pc
  */
-public class RoomButlerView extends javax.swing.JPanel implements ComponentListener
+public class RoomButlerView extends javax.swing.JPanel implements
+        ComponentListener, BaseObserver
 {
+
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final NPCController assistantCtrl;
@@ -34,58 +40,60 @@ public class RoomButlerView extends javax.swing.JPanel implements ComponentListe
             DetectiveController detectiveCtrl,
             NPCController assistantCtrl,
             RoomButlerController roomCtrl)
-    {     
+    {
         this.mainCtrl = mainCtrl;
         this.detectiveCtrl = detectiveCtrl;
         this.assistantCtrl = assistantCtrl;
         this.roomCtrl = roomCtrl;
         
+        assistantCtrl.getNPC().registerObserver(this);
         initComponents();
         addComponentListener(this);
         setFocusable(true);
-    }    
+    }
 
     @Override
-    public void componentHidden(ComponentEvent e) 
+    public void update(BaseModel model)
     {
-
-    }
-
-    @Override
-    public void componentMoved(ComponentEvent e) {
-
-    }
-    
-    @Override
-    public void componentResized(ComponentEvent e) {
-
+        if (model instanceof NPC)
+        {
+            gameTextArea.setText(((NPC) model).getSpokenLine());
+        }
+        else if (model instanceof Hint)
+        {
+            gameTextArea.setText(((Hint) model).getMessage());
+        }
     }
 
     @Override
     public void componentShown(ComponentEvent e)
     {
+        roomCtrl.getItemBlockCtrls().forEach(i ->
+        {
+            i.getItemBlock().registerObserver(this);
+        });   
         requestFocusInWindow();
     }
-        
+
     public Rectangle getBound()
     {
-        return new Rectangle(10, 15, 
+        return new Rectangle(10, 15,
                 this.getSize().width - 30, this.getSize().height - 30);
     }
-        
+
     @Override
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        
+
         Graphics2D g2 = (Graphics2D) g;
-        
+
         detectiveCtrl.draw(g2);
         assistantCtrl.draw(g2);
-        
+
         g2.draw(getBound());
-        
-        for(ItemBlockController itemBlockCtrl : roomCtrl.getItemBlockCtrls())
+
+        for (ItemBlockController itemBlockCtrl : roomCtrl.getItemBlockCtrls())
         {
             g2.draw(itemBlockCtrl.getItemBlock().getBound());
         }
@@ -98,17 +106,23 @@ public class RoomButlerView extends javax.swing.JPanel implements ComponentListe
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jLabel1 = new javax.swing.JLabel();
         houseDoor = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        gameTextArea = new javax.swing.JTextArea();
 
         setName("ButlerRoom"); // NOI18N
-        addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
+        addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt)
+            {
                 formKeyPressed(evt);
             }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
+            public void keyReleased(java.awt.event.KeyEvent evt)
+            {
                 formKeyReleased(evt);
             }
         });
@@ -118,6 +132,10 @@ public class RoomButlerView extends javax.swing.JPanel implements ComponentListe
         houseDoor.setText("*");
         houseDoor.setFocusCycleRoot(true);
         houseDoor.setName("MaidRoomDoor"); // NOI18N
+
+        gameTextArea.setColumns(20);
+        gameTextArea.setRows(5);
+        jScrollPane1.setViewportView(gameTextArea);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -132,6 +150,7 @@ public class RoomButlerView extends javax.swing.JPanel implements ComponentListe
                         .addGap(315, 315, 315)
                         .addComponent(houseDoor)))
                 .addContainerGap(299, Short.MAX_VALUE))
+            .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,37 +159,55 @@ public class RoomButlerView extends javax.swing.JPanel implements ComponentListe
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(houseDoor)
-                .addContainerGap(350, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 254, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        // TODO add your handling code here:
-        
-        roomCtrl.checkCollisions(evt.getKeyCode(), roomCtrl.getItemBlockCtrls(), 
+
+        roomCtrl.checkCollisions(evt.getKeyCode(), roomCtrl.getItemBlockCtrls(),
                 detectiveCtrl, getBound());
-        
+
         repaint();
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
-        // TODO add your handling code here:
-        
+
         detectiveCtrl.keyReleased(evt);
-        
-        if(detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))
+
+        if (detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))
         {
             mainCtrl.showPanel("House");
             detectiveCtrl.setLocationX(detectiveCtrl.getDetective().getRoomHouseLocationX());
             detectiveCtrl.setLocationY(detectiveCtrl.getDetective().getRoomHouseLocationY());
         }
-        
+
         repaint();
     }//GEN-LAST:event_formKeyReleased
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea gameTextArea;
     private javax.swing.JLabel houseDoor;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+    
+    @Override
+    public void componentHidden(ComponentEvent e)
+    {
+
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent e)
+    {
+
+    }
+
+    @Override
+    public void componentResized(ComponentEvent e)
+    {
+
+    }
 }

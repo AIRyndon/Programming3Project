@@ -5,7 +5,7 @@
  */
 package gui_project.ModelController;
 
-import gui_project.NamedRectangle;
+import java.awt.Rectangle;
 
 /**
  *
@@ -16,11 +16,9 @@ public class ItemBlock extends BaseModel
 
     private int width;
     private int height;
-    private final String name;
 
-    public ItemBlock(String name, int locationX, int locationY, int width, int height)
+    public ItemBlock(int locationX, int locationY, int width, int height)
     {
-        this.name = name;
         setLocationX(locationX);
         setLocationY(locationY);
         this.width = width;
@@ -47,13 +45,8 @@ public class ItemBlock extends BaseModel
         this.height = height;
     }
 
-    public NamedRectangle getBound()
+    public Rectangle getBound()
     {
-        return new NamedRectangle(name, getLocationX(), getLocationY(), width, height);
-    }
-
-    public String getName()
-    {
-        return name;
+        return new Rectangle(getLocationX(), getLocationY(), width, height);
     }
 }

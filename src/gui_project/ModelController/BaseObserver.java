@@ -5,12 +5,8 @@
  */
 package gui_project.ModelController;
 
-/**
- *
- * All our other observer interfaces must implement this base,
- * as this is used by the BaseModel to notify
- */
+//Observer for NPC's and the Detective
 public interface BaseObserver
 {
-    void update();
+    void update(BaseModel model);
 }

@@ -20,10 +20,5 @@ public class NPCView extends ItemBlockView
     {
         super.draw(graphics2D);
         graphics2D.drawString(symbol, npc.getLocationX() + 4, npc.getLocationY() + 12);
-        
-        if (npc.HasTalked())
-        {
-            graphics2D.drawString("I can talk", npc.getLocationX() + 20, npc.getLocationY());
-        }
     }
 }

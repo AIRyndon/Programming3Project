@@ -14,6 +14,7 @@ import java.awt.Graphics2D;
  */
 public class NPCController extends ItemBlockController
 {
+
     private final NPC npc;
     private final NPCView view;
 
@@ -23,20 +24,23 @@ public class NPCController extends ItemBlockController
         this.npc = npc;
         view = new NPCView(npc, this);
     }
-     
-    public NPC getNPC(){
+
+    public NPC getNPC()
+    {
         return npc;
     }
-    
-    public NPCView getView(){
+
+    public NPCView getView()
+    {
         return view;
     }
-    
+
+    @Override
     public void draw(Graphics2D graphics2D)
     {
         view.draw(graphics2D, npc.getSymbol());
     }
-    
+
     public void setLocationX(int locationX)
     {
         npc.setLocationX(locationX);
@@ -47,8 +51,8 @@ public class NPCController extends ItemBlockController
         npc.setLocationY(locationY);
     }
 
-    public void setHasTalked(boolean status)
+    public void setSpeaking(boolean status)
     {
-        npc.setHasTalked(status);
+        npc.setSpeaking(status);
     }
 }

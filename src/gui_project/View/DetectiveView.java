@@ -1,12 +1,13 @@
 package gui_project.View;
 
-import gui_project.ModelController.BaseObserver;
+import gui_project.ModelController.BaseModel;
 import gui_project.ModelController.Detective;
 import gui_project.ModelController.DetectiveController;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
+import gui_project.ModelController.BaseObserver;
 
 public class DetectiveView implements BaseObserver
 {   
@@ -30,7 +31,7 @@ public class DetectiveView implements BaseObserver
     }
 
     @Override
-    public void update()
+    public void update(BaseModel model)
     {
         controller.setLocationX(detective.getLocationX() + detective.getVelX());
         controller.setLocationY(detective.getLocationY() + detective.getVelY());
