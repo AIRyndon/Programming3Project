@@ -28,6 +28,9 @@ public class MainController
         NPCController wifeCtrl = new NPCController(new NPC("Wife", "W", 230, 230, 20, 20));
         NPCController daughterCtrl = new NPCController(new NPC("Daughter", "D", 150, 150, 20, 20));
         NPCController victimCtrl = new NPCController(new NPC("Victim", "V", 300, 300, 20, 20));
+        
+        //Setup hints
+        HintController knife = new HintController(new Hint("Knife",150,150,20,20));
 
         /*We setup the rooms here - the room names will be Ground, House, Etc -
         we can create the panels using the GUI builder now because 
@@ -53,6 +56,7 @@ public class MainController
 
         groundCtrl.addItemBlock(dogHouse);
         groundCtrl.addItemBlock(butlerCtrl);
+        groundCtrl.addItemBlock(knife);
         groundCtrl.addItemBlock(houseArea);
 
         houseCtrl.addItemBlock(maidRoomWall);

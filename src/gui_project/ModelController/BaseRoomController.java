@@ -38,6 +38,14 @@ public class BaseRoomController
         {
             if(detectiveCtrl.getView().getBound().intersects(itemBlockCtrl.getItemBlock().getBound()))
             {
+                if (itemBlockCtrl instanceof NPCController)
+                {
+                    System.out.println(((NPCController) itemBlockCtrl).getNPC().getFirstLine()); 
+                }else if (itemBlockCtrl instanceof HintController)
+                {
+                    System.out.println("Im a hint!!");
+                }
+                              
                 itemBlockCollision = true;
                 boundaryCollision = itemBlockCtrl.getItemBlock().getBound();
             }
