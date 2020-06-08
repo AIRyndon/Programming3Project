@@ -21,6 +21,8 @@ import gui_project.ModelController.Hint;
 import gui_project.ModelController.NPC;
 import gui_project.ModelController.BaseObserver;
 import gui_project.ModelController.HintController;
+import gui_project.ModelController.ItemBlockController;
+import gui_project.ModelController.LockedAreaController;
 
 /**
  *
@@ -29,11 +31,11 @@ import gui_project.ModelController.HintController;
 public class RoomGroundView extends javax.swing.JPanel implements
         ComponentListener, BaseObserver
 {
-
-    private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
+    private final MainController mainCtrl;
     private final NPCController butlerCtrl;
     private final RoomGroundController roomCtrl;
+    private Rectangle dogHouse;
 
     /**
      * Creates new form RoomView
@@ -87,7 +89,7 @@ public class RoomGroundView extends javax.swing.JPanel implements
     public void componentShown(ComponentEvent e)
     {
         /*we can use this method to setup the view before it is shown in the main panel
-        *the requestFocus is the one used to keep the detective moving
+         *the requestFocus is the one used to keep the detective moving
          */
         roomCtrl.getItemBlockCtrls().forEach(i ->
         {
@@ -101,9 +103,11 @@ public class RoomGroundView extends javax.swing.JPanel implements
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-
         Graphics2D g2 = (Graphics2D) g;
+        
         detectiveCtrl.draw(g2);
+        g2.draw(getBound());
+        g2.drawImage(getHouseImage(), 276, 83, null);
 
         roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
         {
@@ -117,9 +121,14 @@ public class RoomGroundView extends javax.swing.JPanel implements
                 HintController hint = (HintController) itemBlockCtrl;
                 hint.draw(g2);
             }
+            else if(itemBlockCtrl instanceof LockedAreaController)
+            {
+                LockedAreaController areaLocked = (LockedAreaController) itemBlockCtrl;
+                areaLocked.draw(g2);
+                
+                dogHouse = areaLocked.getView().getBound();
+            }
         });
-        g2.draw(getBound());
-        g2.drawImage(getHouseImage(), 276, 83, null);
     }
 
     /**
@@ -129,8 +138,7 @@ public class RoomGroundView extends javax.swing.JPanel implements
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         roomName = new javax.swing.JLabel();
         doorHouse = new javax.swing.JLabel();
@@ -138,14 +146,11 @@ public class RoomGroundView extends javax.swing.JPanel implements
         gameTextArea = new javax.swing.JTextArea();
 
         setName("Ground"); // NOI18N
-        addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
             }
-            public void keyReleased(java.awt.event.KeyEvent evt)
-            {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
                 formKeyReleased(evt);
             }
         });
@@ -164,15 +169,12 @@ public class RoomGroundView extends javax.swing.JPanel implements
         gameTextArea.setWrapStyleWord(true);
         jScrollPane1.setViewportView(gameTextArea);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 800, 90));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 740, 120));
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyPressed
     {//GEN-HEADEREND:event_formKeyPressed
-        //I think we can check for the boundaries here -- if going outside the bounds
-        //we wont call the keyPress
-
-        //check house collision
+        //Collision check
         roomCtrl.checkCollisions(evt.getKeyCode(), roomCtrl.getItemBlockCtrls(),
                 detectiveCtrl, getBound());
 
@@ -181,9 +183,6 @@ public class RoomGroundView extends javax.swing.JPanel implements
 
     private void formKeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyReleased
     {//GEN-HEADEREND:event_formKeyReleased
-        //I think we can check for the boundaries here -- if going outside the bounds
-        //we wont call the keyPress
-
         detectiveCtrl.keyReleased(evt);
 
         //check doorHouse collision
@@ -192,6 +191,11 @@ public class RoomGroundView extends javax.swing.JPanel implements
             mainCtrl.showPanel("House");
             detectiveCtrl.updateGroundHouseLocation();
             System.out.println("Print House");
+        }
+        //check lockedArea collision
+        else if(detectiveCtrl.getView().getBound().intersects(dogHouse))
+        {
+            mainCtrl.showPanel("DogHouseLock");
         }
 
         repaint();
@@ -206,17 +210,7 @@ public class RoomGroundView extends javax.swing.JPanel implements
     @Override
     public void componentHidden(ComponentEvent e)
     {
-        /*
-            I found it is hard to save detective location here, 
-            as the method in every view is invoked from bottom to the top.
-            Eg. MainController adds GroundCtrl first, then HouseCtrl, then ButlerCtrl.
-            However, componentHidden() in ButlerCtrl was invoked at the beginning,
-            then HouseCtrl, then GroundCtrl, even before the player can move. 
-            I mean I need to initialise Detective previousLocation to fit the order.
-            
-            Thus, I created a method updateGroundHouseLocation() to save current location 
-            in DetectiveController just for now. We might change/move it in the future.
-         */
+       
     }
 
     @Override

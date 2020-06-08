@@ -9,13 +9,6 @@ package gui_project.ModelController;
  *
  * @author pc
  */
-public class DoorAccess extends BaseModel
-{
-    public DoorAccess(int locationX, int locationY)
-    {
-        this.setLocationX(locationX);
-        this.setLocationY(locationY);
-    }
-    
+public class PasswordKey {
     
 }

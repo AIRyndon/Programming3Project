@@ -16,8 +16,7 @@ import java.util.Random;
  */
 public class NPC extends ItemBlock
 {
-
-    public static Random random = new Random();
+    public static Random RANDOM = new Random();
 
     private boolean speaking;
     private final String symbol;

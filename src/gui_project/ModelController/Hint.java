@@ -13,7 +13,6 @@ import java.util.ArrayList;
  */
 public class Hint extends ItemBlock
 {
-
     private boolean visible = false;
     private String message = "";
     private String name;

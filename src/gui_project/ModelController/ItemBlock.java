@@ -13,7 +13,6 @@ import java.awt.Rectangle;
  */
 public class ItemBlock extends BaseModel
 {
-
     private int width;
     private int height;
 
