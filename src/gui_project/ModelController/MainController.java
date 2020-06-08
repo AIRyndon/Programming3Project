@@ -27,7 +27,6 @@ public class MainController
     private ItemBlockController houseArea, maidRoomWall, wifeRoomWall, butlerRoomWall,
             officeRoomWall, bed;
     private LockedAreaController dogHouseLock, officeLock;
-//    private KeyPasswordController keyPanel;
 
     public MainController(Detective detective)
     {
@@ -132,9 +131,7 @@ public class MainController
         maidRoomCtrl = new RoomMaidController(this, detectiveCtrl, maidCtrl);
         butlerRoomCtrl = new RoomButlerController(this, detectiveCtrl, assistantCtrl);
         wifeRoomCtrl = new RoomWifeController(this, detectiveCtrl, wifeCtrl, daughterCtrl);
-        workingRoomCtrl = new RoomWorkingController(this, detectiveCtrl, victimCtrl);
-        
-//        keyPanel = new KeyPasswordController(this, String previousRoomName, lockedArea );
+        workingRoomCtrl = new RoomWorkingController(this, detectiveCtrl, victimCtrl);        
     }
 
     /**

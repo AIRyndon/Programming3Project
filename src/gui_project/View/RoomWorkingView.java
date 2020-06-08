@@ -183,7 +183,7 @@ public class RoomWorkingView extends javax.swing.JPanel implements ComponentList
             }
             else if(detectiveCtrl.getView().getBound().intersects(officeLock))
             {
-                mainCtrl.showPanel("DogHouseLock");
+                mainCtrl.showPanel("OfficeLock");
             }
         }
         
@@ -202,10 +202,6 @@ public class RoomWorkingView extends javax.swing.JPanel implements ComponentList
             mainCtrl.showPanel("House");
             detectiveCtrl.setLocationX(detectiveCtrl.getDetective().getRoomHouseLocationX());
             detectiveCtrl.setLocationY(detectiveCtrl.getDetective().getRoomHouseLocationY());
-        }
-        else if(detectiveCtrl.getView().getBound().intersects(officeLock))
-        {
-            mainCtrl.showPanel("OfficeLock");
         }
         
         repaint();

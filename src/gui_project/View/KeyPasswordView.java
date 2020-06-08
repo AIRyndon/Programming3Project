@@ -4,7 +4,6 @@ import gui_project.ModelController.BaseRoomController;
 import gui_project.ModelController.KeyPasswordController;
 import gui_project.ModelController.LockedArea;
 import gui_project.ModelController.MainController;
-import gui_project.ModelController.RoomGroundController;
 import java.awt.Graphics;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -144,24 +143,25 @@ public class KeyPasswordView extends javax.swing.JPanel implements ComponentList
         if(userInput.equals(lockedArea.getPassword()))
         {
             resultLabel.setText("You are correct! DOOR OPEN");
-            resultLabel.setVisible(true);
+                        
         }
         else
         {
             resultLabel.setText("You are wrong! TRY AGAIN");
-            resultLabel.setVisible(true);
         }
+        
+        resultLabel.setVisible(true);
     }//GEN-LAST:event_userInputTextActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         //todo: check password
-            //Correct -> Mess -> unlocked ItemBlock -> Close panel
-            //Wrong -> Mess -> Close panel
-        if(lockedArea.getName() == "DogHouseLock")
+            //Correct -> Mess appears -> unlocked ItemBlock -> Close panel
+            //Wrong -> Mess appears -> Close panel
+        if(lockedArea.getName().equals("DogHouseLock"))
         {
             mainCtrl.showPanel("Ground");
         }
-        else
+        else 
         {
             mainCtrl.showPanel("WorkingRoom");
         }

@@ -9,6 +9,6 @@ package gui_project.ModelController;
  *
  * @author pc
  */
-public class PasswordKey {
+public class KeyPassword {
     
 }
