@@ -15,6 +15,12 @@ public class MainController
 {
 
     private final MainView view;
+    //we just want to single instance of NPC here so we can update the conversation level from any view
+    private NPCController butler;
+    private NPCController maid;
+    private NPCController assistant;
+    private NPCController wife;
+    private NPCController daughter;
 
     public MainController(Detective detective)
     {
@@ -22,31 +28,31 @@ public class MainController
 
         //we setup our NPCs here
         DetectiveController detectiveCtrl = new DetectiveController(detective);
-        NPCController butlerCtrl = new NPCController(new NPC("Butler", "B", 100, 100, 20, 20));
-        NPCController maidCtrl = new NPCController(new NPC("Maid", "M", 200, 200, 20, 20));
-        NPCController assistantCtrl = new NPCController(new NPC("Assistant", "A", 240, 240, 20, 20));
-        NPCController wifeCtrl = new NPCController(new NPC("Wife", "W", 230, 230, 20, 20));
-        NPCController daughterCtrl = new NPCController(new NPC("Daughter", "D", 150, 150, 20, 20));
+        butler = new NPCController(new NPC("Butler", "B", 100, 100, 20, 20));
+        maid = new NPCController(new NPC("Maid", "M", 200, 200, 20, 20));
+        assistant = new NPCController(new NPC("Assistant", "A", 240, 240, 20, 20));
+        wife = new NPCController(new NPC("Wife", "W", 230, 230, 20, 20));
+        daughter = new NPCController(new NPC("Daughter", "D", 150, 150, 20, 20));
         NPCController victimCtrl = new NPCController(new NPC("Victim", "V", 300, 300, 20, 20));
 
         //Setup hints
         HintController knife = new HintController(new Hint("Knife", 150, 150, 10, 10));
-        HintController gloves = new HintController(new Hint("Gloves",250,250,10,10));
-        
-        //Assign hints to NPCs
-        butlerCtrl.getNPC().setOwnedHint(knife);
-        assistantCtrl.getNPC().setOwnedHint(gloves);
+        HintController gloves = new HintController(new Hint("Gloves", 250, 250, 10, 10));
+
+        //Assign hint controllers to NPCs
+        butler.setOwnedHint(knife);
+        assistant.setOwnedHint(gloves);
 
         /*We setup the rooms here - the room names will be Ground, House, Etc -
         we can create the panels using the GUI builder now because 
         we have some code separation, 
         we just add the panel here at project start
          */
-        RoomGroundController groundCtrl = new RoomGroundController(this, detectiveCtrl, butlerCtrl);
-        RoomHouseController houseCtrl = new RoomHouseController(this, detectiveCtrl, wifeCtrl);
-        RoomMaidController maidRoomCtrl = new RoomMaidController(this, detectiveCtrl, maidCtrl);
-        RoomButlerController butlerRoomCtrl = new RoomButlerController(this, detectiveCtrl, assistantCtrl);
-        RoomWifeController wifeRoomCtrl = new RoomWifeController(this, detectiveCtrl, wifeCtrl, daughterCtrl);
+        RoomGroundController groundCtrl = new RoomGroundController(this, detectiveCtrl, butler);
+        RoomHouseController houseCtrl = new RoomHouseController(this, detectiveCtrl, wife);
+        RoomMaidController maidRoomCtrl = new RoomMaidController(this, detectiveCtrl, maid);
+        RoomButlerController butlerRoomCtrl = new RoomButlerController(this, detectiveCtrl, assistant);
+        RoomWifeController wifeRoomCtrl = new RoomWifeController(this, detectiveCtrl, wife, daughter);
         RoomWorkingController workingRoomCtrl = new RoomWorkingController(this, detectiveCtrl, victimCtrl);
 
         //Setup ItemBlocks (eg. DogHouse, room walls, etc.) to advoid player collision
@@ -60,7 +66,7 @@ public class MainController
         ItemBlockController bed = new ItemBlockController(new ItemBlock(10, 15, 100, 100));
 
         groundCtrl.addItemBlock(dogHouse);
-        groundCtrl.addItemBlock(butlerCtrl);
+        groundCtrl.addItemBlock(butler);
         groundCtrl.addItemBlock(knife);
         groundCtrl.addItemBlock(houseArea);
 
@@ -69,14 +75,14 @@ public class MainController
         houseCtrl.addItemBlock(butlerRoomWall);
         houseCtrl.addItemBlock(officeRoomWall);
 
-        butlerRoomCtrl.addItemBlock(assistantCtrl);
+        butlerRoomCtrl.addItemBlock(assistant);
         butlerRoomCtrl.addItemBlock(bed);
-        maidRoomCtrl.addItemBlock(maidCtrl);
+        maidRoomCtrl.addItemBlock(maid);
         maidRoomCtrl.addItemBlock(bed);
         maidRoomCtrl.addItemBlock(gloves);
 
-        wifeRoomCtrl.addItemBlock(wifeCtrl);
-        wifeRoomCtrl.addItemBlock(daughterCtrl);
+        wifeRoomCtrl.addItemBlock(wife);
+        wifeRoomCtrl.addItemBlock(daughter);
         wifeRoomCtrl.addItemBlock(bed);
         workingRoomCtrl.addItemBlock(victimCtrl);
         workingRoomCtrl.addItemBlock(lockedArea);
@@ -90,6 +96,26 @@ public class MainController
 
         showPanel("Ground");
         view.renderView();
+    }
+
+    public void updateConversationLevel()
+    {
+        if (butler.hasTalkedWithPlayer()
+                && wife.hasTalkedWithPlayer()
+                && daughter.hasTalkedWithPlayer()
+                && maid.hasTalkedWithPlayer())
+        {
+            assistant.unlockLines();
+            NPC.conversationLevel = 2;
+        } else if (NPC.conversationLevel == 2)
+        {
+            wife.unlockLines();
+            NPC.conversationLevel = 3;
+        } else if (NPC.conversationLevel == 3)
+        {
+            maid.unlockLines();
+            daughter.unlockLines();
+        }
     }
 
     /**

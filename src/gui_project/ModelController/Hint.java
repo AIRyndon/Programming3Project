@@ -13,7 +13,8 @@ import java.util.ArrayList;
  */
 public class Hint extends ItemBlock
 {
-
+    
+    private boolean pickedUp = false;
     private boolean visible = false;
     private String message = "";
     private String name;
@@ -60,5 +61,15 @@ public class Hint extends ItemBlock
     void setMessage(String message)
     {
         this.message = message;
+    }
+
+    public boolean isPickedUp()
+    {
+        return pickedUp;
+    }
+
+    void setPickedUp()
+    {
+        pickedUp = true;
     }
 }

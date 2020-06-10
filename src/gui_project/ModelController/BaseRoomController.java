@@ -44,18 +44,8 @@ public class BaseRoomController
                 if (itemBlockCtrl instanceof NPCController)
                 {
                     NPCController npcCtrl = (NPCController) itemBlockCtrl;
-
                     npcCtrl.setSpeaking(true);
                     
-                    //this should be inside the npc, to check if the hint has
-                    //to be revealed based on conversation level
-                    //so we can also change the NPC line to include that a hint 
-                    //popped up
-                    if (npcCtrl.getNPC().getOwnedHint() != null)
-                    {
-                        npcCtrl.getNPC().getOwnedHint().reveal();
-                    }
-
                 } else if (itemBlockCtrl instanceof HintController)
                 {
                     HintController hintCtrl = (HintController) itemBlockCtrl;
