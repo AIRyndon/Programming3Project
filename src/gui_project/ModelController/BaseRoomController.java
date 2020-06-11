@@ -1,20 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui_project.ModelController;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-/**
- *
- * @author pc
- */
 public class BaseRoomController
 {
-
     private ArrayList<ItemBlockController> itemBlockCtrls = new ArrayList<ItemBlockController>();
 
     public void addItemBlock(ItemBlockController itemBlockContrl)
@@ -27,7 +17,6 @@ public class BaseRoomController
         return itemBlockCtrls;
     }
 
-    //I am not sure if a View method should be defined here   
     public void checkCollisions(int keyCode, ArrayList<ItemBlockController> itemBlockCtrls,
             DetectiveController detectiveCtrl, Rectangle roomBoundary)
     {
@@ -49,34 +38,40 @@ public class BaseRoomController
                 } else if (itemBlockCtrl instanceof HintController)
                 {
                     HintController hintCtrl = (HintController) itemBlockCtrl;
+                    
                     if (!hintCtrl.getHint().isVisible())
                     {
                         //a special case for hints because you don't want to bump into
                         //them when they aren't visible
                         break;                 
                     }
+                    
                     hintCtrl.pickup();
                 }
 
                 itemBlockCollision = true;
                 boundaryCollision = itemBlockCtrl.getItemBlock().getBound();
                 break;
-            } else if (!roomBoundary.contains(detectiveCtrl.getView().getBound()))
+            } 
+            else if (!roomBoundary.contains(detectiveCtrl.getView().getBound()))
             {
                 groundCollision = true;
                 boundaryCollision = roomBoundary;
                 break;
-            } else
+            } 
+            else
             {
                 if (itemBlockCtrl instanceof NPCController)
                 {
                     ((NPCController) itemBlockCtrl).setSpeaking(false);
-                } else if (itemBlockCtrl instanceof HintController)
+                } 
+                else if (itemBlockCtrl instanceof HintController)
                 {
                     ((HintController) itemBlockCtrl).clearMessageArea();
                 }
             }
         }
+        
         detectiveCtrl.keyPressed(keyCode, boundaryCollision, itemBlockCollision, groundCollision);
     }
 }

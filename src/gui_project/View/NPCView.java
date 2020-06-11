@@ -8,7 +8,7 @@ public class NPCView extends ItemBlockView
 {
     private final NPC npc;
     private final NPCController npcController;
-      
+    
     public NPCView(NPC npc, NPCController controller) 
     {
         super(npc,controller);

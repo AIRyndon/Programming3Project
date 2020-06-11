@@ -7,6 +7,7 @@ package gui_project.View;
 
 import gui_project.ModelController.DetectiveController;
 import gui_project.ModelController.ItemBlockController;
+import gui_project.ModelController.LockedAreaController;
 import gui_project.ModelController.MainController;
 import gui_project.ModelController.NPCController;
 import gui_project.ModelController.RoomWorkingController;
@@ -26,6 +27,7 @@ public class RoomWorkingView extends javax.swing.JPanel implements ComponentList
     private final DetectiveController detectiveCtrl;
     private final NPCController wifeCtrl;
     private final RoomWorkingController roomCtrl;
+    private Rectangle officeLock;
 
     /**
      * Creates new form RoomView
@@ -88,18 +90,22 @@ public class RoomWorkingView extends javax.swing.JPanel implements ComponentList
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        
         Graphics2D g2 = (Graphics2D) g;
         
         detectiveCtrl.draw(g2);
         wifeCtrl.draw(g2);
-        
         g2.draw(getBound());
         
-        for(ItemBlockController itemBlockCtrl : roomCtrl.getItemBlockCtrls())
+        roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
         {
-            itemBlockCtrl.draw(g2);
-        }
+            if(itemBlockCtrl instanceof LockedAreaController)
+            {
+                LockedAreaController areaLocked = (LockedAreaController) itemBlockCtrl;
+                areaLocked.draw(g2);
+                
+                officeLock = areaLocked.getView().getBound();
+            }
+        });
     }
 
     /**
@@ -174,6 +180,10 @@ public class RoomWorkingView extends javax.swing.JPanel implements ComponentList
             {
                 groundCollision = true;
                 boundaryCollision = this.getBound();
+            }
+            else if(detectiveCtrl.getView().getBound().intersects(officeLock))
+            {
+                mainCtrl.showPanel("OfficeLock");
             }
         }
         

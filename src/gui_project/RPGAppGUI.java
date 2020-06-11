@@ -30,6 +30,8 @@ public class RPGAppGUI
     - the controller creates the view, it also changes its model's state, which
         is why our setter methods are not public but has default visibility(package)
      */
+    
+    /*Todo: move all key press and key release methods from View to Controller */
     public static void main(String args[])
     {
         java.awt.EventQueue.invokeLater(new Runnable()
