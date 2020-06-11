@@ -68,10 +68,11 @@ public class NPC extends ItemBlock
             if (linesUnlocked)
             {
                 spokenLine += secondLine;
-                secondLine = "";
+                spokenLine += '\n';
+                spokenLine += firstLine;
+            }else{
+                spokenLine = firstLine; 
             }
-            spokenLine = firstLine;
-
         } else
         {
             spokenLine = "";

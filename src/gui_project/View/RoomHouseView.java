@@ -16,8 +16,10 @@ import java.awt.event.ComponentListener;
  *
  * @author Angelo
  */
-public class RoomHouseView extends javax.swing.JPanel implements ComponentListener
+public class RoomHouseView extends javax.swing.JPanel implements
+        ComponentListener, BaseObserver
 {
+
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final RoomHouseController roomCtrl;
@@ -34,39 +36,34 @@ public class RoomHouseView extends javax.swing.JPanel implements ComponentListen
         //from a model
         initComponents();
         addComponentListener(this);
-        setFocusable(true);      
+        setFocusable(true);
     }
 
-    @Override
-    public void componentHidden(ComponentEvent e)
+   @Override
+    public void update(BaseModel model)
     {
-
+        if (model instanceof NPC)
+        {
+            gameTextArea.setText(((NPC) model).getSpokenLine());
+        } else if (model instanceof Hint)
+        {
+            gameTextArea.setText(((Hint) model).getMessage());
+        }
+        mainCtrl.updateConversationLevel();
     }
 
-    @Override
-    public void componentMoved(ComponentEvent e)
-    {
-        
-    }
-    
-    @Override
-    public void componentResized(ComponentEvent e)
-    {
-        
-    }
-    
     @Override
     public void componentShown(ComponentEvent e)
     {
         requestFocusInWindow();
     }
-    
+
     public Rectangle getBound()
     {
-        return new Rectangle(10, 15, 
+        return new Rectangle(10, 15,
                 this.getSize().width - 30, this.getSize().height - 30);
     }
-    
+
     @Override
     public void paintComponent(Graphics g)
     {
@@ -75,13 +72,13 @@ public class RoomHouseView extends javax.swing.JPanel implements ComponentListen
         Graphics2D g2 = (Graphics2D) g;
         detectiveCtrl.draw(g2);
         g2.draw(getBound());
-        
-        for(ItemBlockController itemBlockCtrl : roomCtrl.getItemBlockCtrls())
+
+        for (ItemBlockController itemBlockCtrl : roomCtrl.getItemBlockCtrls())
         {
             itemBlockCtrl.draw(g2);
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -99,6 +96,8 @@ public class RoomHouseView extends javax.swing.JPanel implements ComponentListen
         wifeRoomDoor = new javax.swing.JLabel();
         workingRoomDoor = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPanel = new javax.swing.JScrollPane();
+        gameTextArea = new javax.swing.JTextArea();
 
         setName("House"); // NOI18N
         addKeyListener(new java.awt.event.KeyAdapter()
@@ -141,52 +140,53 @@ public class RoomHouseView extends javax.swing.JPanel implements ComponentListen
 
         jLabel2.setText("Kitchen");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, -1, -1));
+
+        gameTextArea.setColumns(20);
+        gameTextArea.setRows(5);
+        jScrollPanel.setViewportView(gameTextArea);
+
+        add(jScrollPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(416, 380, 380, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyPressed
     {//GEN-HEADEREND:event_formKeyPressed
-        
+
         //I think we can check for the boundaries here -- if going outside the bounds
         //we wont call the keyPress
-        
-        roomCtrl.checkCollisions(evt.getKeyCode(), roomCtrl.getItemBlockCtrls(), 
+        roomCtrl.checkCollisions(evt.getKeyCode(), roomCtrl.getItemBlockCtrls(),
                 detectiveCtrl, getBound());
-                
+
         //check if the player wants to access a room
-        if(detectiveCtrl.getView().getBound().intersects(groundDoor.getBounds()))
+        if (detectiveCtrl.getView().getBound().intersects(groundDoor.getBounds()))
         {
             mainCtrl.showPanel("Ground");
             detectiveCtrl.updateGroundHouseLocation();
             System.out.println("Print Ground");
-        }
-        else if(detectiveCtrl.getView().getBound().intersects(maidRoomDoor.getBounds()))
+        } else if (detectiveCtrl.getView().getBound().intersects(maidRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("MaidRoom");
             detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
-            
-        }
-        else if(detectiveCtrl.getView().getBound().intersects(butlerRoomDoor.getBounds()))
+
+        } else if (detectiveCtrl.getView().getBound().intersects(butlerRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("ButlerRoom");
             detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
-        }
-        else if(detectiveCtrl.getView().getBound().intersects(wifeRoomDoor.getBounds()))
+        } else if (detectiveCtrl.getView().getBound().intersects(wifeRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("WifeRoom");
             detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
-        }
-        else if(detectiveCtrl.getView().getBound().intersects(workingRoomDoor.getBounds()))
+        } else if (detectiveCtrl.getView().getBound().intersects(workingRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("WorkingRoom");
             detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
         }
-        
+
         repaint();
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyReleased
     {//GEN-HEADEREND:event_formKeyReleased
-        
+
         //I think we can check for the boundaries here -- if going outside the bounds
         //we wont call the keyPress
         detectiveCtrl.keyReleased(evt);
@@ -195,11 +195,31 @@ public class RoomHouseView extends javax.swing.JPanel implements ComponentListen
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel butlerRoomDoor;
+    private javax.swing.JTextArea gameTextArea;
     private javax.swing.JLabel groundDoor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPanel;
     private javax.swing.JLabel maidRoomDoor;
     private javax.swing.JLabel wifeRoomDoor;
     private javax.swing.JLabel workingRoomDoor;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void componentHidden(ComponentEvent e)
+    {
+
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent e)
+    {
+
+    }
+
+    @Override
+    public void componentResized(ComponentEvent e)
+    {
+
+    }
 }

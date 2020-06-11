@@ -21,7 +21,6 @@ import gui_project.ModelController.Hint;
 import gui_project.ModelController.NPC;
 import gui_project.ModelController.BaseObserver;
 import gui_project.ModelController.HintController;
-import gui_project.ModelController.ItemBlockController;
 import gui_project.ModelController.LockedAreaController;
 
 /**
@@ -31,6 +30,7 @@ import gui_project.ModelController.LockedAreaController;
 public class RoomGroundView extends javax.swing.JPanel implements
         ComponentListener, BaseObserver
 {
+
     private final DetectiveController detectiveCtrl;
     private final MainController mainCtrl;
     private final NPCController butlerCtrl;
@@ -72,14 +72,18 @@ public class RoomGroundView extends javax.swing.JPanel implements
         return image;
     }
 
+    /*
+    
+    Wanted to put this method in a base view, but don't know how
+    to have a JLabel that's inherited - dunno if that is even possible
+     */
     @Override
     public void update(BaseModel model)
     {
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
-        }
-        else if (model instanceof Hint)
+        } else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
         }
@@ -107,7 +111,7 @@ public class RoomGroundView extends javax.swing.JPanel implements
     {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        
+
         detectiveCtrl.draw(g2);
         g2.draw(getBound());
         g2.drawImage(getHouseImage(), 276, 83, null);
@@ -118,17 +122,15 @@ public class RoomGroundView extends javax.swing.JPanel implements
             {
                 NPCController npc = (NPCController) itemBlockCtrl;
                 npc.draw(g2);
-            } 
-            else if (itemBlockCtrl instanceof HintController)
+            } else if (itemBlockCtrl instanceof HintController)
             {
                 HintController hint = (HintController) itemBlockCtrl;
                 hint.draw(g2);
-            }
-            else if(itemBlockCtrl instanceof LockedAreaController)
+            } else if (itemBlockCtrl instanceof LockedAreaController)
             {
                 LockedAreaController areaLocked = (LockedAreaController) itemBlockCtrl;
                 areaLocked.draw(g2);
-                
+
                 dogHouse = areaLocked.getView().getBound();
             }
         });
@@ -194,9 +196,8 @@ public class RoomGroundView extends javax.swing.JPanel implements
             mainCtrl.showPanel("House");
             detectiveCtrl.updateGroundHouseLocation();
             System.out.println("Print House");
-        }
-        //check lockedArea collision
-        else if(detectiveCtrl.getView().getBound().intersects(dogHouse))
+        } //check lockedArea collision
+        else if (detectiveCtrl.getView().getBound().intersects(dogHouse))
         {
             mainCtrl.showPanel("DogHouseLock");
         }
@@ -213,7 +214,7 @@ public class RoomGroundView extends javax.swing.JPanel implements
     @Override
     public void componentHidden(ComponentEvent e)
     {
-       
+
     }
 
     @Override

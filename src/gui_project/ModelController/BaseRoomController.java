@@ -26,10 +26,10 @@ public class BaseRoomController
 
         for (ItemBlockController itemBlockCtrl : itemBlockCtrls)
         {
+            //break out of the loop once you find a collision
             if (detectiveCtrl.getView().getBound()
                     .intersects(itemBlockCtrl.getItemBlock().getBound()))
-            {
-                //break out of the loop once you find a collision
+            {          
                 if (itemBlockCtrl instanceof NPCController)
                 {
                     NPCController npcCtrl = (NPCController) itemBlockCtrl;
