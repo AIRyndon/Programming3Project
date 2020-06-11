@@ -22,7 +22,7 @@ public class MainController
     private RoomButlerController butlerRoomCtrl;
     private RoomWifeController wifeRoomCtrl;
     private RoomWorkingController workingRoomCtrl;
-    private NPCController butlerCtrl, maidCtrl, assistantCtrl, wifeCtrl, daughterCtrl, victimCtrl;
+    private NPCController butler, maid, assistant, wife, daughter, victim;
     private HintController knife, gloves;
     private ItemBlockController houseArea, maidRoomWall, wifeRoomWall, butlerRoomWall,
             officeRoomWall, bed;
@@ -48,7 +48,7 @@ public class MainController
     public void addItemBlockToRoom()
     {
         groundCtrl.addItemBlock(dogHouseLock);
-        groundCtrl.addItemBlock(butlerCtrl);
+        groundCtrl.addItemBlock(butler);
         groundCtrl.addItemBlock(knife);
         groundCtrl.addItemBlock(houseArea);
 
@@ -67,7 +67,7 @@ public class MainController
         wifeRoomCtrl.addItemBlock(daughter);
         wifeRoomCtrl.addItemBlock(bed);
         
-        workingRoomCtrl.addItemBlock(victimCtrl);
+        workingRoomCtrl.addItemBlock(victim);
         workingRoomCtrl.addItemBlock(officeLock);
     }
     
@@ -85,8 +85,8 @@ public class MainController
     
     public void assignHintToNPC()
     {
-        butlerCtrl.getNPC().setOwnedHint(knife);
-        assistantCtrl.getNPC().setOwnedHint(gloves);
+        butler.setOwnedHint(knife);
+        assistant.setOwnedHint(gloves);
     }
     
     public void setUpHint()
@@ -116,22 +116,22 @@ public class MainController
     public void setUpNPCController()
     {
         detectiveCtrl = new DetectiveController(detective);
-        butlerCtrl = new NPCController(new NPC("Butler", "B", 100, 100, 20, 20));
-        maidCtrl = new NPCController(new NPC("Maid", "M", 200, 200, 20, 20));
-        assistantCtrl = new NPCController(new NPC("Assistant", "A", 240, 240, 20, 20));
-        wifeCtrl = new NPCController(new NPC("Wife", "W", 230, 230, 20, 20));
-        daughterCtrl = new NPCController(new NPC("Daughter", "D", 150, 150, 20, 20));
-        victimCtrl = new NPCController(new NPC("Victim", "V", 300, 300, 20, 20));
+        butler = new NPCController(new NPC("Butler", "B", 100, 100, 20, 20));
+        maid = new NPCController(new NPC("Maid", "M", 200, 200, 20, 20));
+        assistant = new NPCController(new NPC("Assistant", "A", 240, 240, 20, 20));
+        wife = new NPCController(new NPC("Wife", "W", 230, 230, 20, 20));
+        daughter = new NPCController(new NPC("Daughter", "D", 150, 150, 20, 20));
+        victim = new NPCController(new NPC("Victim", "V", 300, 300, 20, 20));
     }
     
     public void setUpRoomController()
     {
-        groundCtrl = new RoomGroundController(this, detectiveCtrl, butlerCtrl);
-        houseCtrl = new RoomHouseController(this, detectiveCtrl, wifeCtrl);
-        maidRoomCtrl = new RoomMaidController(this, detectiveCtrl, maidCtrl);
-        butlerRoomCtrl = new RoomButlerController(this, detectiveCtrl, assistantCtrl);
-        wifeRoomCtrl = new RoomWifeController(this, detectiveCtrl, wifeCtrl, daughterCtrl);
-        workingRoomCtrl = new RoomWorkingController(this, detectiveCtrl, victimCtrl);        
+        groundCtrl = new RoomGroundController(this, detectiveCtrl, butler);
+        houseCtrl = new RoomHouseController(this, detectiveCtrl, wife);
+        maidRoomCtrl = new RoomMaidController(this, detectiveCtrl, maid);
+        butlerRoomCtrl = new RoomButlerController(this, detectiveCtrl, assistant);
+        wifeRoomCtrl = new RoomWifeController(this, detectiveCtrl, wife, daughter);
+        workingRoomCtrl = new RoomWorkingController(this, detectiveCtrl, victim);        
     }
 
     public void updateConversationLevel()
