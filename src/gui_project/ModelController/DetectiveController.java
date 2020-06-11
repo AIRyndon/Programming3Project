@@ -108,9 +108,6 @@ public class DetectiveController
                 if((houseCollision && view.getBound().getMinY() >= itemBlock.getMinY()) ||
                     (roomBoundaryCollision && view.getBound().getMinY() <= itemBlock.getMinY()))
                 {
-                    System.out.println(view.getBound().getMinY());
-                    System.out.println(itemBlock.getMaxY());
-                    System.out.println("W");
                     setVelY(0);
                 }
                 else 
@@ -123,9 +120,6 @@ public class DetectiveController
                 if((houseCollision && view.getBound().getMaxY() <= itemBlock.getMaxY()) ||
                     (roomBoundaryCollision && view.getBound().getMaxY() >= itemBlock.getMaxY()))
                 {
-                    System.out.println(view.getBound().getMaxY());
-                    System.out.println(itemBlock.getMinY());
-                    System.out.println("S");
                     setVelY(0);
                 }
                 else 
@@ -138,9 +132,6 @@ public class DetectiveController
                 if((houseCollision && view.getBound().getMinX() >= itemBlock.getMinX()) ||
                     (roomBoundaryCollision && view.getBound().getMinX() <= itemBlock.getMinX()))
                 {
-                    System.out.println(view.getBound().getMinX());
-                    System.out.println(itemBlock.getMaxX());
-                    System.out.println("A");
                     setVelX(0);
                 }
                 else
@@ -153,9 +144,6 @@ public class DetectiveController
                 if((houseCollision && view.getBound().getMaxX() <= itemBlock.getMaxX()) ||
                     (roomBoundaryCollision && view.getBound().getMaxX() >= itemBlock.getMaxX()))
                 {
-                    System.out.println(view.getBound().getMaxX());
-                    System.out.println(itemBlock.getMinX());
-                    System.out.println("D");
                     setVelX(0);
                 }
                 else

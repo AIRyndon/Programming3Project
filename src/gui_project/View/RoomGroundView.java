@@ -81,6 +81,7 @@ public class RoomGroundView extends javax.swing.JPanel implements
         {
             gameTextArea.setText(((Hint) model).getMessage());
         }
+        mainCtrl.updateConversationLevel();
     }
 
     @Override
@@ -89,6 +90,8 @@ public class RoomGroundView extends javax.swing.JPanel implements
         /*we can use this method to setup the view before it is shown in the main panel
         *the requestFocus is the one used to keep the detective moving
          */
+        //this registering feels wrong on every component show..anywayyys i'll just leave it here
+        //as we can't do it on instantiation
         roomCtrl.getItemBlockCtrls().forEach(i ->
         {
             i.getItemBlock().registerObserver(this);

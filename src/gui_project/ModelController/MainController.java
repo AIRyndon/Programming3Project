@@ -15,7 +15,6 @@ public class MainController
 {
 
     private final MainView view;
-    //we just want to single instance of NPC here so we can update the conversation level from any view
     private NPCController butler;
     private NPCController maid;
     private NPCController assistant;
