@@ -13,16 +13,19 @@ import java.util.ArrayList;
  */
 public class Hint extends ItemBlock
 {
-    
+
     private boolean pickedUp = false;
     private boolean visible = false;
     private String message = "";
     private String name;
+    private String description;
 
-    public Hint(String name, int locationX, int locationY, int width, int height)
+    public Hint(String name, String description,
+            int locationX, int locationY, int width, int height)
     {
         super(locationX, locationY, width, height);
         this.name = name;
+        this.description = description;
     }
 
     /**
@@ -41,7 +44,7 @@ public class Hint extends ItemBlock
         this.visible = visible;
         if (!visible)
         {
-            message = name;
+            message = name + '\n' + description;
         }
     }
 
@@ -55,7 +58,7 @@ public class Hint extends ItemBlock
      */
     public String getMessage()
     {
-        return message;          
+        return message;
     }
 
     void setMessage(String message)
@@ -71,5 +74,6 @@ public class Hint extends ItemBlock
     void setPickedUp()
     {
         pickedUp = true;
+        visible = false;
     }
 }

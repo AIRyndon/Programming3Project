@@ -19,11 +19,11 @@ import java.awt.event.ComponentListener;
 public class RoomHouseView extends javax.swing.JPanel implements
         ComponentListener, BaseObserver
 {
-
+    
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final RoomHouseController roomCtrl;
-
+    
     public RoomHouseView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
             RoomHouseController roomCtrl)
@@ -38,8 +38,8 @@ public class RoomHouseView extends javax.swing.JPanel implements
         addComponentListener(this);
         setFocusable(true);
     }
-
-   @Override
+    
+    @Override
     public void update(BaseModel model)
     {
         if (model instanceof NPC)
@@ -51,32 +51,43 @@ public class RoomHouseView extends javax.swing.JPanel implements
         }
         mainCtrl.updateConversationLevel();
     }
-
+    
     @Override
     public void componentShown(ComponentEvent e)
     {
         requestFocusInWindow();
     }
-
+    
     public Rectangle getBound()
     {
         return new Rectangle(10, 15,
                 this.getSize().width - 30, this.getSize().height - 30);
     }
-
+    
     @Override
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-
+        
         Graphics2D g2 = (Graphics2D) g;
         detectiveCtrl.draw(g2);
         g2.draw(getBound());
-
-        for (ItemBlockController itemBlockCtrl : roomCtrl.getItemBlockCtrls())
+        
+        roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
         {
-            itemBlockCtrl.draw(g2);
-        }
+            if (itemBlockCtrl instanceof NPCController)
+            {
+                NPCController npc = (NPCController) itemBlockCtrl;
+                npc.draw(g2);
+            } else if (itemBlockCtrl instanceof HintController)
+            {
+                HintController hint = (HintController) itemBlockCtrl;
+                hint.draw(g2);
+            } else
+            {
+                itemBlockCtrl.draw(g2);
+            }
+        });
     }
 
     /**
@@ -166,7 +177,7 @@ public class RoomHouseView extends javax.swing.JPanel implements
         {
             mainCtrl.showPanel("MaidRoom");
             detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
-
+            
         } else if (detectiveCtrl.getView().getBound().intersects(butlerRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("ButlerRoom");
@@ -180,7 +191,7 @@ public class RoomHouseView extends javax.swing.JPanel implements
             mainCtrl.showPanel("WorkingRoom");
             detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
         }
-
+        
         repaint();
     }//GEN-LAST:event_formKeyPressed
 
@@ -208,18 +219,18 @@ public class RoomHouseView extends javax.swing.JPanel implements
     @Override
     public void componentHidden(ComponentEvent e)
     {
-
+        
     }
-
+    
     @Override
     public void componentMoved(ComponentEvent e)
     {
-
+        
     }
-
+    
     @Override
     public void componentResized(ComponentEvent e)
     {
-
+        
     }
 }

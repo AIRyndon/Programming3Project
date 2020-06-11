@@ -23,7 +23,7 @@ public class MainController
     private RoomWifeController wifeRoomCtrl;
     private RoomWorkingController workingRoomCtrl;
     private NPCController butler, maid, assistant, wife, daughter, victim;
-    private HintController knife, gloves;
+    private HintController knife, gloves, cake,vial,picture;
     private ItemBlockController houseArea, maidRoomWall, wifeRoomWall, butlerRoomWall,
             officeRoomWall, bed;
     private LockedAreaController dogHouseLock, officeLock;
@@ -50,12 +50,14 @@ public class MainController
         groundCtrl.addItemBlock(dogHouseLock);
         groundCtrl.addItemBlock(butler);
         groundCtrl.addItemBlock(knife);
+        groundCtrl.addItemBlock(cake);
         groundCtrl.addItemBlock(houseArea);
 
         houseCtrl.addItemBlock(maidRoomWall);
         houseCtrl.addItemBlock(wifeRoomWall);
         houseCtrl.addItemBlock(butlerRoomWall);
         houseCtrl.addItemBlock(officeRoomWall);
+        houseCtrl.addItemBlock(vial);
 
         butlerRoomCtrl.addItemBlock(assistant);
         butlerRoomCtrl.addItemBlock(bed);
@@ -69,6 +71,8 @@ public class MainController
         
         workingRoomCtrl.addItemBlock(victim);
         workingRoomCtrl.addItemBlock(officeLock);
+        workingRoomCtrl.addItemBlock(knife);
+        workingRoomCtrl.addItemBlock(picture);
     }
     
     public void addAllPanels()
@@ -85,14 +89,23 @@ public class MainController
     
     public void assignHintToNPC()
     {
-        butler.setOwnedHint(knife);
-        assistant.setOwnedHint(gloves);
+        butler.setOwnedHint(gloves);
+        assistant.setOwnedHint(vial);
+        maid.setOwnedHint(cake);
+        wife.setOwnedHint(picture);
+        daughter.setOwnedHint(knife);
     }
     
     public void setUpHint()
     {
-        knife = new HintController(new Hint("Knife", 150, 150, 10, 10));
-        gloves = new HintController(new Hint("Gloves",250,250,10,10));
+        knife = new HintController(new Hint("Knife","The blade is bloody. . .", 500, 260, 10, 10));
+        gloves = new HintController(new Hint("Gloves","A worn-out pair of gloves, there is a name on it - "
+                            + "\nit is illegible, you only recognize the letters ATO",250,250,10,10));
+        cake = new HintController(new Hint("Cheescake","An innocuous-looking cheesecake",750,30,10,10));
+        picture = new HintController(new Hint("Old Picture","A picture of a young girl - "
+                            + "\nthe girl has a resemblance with the maid",30,30,10,10));
+        vial = new HintController(new Hint("Alprazolam","A powerful sedative -"
+                            + "\ncan have side-effects when taken regularly",650,30,10,10));
         
         assignHintToNPC();
     }

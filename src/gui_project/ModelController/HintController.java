@@ -27,8 +27,6 @@ public class HintController extends ItemBlockController
     public void pickup()
     {
         hint.setPickedUp();
-        hint.setVisible(false);
-        hint.setMessage(hint.getMessage());
         hint.sendMessage();
     }
 

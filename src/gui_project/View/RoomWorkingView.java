@@ -9,7 +9,7 @@ import gui_project.ModelController.BaseModel;
 import gui_project.ModelController.BaseObserver;
 import gui_project.ModelController.DetectiveController;
 import gui_project.ModelController.Hint;
-import gui_project.ModelController.ItemBlockController;
+import gui_project.ModelController.HintController;
 import gui_project.ModelController.LockedAreaController;
 import gui_project.ModelController.MainController;
 import gui_project.ModelController.NPC;
@@ -28,9 +28,10 @@ import java.awt.event.ComponentListener;
 public class RoomWorkingView extends javax.swing.JPanel implements
         ComponentListener, BaseObserver
 {
+
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
-    private final NPCController wifeCtrl;
+    private final NPCController victimCtrl;
     private final RoomWorkingController roomCtrl;
     private Rectangle officeLock;
 
@@ -39,14 +40,14 @@ public class RoomWorkingView extends javax.swing.JPanel implements
      */
     public RoomWorkingView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
-            NPCController wifeCtrl,
+            NPCController victimCtrl,
             RoomWorkingController roomCtrl)
-    {     
+    {
         this.mainCtrl = mainCtrl;
         this.detectiveCtrl = detectiveCtrl;
-        this.wifeCtrl = wifeCtrl;
+        this.victimCtrl = victimCtrl;
         this.roomCtrl = roomCtrl;
-        
+
         initComponents();
         addComponentListener(this);
         setFocusable(true);
@@ -64,42 +65,61 @@ public class RoomWorkingView extends javax.swing.JPanel implements
         }
         mainCtrl.updateConversationLevel();
     }
-    
+
     @Override
     public void componentShown(ComponentEvent e)
     {
         roomCtrl.getItemBlockCtrls().forEach(i ->
         {
             i.getItemBlock().registerObserver(this);
-        });   
+        });
         requestFocusInWindow();
     }
- 
+
     public Rectangle getBound()
     {
-        return new Rectangle(10, 15, 
+        return new Rectangle(10, 15,
                 this.getSize().width - 30, this.getSize().height - 30);
     }
-    
+
     @Override
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        
+
         detectiveCtrl.draw(g2);
-        wifeCtrl.draw(g2);
         g2.draw(getBound());
+
         
         roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
         {
-            if(itemBlockCtrl instanceof LockedAreaController)
+            if (itemBlockCtrl instanceof LockedAreaController)
             {
                 LockedAreaController areaLocked = (LockedAreaController) itemBlockCtrl;
+                officeLock = areaLocked.getView().getBound();
                 areaLocked.draw(g2);
-                
+            }          
+            else if (itemBlockCtrl instanceof NPCController)
+            {
+                NPCController npc = (NPCController) itemBlockCtrl;
+                npc.draw(g2);
+            } else if (itemBlockCtrl instanceof HintController)
+            {
+                HintController hint = (HintController) itemBlockCtrl;
+                hint.draw(g2);
+            }
+        });
+        
+        roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
+        {
+            if (itemBlockCtrl instanceof LockedAreaController)
+            {
+                LockedAreaController areaLocked = (LockedAreaController) itemBlockCtrl;
                 officeLock = areaLocked.getView().getBound();
             }
+            itemBlockCtrl.draw(g2);
+
         });
     }
 
@@ -172,47 +192,25 @@ public class RoomWorkingView extends javax.swing.JPanel implements
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
-        
-        //CHECK COLLISIONS
-        boolean itemBlockCollision = false;
-        boolean groundCollision = false;
-        Rectangle boundaryCollision = null;
-        
-        for(ItemBlockController itemBlockCtrl : roomCtrl.getItemBlockCtrls())
-        {
-            if(detectiveCtrl.getView().getBound().intersects(itemBlockCtrl.getItemBlock().getBound()))
-            {
-                itemBlockCollision = true;
-                boundaryCollision = itemBlockCtrl.getItemBlock().getBound();
-            }
-            else if(!getBound().contains(detectiveCtrl.getView().getBound()))
-            {
-                groundCollision = true;
-                boundaryCollision = this.getBound();
-            }
-            else if(detectiveCtrl.getView().getBound().intersects(officeLock))
-            {
-                mainCtrl.showPanel("OfficeLock");
-            }
-        }
-        
-        detectiveCtrl.keyPressed(evt.getKeyCode(), boundaryCollision, itemBlockCollision, groundCollision);
-        
+
+        roomCtrl.checkCollisions(evt.getKeyCode(), roomCtrl.getItemBlockCtrls(),
+                detectiveCtrl, getBound());
+
         repaint();
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
         // TODO add your handling code here:
-        
+
         detectiveCtrl.keyReleased(evt);
-        
-        if(detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))
+
+        if (detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))
         {
             mainCtrl.showPanel("House");
             detectiveCtrl.setLocationX(detectiveCtrl.getDetective().getRoomHouseLocationX());
             detectiveCtrl.setLocationY(detectiveCtrl.getDetective().getRoomHouseLocationY());
         }
-        
+
         repaint();
     }//GEN-LAST:event_formKeyReleased
 
@@ -226,18 +224,18 @@ public class RoomWorkingView extends javax.swing.JPanel implements
     @Override
     public void componentResized(ComponentEvent e)
     {
-        
+
     }
 
     @Override
     public void componentMoved(ComponentEvent e)
     {
-        
+
     }
 
     @Override
     public void componentHidden(ComponentEvent e)
     {
-        
+
     }
 }

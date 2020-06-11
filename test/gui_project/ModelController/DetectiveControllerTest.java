@@ -5,11 +5,7 @@
  */
 package gui_project.ModelController;
 
-import gui_project.View.DetectiveView;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
-import junit.framework.Assert;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -23,7 +19,7 @@ import static org.junit.Assert.*;
  */
 public class DetectiveControllerTest
 {
-    private DetectiveController detectiveCtrl;
+    private DetectiveController sut;
     private Detective detective;
     private Rectangle itemBlock;
 
@@ -46,7 +42,7 @@ public class DetectiveControllerTest
     public void setUp()
     {
         detective = new Detective();
-        detectiveCtrl = new DetectiveController(detective);
+        sut = new DetectiveController(detective);
         itemBlock = new Rectangle(10,15,770,470);
     }
 
@@ -67,7 +63,7 @@ public class DetectiveControllerTest
         detective.setLocationX(0);
         
         //Act
-        detectiveCtrl.keyPressed(keyCode, itemBlock, houseCollision, roomBoundaryCollision);
+        sut.keyPressed(keyCode, itemBlock, houseCollision, roomBoundaryCollision);
         //Assert
         assertEquals(0, detective.getLocationX());
     }
@@ -83,7 +79,7 @@ public class DetectiveControllerTest
         detective.setLocationY(0);
         
         //Act
-        detectiveCtrl.keyPressed(keyCode, itemBlock, houseCollision, roomBoundaryCollision);
+        sut.keyPressed(keyCode, itemBlock, houseCollision, roomBoundaryCollision);
         //Assert
         assertEquals(0, detective.getLocationY());
     }

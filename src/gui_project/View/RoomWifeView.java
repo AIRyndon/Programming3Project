@@ -9,6 +9,7 @@ import gui_project.ModelController.BaseModel;
 import gui_project.ModelController.BaseObserver;
 import gui_project.ModelController.DetectiveController;
 import gui_project.ModelController.Hint;
+import gui_project.ModelController.HintController;
 import gui_project.ModelController.ItemBlockController;
 import gui_project.ModelController.MainController;
 import gui_project.ModelController.NPC;
@@ -89,16 +90,21 @@ public class RoomWifeView extends javax.swing.JPanel implements
         
         Graphics2D g2 = (Graphics2D) g;
         
-        detectiveCtrl.draw(g2);
-        wifeCtrl.draw(g2);
-        daughterCtrl.draw(g2);
-        
+        detectiveCtrl.draw(g2);     
         g2.draw(getBound());
         
-        for(ItemBlockController itemBlockCtrl : roomCtrl.getItemBlockCtrls())
+        roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
         {
-            itemBlockCtrl.draw(g2);
-        }
+            if (itemBlockCtrl instanceof NPCController)
+            {
+                NPCController npc = (NPCController) itemBlockCtrl;
+                npc.draw(g2);
+            } else if (itemBlockCtrl instanceof HintController)
+            {
+                HintController hint = (HintController) itemBlockCtrl;
+                hint.draw(g2);
+            }
+        });
     }
 
     /**

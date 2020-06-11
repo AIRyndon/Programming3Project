@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class BaseRoomController
 {
-    private ArrayList<ItemBlockController> itemBlockCtrls = new ArrayList<ItemBlockController>();
+    private ArrayList<ItemBlockController> itemBlockCtrls = new ArrayList<>();
 
     public void addItemBlock(ItemBlockController itemBlockContrl)
     {
