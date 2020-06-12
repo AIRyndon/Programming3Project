@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class BaseRoomController
 {
-    private ArrayList<ItemBlockController> itemBlockCtrls = new ArrayList<ItemBlockController>();
+    private ArrayList<ItemBlockController> itemBlockCtrls = new ArrayList<>();
 
     public void addItemBlock(ItemBlockController itemBlockContrl)
     {
@@ -26,26 +26,16 @@ public class BaseRoomController
 
         for (ItemBlockController itemBlockCtrl : itemBlockCtrls)
         {
+            //break out of the loop once you find a collision
             if (detectiveCtrl.getView().getBound()
                     .intersects(itemBlockCtrl.getItemBlock().getBound()))
-            {
-                //break out of the loop once you find a collision
+            {          
                 if (itemBlockCtrl instanceof NPCController)
                 {
                     NPCController npcCtrl = (NPCController) itemBlockCtrl;
-
                     npcCtrl.setSpeaking(true);
                     
-                    //this should be inside the npc, to check if the hint has
-                    //to be revealed based on conversation level
-                    //so we can also change the NPC line to include that a hint 
-                    //popped up
-                    if (npcCtrl.getNPC().getOwnedHint() != null)
-                    {
-                        npcCtrl.getNPC().getOwnedHint().reveal();
-                    }
-                } 
-                else if (itemBlockCtrl instanceof HintController)
+                } else if (itemBlockCtrl instanceof HintController)
                 {
                     HintController hintCtrl = (HintController) itemBlockCtrl;
                     

@@ -5,9 +5,14 @@
  */
 package gui_project.View;
 
+import gui_project.ModelController.BaseModel;
+import gui_project.ModelController.BaseObserver;
 import gui_project.ModelController.DetectiveController;
+import gui_project.ModelController.Hint;
+import gui_project.ModelController.HintController;
 import gui_project.ModelController.ItemBlockController;
 import gui_project.ModelController.MainController;
+import gui_project.ModelController.NPC;
 import gui_project.ModelController.NPCController;
 import gui_project.ModelController.RoomMaidController;
 import java.awt.Graphics;
@@ -20,8 +25,10 @@ import java.awt.event.ComponentListener;
  *
  * @author pc
  */
-public class RoomMaidView extends javax.swing.JPanel implements ComponentListener
+public class RoomMaidView extends javax.swing.JPanel implements
+        ComponentListener, BaseObserver
 {
+
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final NPCController maidCtrl;
@@ -48,51 +55,56 @@ public class RoomMaidView extends javax.swing.JPanel implements ComponentListene
     }
 
     @Override
-    public void componentHidden(ComponentEvent e) 
+    public void update(BaseModel model)
     {
-
-    }
-    
-    @Override
-    public void componentMoved(ComponentEvent e) 
-    {
-
-    }
-    
-    @Override
-    public void componentResized(ComponentEvent e)
-    {
-
+        if (model instanceof NPC)
+        {
+            gameTextArea.setText(((NPC) model).getSpokenLine());
+        } else if (model instanceof Hint)
+        {
+            gameTextArea.setText(((Hint) model).getMessage());
+        }
+        mainCtrl.updateConversationLevel();
     }
 
     @Override
     public void componentShown(ComponentEvent e)
     {
+        roomCtrl.getItemBlockCtrls().forEach(i ->
+        {
+            i.getItemBlock().registerObserver(this);
+        });
         requestFocusInWindow();
     }
 
     public Rectangle getBound()
     {
-        return new Rectangle(10, 15, 
+        return new Rectangle(10, 15,
                 this.getSize().width - 30, this.getSize().height - 30);
     }
-        
+
     @Override
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        
+
         Graphics2D g2 = (Graphics2D) g;
-        
-        detectiveCtrl.draw(g2);
-        maidCtrl.draw(g2);
-        
+
+        detectiveCtrl.draw(g2);  
         g2.draw(getBound());
         
-        for(ItemBlockController itemBlockCtrl : roomCtrl.getItemBlockCtrls())
+        roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
         {
-            itemBlockCtrl.draw(g2);
-        }
+            if (itemBlockCtrl instanceof NPCController)
+            {
+                NPCController npc = (NPCController) itemBlockCtrl;
+                npc.draw(g2);
+            } else if (itemBlockCtrl instanceof HintController)
+            {
+                HintController hint = (HintController) itemBlockCtrl;
+                hint.draw(g2);
+            }
+        });
     }
 
     /**
@@ -102,17 +114,23 @@ public class RoomMaidView extends javax.swing.JPanel implements ComponentListene
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jLabel1 = new javax.swing.JLabel();
         houseDoor = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        gameTextArea = new javax.swing.JTextArea();
 
         setName("MaidRoom"); // NOI18N
-        addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
+        addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt)
+            {
                 formKeyPressed(evt);
             }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
+            public void keyReleased(java.awt.event.KeyEvent evt)
+            {
                 formKeyReleased(evt);
             }
         });
@@ -125,37 +143,61 @@ public class RoomMaidView extends javax.swing.JPanel implements ComponentListene
         houseDoor.setFocusCycleRoot(true);
         houseDoor.setName("MaidRoomDoor"); // NOI18N
         add(houseDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 40, 10, 20));
+
+        gameTextArea.setColumns(20);
+        gameTextArea.setRows(5);
+        jScrollPane1.setViewportView(gameTextArea);
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(326, 390, 470, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here: 
-        
-                // TODO add your handling code here:
-        
-        roomCtrl.checkCollisions(evt.getKeyCode(), roomCtrl.getItemBlockCtrls(), 
-                detectiveCtrl, getBound()); 
-        
+
+        // TODO add your handling code here:
+        roomCtrl.checkCollisions(evt.getKeyCode(), roomCtrl.getItemBlockCtrls(),
+                detectiveCtrl, getBound());
+
         repaint();
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
         // TODO add your handling code here:
-        
+
         detectiveCtrl.keyReleased(evt);
-        
-        if(detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))
+
+        if (detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))
         {
             mainCtrl.showPanel("House");
             detectiveCtrl.setLocationX(detectiveCtrl.getDetective().getRoomHouseLocationX());
             detectiveCtrl.setLocationY(detectiveCtrl.getDetective().getRoomHouseLocationY());
         }
-        
+
         repaint();
     }//GEN-LAST:event_formKeyReleased
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea gameTextArea;
     private javax.swing.JLabel houseDoor;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void componentHidden(ComponentEvent e)
+    {
+
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent e)
+    {
+
+    }
+
+    @Override
+    public void componentResized(ComponentEvent e)
+    {
+
+    }
 }

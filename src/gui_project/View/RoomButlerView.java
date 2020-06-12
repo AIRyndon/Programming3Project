@@ -18,6 +18,8 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import gui_project.ModelController.BaseObserver;
 import gui_project.ModelController.Hint;
+import gui_project.ModelController.HintController;
+import gui_project.ModelController.LockedAreaController;
 import gui_project.ModelController.NPC;
 
 /**
@@ -27,6 +29,7 @@ import gui_project.ModelController.NPC;
 public class RoomButlerView extends javax.swing.JPanel implements
         ComponentListener, BaseObserver
 {
+
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final NPCController assistantCtrl;
@@ -44,7 +47,7 @@ public class RoomButlerView extends javax.swing.JPanel implements
         this.detectiveCtrl = detectiveCtrl;
         this.assistantCtrl = assistantCtrl;
         this.roomCtrl = roomCtrl;
-        
+
         assistantCtrl.getNPC().registerObserver(this);
         initComponents();
         addComponentListener(this);
@@ -57,8 +60,7 @@ public class RoomButlerView extends javax.swing.JPanel implements
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
-        }
-        else if (model instanceof Hint)
+        } else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
         }
@@ -70,7 +72,7 @@ public class RoomButlerView extends javax.swing.JPanel implements
         roomCtrl.getItemBlockCtrls().forEach(i ->
         {
             i.getItemBlock().registerObserver(this);
-        });   
+        });
         requestFocusInWindow();
     }
 
@@ -86,16 +88,21 @@ public class RoomButlerView extends javax.swing.JPanel implements
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g;
-
         detectiveCtrl.draw(g2);
-        assistantCtrl.draw(g2);
-
         g2.draw(getBound());
 
-        for (ItemBlockController itemBlockCtrl : roomCtrl.getItemBlockCtrls())
+        roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
         {
-            g2.draw(itemBlockCtrl.getItemBlock().getBound());
-        }
+            if (itemBlockCtrl instanceof NPCController)
+            {
+                NPCController npc = (NPCController) itemBlockCtrl;
+                npc.draw(g2);
+            } else if (itemBlockCtrl instanceof HintController)
+            {
+                HintController hint = (HintController) itemBlockCtrl;
+                hint.draw(g2);
+            }
+        });
     }
 
     /**
@@ -193,7 +200,7 @@ public class RoomButlerView extends javax.swing.JPanel implements
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
-    
+
     @Override
     public void componentHidden(ComponentEvent e)
     {

@@ -22,8 +22,8 @@ public class MainController
     private RoomButlerController butlerRoomCtrl;
     private RoomWifeController wifeRoomCtrl;
     private RoomWorkingController workingRoomCtrl;
-    private NPCController butlerCtrl, maidCtrl, assistantCtrl, wifeCtrl, daughterCtrl, victimCtrl;
-    private HintController knife, gloves;
+    private NPCController butler, maid, assistant, wife, daughter, victim;
+    private HintController knife, gloves, cake,vial,picture;
     private ItemBlockController houseArea, maidRoomWall, wifeRoomWall, butlerRoomWall,
             officeRoomWall, bed;
     private LockedAreaController dogHouseLock, officeLock;
@@ -48,27 +48,31 @@ public class MainController
     public void addItemBlockToRoom()
     {
         groundCtrl.addItemBlock(dogHouseLock);
-        groundCtrl.addItemBlock(butlerCtrl);
+        groundCtrl.addItemBlock(butler);
         groundCtrl.addItemBlock(knife);
+        groundCtrl.addItemBlock(cake);
         groundCtrl.addItemBlock(houseArea);
 
         houseCtrl.addItemBlock(maidRoomWall);
         houseCtrl.addItemBlock(wifeRoomWall);
         houseCtrl.addItemBlock(butlerRoomWall);
         houseCtrl.addItemBlock(officeRoomWall);
+        houseCtrl.addItemBlock(vial);
 
-        butlerRoomCtrl.addItemBlock(assistantCtrl);
+        butlerRoomCtrl.addItemBlock(assistant);
         butlerRoomCtrl.addItemBlock(bed);
-        maidRoomCtrl.addItemBlock(maidCtrl);
+        maidRoomCtrl.addItemBlock(maid);
         maidRoomCtrl.addItemBlock(bed);
         maidRoomCtrl.addItemBlock(gloves);
 
-        wifeRoomCtrl.addItemBlock(wifeCtrl);
-        wifeRoomCtrl.addItemBlock(daughterCtrl);
+        wifeRoomCtrl.addItemBlock(wife);
+        wifeRoomCtrl.addItemBlock(daughter);
         wifeRoomCtrl.addItemBlock(bed);
         
-        workingRoomCtrl.addItemBlock(victimCtrl);
+        workingRoomCtrl.addItemBlock(victim);
         workingRoomCtrl.addItemBlock(officeLock);
+        workingRoomCtrl.addItemBlock(knife);
+        workingRoomCtrl.addItemBlock(picture);
     }
     
     public void addAllPanels()
@@ -85,14 +89,23 @@ public class MainController
     
     public void assignHintToNPC()
     {
-        butlerCtrl.getNPC().setOwnedHint(knife);
-        assistantCtrl.getNPC().setOwnedHint(gloves);
+        butler.setOwnedHint(gloves);
+        assistant.setOwnedHint(vial);
+        maid.setOwnedHint(cake);
+        wife.setOwnedHint(picture);
+        daughter.setOwnedHint(knife);
     }
     
     public void setUpHint()
     {
-        knife = new HintController(new Hint("Knife", 150, 150, 10, 10));
-        gloves = new HintController(new Hint("Gloves",250,250,10,10));
+        knife = new HintController(new Hint("Knife","The blade is bloody. . .", 500, 260, 10, 10));
+        gloves = new HintController(new Hint("Gloves","A worn-out pair of gloves, there is a name on it - "
+                            + "\nit is illegible, you only recognize the letters ATO",250,250,10,10));
+        cake = new HintController(new Hint("Cheescake","An innocuous-looking cheesecake",750,30,10,10));
+        picture = new HintController(new Hint("Old Picture","A picture of a young girl - "
+                            + "\nthe girl has a resemblance with the maid",30,30,10,10));
+        vial = new HintController(new Hint("Alprazolam","A powerful sedative -"
+                            + "\ncan have side-effects when taken regularly",650,30,10,10));
         
         assignHintToNPC();
     }
@@ -116,22 +129,42 @@ public class MainController
     public void setUpNPCController()
     {
         detectiveCtrl = new DetectiveController(detective);
-        butlerCtrl = new NPCController(new NPC("Butler", "B", 100, 100, 20, 20));
-        maidCtrl = new NPCController(new NPC("Maid", "M", 200, 200, 20, 20));
-        assistantCtrl = new NPCController(new NPC("Assistant", "A", 240, 240, 20, 20));
-        wifeCtrl = new NPCController(new NPC("Wife", "W", 230, 230, 20, 20));
-        daughterCtrl = new NPCController(new NPC("Daughter", "D", 150, 150, 20, 20));
-        victimCtrl = new NPCController(new NPC("Victim", "V", 300, 300, 20, 20));
+        butler = new NPCController(new NPC("Butler", "B", 100, 100, 20, 20));
+        maid = new NPCController(new NPC("Maid", "M", 200, 200, 20, 20));
+        assistant = new NPCController(new NPC("Assistant", "A", 240, 240, 20, 20));
+        wife = new NPCController(new NPC("Wife", "W", 230, 230, 20, 20));
+        daughter = new NPCController(new NPC("Daughter", "D", 150, 150, 20, 20));
+        victim = new NPCController(new NPC("Victim", "V", 300, 300, 20, 20));
     }
     
     public void setUpRoomController()
     {
-        groundCtrl = new RoomGroundController(this, detectiveCtrl, butlerCtrl);
-        houseCtrl = new RoomHouseController(this, detectiveCtrl, wifeCtrl);
-        maidRoomCtrl = new RoomMaidController(this, detectiveCtrl, maidCtrl);
-        butlerRoomCtrl = new RoomButlerController(this, detectiveCtrl, assistantCtrl);
-        wifeRoomCtrl = new RoomWifeController(this, detectiveCtrl, wifeCtrl, daughterCtrl);
-        workingRoomCtrl = new RoomWorkingController(this, detectiveCtrl, victimCtrl);        
+        groundCtrl = new RoomGroundController(this, detectiveCtrl, butler);
+        houseCtrl = new RoomHouseController(this, detectiveCtrl, wife);
+        maidRoomCtrl = new RoomMaidController(this, detectiveCtrl, maid);
+        butlerRoomCtrl = new RoomButlerController(this, detectiveCtrl, assistant);
+        wifeRoomCtrl = new RoomWifeController(this, detectiveCtrl, wife, daughter);
+        workingRoomCtrl = new RoomWorkingController(this, detectiveCtrl, victim);        
+    }
+
+    public void updateConversationLevel()
+    {
+        if (butler.hasTalkedWithPlayer()
+                && wife.hasTalkedWithPlayer()
+                && daughter.hasTalkedWithPlayer()
+                && maid.hasTalkedWithPlayer())
+        {
+            assistant.unlockLines();
+            NPC.conversationLevel = 2;
+        } else if (NPC.conversationLevel == 2)
+        {
+            wife.unlockLines();
+            NPC.conversationLevel = 3;
+        } else if (NPC.conversationLevel == 3)
+        {
+            maid.unlockLines();
+            daughter.unlockLines();
+        }
     }
 
     /**

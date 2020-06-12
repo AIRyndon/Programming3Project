@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class BaseModel
 {
-    private ArrayList<BaseObserver> characterObs = new ArrayList<>();
+    private ArrayList<BaseObserver> observers = new ArrayList<>();
     private int locationY;
     private int locationX;
     
@@ -40,24 +40,24 @@ public class BaseModel
 
     public void registerObserver(BaseObserver obs)
     {
-        characterObs.add(obs);
+        observers.add(obs);
     }
 
     public void removeObserver(BaseObserver obs)
     {
-        int idx = characterObs.indexOf(obs);
+        int idx = observers.indexOf(obs);
 
         if (idx >= 0)
         {
-            characterObs.remove(idx);
+            observers.remove(idx);
         }
     }
    
     public void notifyObservers()
     {
-        for (int i = 0; i < characterObs.size(); i++)
+        for (int i = 0; i < observers.size(); i++)
         {
-            BaseObserver obs = characterObs.get(i);
+            BaseObserver obs = observers.get(i);
             obs.update(this);
         }
     }

@@ -17,6 +17,7 @@ public class NPCController extends ItemBlockController
 
     private final NPC npc;
     private final NPCView view;
+    private HintController hintCtrl;
 
     public NPCController(NPC npc)
     {
@@ -33,6 +34,11 @@ public class NPCController extends ItemBlockController
     public NPCView getView()
     {
         return view;
+    }
+
+    public void setOwnedHint(HintController hintCtrl)
+    {
+        this.hintCtrl = hintCtrl;
     }
 
     @Override
@@ -54,5 +60,23 @@ public class NPCController extends ItemBlockController
     public void setSpeaking(boolean status)
     {
         npc.setSpeaking(status);
+        
+        if (npc.isLinesUnlocked())
+        {
+            if (hintCtrl != null)
+            {
+               hintCtrl.reveal();
+            }
+        }   
+    }
+
+    boolean hasTalkedWithPlayer()
+    {
+        return npc.isDiscovered();
+    }
+
+    void unlockLines()
+    {
+        npc.unlockLines(true);
     }
 }

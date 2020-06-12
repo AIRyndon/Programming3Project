@@ -5,10 +5,14 @@
  */
 package gui_project.View;
 
+import gui_project.ModelController.BaseModel;
+import gui_project.ModelController.BaseObserver;
 import gui_project.ModelController.DetectiveController;
-import gui_project.ModelController.ItemBlockController;
+import gui_project.ModelController.Hint;
+import gui_project.ModelController.HintController;
 import gui_project.ModelController.LockedAreaController;
 import gui_project.ModelController.MainController;
+import gui_project.ModelController.NPC;
 import gui_project.ModelController.NPCController;
 import gui_project.ModelController.RoomWorkingController;
 import java.awt.Graphics;
@@ -21,11 +25,13 @@ import java.awt.event.ComponentListener;
  *
  * @author pc
  */
-public class RoomWorkingView extends javax.swing.JPanel implements ComponentListener
+public class RoomWorkingView extends javax.swing.JPanel implements
+        ComponentListener, BaseObserver
 {
+
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
-    private final NPCController wifeCtrl;
+    private final NPCController victimCtrl;
     private final RoomWorkingController roomCtrl;
     private Rectangle officeLock;
 
@@ -34,77 +40,86 @@ public class RoomWorkingView extends javax.swing.JPanel implements ComponentList
      */
     public RoomWorkingView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
-            NPCController wifeCtrl,
+            NPCController victimCtrl,
             RoomWorkingController roomCtrl)
-    {     
+    {
         this.mainCtrl = mainCtrl;
         this.detectiveCtrl = detectiveCtrl;
-        this.wifeCtrl = wifeCtrl;
+        this.victimCtrl = victimCtrl;
         this.roomCtrl = roomCtrl;
-        
+
         initComponents();
         addComponentListener(this);
         setFocusable(true);
     }
 
     @Override
+    public void update(BaseModel model)
+    {
+        if (model instanceof NPC)
+        {
+            gameTextArea.setText(((NPC) model).getSpokenLine());
+        } else if (model instanceof Hint)
+        {
+            gameTextArea.setText(((Hint) model).getMessage());
+        }
+        mainCtrl.updateConversationLevel();
+    }
+
+    @Override
     public void componentShown(ComponentEvent e)
     {
-        /*we can use this method to setup the view before it is shown in the main panel
-        *the requestFocus is the one used to keep the detective moving
-        */
-       requestFocusInWindow();
+        roomCtrl.getItemBlockCtrls().forEach(i ->
+        {
+            i.getItemBlock().registerObserver(this);
+        });
+        requestFocusInWindow();
     }
 
-    @Override
-    public void componentHidden(ComponentEvent e)
-    {
-        /*
-        we can use this to set up things before the view gets off screen
-        -- I'm thinking like saving the detective's last location before leaving
-        this room - so when he comes back, we can set his correct location on
-        componentShown
-        */
-        
-    }
-
-    @Override
-    public void componentResized(ComponentEvent e)
-    {
-        
-    }
-
-    @Override
-    public void componentMoved(ComponentEvent e)
-    {
-       
-    }
-    
     public Rectangle getBound()
     {
-        return new Rectangle(10, 15, 
+        return new Rectangle(10, 15,
                 this.getSize().width - 30, this.getSize().height - 30);
     }
-    
+
     @Override
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        
+
         detectiveCtrl.draw(g2);
-        wifeCtrl.draw(g2);
         g2.draw(getBound());
+
         
         roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
         {
-            if(itemBlockCtrl instanceof LockedAreaController)
+            if (itemBlockCtrl instanceof LockedAreaController)
             {
                 LockedAreaController areaLocked = (LockedAreaController) itemBlockCtrl;
+                officeLock = areaLocked.getView().getBound();
                 areaLocked.draw(g2);
-                
+            }          
+            else if (itemBlockCtrl instanceof NPCController)
+            {
+                NPCController npc = (NPCController) itemBlockCtrl;
+                npc.draw(g2);
+            } else if (itemBlockCtrl instanceof HintController)
+            {
+                HintController hint = (HintController) itemBlockCtrl;
+                hint.draw(g2);
+            }
+        });
+        
+        roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
+        {
+            if (itemBlockCtrl instanceof LockedAreaController)
+            {
+                LockedAreaController areaLocked = (LockedAreaController) itemBlockCtrl;
                 officeLock = areaLocked.getView().getBound();
             }
+            itemBlockCtrl.draw(g2);
+
         });
     }
 
@@ -115,17 +130,23 @@ public class RoomWorkingView extends javax.swing.JPanel implements ComponentList
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jLabel1 = new javax.swing.JLabel();
         houseDoor = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        gameTextArea = new javax.swing.JTextArea();
 
         setName("WorkingRoom"); // NOI18N
-        addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
+        addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt)
+            {
                 formKeyPressed(evt);
             }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
+            public void keyReleased(java.awt.event.KeyEvent evt)
+            {
                 formKeyReleased(evt);
             }
         });
@@ -135,6 +156,10 @@ public class RoomWorkingView extends javax.swing.JPanel implements ComponentList
         houseDoor.setText("*");
         houseDoor.setFocusCycleRoot(true);
         houseDoor.setName("MaidRoomDoor"); // NOI18N
+
+        gameTextArea.setColumns(20);
+        gameTextArea.setRows(5);
+        jScrollPane1.setViewportView(gameTextArea);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -149,6 +174,9 @@ public class RoomWorkingView extends javax.swing.JPanel implements ComponentList
                         .addGap(341, 341, 341)
                         .addComponent(houseDoor)))
                 .addContainerGap(385, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,59 +185,57 @@ public class RoomWorkingView extends javax.swing.JPanel implements ComponentList
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(houseDoor)
-                .addContainerGap(384, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 288, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
-        
-        //CHECK COLLISIONS
-        boolean itemBlockCollision = false;
-        boolean groundCollision = false;
-        Rectangle boundaryCollision = null;
-        
-        for(ItemBlockController itemBlockCtrl : roomCtrl.getItemBlockCtrls())
-        {
-            if(detectiveCtrl.getView().getBound().intersects(itemBlockCtrl.getItemBlock().getBound()))
-            {
-                itemBlockCollision = true;
-                boundaryCollision = itemBlockCtrl.getItemBlock().getBound();
-            }
-            else if(!getBound().contains(detectiveCtrl.getView().getBound()))
-            {
-                groundCollision = true;
-                boundaryCollision = this.getBound();
-            }
-            else if(detectiveCtrl.getView().getBound().intersects(officeLock))
-            {
-                mainCtrl.showPanel("OfficeLock");
-            }
-        }
-        
-        detectiveCtrl.keyPressed(evt.getKeyCode(), boundaryCollision, itemBlockCollision, groundCollision);
-        
+
+        roomCtrl.checkCollisions(evt.getKeyCode(), roomCtrl.getItemBlockCtrls(),
+                detectiveCtrl, getBound());
+
         repaint();
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
         // TODO add your handling code here:
-        
+
         detectiveCtrl.keyReleased(evt);
-        
-        if(detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))
+
+        if (detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))
         {
             mainCtrl.showPanel("House");
             detectiveCtrl.setLocationX(detectiveCtrl.getDetective().getRoomHouseLocationX());
             detectiveCtrl.setLocationY(detectiveCtrl.getDetective().getRoomHouseLocationY());
         }
-        
+
         repaint();
     }//GEN-LAST:event_formKeyReleased
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea gameTextArea;
     private javax.swing.JLabel houseDoor;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void componentResized(ComponentEvent e)
+    {
+
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent e)
+    {
+
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent e)
+    {
+
+    }
 }

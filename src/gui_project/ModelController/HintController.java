@@ -26,14 +26,16 @@ public class HintController extends ItemBlockController
 
     public void pickup()
     {
-        hint.setVisible(false);
-        hint.setMessage(hint.getMessage());
+        hint.setPickedUp();
         hint.sendMessage();
     }
 
     public void reveal()
     {
-        hint.setVisible(true);
+        if (!hint.isPickedUp())
+        {
+            hint.setVisible(true);
+        }     
     }
 
     public void clearMessageArea()

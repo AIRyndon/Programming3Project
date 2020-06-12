@@ -8,7 +8,6 @@ package gui_project.ModelController;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Random;
 
 /**
  *
@@ -16,15 +15,17 @@ import java.util.Random;
  */
 public class NPC extends ItemBlock
 {
-    public static Random RANDOM = new Random();
 
+    public static int conversationLevel = 1;
+
+    private boolean discovered = false;
+    private boolean linesUnlocked = false;
     private boolean speaking;
     private final String symbol;
     private String role;
     private String firstLine = "";
     private String secondLine = "";
     private String spokenLine = "";
-    private HintController ownedHint = null;
 
     public NPC(String role, String symbol, int locationX, int locationY,
             int width, int height)
@@ -56,11 +57,22 @@ public class NPC extends ItemBlock
      */
     void setSpeaking(boolean speaking)
     {
+        //discovered will be set when the detective has spoken with
+        //an NPC
+
+        discovered = true;
         this.speaking = speaking;
 
         if (speaking)
         {
-            spokenLine = firstLine;
+            if (linesUnlocked)
+            {
+                spokenLine += secondLine;
+                spokenLine += '\n';
+                spokenLine += firstLine;
+            }else{
+                spokenLine = firstLine; 
+            }
         } else
         {
             spokenLine = "";
@@ -141,18 +153,26 @@ public class NPC extends ItemBlock
     }
 
     /**
-     * @return the ownedHint
+     * @return the discovered
      */
-    public HintController getOwnedHint()
+    public boolean isDiscovered()
     {
-        return ownedHint;
+        return discovered;
     }
 
     /**
-     * @param ownedHint the ownedHint to set
+     * @return the linesUnlocked
      */
-    void setOwnedHint(HintController ownedHint)
+    public boolean isLinesUnlocked()
     {
-        this.ownedHint = ownedHint;
+        return linesUnlocked;
+    }
+
+    /**
+     * @param linesUnlocked the linesUnlocked to set
+     */
+    public void unlockLines(boolean linesUnlocked)
+    {
+        this.linesUnlocked = linesUnlocked;
     }
 }
