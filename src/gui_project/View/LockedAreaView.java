@@ -17,7 +17,11 @@ public class LockedAreaView extends ItemBlockView
     }
     
     public void draw(Graphics2D graphics2D) 
-    {
-        graphics2D.draw(super.getBound());
+    {   
+        //Should it be in Controller?
+        if(!lockedArea.isIsLocked())
+        {
+            graphics2D.draw(super.getBound());
+        }
     }
 }

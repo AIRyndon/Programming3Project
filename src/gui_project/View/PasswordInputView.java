@@ -1,19 +1,17 @@
 package gui_project.View;
 
-import gui_project.ModelController.BaseRoomController;
-import gui_project.ModelController.KeyPasswordController;
 import gui_project.ModelController.LockedArea;
 import gui_project.ModelController.MainController;
 import java.awt.Graphics;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
-public class KeyPasswordView extends javax.swing.JPanel implements ComponentListener
+public class PasswordInputView extends javax.swing.JPanel implements ComponentListener
 {
     private final MainController mainCtrl;
     private LockedArea lockedArea;
     
-    public KeyPasswordView(MainController mainCtrl, LockedArea lockedArea) 
+    public PasswordInputView(MainController mainCtrl, LockedArea lockedArea) 
     {
         initComponents();
         addComponentListener(this);
@@ -143,7 +141,9 @@ public class KeyPasswordView extends javax.swing.JPanel implements ComponentList
         if(userInput.equals(lockedArea.getPassword()))
         {
             resultLabel.setText("You are correct! DOOR OPEN");
-                        
+            //update isLock = true;
+                //Disable DogHouseLock
+            lockedArea.setIsLocked(true);
         }
         else
         {

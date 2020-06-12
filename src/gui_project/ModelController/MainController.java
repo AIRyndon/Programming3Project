@@ -79,8 +79,8 @@ public class MainController
         view.addPanel(wifeRoomCtrl.getView(), wifeRoomCtrl.getView().getName());
         view.addPanel(workingRoomCtrl.getView(), workingRoomCtrl.getView().getName());
         view.addPanel(groundCtrl.getView(), groundCtrl.getView().getName());
-        view.addPanel(dogHouseLock.getKeyPanel().getView(), dogHouseLock.getLockedArea().getName());
-        view.addPanel(officeLock.getKeyPanel().getView(), officeLock.getLockedArea().getName());
+        view.addPanel(dogHouseLock.getPasswordInputController().getView(), dogHouseLock.getLockedArea().getName());
+        view.addPanel(officeLock.getPasswordInputController().getView(), officeLock.getLockedArea().getName());
     }
     
     public void assignHintToNPC()
