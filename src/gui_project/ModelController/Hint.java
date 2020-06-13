@@ -5,15 +5,12 @@
  */
 package gui_project.ModelController;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Angelo
  */
 public class Hint extends ItemBlock
 {
-
     private boolean pickedUp = false;
     private boolean visible = false;
     private String message = "";
@@ -42,6 +39,7 @@ public class Hint extends ItemBlock
     void setVisible(boolean visible)
     {
         this.visible = visible;
+        
         if (!visible)
         {
             message = name + '\n' + description;

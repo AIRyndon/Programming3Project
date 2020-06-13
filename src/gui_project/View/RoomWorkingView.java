@@ -10,6 +10,8 @@ import gui_project.ModelController.BaseObserver;
 import gui_project.ModelController.DetectiveController;
 import gui_project.ModelController.Hint;
 import gui_project.ModelController.HintController;
+import gui_project.ModelController.KeyPassword;
+import gui_project.ModelController.KeyPasswordController;
 import gui_project.ModelController.LockedAreaController;
 import gui_project.ModelController.MainController;
 import gui_project.ModelController.NPC;
@@ -28,12 +30,13 @@ import java.awt.event.ComponentListener;
 public class RoomWorkingView extends javax.swing.JPanel implements
         ComponentListener, BaseObserver
 {
-
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final NPCController victimCtrl;
+    private LockedAreaController lockedAreaCtrl;
     private final RoomWorkingController roomCtrl;
-    private Rectangle officeLock;
+    private Rectangle officeLockBound, keyPasswordBound;
+    private KeyPasswordController keyPasswordCtrl;
 
     /**
      * Creates new form RoomView
@@ -59,10 +62,16 @@ public class RoomWorkingView extends javax.swing.JPanel implements
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
-        } else if (model instanceof Hint)
+        } 
+        else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
         }
+        else if(model instanceof KeyPassword)
+        {
+            gameTextArea.setText(((KeyPassword) model).getMessage());
+        }
+        
         mainCtrl.updateConversationLevel();
     }
 
@@ -73,6 +82,7 @@ public class RoomWorkingView extends javax.swing.JPanel implements
         {
             i.getItemBlock().registerObserver(this);
         });
+        
         requestFocusInWindow();
     }
 
@@ -94,20 +104,28 @@ public class RoomWorkingView extends javax.swing.JPanel implements
         
         roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
         {
-            if (itemBlockCtrl instanceof LockedAreaController)
-            {
-                LockedAreaController areaLocked = (LockedAreaController) itemBlockCtrl;
-                officeLock = areaLocked.getView().getBound();
-                areaLocked.draw(g2);
-            }          
-            else if (itemBlockCtrl instanceof NPCController)
+            if (itemBlockCtrl instanceof NPCController)
             {
                 NPCController npc = (NPCController) itemBlockCtrl;
                 npc.draw(g2);
-            } else if (itemBlockCtrl instanceof HintController)
+            } 
+            else if (itemBlockCtrl instanceof HintController)
             {
                 HintController hint = (HintController) itemBlockCtrl;
                 hint.draw(g2);
+            }
+            else if (itemBlockCtrl instanceof LockedAreaController)
+            {
+                LockedAreaController areaLocked = (LockedAreaController) itemBlockCtrl;
+                areaLocked.draw(g2);
+                
+                lockedAreaCtrl = areaLocked;               
+                officeLockBound = areaLocked.getView().getBound();
+            } 
+            else if (itemBlockCtrl instanceof KeyPasswordController)
+            {
+                KeyPasswordController keyPassword = (KeyPasswordController) itemBlockCtrl;
+                keyPassword.draw(g2);
             }
         });
         
@@ -116,10 +134,20 @@ public class RoomWorkingView extends javax.swing.JPanel implements
             if (itemBlockCtrl instanceof LockedAreaController)
             {
                 LockedAreaController areaLocked = (LockedAreaController) itemBlockCtrl;
-                officeLock = areaLocked.getView().getBound();
+                officeLockBound = areaLocked.getView().getBound();
             }
-            itemBlockCtrl.draw(g2);
-
+            else if (itemBlockCtrl instanceof KeyPasswordController)
+            {
+                KeyPasswordController keyPassword = (KeyPasswordController) itemBlockCtrl;
+                keyPassword.draw(g2);
+                
+                keyPasswordCtrl = keyPassword;
+                keyPasswordBound = keyPassword.getView().getBound();
+            }
+            else
+            {
+                itemBlockCtrl.draw(g2);        
+            }
         });
     }
 
@@ -209,6 +237,16 @@ public class RoomWorkingView extends javax.swing.JPanel implements
             mainCtrl.showPanel("House");
             detectiveCtrl.setLocationX(detectiveCtrl.getDetective().getRoomHouseLocationX());
             detectiveCtrl.setLocationY(detectiveCtrl.getDetective().getRoomHouseLocationY());
+        }
+        else if (detectiveCtrl.getView().getBound().intersects(officeLockBound) &&
+                !lockedAreaCtrl.getLockedArea().isUnLocked())
+        {
+            mainCtrl.showPanel("OfficeLock");
+        }
+        if(detectiveCtrl.getView().getBound().intersects(keyPasswordBound) &&
+                !keyPasswordCtrl.getKeyPassword().isCorrect())
+        {
+            mainCtrl.showPanel("HeadDogHouse");
         }
 
         repaint();

@@ -60,10 +60,12 @@ public class RoomMaidView extends javax.swing.JPanel implements
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
-        } else if (model instanceof Hint)
+        } 
+        else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
         }
+        
         mainCtrl.updateConversationLevel();
     }
 
@@ -74,6 +76,7 @@ public class RoomMaidView extends javax.swing.JPanel implements
         {
             i.getItemBlock().registerObserver(this);
         });
+        
         requestFocusInWindow();
     }
 
@@ -99,10 +102,15 @@ public class RoomMaidView extends javax.swing.JPanel implements
             {
                 NPCController npc = (NPCController) itemBlockCtrl;
                 npc.draw(g2);
-            } else if (itemBlockCtrl instanceof HintController)
+            } 
+            else if (itemBlockCtrl instanceof HintController)
             {
                 HintController hint = (HintController) itemBlockCtrl;
                 hint.draw(g2);
+            }
+            else
+            {
+                itemBlockCtrl.draw(g2);
             }
         });
     }
@@ -114,23 +122,20 @@ public class RoomMaidView extends javax.swing.JPanel implements
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
         houseDoor = new javax.swing.JLabel();
+        bedLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         gameTextArea = new javax.swing.JTextArea();
 
         setName("MaidRoom"); // NOI18N
-        addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
             }
-            public void keyReleased(java.awt.event.KeyEvent evt)
-            {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
                 formKeyReleased(evt);
             }
         });
@@ -144,11 +149,14 @@ public class RoomMaidView extends javax.swing.JPanel implements
         houseDoor.setName("MaidRoomDoor"); // NOI18N
         add(houseDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 40, 10, 20));
 
+        bedLabel.setText("BED");
+        add(bedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
+
         gameTextArea.setColumns(20);
         gameTextArea.setRows(5);
         jScrollPane1.setViewportView(gameTextArea);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(326, 390, 470, -1));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(446, 400, 350, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -177,6 +185,7 @@ public class RoomMaidView extends javax.swing.JPanel implements
     }//GEN-LAST:event_formKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel bedLabel;
     private javax.swing.JTextArea gameTextArea;
     private javax.swing.JLabel houseDoor;
     private javax.swing.JLabel jLabel1;

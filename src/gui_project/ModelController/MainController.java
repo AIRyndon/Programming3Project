@@ -6,6 +6,7 @@
 package gui_project.ModelController;
 
 import gui_project.View.*;
+import java.io.IOException;
 
 /**
  *
@@ -23,12 +24,13 @@ public class MainController
     private RoomWifeController wifeRoomCtrl;
     private RoomWorkingController workingRoomCtrl;
     private NPCController butler, maid, assistant, wife, daughter, victim;
-    private HintController knife, gloves, cake,vial,picture;
+    private HintController knife, gloves, cake, vial, picture;
+    private KeyPasswordController headOfficeLock, tailOfficeLock, headDogHouse, tailDogHouse;
     private ItemBlockController houseArea, maidRoomWall, wifeRoomWall, butlerRoomWall,
             officeRoomWall, bed;
     private LockedAreaController dogHouseLock, officeLock;
 
-    public MainController(Detective detective)
+    public MainController(Detective detective) throws IOException
     {
         this.detective = detective;
         view = new MainView();
@@ -38,6 +40,7 @@ public class MainController
         setUpRoomController();
         setUpItemBlockController();
         setUpLockedAreaController();
+        setUpKeyPasswordController();
         addItemBlockToRoom();
         
         addAllPanels();
@@ -52,15 +55,19 @@ public class MainController
         groundCtrl.addItemBlock(knife);
         groundCtrl.addItemBlock(cake);
         groundCtrl.addItemBlock(houseArea);
+        groundCtrl.addItemBlock(tailOfficeLock);
 
         houseCtrl.addItemBlock(maidRoomWall);
         houseCtrl.addItemBlock(wifeRoomWall);
         houseCtrl.addItemBlock(butlerRoomWall);
         houseCtrl.addItemBlock(officeRoomWall);
         houseCtrl.addItemBlock(vial);
+        houseCtrl.addItemBlock(headOfficeLock);
 
         butlerRoomCtrl.addItemBlock(assistant);
         butlerRoomCtrl.addItemBlock(bed);
+        butlerRoomCtrl.addItemBlock(tailDogHouse);
+        
         maidRoomCtrl.addItemBlock(maid);
         maidRoomCtrl.addItemBlock(bed);
         maidRoomCtrl.addItemBlock(gloves);
@@ -73,6 +80,7 @@ public class MainController
         workingRoomCtrl.addItemBlock(officeLock);
         workingRoomCtrl.addItemBlock(knife);
         workingRoomCtrl.addItemBlock(picture);
+        workingRoomCtrl.addItemBlock(headDogHouse);
     }
     
     public void addAllPanels()
@@ -83,8 +91,12 @@ public class MainController
         view.addPanel(wifeRoomCtrl.getView(), wifeRoomCtrl.getView().getName());
         view.addPanel(workingRoomCtrl.getView(), workingRoomCtrl.getView().getName());
         view.addPanel(groundCtrl.getView(), groundCtrl.getView().getName());
-        view.addPanel(dogHouseLock.getPasswordInputController().getView(), dogHouseLock.getLockedArea().getName());
-        view.addPanel(officeLock.getPasswordInputController().getView(), officeLock.getLockedArea().getName());
+        view.addPanel(dogHouseLock.getPasswordInputPanel(), dogHouseLock.getLockedArea().getName());
+        view.addPanel(officeLock.getPasswordInputPanel(), officeLock.getLockedArea().getName());
+        view.addPanel(headDogHouse.getQuestionPanel(), headDogHouse.getKeyPassword().getName());
+        view.addPanel(tailDogHouse.getQuestionPanel(), tailDogHouse.getKeyPassword().getName());
+        view.addPanel(headOfficeLock.getQuestionPanel(), headOfficeLock.getKeyPassword().getName());
+        view.addPanel(tailOfficeLock.getQuestionPanel(), tailOfficeLock.getKeyPassword().getName());
     }
     
     public void assignHintToNPC()
@@ -137,6 +149,25 @@ public class MainController
         victim = new NPCController(new NPC("Victim", "V", 300, 300, 20, 20));
     }
     
+    public void setUpKeyPasswordController() throws IOException
+    {
+        //House
+        headOfficeLock = new KeyPasswordController(this, new KeyPassword(700, 150, 20, 20, 
+                officeLock.getLockedArea(), "!", "HeadOffice", KeyPasswordType.KEYHEAD));
+        
+        //Ground
+        tailOfficeLock = new KeyPasswordController(this, new KeyPassword(650, 300, 20, 20, 
+                officeLock.getLockedArea(), "@", "TailOffice", KeyPasswordType.KEYTAIL));
+        
+        //WorkingRoom
+        headDogHouse = new KeyPasswordController(this, new KeyPassword(30, 65, 20, 20, 
+                dogHouseLock.getLockedArea(), "#", "HeadDogHouse", KeyPasswordType.KEYHEAD));
+        
+        //Butler
+        tailDogHouse = new KeyPasswordController(this, new KeyPassword(150, 50, 20, 20, 
+                dogHouseLock.getLockedArea(), "%", "TailDogHouse", KeyPasswordType.KEYTAIL));
+    }
+    
     public void setUpRoomController()
     {
         groundCtrl = new RoomGroundController(this, detectiveCtrl, butler);
@@ -156,11 +187,13 @@ public class MainController
         {
             assistant.unlockLines();
             NPC.conversationLevel = 2;
-        } else if (NPC.conversationLevel == 2)
+        }
+        else if (NPC.conversationLevel == 2)
         {
             wife.unlockLines();
             NPC.conversationLevel = 3;
-        } else if (NPC.conversationLevel == 3)
+        } 
+        else if (NPC.conversationLevel == 3)
         {
             maid.unlockLines();
             daughter.unlockLines();

@@ -15,7 +15,6 @@ import java.awt.Graphics2D;
  */
 public class HintView extends ItemBlockView
 {
-
     private final Hint hint;
 
     public HintView(Hint hint, HintController hintCtrl)

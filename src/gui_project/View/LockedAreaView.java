@@ -7,19 +7,17 @@ import java.awt.Graphics2D;
 public class LockedAreaView extends ItemBlockView
 {
     private final LockedArea lockedArea;
-    private final LockedAreaController lockedAreaCtrl;
     
     public LockedAreaView(LockedArea lockedArea, LockedAreaController lockedAreaCtrl) 
     {
         super(lockedArea, lockedAreaCtrl);
         this.lockedArea = lockedArea;
-        this.lockedAreaCtrl = lockedAreaCtrl;
     }
     
+    @Override
     public void draw(Graphics2D graphics2D) 
     {   
-        //Should it be in Controller?
-        if(!lockedArea.isIsLocked())
+        if(!lockedArea.isUnLocked())
         {
             graphics2D.draw(super.getBound());
         }

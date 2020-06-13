@@ -14,7 +14,6 @@ import java.awt.Graphics2D;
  */
 public class NPCController extends ItemBlockController
 {
-
     private final NPC npc;
     private final NPCView view;
     private HintController hintCtrl;

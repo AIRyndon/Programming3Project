@@ -1,47 +1,19 @@
 package gui_project.View;
 
-import gui_project.ModelController.LockedArea;
+import gui_project.ModelController.LockedAreaController;
 import gui_project.ModelController.MainController;
 import java.awt.Graphics;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 
-public class PasswordInputView extends javax.swing.JPanel implements ComponentListener
+public class PasswordInputPanel extends javax.swing.JPanel
 {
     private final MainController mainCtrl;
-    private LockedArea lockedArea;
+    private LockedAreaController lockedAreaCtrl;
     
-    public PasswordInputView(MainController mainCtrl, LockedArea lockedArea) 
+    public PasswordInputPanel(MainController mainCtrl, LockedAreaController lockedAreaCtrl) 
     {
         initComponents();
-        addComponentListener(this);
         this.mainCtrl = mainCtrl;
-        this.lockedArea = lockedArea;
-    }
-    
-    @Override
-    public void componentResized(ComponentEvent e)
-    {
-
-    }
-
-    @Override
-    public void componentMoved(ComponentEvent e)
-    {
-        
-    }
-
-    @Override
-    public void componentShown(ComponentEvent e) 
-    {
-
-    }
-
-    @Override
-    public void componentHidden(ComponentEvent e)
-    {
-        resultLabel.setVisible(false);
-        userInputText.setText(null);
+        this.lockedAreaCtrl = lockedAreaCtrl;
     }
 
     @Override
@@ -95,55 +67,56 @@ public class PasswordInputView extends javax.swing.JPanel implements ComponentLi
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(240, 240, 240)
-                .addComponent(lockStatus)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(173, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(enterPassword)
-                        .addGap(164, 164, 164))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(userInputText, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(177, 177, 177))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(resultLabel)
-                        .addGap(288, 288, 288))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(backButton)
-                        .addGap(277, 277, 277))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(245, 245, 245)
+                        .addComponent(enterPassword))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(256, 256, 256)
+                        .addComponent(userInputText, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(374, 374, 374)
+                        .addComponent(resultLabel)))
+                .addContainerGap(247, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(313, 313, 313)
+                        .addComponent(lockStatus))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(363, 363, 363)
+                        .addComponent(backButton)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(46, 46, 46)
+                .addGap(35, 35, 35)
                 .addComponent(lockStatus)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(35, 35, 35)
                 .addComponent(enterPassword)
-                .addGap(51, 51, 51)
+                .addGap(41, 41, 41)
                 .addComponent(userInputText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addGap(46, 46, 46)
                 .addComponent(resultLabel)
-                .addGap(33, 33, 33)
+                .addGap(54, 54, 54)
                 .addComponent(backButton)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addContainerGap(129, Short.MAX_VALUE))
         );
 
         lockStatus.getAccessibleContext().setAccessibleName("");
         resultLabel.setVisible(false);
     }// </editor-fold>//GEN-END:initComponents
 
+    //todo: bring this to Controller
     private void userInputTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userInputTextActionPerformed
         String userInput = userInputText.getText();
         
-        //todo: check password
-        if(userInput.equals(lockedArea.getPassword()))
+        //todo: check password        
+        if(userInput.equals(lockedAreaCtrl.getLockedArea().getPassword()))
         {
             resultLabel.setText("You are correct! DOOR OPEN");
-            //update isLock = true;
-                //Disable DogHouseLock
-            lockedArea.setIsLocked(true);
+            lockedAreaCtrl.disableLockedArea();
         }
         else
         {
@@ -157,7 +130,10 @@ public class PasswordInputView extends javax.swing.JPanel implements ComponentLi
         //todo: check password
             //Correct -> Mess appears -> unlocked ItemBlock -> Close panel
             //Wrong -> Mess appears -> Close panel
-        if(lockedArea.getName().equals("DogHouseLock"))
+        resultLabel.setVisible(false);
+        userInputText.setText(null);
+        
+        if(lockedAreaCtrl.getLockedArea().getName().equals("DogHouseLock"))
         {
             mainCtrl.showPanel("Ground");
         }

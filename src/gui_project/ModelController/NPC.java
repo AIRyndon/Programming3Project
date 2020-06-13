@@ -15,7 +15,6 @@ import java.io.IOException;
  */
 public class NPC extends ItemBlock
 {
-
     public static int conversationLevel = 1;
 
     private boolean discovered = false;
@@ -70,13 +69,17 @@ public class NPC extends ItemBlock
                 spokenLine += secondLine;
                 spokenLine += '\n';
                 spokenLine += firstLine;
-            }else{
+            }
+            else
+            {
                 spokenLine = firstLine; 
             }
-        } else
+        } 
+        else
         {
             spokenLine = "";
         }
+        
         notifyObservers();
     }
 
@@ -106,7 +109,8 @@ public class NPC extends ItemBlock
                     break;
                 }
             }
-        } catch (IOException ex)
+        } 
+        catch (IOException ex)
         {
             ex.printStackTrace();
         }

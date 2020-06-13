@@ -7,6 +7,9 @@ package gui_project;
 
 import gui_project.ModelController.Detective;
 import gui_project.ModelController.MainController;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -39,7 +42,14 @@ public class RPGAppGUI
             public void run()
             {
                 Detective detective = new Detective();
-                new MainController(detective);
+                try 
+                {
+                    new MainController(detective);
+                } 
+                catch (IOException ex) 
+                {
+                    Logger.getLogger(RPGAppGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

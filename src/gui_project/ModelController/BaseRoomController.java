@@ -34,8 +34,8 @@ public class BaseRoomController
                 {
                     NPCController npcCtrl = (NPCController) itemBlockCtrl;
                     npcCtrl.setSpeaking(true);
-                    
-                } else if (itemBlockCtrl instanceof HintController)
+                } 
+                else if (itemBlockCtrl instanceof HintController)
                 {
                     HintController hintCtrl = (HintController) itemBlockCtrl;
                     
@@ -47,6 +47,27 @@ public class BaseRoomController
                     }
                     
                     hintCtrl.pickup();
+                }
+                else if (itemBlockCtrl instanceof LockedAreaController)
+                {
+                    LockedAreaController lockedArea = (LockedAreaController) itemBlockCtrl;
+                    
+                    if (lockedArea.getLockedArea().isUnLocked())
+                    {
+                       break;
+                    } 
+                }
+                else if (itemBlockCtrl instanceof KeyPasswordController)
+                {
+                    KeyPasswordController keyPassword = (KeyPasswordController) itemBlockCtrl;
+                    
+                    if (keyPassword.getKeyPassword().isCorrect())
+                    {
+                        //If user's answer is correct, allow player to get the key.
+                        keyPassword.pickup();
+                        
+                        break;
+                    }
                 }
 
                 itemBlockCollision = true;

@@ -19,7 +19,8 @@ import java.awt.event.ComponentListener;
 import gui_project.ModelController.BaseObserver;
 import gui_project.ModelController.Hint;
 import gui_project.ModelController.HintController;
-import gui_project.ModelController.LockedAreaController;
+import gui_project.ModelController.KeyPassword;
+import gui_project.ModelController.KeyPasswordController;
 import gui_project.ModelController.NPC;
 
 /**
@@ -34,6 +35,8 @@ public class RoomButlerView extends javax.swing.JPanel implements
     private final DetectiveController detectiveCtrl;
     private final NPCController assistantCtrl;
     private final RoomButlerController roomCtrl;
+    private KeyPasswordController keyPasswordCtrl;
+    private Rectangle keyPasswordBound;
 
     /**
      * Creates new form RoomView
@@ -60,10 +63,17 @@ public class RoomButlerView extends javax.swing.JPanel implements
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
-        } else if (model instanceof Hint)
+        } 
+        else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
         }
+        else if(model instanceof KeyPassword)
+        {
+            gameTextArea.setText(((KeyPassword) model).getMessage());
+        }
+        
+        mainCtrl.updateConversationLevel();
     }
 
     @Override
@@ -73,6 +83,7 @@ public class RoomButlerView extends javax.swing.JPanel implements
         {
             i.getItemBlock().registerObserver(this);
         });
+        
         requestFocusInWindow();
     }
 
@@ -97,10 +108,23 @@ public class RoomButlerView extends javax.swing.JPanel implements
             {
                 NPCController npc = (NPCController) itemBlockCtrl;
                 npc.draw(g2);
-            } else if (itemBlockCtrl instanceof HintController)
+            } 
+            else if (itemBlockCtrl instanceof HintController)
             {
                 HintController hint = (HintController) itemBlockCtrl;
                 hint.draw(g2);
+            }
+            else if (itemBlockCtrl instanceof KeyPasswordController)
+            {
+                KeyPasswordController keyPassword = (KeyPasswordController) itemBlockCtrl;
+                keyPassword.draw(g2);
+                
+                keyPasswordCtrl = keyPassword;
+                keyPasswordBound = keyPassword.getView().getBound();
+            }
+            else
+            {
+                itemBlockCtrl.draw(g2);
             }
         });
     }
@@ -118,6 +142,7 @@ public class RoomButlerView extends javax.swing.JPanel implements
         houseDoor = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         gameTextArea = new javax.swing.JTextArea();
+        bedLabel = new javax.swing.JLabel();
 
         setName("ButlerRoom"); // NOI18N
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -139,6 +164,8 @@ public class RoomButlerView extends javax.swing.JPanel implements
         gameTextArea.setRows(5);
         jScrollPane1.setViewportView(gameTextArea);
 
+        bedLabel.setText("BED");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -148,10 +175,12 @@ public class RoomButlerView extends javax.swing.JPanel implements
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(273, 273, 273)
+                                .addGap(249, 249, 249)
                                 .addComponent(jLabel1))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(315, 315, 315)
+                                .addGap(50, 50, 50)
+                                .addComponent(bedLabel)
+                                .addGap(230, 230, 230)
                                 .addComponent(houseDoor)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -164,11 +193,17 @@ public class RoomButlerView extends javax.swing.JPanel implements
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(houseDoor)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 235, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(houseDoor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 235, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(bedLabel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -190,11 +225,17 @@ public class RoomButlerView extends javax.swing.JPanel implements
             detectiveCtrl.setLocationX(detectiveCtrl.getDetective().getRoomHouseLocationX());
             detectiveCtrl.setLocationY(detectiveCtrl.getDetective().getRoomHouseLocationY());
         }
+        else if(detectiveCtrl.getView().getBound().intersects(keyPasswordBound) &&
+                !keyPasswordCtrl.getKeyPassword().isCorrect())
+        {
+            mainCtrl.showPanel("TailDogHouse");
+        }
 
         repaint();
     }//GEN-LAST:event_formKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel bedLabel;
     private javax.swing.JTextArea gameTextArea;
     private javax.swing.JLabel houseDoor;
     private javax.swing.JLabel jLabel1;

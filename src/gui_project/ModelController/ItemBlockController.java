@@ -34,5 +34,10 @@ public class ItemBlockController
     public ArrayList<ItemBlockController> getItemBlockCtrls()
     {
         return itemBlockCtrls;
-    } 
+    }
+    
+    public void removeItemBlock(ItemBlockController itemBlockContrl)
+    {
+        itemBlockCtrls.remove(itemBlockContrl);
+    }
 }

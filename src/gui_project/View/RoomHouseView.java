@@ -19,10 +19,11 @@ import java.awt.event.ComponentListener;
 public class RoomHouseView extends javax.swing.JPanel implements
         ComponentListener, BaseObserver
 {
-    
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final RoomHouseController roomCtrl;
+    private KeyPasswordController keyPasswordCtrl;
+    private Rectangle keyPasswordBound;
     
     public RoomHouseView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
@@ -45,16 +46,27 @@ public class RoomHouseView extends javax.swing.JPanel implements
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
-        } else if (model instanceof Hint)
+        } 
+        else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
         }
+        else if(model instanceof KeyPassword)
+        {
+            gameTextArea.setText(((KeyPassword) model).getMessage());
+        }
+        
         mainCtrl.updateConversationLevel();
     }
     
     @Override
     public void componentShown(ComponentEvent e)
     {
+        roomCtrl.getItemBlockCtrls().forEach(i ->
+        {
+            i.getItemBlock().registerObserver(this);
+        });
+
         requestFocusInWindow();
     }
     
@@ -79,11 +91,21 @@ public class RoomHouseView extends javax.swing.JPanel implements
             {
                 NPCController npc = (NPCController) itemBlockCtrl;
                 npc.draw(g2);
-            } else if (itemBlockCtrl instanceof HintController)
+            } 
+            else if (itemBlockCtrl instanceof HintController)
             {
                 HintController hint = (HintController) itemBlockCtrl;
                 hint.draw(g2);
-            } else
+            }
+            else if (itemBlockCtrl instanceof KeyPasswordController)
+            {
+                KeyPasswordController keyPassword = (KeyPasswordController) itemBlockCtrl;
+                keyPassword.draw(g2);
+                
+                keyPasswordCtrl = keyPassword;
+                keyPasswordBound = keyPassword.getView().getBound();
+            }
+            else
             {
                 itemBlockCtrl.draw(g2);
             }
@@ -97,8 +119,7 @@ public class RoomHouseView extends javax.swing.JPanel implements
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
         groundDoor = new javax.swing.JLabel();
@@ -109,16 +130,17 @@ public class RoomHouseView extends javax.swing.JPanel implements
         jLabel2 = new javax.swing.JLabel();
         jScrollPanel = new javax.swing.JScrollPane();
         gameTextArea = new javax.swing.JTextArea();
+        workingRoomLabel = new javax.swing.JLabel();
+        maidRoomLabel = new javax.swing.JLabel();
+        wifeRoomLabel = new javax.swing.JLabel();
+        butlerRoomLabel = new javax.swing.JLabel();
 
         setName("House"); // NOI18N
-        addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
             }
-            public void keyReleased(java.awt.event.KeyEvent evt)
-            {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
                 formKeyReleased(evt);
             }
         });
@@ -136,11 +158,11 @@ public class RoomHouseView extends javax.swing.JPanel implements
         maidRoomDoor.setText("*");
         maidRoomDoor.setFocusCycleRoot(true);
         maidRoomDoor.setName("MaidRoomDoor"); // NOI18N
-        add(maidRoomDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 10, -1));
+        add(maidRoomDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 10, -1));
 
         butlerRoomDoor.setText("*");
         butlerRoomDoor.setName("ButlerRoomDoor"); // NOI18N
-        add(butlerRoomDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 10, -1));
+        add(butlerRoomDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, 10, -1));
 
         wifeRoomDoor.setText("*");
         wifeRoomDoor.setName("WifeRoomDoor"); // NOI18N
@@ -156,7 +178,19 @@ public class RoomHouseView extends javax.swing.JPanel implements
         gameTextArea.setRows(5);
         jScrollPanel.setViewportView(gameTextArea);
 
-        add(jScrollPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(416, 380, 380, -1));
+        add(jScrollPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(506, 380, 270, -1));
+
+        workingRoomLabel.setText("Working Room");
+        add(workingRoomLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 410, -1, -1));
+
+        maidRoomLabel.setText("Maid Room");
+        add(maidRoomLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, -1, -1));
+
+        wifeRoomLabel.setText("Wife Room");
+        add(wifeRoomLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, -1, -1));
+
+        butlerRoomLabel.setText("Butler Room");
+        add(butlerRoomLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyPressed
@@ -173,20 +207,24 @@ public class RoomHouseView extends javax.swing.JPanel implements
             mainCtrl.showPanel("Ground");
             detectiveCtrl.updateGroundHouseLocation();
             System.out.println("Print Ground");
-        } else if (detectiveCtrl.getView().getBound().intersects(maidRoomDoor.getBounds()))
+        } 
+        else if (detectiveCtrl.getView().getBound().intersects(maidRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("MaidRoom");
             detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
             
-        } else if (detectiveCtrl.getView().getBound().intersects(butlerRoomDoor.getBounds()))
+        } 
+        else if (detectiveCtrl.getView().getBound().intersects(butlerRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("ButlerRoom");
             detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
-        } else if (detectiveCtrl.getView().getBound().intersects(wifeRoomDoor.getBounds()))
+        }
+        else if (detectiveCtrl.getView().getBound().intersects(wifeRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("WifeRoom");
             detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
-        } else if (detectiveCtrl.getView().getBound().intersects(workingRoomDoor.getBounds()))
+        }
+        else if (detectiveCtrl.getView().getBound().intersects(workingRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("WorkingRoom");
             detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
@@ -201,19 +239,30 @@ public class RoomHouseView extends javax.swing.JPanel implements
         //I think we can check for the boundaries here -- if going outside the bounds
         //we wont call the keyPress
         detectiveCtrl.keyReleased(evt);
+        
+        if(detectiveCtrl.getView().getBound().intersects(keyPasswordBound) &&
+                !keyPasswordCtrl.getKeyPassword().isCorrect())
+        {
+            mainCtrl.showPanel("HeadOffice");
+        }
+        
         repaint();
     }//GEN-LAST:event_formKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel butlerRoomDoor;
+    private javax.swing.JLabel butlerRoomLabel;
     private javax.swing.JTextArea gameTextArea;
     private javax.swing.JLabel groundDoor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPanel;
     private javax.swing.JLabel maidRoomDoor;
+    private javax.swing.JLabel maidRoomLabel;
     private javax.swing.JLabel wifeRoomDoor;
+    private javax.swing.JLabel wifeRoomLabel;
     private javax.swing.JLabel workingRoomDoor;
+    private javax.swing.JLabel workingRoomLabel;
     // End of variables declaration//GEN-END:variables
 
     @Override

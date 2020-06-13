@@ -6,7 +6,7 @@ public class LockedArea extends ItemBlock
 {
     public static Random RANDOM = new Random();
     private String password;
-    private boolean isLocked;
+    private boolean unLocked = false;
     private String name;
     
     public LockedArea(int locationX, int locationY, int width, int height, String name) 
@@ -38,14 +38,15 @@ public class LockedArea extends ItemBlock
         this.password = password;
     }
     
-    public boolean isIsLocked() 
+    public boolean isUnLocked() 
     {
-        return isLocked;
+        return unLocked;
     } 
     
-    public void setIsLocked(boolean isLocked)
+    public void setUnLocked(boolean isLocked)
     {
-        this.isLocked = isLocked;
+        this.unLocked = isLocked;
+        notifyObservers();
     }
     
     public String getName() 
