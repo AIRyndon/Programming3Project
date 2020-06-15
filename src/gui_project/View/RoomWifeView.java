@@ -10,7 +10,6 @@ import gui_project.ModelController.BaseObserver;
 import gui_project.ModelController.DetectiveController;
 import gui_project.ModelController.Hint;
 import gui_project.ModelController.HintController;
-import gui_project.ModelController.ItemBlockController;
 import gui_project.ModelController.MainController;
 import gui_project.ModelController.NPC;
 import gui_project.ModelController.NPCController;
@@ -26,8 +25,9 @@ import java.awt.event.ComponentListener;
  * @author pc
  */
 public class RoomWifeView extends javax.swing.JPanel implements
-        ComponentListener,BaseObserver
+        ComponentListener, BaseObserver
 {
+
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final NPCController wifeCtrl;
@@ -42,14 +42,16 @@ public class RoomWifeView extends javax.swing.JPanel implements
             NPCController wifeCtrl,
             NPCController daughterCtrl,
             RoomWifeController roomCtrl)
-    {     
+    {
         this.mainCtrl = mainCtrl;
         this.daughterCtrl = daughterCtrl;
         this.detectiveCtrl = detectiveCtrl;
         this.wifeCtrl = wifeCtrl;
         this.roomCtrl = roomCtrl;
-        
+
         initComponents();
+        gameTextArea.setEditable(false);
+        gameTextArea.setFocusable(false);
         addComponentListener(this);
         setFocusable(true);
     }
@@ -60,54 +62,51 @@ public class RoomWifeView extends javax.swing.JPanel implements
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
-        } 
-        else if (model instanceof Hint)
+        } else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
         }
-        
+
         mainCtrl.updateConversationLevel();
     }
-    
+
     @Override
     public void componentShown(ComponentEvent e)
     {
         roomCtrl.getItemBlockCtrls().forEach(i ->
         {
             i.getItemBlock().registerObserver(this);
-        });   
+        });
         requestFocusInWindow();
     }
-      
+
     public Rectangle getBound()
     {
-        return new Rectangle(10, 15, 
+        return new Rectangle(10, 15,
                 this.getSize().width - 30, this.getSize().height - 30);
     }
-    
+
     @Override
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        
+
         Graphics2D g2 = (Graphics2D) g;
-        
-        detectiveCtrl.draw(g2);     
+
+        detectiveCtrl.draw(g2);
         g2.draw(getBound());
-        
+
         roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
         {
             if (itemBlockCtrl instanceof NPCController)
             {
                 NPCController npc = (NPCController) itemBlockCtrl;
                 npc.draw(g2);
-            }
-            else if (itemBlockCtrl instanceof HintController)
+            } else if (itemBlockCtrl instanceof HintController)
             {
                 HintController hint = (HintController) itemBlockCtrl;
                 hint.draw(g2);
-            }
-            else
+            } else
             {
                 itemBlockCtrl.draw(g2);
             }
@@ -188,25 +187,25 @@ public class RoomWifeView extends javax.swing.JPanel implements
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
-        
-        roomCtrl.checkCollisions(evt.getKeyCode(), roomCtrl.getItemBlockCtrls(), 
+
+        roomCtrl.checkCollisions(evt.getKeyCode(), roomCtrl.getItemBlockCtrls(),
                 detectiveCtrl, getBound());
-        
+
         repaint();
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
         // TODO add your handling code here:
-        
+
         detectiveCtrl.keyReleased(evt);
-        
-        if(detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))
+
+        if (detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))
         {
             mainCtrl.showPanel("House");
             detectiveCtrl.setLocationX(detectiveCtrl.getDetective().getRoomHouseLocationX());
             detectiveCtrl.setLocationY(detectiveCtrl.getDetective().getRoomHouseLocationY());
         }
-        
+
         repaint();
     }//GEN-LAST:event_formKeyReleased
 
@@ -222,19 +221,19 @@ public class RoomWifeView extends javax.swing.JPanel implements
     @Override
     public void componentResized(ComponentEvent e)
     {
-        
+
     }
 
     @Override
     public void componentMoved(ComponentEvent e)
     {
-        
+
     }
 
     @Override
     public void componentHidden(ComponentEvent e)
     {
-        
+
     }
 
 }

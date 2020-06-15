@@ -19,12 +19,13 @@ import java.awt.event.ComponentListener;
 public class RoomHouseView extends javax.swing.JPanel implements
         ComponentListener, BaseObserver
 {
+
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final RoomHouseController roomCtrl;
     private KeyPasswordController keyPasswordCtrl;
     private Rectangle keyPasswordBound;
-    
+
     public RoomHouseView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
             RoomHouseController roomCtrl)
@@ -36,29 +37,29 @@ public class RoomHouseView extends javax.swing.JPanel implements
         //our view should also implement Observer Interfaces if it needs data
         //from a model
         initComponents();
+        gameTextArea.setEditable(false);
+        gameTextArea.setFocusable(false);
         addComponentListener(this);
         setFocusable(true);
     }
-    
+
     @Override
     public void update(BaseModel model)
     {
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
-        } 
-        else if (model instanceof Hint)
+        } else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
-        }
-        else if(model instanceof KeyPassword)
+        } else if (model instanceof KeyPassword)
         {
             gameTextArea.setText(((KeyPassword) model).getMessage());
         }
-        
+
         mainCtrl.updateConversationLevel();
     }
-    
+
     @Override
     public void componentShown(ComponentEvent e)
     {
@@ -69,43 +70,40 @@ public class RoomHouseView extends javax.swing.JPanel implements
 
         requestFocusInWindow();
     }
-    
+
     public Rectangle getBound()
     {
         return new Rectangle(10, 15,
                 this.getSize().width - 30, this.getSize().height - 30);
     }
-    
+
     @Override
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        
+
         Graphics2D g2 = (Graphics2D) g;
         detectiveCtrl.draw(g2);
         g2.draw(getBound());
-        
+
         roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
         {
             if (itemBlockCtrl instanceof NPCController)
             {
                 NPCController npc = (NPCController) itemBlockCtrl;
                 npc.draw(g2);
-            } 
-            else if (itemBlockCtrl instanceof HintController)
+            } else if (itemBlockCtrl instanceof HintController)
             {
                 HintController hint = (HintController) itemBlockCtrl;
                 hint.draw(g2);
-            }
-            else if (itemBlockCtrl instanceof KeyPasswordController)
+            } else if (itemBlockCtrl instanceof KeyPasswordController)
             {
                 KeyPasswordController keyPassword = (KeyPasswordController) itemBlockCtrl;
                 keyPassword.draw(g2);
-                
+
                 keyPasswordCtrl = keyPassword;
                 keyPasswordBound = keyPassword.getView().getBound();
-            }
-            else
+            } else
             {
                 itemBlockCtrl.draw(g2);
             }
@@ -207,29 +205,25 @@ public class RoomHouseView extends javax.swing.JPanel implements
             mainCtrl.showPanel("Ground");
             detectiveCtrl.updateGroundHouseLocation();
             System.out.println("Print Ground");
-        } 
-        else if (detectiveCtrl.getView().getBound().intersects(maidRoomDoor.getBounds()))
+        } else if (detectiveCtrl.getView().getBound().intersects(maidRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("MaidRoom");
             detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
-            
-        } 
-        else if (detectiveCtrl.getView().getBound().intersects(butlerRoomDoor.getBounds()))
+
+        } else if (detectiveCtrl.getView().getBound().intersects(butlerRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("ButlerRoom");
             detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
-        }
-        else if (detectiveCtrl.getView().getBound().intersects(wifeRoomDoor.getBounds()))
+        } else if (detectiveCtrl.getView().getBound().intersects(wifeRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("WifeRoom");
             detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
-        }
-        else if (detectiveCtrl.getView().getBound().intersects(workingRoomDoor.getBounds()))
+        } else if (detectiveCtrl.getView().getBound().intersects(workingRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("WorkingRoom");
             detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
         }
-        
+
         repaint();
     }//GEN-LAST:event_formKeyPressed
 
@@ -239,13 +233,13 @@ public class RoomHouseView extends javax.swing.JPanel implements
         //I think we can check for the boundaries here -- if going outside the bounds
         //we wont call the keyPress
         detectiveCtrl.keyReleased(evt);
-        
-        if(detectiveCtrl.getView().getBound().intersects(keyPasswordBound) &&
-                !keyPasswordCtrl.getKeyPassword().isCorrect())
+
+        if (detectiveCtrl.getView().getBound().intersects(keyPasswordBound)
+                && !keyPasswordCtrl.getKeyPassword().isCorrect())
         {
             mainCtrl.showPanel("HeadOffice");
         }
-        
+
         repaint();
     }//GEN-LAST:event_formKeyReleased
 
@@ -268,18 +262,18 @@ public class RoomHouseView extends javax.swing.JPanel implements
     @Override
     public void componentHidden(ComponentEvent e)
     {
-        
+
     }
-    
+
     @Override
     public void componentMoved(ComponentEvent e)
     {
-        
+
     }
-    
+
     @Override
     public void componentResized(ComponentEvent e)
     {
-        
+
     }
 }

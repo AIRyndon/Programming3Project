@@ -10,7 +10,6 @@ import gui_project.ModelController.BaseObserver;
 import gui_project.ModelController.DetectiveController;
 import gui_project.ModelController.Hint;
 import gui_project.ModelController.HintController;
-import gui_project.ModelController.ItemBlockController;
 import gui_project.ModelController.MainController;
 import gui_project.ModelController.NPC;
 import gui_project.ModelController.NPCController;
@@ -50,6 +49,8 @@ public class RoomMaidView extends javax.swing.JPanel implements
         //our view should also implement Observer Interfaces if it needs data
         //from a model
         initComponents();
+        gameTextArea.setEditable(false);
+        gameTextArea.setFocusable(false);
         addComponentListener(this);
         setFocusable(true);
     }
@@ -60,12 +61,11 @@ public class RoomMaidView extends javax.swing.JPanel implements
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
-        } 
-        else if (model instanceof Hint)
+        } else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
         }
-        
+
         mainCtrl.updateConversationLevel();
     }
 
@@ -76,7 +76,7 @@ public class RoomMaidView extends javax.swing.JPanel implements
         {
             i.getItemBlock().registerObserver(this);
         });
-        
+
         requestFocusInWindow();
     }
 
@@ -93,22 +93,20 @@ public class RoomMaidView extends javax.swing.JPanel implements
 
         Graphics2D g2 = (Graphics2D) g;
 
-        detectiveCtrl.draw(g2);  
+        detectiveCtrl.draw(g2);
         g2.draw(getBound());
-        
+
         roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
         {
             if (itemBlockCtrl instanceof NPCController)
             {
                 NPCController npc = (NPCController) itemBlockCtrl;
                 npc.draw(g2);
-            } 
-            else if (itemBlockCtrl instanceof HintController)
+            } else if (itemBlockCtrl instanceof HintController)
             {
                 HintController hint = (HintController) itemBlockCtrl;
                 hint.draw(g2);
-            }
-            else
+            } else
             {
                 itemBlockCtrl.draw(g2);
             }

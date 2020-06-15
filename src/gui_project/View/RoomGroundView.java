@@ -54,6 +54,8 @@ public class RoomGroundView extends javax.swing.JPanel implements
         this.roomCtrl = roomCtrl;
 
         initComponents();
+        gameTextArea.setEditable(false);
+        gameTextArea.setFocusable(false);
         addComponentListener(this);
         setFocusable(true);
     }

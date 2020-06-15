@@ -30,6 +30,7 @@ import java.awt.event.ComponentListener;
 public class RoomWorkingView extends javax.swing.JPanel implements
         ComponentListener, BaseObserver
 {
+
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final NPCController victimCtrl;
@@ -52,6 +53,8 @@ public class RoomWorkingView extends javax.swing.JPanel implements
         this.roomCtrl = roomCtrl;
 
         initComponents();
+        gameTextArea.setEditable(false);
+        gameTextArea.setFocusable(false);
         addComponentListener(this);
         setFocusable(true);
     }
@@ -62,16 +65,14 @@ public class RoomWorkingView extends javax.swing.JPanel implements
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
-        } 
-        else if (model instanceof Hint)
+        } else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
-        }
-        else if(model instanceof KeyPassword)
+        } else if (model instanceof KeyPassword)
         {
             gameTextArea.setText(((KeyPassword) model).getMessage());
         }
-        
+
         mainCtrl.updateConversationLevel();
     }
 
@@ -82,7 +83,7 @@ public class RoomWorkingView extends javax.swing.JPanel implements
         {
             i.getItemBlock().registerObserver(this);
         });
-        
+
         requestFocusInWindow();
     }
 
@@ -101,52 +102,46 @@ public class RoomWorkingView extends javax.swing.JPanel implements
         detectiveCtrl.draw(g2);
         g2.draw(getBound());
 
-        
         roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
         {
             if (itemBlockCtrl instanceof NPCController)
             {
                 NPCController npc = (NPCController) itemBlockCtrl;
                 npc.draw(g2);
-            } 
-            else if (itemBlockCtrl instanceof HintController)
+            } else if (itemBlockCtrl instanceof HintController)
             {
                 HintController hint = (HintController) itemBlockCtrl;
                 hint.draw(g2);
-            }
-            else if (itemBlockCtrl instanceof LockedAreaController)
+            } else if (itemBlockCtrl instanceof LockedAreaController)
             {
                 LockedAreaController areaLocked = (LockedAreaController) itemBlockCtrl;
                 areaLocked.draw(g2);
-                
-                lockedAreaCtrl = areaLocked;               
+
+                lockedAreaCtrl = areaLocked;
                 officeLockBound = areaLocked.getView().getBound();
-            } 
-            else if (itemBlockCtrl instanceof KeyPasswordController)
+            } else if (itemBlockCtrl instanceof KeyPasswordController)
             {
                 KeyPasswordController keyPassword = (KeyPasswordController) itemBlockCtrl;
                 keyPassword.draw(g2);
             }
         });
-        
+
         roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
         {
             if (itemBlockCtrl instanceof LockedAreaController)
             {
                 LockedAreaController areaLocked = (LockedAreaController) itemBlockCtrl;
                 officeLockBound = areaLocked.getView().getBound();
-            }
-            else if (itemBlockCtrl instanceof KeyPasswordController)
+            } else if (itemBlockCtrl instanceof KeyPasswordController)
             {
                 KeyPasswordController keyPassword = (KeyPasswordController) itemBlockCtrl;
                 keyPassword.draw(g2);
-                
+
                 keyPasswordCtrl = keyPassword;
                 keyPasswordBound = keyPassword.getView().getBound();
-            }
-            else
+            } else
             {
-                itemBlockCtrl.draw(g2);        
+                itemBlockCtrl.draw(g2);
             }
         });
     }
@@ -237,14 +232,13 @@ public class RoomWorkingView extends javax.swing.JPanel implements
             mainCtrl.showPanel("House");
             detectiveCtrl.setLocationX(detectiveCtrl.getDetective().getRoomHouseLocationX());
             detectiveCtrl.setLocationY(detectiveCtrl.getDetective().getRoomHouseLocationY());
-        }
-        else if (detectiveCtrl.getView().getBound().intersects(officeLockBound) &&
-                !lockedAreaCtrl.getLockedArea().isUnLocked())
+        } else if (detectiveCtrl.getView().getBound().intersects(officeLockBound)
+                && !lockedAreaCtrl.getLockedArea().isUnLocked())
         {
             mainCtrl.showPanel("OfficeLock");
         }
-        if(detectiveCtrl.getView().getBound().intersects(keyPasswordBound) &&
-                !keyPasswordCtrl.getKeyPassword().isCorrect())
+        if (detectiveCtrl.getView().getBound().intersects(keyPasswordBound)
+                && !keyPasswordCtrl.getKeyPassword().isCorrect())
         {
             mainCtrl.showPanel("HeadDogHouse");
         }
