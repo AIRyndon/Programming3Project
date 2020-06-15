@@ -47,6 +47,7 @@ public class BaseRoomController
                     }
                     
                     hintCtrl.pickup();
+                    detectiveCtrl.increasePickedUpHint();
                 }
                 else if (itemBlockCtrl instanceof LockedAreaController)
                 {

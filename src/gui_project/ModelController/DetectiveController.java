@@ -16,6 +16,7 @@ import java.awt.event.KeyEvent;
  */
 public class DetectiveController
 {
+
     private final Detective detective;
     private final DetectiveView view;
 
@@ -23,6 +24,11 @@ public class DetectiveController
     {
         this.detective = detective;
         view = new DetectiveView(detective, this);
+    }
+
+    public void increasePickedUpHint()
+    {
+        detective.increasePickedUpHints();
     }
 
     public void setVelX(int velX)
@@ -44,33 +50,33 @@ public class DetectiveController
     {
         getDetective().setLocationY(locationY);
     }
-    
-    public void setGroundHouseLocationX(int previousLocationX) 
+
+    public void setGroundHouseLocationX(int previousLocationX)
     {
         getDetective().setGroundHouseLocationX(previousLocationX);
     }
-    
-    public void setGroundHouseLocationY(int previousLocationY) 
+
+    public void setGroundHouseLocationY(int previousLocationY)
     {
         getDetective().setGroundHouseLocationY(previousLocationY);
     }
-    
-    public void setRoomHouseLocationX(int previousLocationX) 
+
+    public void setRoomHouseLocationX(int previousLocationX)
     {
         getDetective().setRoomHouseLocationX(previousLocationX);
     }
-    
-    public void setRoomHouseLocationY(int previousLocationY) 
+
+    public void setRoomHouseLocationY(int previousLocationY)
     {
         getDetective().setRoomHouseLocationY(previousLocationY);
     }
-    
-    public Detective getDetective() 
+
+    public Detective getDetective()
     {
         return detective;
     }
-    
-    public DetectiveView getView() 
+
+    public DetectiveView getView()
     {
         return view;
     }
@@ -79,7 +85,7 @@ public class DetectiveController
     {
         getView().draw(graphics2D);
     }
-    
+
     public void updateGroundHouseLocation()
     {
         int previousX = getDetective().getGroundHouseLocationX();
@@ -97,58 +103,62 @@ public class DetectiveController
         setLocationX(newLocationX);
         setLocationY(newLocationY);
     }
-    
-    public void keyPressed(int keyCode, Rectangle itemBlock, 
+
+    public void keyPressed(int keyCode, Rectangle itemBlock,
             boolean houseCollision, boolean roomBoundaryCollision)
     {
         switch (keyCode)
         {
             case KeyEvent.VK_W:
             {
-                if((houseCollision && view.getBound().getMinY() >= itemBlock.getMinY()) ||
-                    (roomBoundaryCollision && view.getBound().getMinY() <= itemBlock.getMinY()))
+                if ((houseCollision && view.getBound().getMinY() >= itemBlock.getMinY())
+                        || (roomBoundaryCollision && view.getBound().getMinY() <= itemBlock.getMinY()))
                 {
                     setVelY(0);
-                }
-                else 
+                } else
+                {
                     setVelY(-(detective.getSpeed()));
-                
+                }
+
                 break;
             }
             case KeyEvent.VK_S:
             {
-                if((houseCollision && view.getBound().getMaxY() <= itemBlock.getMaxY()) ||
-                    (roomBoundaryCollision && view.getBound().getMaxY() >= itemBlock.getMaxY()))
+                if ((houseCollision && view.getBound().getMaxY() <= itemBlock.getMaxY())
+                        || (roomBoundaryCollision && view.getBound().getMaxY() >= itemBlock.getMaxY()))
                 {
                     setVelY(0);
-                }
-                else 
+                } else
+                {
                     setVelY(detective.getSpeed());
-                
+                }
+
                 break;
             }
             case KeyEvent.VK_A:
             {
-                if((houseCollision && view.getBound().getMinX() >= itemBlock.getMinX()) ||
-                    (roomBoundaryCollision && view.getBound().getMinX() <= itemBlock.getMinX()))
+                if ((houseCollision && view.getBound().getMinX() >= itemBlock.getMinX())
+                        || (roomBoundaryCollision && view.getBound().getMinX() <= itemBlock.getMinX()))
                 {
                     setVelX(0);
-                }
-                else
+                } else
+                {
                     setVelX(-(detective.getSpeed()));
-                
+                }
+
                 break;
             }
             case KeyEvent.VK_D:
             {
-                if((houseCollision && view.getBound().getMaxX() <= itemBlock.getMaxX()) ||
-                    (roomBoundaryCollision && view.getBound().getMaxX() >= itemBlock.getMaxX()))
+                if ((houseCollision && view.getBound().getMaxX() <= itemBlock.getMaxX())
+                        || (roomBoundaryCollision && view.getBound().getMaxX() >= itemBlock.getMaxX()))
                 {
                     setVelX(0);
-                }
-                else
+                } else
+                {
                     setVelX(getDetective().getSpeed());
-                
+                }
+
                 break;
             }
             default:
