@@ -5,6 +5,7 @@
  */
 package gui_project.ModelController;
 
+import gui_database.HintDatabase;
 import gui_project.View.HintView;
 import java.awt.Graphics2D;
 
@@ -12,22 +13,31 @@ import java.awt.Graphics2D;
  *
  * @author Angelo
  */
+
+/**
+ *  I am not sure if we should put the Database in the Controller
+ */
 public class HintController extends ItemBlockController
 {
     private final Hint hint;
     private final HintView view;
+    private final HintDatabase hintDatabase;
 
     public HintController(Hint hint)
     {
         super(hint);
         this.hint = hint;
         view = new HintView(hint, this);
+        hintDatabase = new HintDatabase();
     }
 
     public void pickup()
     {
         hint.setPickedUp();
         hint.sendMessage();
+        
+        hintDatabase.inputDataRow(hint.getName(), hint.getDescription());
+        hintDatabase.printData();
     }
 
     public void reveal()

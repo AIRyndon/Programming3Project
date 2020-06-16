@@ -24,25 +24,30 @@ public class Hint extends ItemBlock
         this.name = name;
         this.description = description;
     }
+    
+    //Getters and setters
+    public String getName()
+    {
+        return name;
+    }
 
-    /**
-     * @return the visible
-     */
+    public String getDescription() 
+    {
+        return description;
+    }
+    
     public boolean isVisible()
     {
         return visible;
-    }
-
-    /**
-     * @param visible the visible to set
-     */
+    } 
+    
     void setVisible(boolean visible)
     {
         this.visible = visible;
         
         if (!visible)
         {
-            message = name + '\n' + description;
+            message = getName() + '\n' + getDescription();
         }
     }
 
@@ -51,9 +56,6 @@ public class Hint extends ItemBlock
         notifyObservers();
     }
 
-    /**
-     * @return the message
-     */
     public String getMessage()
     {
         return message;

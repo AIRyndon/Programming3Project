@@ -17,6 +17,7 @@ public class HintDatabase extends DatabaseManager
     public HintDatabase()
     {
         super();
+        resetTable();
         tableName = "HINT";
     }
     
@@ -35,6 +36,23 @@ public class HintDatabase extends DatabaseManager
         catch (Throwable e)
         {
             System.err.println("SQL INSERT exception at " + HINT_ID + " - " + e.getMessage());
+        }
+    }
+    
+    public void resetTable()
+    {
+        try
+        {
+            connection = DriverManager.getConnection(getURL(), getUSER_NAME(), getPASSWORD());
+            statement = connection.createStatement();
+            
+            statement.executeUpdate("DELETE FROM HINT");
+            
+            HINT_ID++;
+        }
+        catch (Throwable e)
+        {
+            System.err.println("SQL DELETE exception at " + HINT_ID + " - " + e.getMessage());
         }
     }
 }
