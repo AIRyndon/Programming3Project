@@ -1,10 +1,5 @@
 package gui_database;
 
-import static gui_database.DatabaseManager.getPASSWORD;
-import static gui_database.DatabaseManager.getURL;
-import static gui_database.DatabaseManager.getUSER_NAME;
-import java.sql.DriverManager;
-
 /**
     * I planned to have 3 tables: Hint (5 hints), Player (all players), 
     * and Hint_grab (composite entity - records all hints 
