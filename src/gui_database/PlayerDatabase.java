@@ -28,9 +28,7 @@ public class PlayerDatabase extends DatabaseManager
     {
         try
         {
-            connection = DriverManager.getConnection(getURL(), getUSER_NAME(), getPASSWORD());
-            statement = connection.createStatement();
-            
+            statement = connection.createStatement();         
             statement.executeUpdate("INSERT INTO PLAYER VALUES (" + PLAYER_ID + ", \'" + 
                     player_name + "\', " + player_age + ", \'" + player_gender + "\')");
             
@@ -40,5 +38,9 @@ public class PlayerDatabase extends DatabaseManager
         {
             System.err.println("SQL INSERT exception at " + PLAYER_ID + " - " + e.getMessage());
         }
+    }
+    
+    public void createPlayerTable(){
+        
     }
 }
