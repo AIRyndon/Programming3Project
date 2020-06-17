@@ -7,6 +7,8 @@ package gui_project.ModelController;
 
 import gui_project.View.*;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -98,6 +100,7 @@ public class MainController
         view.addPanel(tailDogHouse.getQuestionPanel(), tailDogHouse.getKeyPassword().getName());
         view.addPanel(headOfficeLock.getQuestionPanel(), headOfficeLock.getKeyPassword().getName());
         view.addPanel(tailOfficeLock.getQuestionPanel(), tailOfficeLock.getKeyPassword().getName());
+        view.addPanel(new GuessKillerPanel(),"GuessKillerPanel");
     }
 
     public void assignHintToNPC()
@@ -220,6 +223,13 @@ public class MainController
 
     private void guessKiller()
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try
+        {
+            Thread.sleep(1500);
+            view.showPanel("GuessKillerPanel");
+        } catch (InterruptedException ex)
+        {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

@@ -5,11 +5,14 @@
  */
 package gui_project.View;
 
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+
 /**
  *
  * @author Angelo
  */
-public class GuessKillerPanel extends javax.swing.JPanel
+public class GuessKillerPanel extends javax.swing.JPanel implements ComponentListener
 {
 
     /**
@@ -99,4 +102,28 @@ public class GuessKillerPanel extends javax.swing.JPanel
     private javax.swing.JRadioButton maidRadioBtn;
     private javax.swing.JRadioButton wifeRadioBtn;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void componentResized(ComponentEvent e)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent e)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void componentShown(ComponentEvent e)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent e)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -15,7 +15,7 @@ public class Detective extends BaseModel
     private int velX = 0;
     private int velY = 0;
     private int speed = 5;
-    private int pickedUpHints = 0;
+    private int pickedUpHints = 4;
     private int groundHouseLocationX = 380;
     private int groundHouseLocationY = 50;
     private int roomHouseLocationX;
