@@ -1,11 +1,6 @@
 package gui_database;
 
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
     HINT table will be reseted every time when the game ends
@@ -25,9 +20,7 @@ public class HintDatabase extends DatabaseManager
     {
         try
         {
-            connection = DriverManager.getConnection(getURL(), getUSER_NAME(), getPASSWORD());
-            statement = connection.createStatement();
-            
+            statement = connection.createStatement();           
             statement.executeUpdate("INSERT INTO HINT VALUES (" + HINT_ID + ", '" +
                     hint_name + "', '" + description + "')");
             
@@ -43,12 +36,13 @@ public class HintDatabase extends DatabaseManager
     {
         try
         {
-            connection = DriverManager.getConnection(getURL(), getUSER_NAME(), getPASSWORD());
+            connection = DriverManager.getConnection(getURL(),getUSER_NAME(),getPASSWORD());
             statement = connection.createStatement();
             
-            statement.executeUpdate("DELETE FROM HINT");
             
-            HINT_ID++;
+            statement.executeUpdate("TRUNCATE TABLE HINT");
+            
+            //HINT_ID++;
         }
         catch (Throwable e)
         {
