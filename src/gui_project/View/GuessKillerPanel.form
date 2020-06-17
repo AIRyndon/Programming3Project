@@ -16,13 +16,78 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="400" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="butlerRadioBtn" min="-2" max="-2" attributes="0"/>
+                  <Component id="daughterRadioBtn" min="-2" max="-2" attributes="0"/>
+                  <Component id="assistantRadioBtn" min="-2" max="-2" attributes="0"/>
+                  <Component id="wifeRadioBtn" min="-2" max="-2" attributes="0"/>
+                  <Component id="maidRadioBtn" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTextField1" min="-2" pref="147" max="-2" attributes="0"/>
+                  <Component id="guessBtn" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="849" max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="300" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jTextField1" min="-2" pref="52" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+              <Component id="maidRadioBtn" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="wifeRadioBtn" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="assistantRadioBtn" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="daughterRadioBtn" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="butlerRadioBtn" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+              <Component id="guessBtn" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="136" max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
   </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JTextField" name="jTextField1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jTextField1"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="maidRadioBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Maid"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="wifeRadioBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Wife"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="assistantRadioBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Assistant"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="daughterRadioBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Daughter"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="butlerRadioBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Butler"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="guessBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Confirm Guess"/>
+      </Properties>
+    </Component>
+  </SubComponents>
 </Form>

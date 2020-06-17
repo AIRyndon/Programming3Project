@@ -30,19 +30,73 @@ public class GuessKillerPanel extends javax.swing.JPanel
     private void initComponents()
     {
 
+        jTextField1 = new javax.swing.JTextField();
+        maidRadioBtn = new javax.swing.JRadioButton();
+        wifeRadioBtn = new javax.swing.JRadioButton();
+        assistantRadioBtn = new javax.swing.JRadioButton();
+        daughterRadioBtn = new javax.swing.JRadioButton();
+        butlerRadioBtn = new javax.swing.JRadioButton();
+        guessBtn = new javax.swing.JButton();
+
+        jTextField1.setText("jTextField1");
+
+        maidRadioBtn.setText("Maid");
+
+        wifeRadioBtn.setText("Wife");
+
+        assistantRadioBtn.setText("Assistant");
+
+        daughterRadioBtn.setText("Daughter");
+
+        butlerRadioBtn.setText("Butler");
+
+        guessBtn.setText("Confirm Guess");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(butlerRadioBtn)
+                    .addComponent(daughterRadioBtn)
+                    .addComponent(assistantRadioBtn)
+                    .addComponent(wifeRadioBtn)
+                    .addComponent(maidRadioBtn)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(guessBtn))
+                .addContainerGap(849, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(maidRadioBtn)
+                .addGap(18, 18, 18)
+                .addComponent(wifeRadioBtn)
+                .addGap(18, 18, 18)
+                .addComponent(assistantRadioBtn)
+                .addGap(18, 18, 18)
+                .addComponent(daughterRadioBtn)
+                .addGap(18, 18, 18)
+                .addComponent(butlerRadioBtn)
+                .addGap(49, 49, 49)
+                .addComponent(guessBtn)
+                .addContainerGap(136, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton assistantRadioBtn;
+    private javax.swing.JRadioButton butlerRadioBtn;
+    private javax.swing.JRadioButton daughterRadioBtn;
+    private javax.swing.JButton guessBtn;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JRadioButton maidRadioBtn;
+    private javax.swing.JRadioButton wifeRadioBtn;
     // End of variables declaration//GEN-END:variables
 }
