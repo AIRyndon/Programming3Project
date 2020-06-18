@@ -8,6 +8,9 @@ package gui_project.ModelController;
 import gui_database.HintDatabase;
 import gui_project.View.HintView;
 import java.awt.Graphics2D;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -35,7 +38,7 @@ public class HintController extends ItemBlockController
         view = new HintView(hint, this);
     }
 
-    public void pickup()
+    public void pickup() throws SQLException
     {
         hint.setPickedUp();
         hint.sendMessage();
@@ -73,7 +76,15 @@ public class HintController extends ItemBlockController
             return false;
         }
         
-        pickup();
+        try 
+        {
+            pickup();
+        } 
+        catch (SQLException ex) 
+        {
+            Logger.getLogger(HintController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         detectiveCtrl.increasePickedUpHint();
         mainCtrl.checkDetectiveHintCount();
         return true;

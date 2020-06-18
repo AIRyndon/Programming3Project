@@ -6,6 +6,7 @@
 package gui_project.ModelController;
 
 import gui_project.View.*;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,7 +37,7 @@ public class MainController
     private PlayerInforController playerInforCtrl;
     private WelcomePanel welcomePanel;
 
-    public MainController(Detective detective)
+    public MainController(Detective detective) throws SQLException
     {
         this.detective = detective;
         view = new MainView();
@@ -191,7 +192,7 @@ public class MainController
                 dogHouseLock.getLockedArea(), "%", "TailDogHouse", KeyPasswordType.KEYTAIL));
     }
 
-    public void setUpPlayerInforController()
+    public void setUpPlayerInforController() throws SQLException
     {
         playerInforCtrl = new PlayerInforController(this, new PlayerInfor());
     }

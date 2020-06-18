@@ -1,41 +1,45 @@
 package gui_database;
 
-/**
-    * I planned to have 3 tables: Hint (5 hints), Player (all players), 
-    * and Hint_grab (composite entity - records all hints 
-    * the player grabbed, will be reseted every time when the game ends);
-    * 
-    * However, my mind is lagged, so I just created 2 tables first: 
-    * Player and Hint (Hint works as Hint_grab), we do not have any table 
-    * that holds the five hints at the beginning.
-*/
+import gui_project.ModelController.PlayerInfor;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class PlayerDatabase extends DatabaseManager
 {
-    private  static int PLAYER_ID = 1;
+    private int player_id = 1;
+    PlayerInfor playerInfo;
     
-    public PlayerDatabase()
+    public PlayerDatabase(PlayerInfor playerInfo) throws SQLException
     {
         super();
         tableName = "PLAYER";
+        this.playerInfo = playerInfo;
     }
     
-    public void inputDataRow(String player_name, int player_age, char player_gender)
-    {
+    public void inputDataRow() throws SQLException
+    {        
         try
         {
-            statement = connection.createStatement();         
-            statement.executeUpdate("INSERT INTO PLAYER VALUES (" + PLAYER_ID + ", \'" + 
-                    player_name + "\', " + player_age + ", \'" + player_gender + "\')");
+            statement = connection.createStatement();   
+            statement = connection.createStatement(
+                ResultSet.TYPE_SCROLL_INSENSITIVE, 
+                ResultSet.CONCUR_READ_ONLY);
             
-            PLAYER_ID++;
+            resultSet = statement.executeQuery("SELECT * FROM " + tableName);
+            
+            player_id = getNextID();
+            
+            statement.executeUpdate("INSERT INTO PLAYER VALUES (" + player_id + ", \'" + 
+                    playerInfo.getName() + "\', " + playerInfo.getAge() + ", \'" + playerInfo.getGender() + "\')");            
         }
         catch (Throwable e)
         {
-            System.err.println("SQL INSERT exception at " + PLAYER_ID + " - " + e.getMessage());
+            System.err.println("SQL INSERT exception at " + player_id + " - " + e.getMessage());
         }
     }
     
-    public void createPlayerTable(){
+    public void createPlayerTable()
+    {
         
     }
 }

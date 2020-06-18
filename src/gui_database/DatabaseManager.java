@@ -2,6 +2,7 @@ package gui_database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -18,6 +19,8 @@ public class DatabaseManager
     public Statement statement;
     public ResultSet resultSet;
     public ResultSetMetaData resultSetMetaData;
+    public PreparedStatement prepareStatement;
+    public String generatedColumns[] = { "ID" };
 
     protected String tableName;
     private static final String USER_NAME = "group4";
@@ -28,7 +31,25 @@ public class DatabaseManager
     {
         establishConnection();
     }
-
+    
+    public int getNextID() throws SQLException
+    {
+        int lastID = 0;
+        
+        try 
+        {
+            resultSet.last();
+            lastID = resultSet.getRow();
+            resultSet.beforeFirst();
+        }
+        catch(Exception ex)
+        {
+            System.err.println("SQL Exception at GETNEXTID - " + ex.getMessage());
+        }
+        
+        return lastID + 1;
+    }
+    
     public void establishConnection()
     {
         if (connection == null)
@@ -78,7 +99,8 @@ public class DatabaseManager
         }
         catch (SQLException ex)
         {
-            Logger.getLogger(HintDatabase.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("SQL Exception in PRINTDATA - " + ex.getMessage());
+//            Logger.getLogger(HintDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

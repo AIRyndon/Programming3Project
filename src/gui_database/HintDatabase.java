@@ -1,13 +1,15 @@
 package gui_database;
 
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
     HINT table will be reseted every time when the game ends
 */
 public class HintDatabase extends DatabaseManager 
 {
-    private static int HINT_ID = 1;
+    private int hint_id = 1;
     
     public HintDatabase()
     {
@@ -16,19 +18,30 @@ public class HintDatabase extends DatabaseManager
         tableName = "HINT";
     }
     
-    public void inputDataRow(String hint_name, String description)
+    public int getNextID() throws SQLException
+    {
+        return 1;
+    }
+    
+    public void inputDataRow(String hint_name, String description) throws SQLException
     {
         try
         {
-            statement = connection.createStatement();           
-            statement.executeUpdate("INSERT INTO HINT VALUES (" + HINT_ID + ", '" +
-                    hint_name + "', '" + description + "')");
+            statement = connection.createStatement();   
+            statement = connection.createStatement(
+                ResultSet.TYPE_SCROLL_INSENSITIVE, 
+                ResultSet.CONCUR_READ_ONLY);
             
-            HINT_ID++;
+            resultSet = statement.executeQuery("SELECT * FROM " + tableName);
+            
+            hint_id = getNextID();    
+            
+            statement.executeUpdate("INSERT INTO HINT VALUES (" + hint_id + ", '" +
+                    hint_name + "', '" + description + "')");            
         }
         catch (Throwable e)
         {
-            System.err.println("SQL INSERT exception at " + HINT_ID + " - " + e.getMessage());
+            System.err.println("SQL INSERT exception at " + hint_id + " - " + e.getMessage());
         }
     }
     
@@ -39,13 +52,11 @@ public class HintDatabase extends DatabaseManager
             connection = DriverManager.getConnection(getURL(),getUSER_NAME(),getPASSWORD());
             statement = connection.createStatement();
                        
-            statement.executeUpdate("TRUNCATE TABLE HINT");
-            
-            //HINT_ID++;
+            statement.executeUpdate("TRUNCATE TABLE HINT");            
         }
         catch (Throwable e)
         {
-            System.err.println("SQL DELETE exception at " + HINT_ID + " - " + e.getMessage());
+            System.err.println("SQL DELETE exception at " + hint_id + " - " + e.getMessage());
         }
     }
 }

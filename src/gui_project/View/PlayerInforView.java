@@ -2,6 +2,9 @@ package gui_project.View;
 
 import gui_project.ModelController.MainController;
 import gui_project.ModelController.PlayerInforController;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PlayerInforView extends javax.swing.JPanel
 {
@@ -223,9 +226,17 @@ public class PlayerInforView extends javax.swing.JPanel
     private void continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButtonActionPerformed
         if(nameChecked && genderChecked && ageChecked)
         {
-            mainCtrl.showPanel("Story");
-            playerInforCtrl.savePlayerInfo();
+            mainCtrl.showPanel("Story");            
             invalidLabel.setVisible(false);
+            
+            try 
+            {
+                playerInforCtrl.savePlayerInfo();
+            } 
+            catch (SQLException ex) 
+            {
+                Logger.getLogger(PlayerInforView.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         else
         {

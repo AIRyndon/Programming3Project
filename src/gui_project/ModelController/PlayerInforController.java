@@ -3,28 +3,29 @@ package gui_project.ModelController;
 import gui_database.PlayerDatabase;
 import gui_project.View.PlayerInforView;
 import gui_project.View.StoryPanel;
+import java.sql.SQLException;
 
 public class PlayerInforController
 {
-    private static PlayerDatabase playerDatabase = new PlayerDatabase();
+    private static PlayerDatabase playerDatabase;
     private MainController mainCtrl;
     private PlayerInfor playerInfor;
     private PlayerInforView view;
     private StoryPanel storyPanel;
     
-    PlayerInforController(MainController mainCtrl, PlayerInfor playerInfor) 
+    PlayerInforController(MainController mainCtrl, PlayerInfor playerInfor) throws SQLException 
     {
         this.mainCtrl = mainCtrl;
         this.playerInfor = playerInfor;
+        playerDatabase = new PlayerDatabase(playerInfor);
         System.out.println(playerInfor.getName());
         view = new PlayerInforView(mainCtrl, this);
         storyPanel = new StoryPanel(mainCtrl, this);
     }
 
-    public void savePlayerInfo()
+    public void savePlayerInfo() throws SQLException
     {
-        playerDatabase.inputDataRow(playerInfor.getName(), playerInfor.getAge(), 
-                playerInfor.getGender());
+        playerDatabase.inputDataRow();
         playerDatabase.printData();
     }
     
