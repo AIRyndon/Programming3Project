@@ -13,16 +13,18 @@ import gui_project.View.RoomHouseView;
  */
 public class RoomHouseController extends BaseRoomController
 {
+
     private final RoomHouseView view;
 
     public RoomHouseController(MainController mainCtrl,
             DetectiveController detectiveCtrl,
-            NPCController wifeCtrl)
+            KeyPasswordController keyPasswordCtrl)
     {
         view = new RoomHouseView(mainCtrl,
-                detectiveCtrl,this);
+                detectiveCtrl, this,
+                keyPasswordCtrl);
     }
-    
+
     public RoomHouseView getView()
     {
         return view;

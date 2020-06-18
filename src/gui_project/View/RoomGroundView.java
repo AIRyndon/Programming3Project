@@ -34,20 +34,23 @@ public class RoomGroundView extends javax.swing.JPanel implements
     private final DetectiveController detectiveCtrl;
     private final MainController mainCtrl;
     private final RoomGroundController roomCtrl;
-    private LockedAreaController lockedAreaCtrl;
-    private KeyPasswordController keyPasswordCtrl;
-    private Rectangle dogHouseBound, keyPasswordBound;
+    private final LockedAreaController lockedAreaCtrl;
+    private final KeyPasswordController keyPasswordCtrl;
 
     /**
      * Creates new form RoomView
      */
     public RoomGroundView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
-            RoomGroundController roomCtrl)
+            RoomGroundController roomCtrl,
+            KeyPasswordController keyPasswordCtrl,
+            LockedAreaController lockedAreaCtrl)
     {
         this.mainCtrl = mainCtrl;
         this.detectiveCtrl = detectiveCtrl;
         this.roomCtrl = roomCtrl;
+        this.keyPasswordCtrl = keyPasswordCtrl;
+        this.lockedAreaCtrl = lockedAreaCtrl;
 
         initComponents();
         gameTextArea.setEditable(false);
@@ -96,16 +99,10 @@ public class RoomGroundView extends javax.swing.JPanel implements
     @Override
     public void componentShown(ComponentEvent e)
     {
-        /*we can use this method to setup the view before it is shown in the main panel
-         *the requestFocus is the one used to keep the detective moving
-         */
-        //this registering feels wrong on every component show..anywayyys i'll just leave it here
-        //as we can't do it on instantiation
         roomCtrl.getItemBlockCtrls().forEach(i ->
         {
             i.getItemBlock().registerObserver(this);
         });
-
         requestFocusInWindow();
     }
 
@@ -119,27 +116,8 @@ public class RoomGroundView extends javax.swing.JPanel implements
         g2.draw(getBound());
         g2.drawImage(getHouseImage(), 276, 83, null);
 
-        roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
-        {
-            if (itemBlockCtrl instanceof LockedAreaController)
-            {
-                LockedAreaController areaLocked = (LockedAreaController) itemBlockCtrl;
-                areaLocked.draw(g2);
-
-                lockedAreaCtrl = areaLocked;
-                dogHouseBound = lockedAreaCtrl.getView().getBound();
-            } else if (itemBlockCtrl instanceof KeyPasswordController)
-            {
-                KeyPasswordController keyPassword = (KeyPasswordController) itemBlockCtrl;
-                keyPassword.draw(g2);
-
-                keyPasswordCtrl = keyPassword;
-                keyPasswordBound = keyPassword.getView().getBound();
-            } else
-            {
-                itemBlockCtrl.draw(g2);
-            }
-        });
+        roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl
+                -> itemBlockCtrl.draw(g2));
     }
 
     /**
@@ -195,6 +173,8 @@ public class RoomGroundView extends javax.swing.JPanel implements
     private void formKeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyReleased
     {//GEN-HEADEREND:event_formKeyReleased
         detectiveCtrl.keyReleased(evt);
+        Rectangle dogHouseBound = lockedAreaCtrl.getView().getBound();
+        Rectangle keyPasswordBound = keyPasswordCtrl.getView().getBound();
 
         //check doorHouse collision
         if (detectiveCtrl.getView().getBound().intersects(doorHouse.getBounds()))

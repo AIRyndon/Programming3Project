@@ -8,7 +8,6 @@ package gui_project.View;
 import gui_project.ModelController.BaseModel;
 import gui_project.ModelController.DetectiveController;
 import gui_project.ModelController.MainController;
-import gui_project.ModelController.NPCController;
 import gui_project.ModelController.RoomButlerController;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -17,7 +16,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import gui_project.ModelController.BaseObserver;
 import gui_project.ModelController.Hint;
-import gui_project.ModelController.HintController;
 import gui_project.ModelController.KeyPassword;
 import gui_project.ModelController.KeyPasswordController;
 import gui_project.ModelController.NPC;
@@ -33,19 +31,20 @@ public class RoomButlerView extends javax.swing.JPanel implements
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final RoomButlerController roomCtrl;
-    private KeyPasswordController keyPasswordCtrl;
-    private Rectangle keyPasswordBound;
+    private final KeyPasswordController keyPasswordCtrl;
 
     /**
      * Creates new form RoomView
      */
     public RoomButlerView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
-            RoomButlerController roomCtrl)
+            RoomButlerController roomCtrl,
+            KeyPasswordController keyPasswordCtrl)
     {
         this.mainCtrl = mainCtrl;
         this.detectiveCtrl = detectiveCtrl;
         this.roomCtrl = roomCtrl;
+        this.keyPasswordCtrl = keyPasswordCtrl;
 
         initComponents();
         gameTextArea.setEditable(false);
@@ -73,10 +72,8 @@ public class RoomButlerView extends javax.swing.JPanel implements
     @Override
     public void componentShown(ComponentEvent e)
     {
-        roomCtrl.getItemBlockCtrls().forEach(i ->
-        {
-            i.getItemBlock().registerObserver(this);
-        });
+        roomCtrl.getItemBlockCtrls().forEach(i
+                -> i.getItemBlock().registerObserver(this));
 
         requestFocusInWindow();
     }
@@ -96,20 +93,8 @@ public class RoomButlerView extends javax.swing.JPanel implements
         detectiveCtrl.draw(g2);
         g2.draw(getBound());
 
-        roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
-        {
-            if (itemBlockCtrl instanceof KeyPasswordController)
-            {
-                KeyPasswordController keyPassword = (KeyPasswordController) itemBlockCtrl;
-                keyPassword.draw(g2);
-
-                keyPasswordCtrl = keyPassword;
-                keyPasswordBound = keyPassword.getView().getBound();
-            } else
-            {
-                itemBlockCtrl.draw(g2);
-            }
-        });
+        roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl
+                -> itemBlockCtrl.draw(g2));
     }
 
     /**
@@ -201,6 +186,7 @@ public class RoomButlerView extends javax.swing.JPanel implements
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
 
         detectiveCtrl.keyReleased(evt);
+        Rectangle keyPasswordBound = keyPasswordCtrl.getView().getBound();
 
         if (detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))
         {

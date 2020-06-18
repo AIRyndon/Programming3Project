@@ -147,13 +147,7 @@ public class GuessKillerView extends javax.swing.JPanel
             public void run()
             {
                 Detective detective = new Detective();
-                try
-                {
-                    new MainController(detective);
-                } catch (IOException ex)
-                {
-                    Logger.getLogger(RPGAppGUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                new MainController(detective);
             }
         });
         mainCtrl.getView().getWindow().dispose();

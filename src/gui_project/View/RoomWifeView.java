@@ -87,21 +87,8 @@ public class RoomWifeView extends javax.swing.JPanel implements
         detectiveCtrl.draw(g2);
         g2.draw(getBound());
 
-        roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
-        {
-            if (itemBlockCtrl instanceof NPCController)
-            {
-                NPCController npc = (NPCController) itemBlockCtrl;
-                npc.draw(g2);
-            } else if (itemBlockCtrl instanceof HintController)
-            {
-                HintController hint = (HintController) itemBlockCtrl;
-                hint.draw(g2);
-            } else
-            {
-                itemBlockCtrl.draw(g2);
-            }
-        });
+        roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl
+                -> itemBlockCtrl.draw(g2));
     }
 
     /**
@@ -185,7 +172,7 @@ public class RoomWifeView extends javax.swing.JPanel implements
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
-       
+
         detectiveCtrl.keyReleased(evt);
 
         if (detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))

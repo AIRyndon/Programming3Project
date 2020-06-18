@@ -15,17 +15,20 @@ import gui_project.View.RoomGroundView;
 //in every view
 //We pass the MainController so we can change panels
 public class RoomGroundController extends BaseRoomController
-{   
+{
+
     private final RoomGroundView view;
-  
-    public RoomGroundController(MainController mainCtrl, 
+
+    public RoomGroundController(MainController mainCtrl,
             DetectiveController detectiveCtrl,
-            NPCController butlerCtrl)
+            KeyPasswordController keyPasswordCtrl,
+            LockedAreaController lockedAreaCtrl)
     {
-        view = new RoomGroundView(mainCtrl, 
-                detectiveCtrl, this);
+        view = new RoomGroundView(mainCtrl,
+                detectiveCtrl, this,
+                keyPasswordCtrl, lockedAreaCtrl);
     }
-    
+
     public RoomGroundView getView()
     {
         return view;

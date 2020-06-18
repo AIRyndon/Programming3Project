@@ -23,19 +23,18 @@ public class RoomHouseView extends javax.swing.JPanel implements
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final RoomHouseController roomCtrl;
-    private KeyPasswordController keyPasswordCtrl;
-    private Rectangle keyPasswordBound;
+    private final KeyPasswordController keyPasswordCtrl;
 
     public RoomHouseView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
-            RoomHouseController roomCtrl)
+            RoomHouseController roomCtrl,
+            KeyPasswordController keyPasswordCtrl)
     {
         this.mainCtrl = mainCtrl;
         this.detectiveCtrl = detectiveCtrl;
         this.roomCtrl = roomCtrl;
+        this.keyPasswordCtrl = keyPasswordCtrl;
 
-        //our view should also implement Observer Interfaces if it needs data
-        //from a model
         initComponents();
         gameTextArea.setEditable(false);
         gameTextArea.setFocusable(false);
@@ -62,10 +61,8 @@ public class RoomHouseView extends javax.swing.JPanel implements
     @Override
     public void componentShown(ComponentEvent e)
     {
-        roomCtrl.getItemBlockCtrls().forEach(i ->
-        {
-            i.getItemBlock().registerObserver(this);
-        });
+        roomCtrl.getItemBlockCtrls().forEach(i
+                -> i.getItemBlock().registerObserver(this));
 
         requestFocusInWindow();
     }
@@ -85,20 +82,8 @@ public class RoomHouseView extends javax.swing.JPanel implements
         detectiveCtrl.draw(g2);
         g2.draw(getBound());
 
-        roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
-        {
-            if (itemBlockCtrl instanceof KeyPasswordController)
-            {
-                KeyPasswordController keyPassword = (KeyPasswordController) itemBlockCtrl;
-                keyPassword.draw(g2);
-
-                keyPasswordCtrl = keyPassword;
-                keyPasswordBound = keyPassword.getView().getBound();
-            } else
-            {
-                itemBlockCtrl.draw(g2);
-            }
-        });
+        roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl
+                -> itemBlockCtrl.draw(g2));
     }
 
     /**
@@ -224,6 +209,7 @@ public class RoomHouseView extends javax.swing.JPanel implements
         //I think we can check for the boundaries here -- if going outside the bounds
         //we wont call the keyPress
         detectiveCtrl.keyReleased(evt);
+        Rectangle keyPasswordBound = keyPasswordCtrl.getView().getBound();
 
         if (detectiveCtrl.getView().getBound().intersects(keyPasswordBound)
                 && !keyPasswordCtrl.getKeyPassword().isCorrect())

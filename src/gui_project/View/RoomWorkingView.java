@@ -9,13 +9,11 @@ import gui_project.ModelController.BaseModel;
 import gui_project.ModelController.BaseObserver;
 import gui_project.ModelController.DetectiveController;
 import gui_project.ModelController.Hint;
-import gui_project.ModelController.HintController;
 import gui_project.ModelController.KeyPassword;
 import gui_project.ModelController.KeyPasswordController;
 import gui_project.ModelController.LockedAreaController;
 import gui_project.ModelController.MainController;
 import gui_project.ModelController.NPC;
-import gui_project.ModelController.NPCController;
 import gui_project.ModelController.RoomWorkingController;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -33,21 +31,24 @@ public class RoomWorkingView extends javax.swing.JPanel implements
 
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
-    private LockedAreaController lockedAreaCtrl;
     private final RoomWorkingController roomCtrl;
-    private Rectangle officeLockBound, keyPasswordBound;
-    private KeyPasswordController keyPasswordCtrl;
+    private final KeyPasswordController keyPasswordCtrl;
+    private final LockedAreaController lockedAreaCtrl;
 
     /**
      * Creates new form RoomView
      */
     public RoomWorkingView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
-            RoomWorkingController roomCtrl)
+            RoomWorkingController roomCtrl,
+            KeyPasswordController keyPasswordCtrl,
+            LockedAreaController lockedAreaCtrl)
     {
         this.mainCtrl = mainCtrl;
         this.detectiveCtrl = detectiveCtrl;
         this.roomCtrl = roomCtrl;
+        this.keyPasswordCtrl = keyPasswordCtrl;
+        this.lockedAreaCtrl = lockedAreaCtrl;
 
         initComponents();
         gameTextArea.setEditable(false);
@@ -96,27 +97,8 @@ public class RoomWorkingView extends javax.swing.JPanel implements
         detectiveCtrl.draw(g2);
         g2.draw(getBound());
 
-        roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
-        {
-            if (itemBlockCtrl instanceof LockedAreaController)
-            {
-                LockedAreaController areaLocked = (LockedAreaController) itemBlockCtrl;
-                areaLocked.draw(g2);
-
-                lockedAreaCtrl = areaLocked;
-                officeLockBound = areaLocked.getView().getBound();
-            } else if (itemBlockCtrl instanceof KeyPasswordController)
-            {
-                KeyPasswordController keyPassword = (KeyPasswordController) itemBlockCtrl;
-                keyPassword.draw(g2);
-
-                keyPasswordCtrl = keyPassword;
-                keyPasswordBound = keyPassword.getView().getBound();
-            } else
-            {
-                itemBlockCtrl.draw(g2);
-            }
-        });
+        roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl
+                -> itemBlockCtrl.draw(g2));
     }
 
     /**
@@ -199,6 +181,8 @@ public class RoomWorkingView extends javax.swing.JPanel implements
         // TODO add your handling code here:
 
         detectiveCtrl.keyReleased(evt);
+        Rectangle officeLockBound = lockedAreaCtrl.getView().getBound();
+        Rectangle keyPasswordBound = keyPasswordCtrl.getView().getBound();
 
         if (detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))
         {

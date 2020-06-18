@@ -15,15 +15,16 @@ import gui_project.View.RoomButlerView;
 //in every view
 //We pass the MainController so we can change panels
 public class RoomButlerController extends BaseRoomController
-{   
+{
+
     private final RoomButlerView view;
-  
-    public RoomButlerController(MainController mainCtrl, 
+
+    public RoomButlerController(MainController mainCtrl,
             DetectiveController detectiveCtrl,
-            NPCController assistantCtrl)
+            KeyPasswordController keyPasswordCtrl)
     {
-        view = new RoomButlerView(mainCtrl, 
-                detectiveCtrl, this);
+        view = new RoomButlerView(mainCtrl,
+                detectiveCtrl, this, keyPasswordCtrl);
     }
 
     public RoomButlerView getView()

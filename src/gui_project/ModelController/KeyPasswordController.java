@@ -8,8 +8,8 @@ public class KeyPasswordController extends ItemBlockController
 {
 
     private final KeyPasswordView view;
-    private KeyPassword keyPassword;
-    private KeyPasswordQuestionPanel questionPanel;
+    private final KeyPassword keyPassword;
+    private final KeyPasswordQuestionPanel questionPanel;
 
     public KeyPasswordController(MainController mainCtrl, KeyPassword keyPassword)
     {

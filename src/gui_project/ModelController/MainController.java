@@ -6,7 +6,6 @@
 package gui_project.ModelController;
 
 import gui_project.View.*;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,19 +33,19 @@ public class MainController
     private LockedAreaController dogHouseLock, officeLock;
     private GuessKillerController guessKillerCtrl;
 
-    public MainController(Detective detective) throws IOException
+    public MainController(Detective detective)
     {
         this.detective = detective;
         view = new MainView();
 
         setUpNPCController();
+        setUpLockedAreaController();
+        setUpKeyPasswordController();
         setUpHint();
         setUpRoomController();
         setUpItemBlockController();
-        setUpLockedAreaController();
-        setUpKeyPasswordController();
-        addItemBlockToRoom();
 
+        addItemBlockToRoom();
         addAllPanels();
         showPanel("Ground");
         view.renderView();
@@ -159,7 +158,7 @@ public class MainController
         victim = new NPCController(this, new NPC("Victim", "V", 300, 300, 20, 20));
     }
 
-    public void setUpKeyPasswordController() throws IOException
+    public void setUpKeyPasswordController()
     {
         //House
         headOfficeLock = new KeyPasswordController(this, new KeyPassword(700, 150, 20, 20,
@@ -180,12 +179,12 @@ public class MainController
 
     public void setUpRoomController()
     {
-        groundCtrl = new RoomGroundController(this, detectiveCtrl, butler);
-        houseCtrl = new RoomHouseController(this, detectiveCtrl, wife);
+        groundCtrl = new RoomGroundController(this, detectiveCtrl, tailOfficeLock, dogHouseLock);
+        houseCtrl = new RoomHouseController(this, detectiveCtrl, headOfficeLock);
         maidRoomCtrl = new RoomMaidController(this, detectiveCtrl, maid);
-        butlerRoomCtrl = new RoomButlerController(this, detectiveCtrl, assistant);
+        butlerRoomCtrl = new RoomButlerController(this, detectiveCtrl, tailDogHouse);
         wifeRoomCtrl = new RoomWifeController(this, detectiveCtrl, wife, daughter);
-        workingRoomCtrl = new RoomWorkingController(this, detectiveCtrl, victim);
+        workingRoomCtrl = new RoomWorkingController(this, detectiveCtrl, headDogHouse, officeLock);
     }
 
     public void updateConversationLevel()

@@ -20,7 +20,7 @@ public class KeyPasswordView extends ItemBlockView
     {
         if(!keyPassword.isPickup())
         {
-            graphics2D.drawString(symbol, keyPassword.getLocationX(), keyPassword.getLocationY());            
+            graphics2D.drawString(symbol, keyPassword.getLocationX(), keyPassword.getLocationY());           
         }
     }
 }

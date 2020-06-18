@@ -7,21 +7,23 @@ package gui_project.ModelController;
 
 import gui_project.View.RoomWorkingView;
 
-
 /**
  *
  * @author pc
  */
 public class RoomWorkingController extends BaseRoomController
 {
+
     private final RoomWorkingView view;
-  
-    public RoomWorkingController(MainController mainCtrl, 
+
+    public RoomWorkingController(MainController mainCtrl,
             DetectiveController detectiveCtrl,
-            NPCController wifeCtrl)
+            KeyPasswordController keyPasswordCtrl,
+            LockedAreaController lockedAreaCtrl)
     {
-        view = new RoomWorkingView(mainCtrl, 
-                detectiveCtrl,this);
+        view = new RoomWorkingView(mainCtrl,
+                detectiveCtrl, this,
+                keyPasswordCtrl, lockedAreaCtrl);
     }
 
     public RoomWorkingView getView()

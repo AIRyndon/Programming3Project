@@ -6,6 +6,7 @@ import java.io.IOException;
 
 public class KeyPassword extends ItemBlock
 {
+
     private final LockedArea lockedArea;
     private final String name;
     private final KeyPasswordType keyType;
@@ -17,76 +18,87 @@ public class KeyPassword extends ItemBlock
     private boolean correct = false;
     private boolean pickup = false;
     private String symbol;
-    
-    public KeyPassword(int locationX, int locationY, int width, int height, LockedArea lockedArea, 
-            String symbol, String name, KeyPasswordType keyType) throws IOException
+
+    public KeyPassword(int locationX, int locationY, int width, int height, LockedArea lockedArea,
+            String symbol, String name, KeyPasswordType keyType)
     {
         super(locationX, locationY, width, height);
         this.lockedArea = lockedArea;
         this.name = name;
         this.symbol = symbol;
         this.keyType = keyType;
-        
+
         setupKeyPassword();
         setupQuestionAndAnswer();
         setupTrivia();
     }
-    
-    public void setupKeyPassword()
+
+    private void setupKeyPassword()
     {
-        if(keyType == KeyPasswordType.KEYHEAD)
+        if (keyType == KeyPasswordType.KEYHEAD)
         {
             setPassword("XX" + lockedArea.getPassword().substring(2));
-        }
-        else
+        } else
         {
             setPassword(lockedArea.getPassword().substring(0, 2) + "XX");
         }
-        
+
         System.out.println(password);
     }
 
-    private void setupQuestionAndAnswer() throws IOException
+    private void setupQuestionAndAnswer()
     {
-        BufferedReader br = new BufferedReader(new FileReader(
-                System.getProperty("user.dir") + "/FileDB/" + ("Questions.txt")));
-
-        String line = "";
-
-        while ((line = br.readLine()) != null)
+        try
         {
-            if (line.contains(symbol))
-            {
-                String[] questionAndAnswer = line.substring(1).split("/");
-                question = questionAndAnswer[0];
-                answer = questionAndAnswer[1];
+            BufferedReader br = new BufferedReader(new FileReader(
+                    System.getProperty("user.dir") + "/FileDB/" + ("Questions.txt")));
 
-                break;
+            String line = "";
+
+            while ((line = br.readLine()) != null)
+            {
+                if (line.contains(symbol))
+                {
+                    String[] questionAndAnswer = line.substring(1).split("/");
+                    question = questionAndAnswer[0];
+                    answer = questionAndAnswer[1];
+
+                    break;
+                }
             }
+        } catch (IOException ex)
+        {
+            ex.printStackTrace();
         }
     }
 
-    private void setupTrivia() throws IOException
+    private void setupTrivia()
     {
-        BufferedReader br = new BufferedReader(new FileReader(
-                System.getProperty("user.dir") + "/FileDB/" + ("BeforeQuestion.txt")));
-        String line = "";
-        String triviaResult = "";
-
-        while ((line = br.readLine()) != null)
+        try
         {
-            if (line.contains(symbol))
-            {
-                while (!(line = br.readLine()).isEmpty())
-                {
-                    triviaResult += line + "\n";
-                }
+            BufferedReader br = new BufferedReader(new FileReader(
+                    System.getProperty("user.dir") + "/FileDB/" + ("BeforeQuestion.txt")));
+            String line = "";
+            String triviaResult = "";
 
-                break;
+            while ((line = br.readLine()) != null)
+            {
+                if (line.contains(symbol))
+                {
+                    while (!(line = br.readLine()).isEmpty())
+                    {
+                        triviaResult += line + "\n";
+                    }
+
+                    break;
+                }
             }
+
+            trivia = triviaResult.split("\n");
+        } catch (IOException ex)
+        {
+            ex.printStackTrace();
         }
-        
-        trivia = triviaResult.split("\n");
     }
 
     //Setters and getters
@@ -94,72 +106,72 @@ public class KeyPassword extends ItemBlock
     {
         return answer;
     }
-    
-    public String getName() 
+
+    public String getName()
     {
         return name;
     }
 
-    public String getPassword() 
+    public String getPassword()
     {
         return password;
     }
 
-    public String getQuestion() 
+    public String getQuestion()
     {
         return question;
     }
-    
-    public String[] getTrivia() 
+
+    public String[] getTrivia()
     {
         return trivia;
     }
-    
+
     public boolean isCorrect()
     {
         return correct;
     }
-    
-    public boolean isPickup() 
+
+    public boolean isPickup()
     {
         return pickup;
     }
-    
+
     void hasPickup()
     {
-        if(correct)
+        if (correct)
         {
             this.pickup = true;
         }
     }
-    
+
     void updateCorrect()
     {
         correct = true;
         notifyObservers();
     }
-    
-    public void setPassword(String password) 
+
+    void setPassword(String password)
     {
         this.password = password;
     }
-    
+
     public String getMessage()
     {
         return message;
     }
-    
-    void updateMessage() 
+
+    void updateMessage()
     {
         this.message = password;
         sendMessage();
     }
-    
+
     void clearMessage()
     {
         this.message = "";
     }
-    
+
     void sendMessage()
     {
         notifyObservers();
