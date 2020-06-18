@@ -65,10 +65,12 @@ public class RoomWorkingView extends javax.swing.JPanel implements
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
-        } else if (model instanceof Hint)
+        }
+        else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
-        } else if (model instanceof KeyPassword)
+        } 
+        else if (model instanceof KeyPassword)
         {
             gameTextArea.setText(((KeyPassword) model).getMessage());
         }

@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /*
-    Here, database is used to store player information and hints that the player grab.
+    Here, database is used to store player information and hints that the player grabbed.
 */
 public class DatabaseManager 
 {

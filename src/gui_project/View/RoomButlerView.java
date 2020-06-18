@@ -7,7 +7,6 @@ package gui_project.View;
 
 import gui_project.ModelController.BaseModel;
 import gui_project.ModelController.DetectiveController;
-import gui_project.ModelController.ItemBlockController;
 import gui_project.ModelController.MainController;
 import gui_project.ModelController.NPCController;
 import gui_project.ModelController.RoomButlerController;
