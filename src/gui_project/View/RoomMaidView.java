@@ -61,12 +61,13 @@ public class RoomMaidView extends javax.swing.JPanel implements
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
+            mainCtrl.updateConversationLevel();
         } else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
         }
 
-        mainCtrl.updateConversationLevel();
+        
     }
 
     @Override

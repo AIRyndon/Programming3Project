@@ -7,7 +7,6 @@ package gui_project.View;
 
 import gui_project.ModelController.BaseModel;
 import gui_project.ModelController.DetectiveController;
-import gui_project.ModelController.ItemBlockController;
 import gui_project.ModelController.MainController;
 import gui_project.ModelController.NPCController;
 import gui_project.ModelController.RoomButlerController;
@@ -63,6 +62,7 @@ public class RoomButlerView extends javax.swing.JPanel implements
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
+            mainCtrl.updateConversationLevel();
         } 
         else if (model instanceof Hint)
         {
@@ -73,7 +73,7 @@ public class RoomButlerView extends javax.swing.JPanel implements
             gameTextArea.setText(((KeyPassword) model).getMessage());
         }
         
-        mainCtrl.updateConversationLevel();
+        
     }
 
     @Override

@@ -32,6 +32,7 @@ public class MainController
     private ItemBlockController houseArea, maidRoomWall, wifeRoomWall, butlerRoomWall,
             officeRoomWall, bed;
     private LockedAreaController dogHouseLock, officeLock;
+    private GuessKillerController guessKillerCtrl;
 
     public MainController(Detective detective) throws IOException
     {
@@ -100,7 +101,7 @@ public class MainController
         view.addPanel(tailDogHouse.getQuestionPanel(), tailDogHouse.getKeyPassword().getName());
         view.addPanel(headOfficeLock.getQuestionPanel(), headOfficeLock.getKeyPassword().getName());
         view.addPanel(tailOfficeLock.getQuestionPanel(), tailOfficeLock.getKeyPassword().getName());
-        view.addPanel(new GuessKillerPanel(),"GuessKillerPanel");
+        view.addPanel(guessKillerCtrl.getView(), guessKillerCtrl.getView().getName());
     }
 
     public void assignHintToNPC()
@@ -140,6 +141,7 @@ public class MainController
     {
         dogHouseLock = new LockedAreaController(this, new LockedArea(630, 15, 150, 100, "DogHouseLock"));
         officeLock = new LockedAreaController(this, new LockedArea(10, 15, 200, 469, "OfficeLock"));
+        guessKillerCtrl = new GuessKillerController(this);
     }
 
     public void setUpNPCController()
@@ -184,18 +186,21 @@ public class MainController
 
     public void updateConversationLevel()
     {
-        if (butler.hasTalkedWithPlayer()
-                && wife.hasTalkedWithPlayer()
-                && daughter.hasTalkedWithPlayer()
-                && maid.hasTalkedWithPlayer())
+        if (detective.getConversationLevel() == 1)
         {
-            assistant.unlockLines();
-            NPC.conversationLevel = 2;
-        } else if (NPC.conversationLevel == 2)
+            if (butler.hasTalkedWithPlayer()
+                    && wife.hasTalkedWithPlayer()
+                    && daughter.hasTalkedWithPlayer()
+                    && maid.hasTalkedWithPlayer())
+            {
+                assistant.unlockLines();
+                detective.setConversationLevel(2);
+            }
+        } else if (detective.getConversationLevel() == 2)
         {
             wife.unlockLines();
-            NPC.conversationLevel = 3;
-        } else if (NPC.conversationLevel == 3)
+            detective.setConversationLevel(3);
+        } else if (detective.getConversationLevel() == 3)
         {
             maid.unlockLines();
             daughter.unlockLines();
@@ -208,6 +213,11 @@ public class MainController
         {
             guessKiller();
         }
+    }
+
+    public MainView getView()
+    {
+        return view;
     }
 
     /**
@@ -226,7 +236,7 @@ public class MainController
         try
         {
             Thread.sleep(1500);
-            view.showPanel("GuessKillerPanel");
+            view.showPanel(guessKillerCtrl.getView().getName());
         } catch (InterruptedException ex)
         {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);

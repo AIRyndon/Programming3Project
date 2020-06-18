@@ -15,8 +15,6 @@ import java.io.IOException;
  */
 public class NPC extends ItemBlock
 {
-    public static int conversationLevel = 1;
-
     private boolean discovered = false;
     private boolean linesUnlocked = false;
     private boolean speaking;
@@ -58,12 +56,11 @@ public class NPC extends ItemBlock
     {
         //discovered will be set when the detective has spoken with
         //an NPC
-
-        discovered = true;
         this.speaking = speaking;
 
         if (speaking)
         {
+            discovered = true;
             if (linesUnlocked)
             {
                 spokenLine += secondLine;

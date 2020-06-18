@@ -35,4 +35,12 @@ public class MainView
         CardLayout layout = (CardLayout) mainPanel.getLayout();
         layout.show(mainPanel, panelName);
     }
+    
+    /**
+    *  this is here so we can dispose the frame when we want to restart
+    * @return the main JFrame
+    */
+    public JFrame getWindow(){
+        return frame;
+    }
 }

@@ -31,6 +31,11 @@ public class DetectiveController
         detective.increasePickedUpHints();
     }
 
+    public void setConversationLevel(int level)
+    {
+        detective.setConversationLevel(level);
+    }
+
     public void setVelX(int velX)
     {
         getDetective().setVelX(velX);

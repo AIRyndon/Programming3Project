@@ -23,7 +23,7 @@ public class DatabaseManager
     protected String tableName;
     private static final String USER_NAME = "group4";
     private static final String PASSWORD = "group4";
-    private static final String URL = "jdbc:derby://localhost:1527/RPGDetective";
+    private static final String URL = "jdbc:derby:DerbyDB/RPGDetective";
 
     public DatabaseManager()
     {

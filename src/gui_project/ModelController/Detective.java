@@ -15,7 +15,8 @@ public class Detective extends BaseModel
     private int velX = 0;
     private int velY = 0;
     private int speed = 5;
-    private int pickedUpHints = 4;
+    private int pickedUpHints = 0;
+    private int conversationLevel = 1;
     private int groundHouseLocationX = 380;
     private int groundHouseLocationY = 50;
     private int roomHouseLocationX;
@@ -123,5 +124,21 @@ public class Detective extends BaseModel
     void increasePickedUpHints()
     {
         ++pickedUpHints;
+    }
+
+    /**
+     * @return the conversationLevel
+     */
+    public int getConversationLevel()
+    {
+        return conversationLevel;
+    }
+
+    /**
+     * @param conversationLevel the conversationLevel to set
+     */
+    void setConversationLevel(int conversationLevel)
+    {
+        this.conversationLevel = conversationLevel;
     }
 }

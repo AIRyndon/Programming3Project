@@ -14,6 +14,7 @@ import java.awt.Graphics2D;
  */
 public class NPCController extends ItemBlockController
 {
+
     private final NPC npc;
     private final NPCView view;
     private HintController hintCtrl;
@@ -59,14 +60,17 @@ public class NPCController extends ItemBlockController
     public void setSpeaking(boolean status)
     {
         npc.setSpeaking(status);
-        
+    }
+
+    public void tryToPlaceHint()
+    {
         if (npc.isLinesUnlocked())
         {
             if (hintCtrl != null)
             {
-               hintCtrl.reveal();
+                hintCtrl.reveal();
             }
-        }   
+        }
     }
 
     boolean hasTalkedWithPlayer()
