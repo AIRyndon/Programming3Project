@@ -13,20 +13,25 @@ import java.awt.Graphics2D;
  *
  * @author Angelo
  */
-
 /**
- *  I am not sure if we should put the Database in the Controller
+ * I am not sure if we should put the Database in the Controller
  */
 public class HintController extends ItemBlockController
 {
+
     private final Hint hint;
     private final HintView view;
     private final HintDatabase hintDatabase;
+    private final MainController mainCtrl;
+    private final DetectiveController detectiveCtrl;
 
-    public HintController(Hint hint)
+    public HintController(MainController mainCtrl,
+            DetectiveController detectiveCtrl, Hint hint)
     {
         super(hint);
         this.hint = hint;
+        this.mainCtrl = mainCtrl;
+        this.detectiveCtrl = detectiveCtrl;
         view = new HintView(hint, this);
         hintDatabase = new HintDatabase();
     }
@@ -35,7 +40,7 @@ public class HintController extends ItemBlockController
     {
         hint.setPickedUp();
         hint.sendMessage();
-        
+
         hintDatabase.inputDataRow(hint.getName(), hint.getDescription());
         hintDatabase.printData();
     }
@@ -45,7 +50,7 @@ public class HintController extends ItemBlockController
         if (!hint.isPickedUp())
         {
             hint.setVisible(true);
-        }     
+        }
     }
 
     public void clearMessageArea()
@@ -57,6 +62,22 @@ public class HintController extends ItemBlockController
     public Hint getHint()
     {
         return hint;
+    }
+
+    @Override
+    public boolean collisionAction()
+    {
+        if (!hint.isVisible())
+        {
+            //a special case for hints because you don't want to bump into
+            //them when they aren't visible
+            return false;
+        }
+        
+        pickup();
+        detectiveCtrl.increasePickedUpHint();
+        mainCtrl.checkDetectiveHintCount();
+        return true;
     }
 
     @Override

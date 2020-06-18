@@ -2,14 +2,16 @@ package gui_project.ModelController;
 
 import gui_project.View.ItemBlockView;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
 public class ItemBlockController
 {
+
     private final ItemBlock itemBlock;
     private final ItemBlockView itemBlockView;
     private ArrayList<ItemBlockController> itemBlockCtrls = new ArrayList<>();
-    
+
     public ItemBlockController(ItemBlock itemBlock)
     {
         this.itemBlock = itemBlock;
@@ -35,9 +37,14 @@ public class ItemBlockController
     {
         return itemBlockCtrls;
     }
-    
+
     public void removeItemBlock(ItemBlockController itemBlockContrl)
     {
         itemBlockCtrls.remove(itemBlockContrl);
+    }
+
+    public boolean collisionAction()
+    {
+        return false;
     }
 }

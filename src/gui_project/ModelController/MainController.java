@@ -56,7 +56,6 @@ public class MainController
     {
         groundCtrl.addItemBlock(dogHouseLock);
         groundCtrl.addItemBlock(butler);
-        groundCtrl.addItemBlock(knife);
         groundCtrl.addItemBlock(cake);
         groundCtrl.addItemBlock(houseArea);
         groundCtrl.addItemBlock(tailOfficeLock);
@@ -115,13 +114,18 @@ public class MainController
 
     public void setUpHint()
     {
-        knife = new HintController(new Hint("Knife", "The blade is bloody. . .", 500, 260, 10, 10));
-        gloves = new HintController(new Hint("Gloves", "A worn-out pair of gloves, there is a name on it - "
+        knife = new HintController(this, detectiveCtrl, 
+                    new Hint("Knife", "The blade is bloody. . .", 500, 260, 10, 10));
+        gloves = new HintController(this, detectiveCtrl,
+                    new Hint("Gloves", "A worn-out pair of gloves, there is a name on it - "
                 + "\nit is illegible, you only recognize the letters ATO", 250, 250, 10, 10));
-        cake = new HintController(new Hint("Cheescake", "An innocuous-looking cheesecake", 750, 30, 10, 10));
-        picture = new HintController(new Hint("Old Picture", "A picture of a young girl - "
+        cake = new HintController(this, detectiveCtrl,
+                    new Hint("Cheescake", "An innocuous-looking cheesecake", 750, 30, 10, 10));
+        picture = new HintController(this, detectiveCtrl,
+                    new Hint("Old Picture", "A picture of a young girl - "
                 + "\nthe girl has a resemblance with the maid", 30, 30, 10, 10));
-        vial = new HintController(new Hint("Alprazolam", "A powerful sedative -"
+        vial = new HintController(this, detectiveCtrl,
+                    new Hint("Alprazolam", "A powerful sedative -"
                 + "\ncan have side-effects when taken regularly", 650, 30, 10, 10));
 
         assignHintToNPC();
@@ -147,12 +151,12 @@ public class MainController
     public void setUpNPCController()
     {
         detectiveCtrl = new DetectiveController(detective);
-        butler = new NPCController(new NPC("Butler", "B", 100, 100, 20, 20));
-        maid = new NPCController(new NPC("Maid", "M", 200, 200, 20, 20));
-        assistant = new NPCController(new NPC("Assistant", "A", 240, 240, 20, 20));
-        wife = new NPCController(new NPC("Wife", "W", 230, 230, 20, 20));
-        daughter = new NPCController(new NPC("Daughter", "D", 150, 150, 20, 20));
-        victim = new NPCController(new NPC("Victim", "V", 300, 300, 20, 20));
+        butler = new NPCController(this, new NPC("Butler", "B", 100, 100, 20, 20));
+        maid = new NPCController(this, new NPC("Maid", "M", 200, 200, 20, 20));
+        assistant = new NPCController(this, new NPC("Assistant", "A", 240, 240, 20, 20));
+        wife = new NPCController(this, new NPC("Wife", "W", 230, 230, 20, 20));
+        daughter = new NPCController(this, new NPC("Daughter", "D", 150, 150, 20, 20));
+        victim = new NPCController(this, new NPC("Victim", "V", 300, 300, 20, 20));
     }
 
     public void setUpKeyPasswordController() throws IOException
@@ -186,24 +190,28 @@ public class MainController
 
     public void updateConversationLevel()
     {
-        if (detective.getConversationLevel() == 1)
+        switch (detective.getConversationLevel())
         {
-            if (butler.hasTalkedWithPlayer()
-                    && wife.hasTalkedWithPlayer()
-                    && daughter.hasTalkedWithPlayer()
-                    && maid.hasTalkedWithPlayer())
-            {
-                assistant.unlockLines();
-                detective.setConversationLevel(2);
-            }
-        } else if (detective.getConversationLevel() == 2)
-        {
-            wife.unlockLines();
-            detective.setConversationLevel(3);
-        } else if (detective.getConversationLevel() == 3)
-        {
-            maid.unlockLines();
-            daughter.unlockLines();
+            case 1:
+                if (butler.hasTalkedWithPlayer()
+                        && wife.hasTalkedWithPlayer()
+                        && daughter.hasTalkedWithPlayer()
+                        && maid.hasTalkedWithPlayer())
+                {
+                    assistant.unlockLines();
+                    detective.setConversationLevel(2);
+                }
+                break;
+            case 2:
+                wife.unlockLines();
+                detective.setConversationLevel(3);
+                break;
+            case 3:
+                maid.unlockLines();
+                daughter.unlockLines();
+                break;
+            default:
+                break;
         }
     }
 
@@ -235,7 +243,7 @@ public class MainController
     {
         try
         {
-            Thread.sleep(1500);
+            Thread.sleep(1000);
             view.showPanel(guessKillerCtrl.getView().getName());
         } catch (InterruptedException ex)
         {

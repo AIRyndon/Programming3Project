@@ -6,38 +6,45 @@ import java.awt.Graphics2D;
 
 public class LockedAreaController extends ItemBlockController
 {
+
     private LockedArea lockedArea;
     private LockedAreaView view;
     private PasswordInputPanel passwordInputPanel;
-    
-    public LockedAreaController(MainController mainCtrl, LockedArea lockedArea) 
+
+    public LockedAreaController(MainController mainCtrl, LockedArea lockedArea)
     {
         super(lockedArea);
         this.lockedArea = lockedArea;
         view = new LockedAreaView(lockedArea, this);
         passwordInputPanel = new PasswordInputPanel(mainCtrl, this);
     }
-    
-    public LockedArea getLockedArea() 
+
+    public LockedArea getLockedArea()
     {
         return lockedArea;
     }
-    
-    public PasswordInputPanel getPasswordInputPanel() 
+
+    public PasswordInputPanel getPasswordInputPanel()
     {
         return passwordInputPanel;
     }
-    
-    public LockedAreaView getView() 
+
+    public LockedAreaView getView()
     {
         return view;
     }
-    
+
     public void disableLockedArea()
     {
         lockedArea.setUnLocked(true);
     }
-    
+
+    @Override
+    public boolean collisionAction()
+    {
+        return !lockedArea.isUnLocked();
+    }
+
     @Override
     public void draw(Graphics2D g2)
     {

@@ -50,8 +50,9 @@ public class RoomButlerView extends javax.swing.JPanel implements
         this.assistantCtrl = assistantCtrl;
         this.roomCtrl = roomCtrl;
 
-        assistantCtrl.getNPC().registerObserver(this);
         initComponents();
+        gameTextArea.setEditable(false);
+        gameTextArea.setFocusable(false);
         addComponentListener(this);
         setFocusable(true);
     }
@@ -62,17 +63,14 @@ public class RoomButlerView extends javax.swing.JPanel implements
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
-        } 
-        else if (model instanceof Hint)
+        } else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
-        }
-        else if(model instanceof KeyPassword)
+        } else if (model instanceof KeyPassword)
         {
             gameTextArea.setText(((KeyPassword) model).getMessage());
         }
-        
-        
+
     }
 
     @Override
@@ -82,7 +80,7 @@ public class RoomButlerView extends javax.swing.JPanel implements
         {
             i.getItemBlock().registerObserver(this);
         });
-        
+
         requestFocusInWindow();
     }
 
@@ -107,21 +105,18 @@ public class RoomButlerView extends javax.swing.JPanel implements
             {
                 NPCController npc = (NPCController) itemBlockCtrl;
                 npc.draw(g2);
-            } 
-            else if (itemBlockCtrl instanceof HintController)
+            } else if (itemBlockCtrl instanceof HintController)
             {
                 HintController hint = (HintController) itemBlockCtrl;
                 hint.draw(g2);
-            }
-            else if (itemBlockCtrl instanceof KeyPasswordController)
+            } else if (itemBlockCtrl instanceof KeyPasswordController)
             {
                 KeyPasswordController keyPassword = (KeyPasswordController) itemBlockCtrl;
                 keyPassword.draw(g2);
-                
+
                 keyPasswordCtrl = keyPassword;
                 keyPasswordBound = keyPassword.getView().getBound();
-            }
-            else
+            } else
             {
                 itemBlockCtrl.draw(g2);
             }
@@ -223,9 +218,8 @@ public class RoomButlerView extends javax.swing.JPanel implements
             mainCtrl.showPanel("House");
             detectiveCtrl.setLocationX(detectiveCtrl.getDetective().getRoomHouseLocationX());
             detectiveCtrl.setLocationY(detectiveCtrl.getDetective().getRoomHouseLocationY());
-        }
-        else if(detectiveCtrl.getView().getBound().intersects(keyPasswordBound) &&
-                !keyPasswordCtrl.getKeyPassword().isCorrect())
+        } else if (detectiveCtrl.getView().getBound().intersects(keyPasswordBound)
+                && !keyPasswordCtrl.getKeyPassword().isCorrect())
         {
             mainCtrl.showPanel("TailDogHouse");
         }

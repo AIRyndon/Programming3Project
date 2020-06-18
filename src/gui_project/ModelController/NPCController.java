@@ -18,10 +18,12 @@ public class NPCController extends ItemBlockController
     private final NPC npc;
     private final NPCView view;
     private HintController hintCtrl;
+    private MainController mainCtrl;
 
-    public NPCController(NPC npc)
+    public NPCController(MainController mainCtrl, NPC npc)
     {
         super(npc);
+        this.mainCtrl = mainCtrl;
         this.npc = npc;
         view = new NPCView(npc, this);
     }
@@ -39,6 +41,16 @@ public class NPCController extends ItemBlockController
     public void setOwnedHint(HintController hintCtrl)
     {
         this.hintCtrl = hintCtrl;
+    }
+
+    @Override
+    public boolean collisionAction()
+    {
+        setSpeaking(true);
+        tryToPlaceHint();
+        mainCtrl.updateConversationLevel();
+        
+        return true;
     }
 
     @Override
@@ -62,7 +74,7 @@ public class NPCController extends ItemBlockController
         npc.setSpeaking(status);
     }
 
-    public void tryToPlaceHint()
+    private void tryToPlaceHint()
     {
         if (npc.isLinesUnlocked())
         {

@@ -30,49 +30,12 @@ public class BaseRoomController
             //break out of the loop once you find a collision
             if (detectiveCtrl.getView().getBound()
                     .intersects(itemBlockCtrl.getItemBlock().getBound()))
-            {
-                if (itemBlockCtrl instanceof NPCController)
+            {                             
+                itemBlockCollision = itemBlockCtrl.collisionAction();             
+                if (itemBlockCollision)
                 {
-                    NPCController npcCtrl = (NPCController) itemBlockCtrl;
-                    npcCtrl.setSpeaking(true);
-                    mainCtrl.updateConversationLevel();
-
-                } else if (itemBlockCtrl instanceof HintController)
-                {
-                    HintController hintCtrl = (HintController) itemBlockCtrl;
-
-                    if (!hintCtrl.getHint().isVisible())
-                    {
-                        //a special case for hints because you don't want to bump into
-                        //them when they aren't visible
-                        break;
-                    }
-                    hintCtrl.pickup();
-                    detectiveCtrl.increasePickedUpHint();
-                    mainCtrl.checkDetectiveHintCount();
-
-                } else if (itemBlockCtrl instanceof LockedAreaController)
-                {
-                    LockedAreaController lockedArea = (LockedAreaController) itemBlockCtrl;
-
-                    if (lockedArea.getLockedArea().isUnLocked())
-                    {
-                        break;
-                    }
-                } else if (itemBlockCtrl instanceof KeyPasswordController)
-                {
-                    KeyPasswordController keyPassword = (KeyPasswordController) itemBlockCtrl;
-
-                    if (keyPassword.getKeyPassword().isCorrect())
-                    {
-                        //If user's answer is correct, allow player to get the key.
-                        keyPassword.pickup();
-                        break;
-                    }
-                }
-
-                itemBlockCollision = true;
-                boundaryCollision = itemBlockCtrl.getItemBlock().getBound();
+                   boundaryCollision = itemBlockCtrl.getItemBlock().getBound(); 
+                }                           
                 break;
             } else if (!roomBoundary.contains(detectiveCtrl.getView().getBound()))
             {
