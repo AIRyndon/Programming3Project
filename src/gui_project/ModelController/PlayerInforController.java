@@ -1,10 +1,12 @@
 package gui_project.ModelController;
 
+import gui_database.PlayerDatabase;
 import gui_project.View.PlayerInforView;
 import gui_project.View.StoryPanel;
 
 public class PlayerInforController
 {
+    private static PlayerDatabase playerDatabase = new PlayerDatabase();
     private MainController mainCtrl;
     private PlayerInfor playerInfor;
     private PlayerInforView view;
@@ -19,9 +21,11 @@ public class PlayerInforController
         storyPanel = new StoryPanel(mainCtrl, this);
     }
 
-    public void updatePlayerInfoInStoryPanel()
+    public void savePlayerInfo()
     {
-        storyPanel.update(playerInfor);
+        playerDatabase.inputDataRow(playerInfor.getName(), playerInfor.getAge(), 
+                playerInfor.getGender());
+        playerDatabase.printData();
     }
     
     //Getters and setters

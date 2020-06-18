@@ -224,6 +224,7 @@ public class PlayerInforView extends javax.swing.JPanel
         if(nameChecked && genderChecked && ageChecked)
         {
             mainCtrl.showPanel("Story");
+            playerInforCtrl.savePlayerInfo();
             invalidLabel.setVisible(false);
         }
         else

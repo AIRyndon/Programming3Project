@@ -25,7 +25,7 @@ public class StoryPanel extends javax.swing.JPanel implements BaseObserver
     @Override
     public void update(BaseModel model) 
     {
-        jLabel1.setText("Hi " + playerInfoCtrl.getPlayerInfor().getName() + ",");
+        jLabel2.setText("Hi " + playerInfoCtrl.getPlayerInfor().getName() + ",");
     }
 
     /**

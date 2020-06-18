@@ -131,7 +131,7 @@ public class RoomMaidView extends javax.swing.JPanel implements
         gameTextArea.setRows(5);
         jScrollPane1.setViewportView(gameTextArea);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(446, 400, 350, -1));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(396, 400, 400, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed

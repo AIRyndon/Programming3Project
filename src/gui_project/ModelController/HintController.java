@@ -19,9 +19,9 @@ import java.awt.Graphics2D;
 public class HintController extends ItemBlockController
 {
 
+    private static HintDatabase hintDatabase = new HintDatabase();
     private final Hint hint;
     private final HintView view;
-    private final HintDatabase hintDatabase;
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
 
@@ -33,7 +33,6 @@ public class HintController extends ItemBlockController
         this.mainCtrl = mainCtrl;
         this.detectiveCtrl = detectiveCtrl;
         view = new HintView(hint, this);
-        hintDatabase = new HintDatabase();
     }
 
     public void pickup()

@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 */
 public class DatabaseManager 
 {
-
     public Connection connection;
     public Statement statement;
     public ResultSet resultSet;
@@ -38,7 +37,8 @@ public class DatabaseManager
             {
                 connection = DriverManager.getConnection(getURL(),getUSER_NAME(),getPASSWORD());
                 
-            } catch (SQLException ex)
+            } 
+            catch (SQLException ex)
             {
                 System.out.println("SQL exception");
             }
@@ -75,7 +75,8 @@ public class DatabaseManager
                     System.out.print(resultSet.getString(i));
                 }
             }
-        } catch (SQLException ex)
+        }
+        catch (SQLException ex)
         {
             Logger.getLogger(HintDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
