@@ -12,7 +12,7 @@ public class NPCVictimController extends NPCController
     
     public NPCVictimController(MainController mainCtrl, NPCVictim victim) 
     {
-        super(victim);
+        super(mainCtrl,victim);
         
         this.mainCtrl = mainCtrl;
         this.victim = victim;
