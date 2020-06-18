@@ -7,6 +7,8 @@ package gui_project.ModelController;
 
 import gui_project.View.*;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -14,6 +16,7 @@ import java.io.IOException;
  */
 public class MainController
 {
+
     private final MainView view;
     private final Detective detective;
     private DetectiveController detectiveCtrl;
@@ -29,6 +32,7 @@ public class MainController
     private ItemBlockController houseArea, maidRoomWall, wifeRoomWall, butlerRoomWall,
             officeRoomWall, bed;
     private LockedAreaController dogHouseLock, officeLock;
+    private GuessKillerController guessKillerCtrl;
 
     public MainController(Detective detective) throws IOException
     {
@@ -42,12 +46,12 @@ public class MainController
         setUpLockedAreaController();
         setUpKeyPasswordController();
         addItemBlockToRoom();
-        
+
         addAllPanels();
         showPanel("Ground");
         view.renderView();
     }
-    
+
     public void addItemBlockToRoom()
     {
         groundCtrl.addItemBlock(dogHouseLock);
@@ -67,7 +71,7 @@ public class MainController
         butlerRoomCtrl.addItemBlock(assistant);
         butlerRoomCtrl.addItemBlock(bed);
         butlerRoomCtrl.addItemBlock(tailDogHouse);
-        
+
         maidRoomCtrl.addItemBlock(maid);
         maidRoomCtrl.addItemBlock(bed);
         maidRoomCtrl.addItemBlock(gloves);
@@ -75,14 +79,14 @@ public class MainController
         wifeRoomCtrl.addItemBlock(wife);
         wifeRoomCtrl.addItemBlock(daughter);
         wifeRoomCtrl.addItemBlock(bed);
-        
+
         workingRoomCtrl.addItemBlock(victim);
         workingRoomCtrl.addItemBlock(officeLock);
         workingRoomCtrl.addItemBlock(knife);
         workingRoomCtrl.addItemBlock(picture);
         workingRoomCtrl.addItemBlock(headDogHouse);
     }
-    
+
     public void addAllPanels()
     {
         view.addPanel(houseCtrl.getView(), houseCtrl.getView().getName());
@@ -97,8 +101,9 @@ public class MainController
         view.addPanel(tailDogHouse.getQuestionPanel(), tailDogHouse.getKeyPassword().getName());
         view.addPanel(headOfficeLock.getQuestionPanel(), headOfficeLock.getKeyPassword().getName());
         view.addPanel(tailOfficeLock.getQuestionPanel(), tailOfficeLock.getKeyPassword().getName());
+        view.addPanel(guessKillerCtrl.getView(), guessKillerCtrl.getView().getName());
     }
-    
+
     public void assignHintToNPC()
     {
         butler.setOwnedHint(gloves);
@@ -107,21 +112,21 @@ public class MainController
         wife.setOwnedHint(picture);
         daughter.setOwnedHint(knife);
     }
-    
+
     public void setUpHint()
     {
-        knife = new HintController(new Hint("Knife","The blade is bloody. . .", 500, 260, 10, 10));
-        gloves = new HintController(new Hint("Gloves","A worn-out pair of gloves, there is a name on it - "
-                            + "\nit is illegible, you only recognize the letters ATO",250,250,10,10));
-        cake = new HintController(new Hint("Cheescake","An innocuous-looking cheesecake",750,30,10,10));
-        picture = new HintController(new Hint("Old Picture","A picture of a young girl - "
-                            + "\nthe girl has a resemblance with the maid",30,30,10,10));
-        vial = new HintController(new Hint("Alprazolam","A powerful sedative -"
-                            + "\ncan have side-effects when taken regularly",650,30,10,10));
-        
+        knife = new HintController(new Hint("Knife", "The blade is bloody. . .", 500, 260, 10, 10));
+        gloves = new HintController(new Hint("Gloves", "A worn-out pair of gloves, there is a name on it - "
+                + "\nit is illegible, you only recognize the letters ATO", 250, 250, 10, 10));
+        cake = new HintController(new Hint("Cheescake", "An innocuous-looking cheesecake", 750, 30, 10, 10));
+        picture = new HintController(new Hint("Old Picture", "A picture of a young girl - "
+                + "\nthe girl has a resemblance with the maid", 30, 30, 10, 10));
+        vial = new HintController(new Hint("Alprazolam", "A powerful sedative -"
+                + "\ncan have side-effects when taken regularly", 650, 30, 10, 10));
+
         assignHintToNPC();
     }
-    
+
     public void setUpItemBlockController()
     {
         houseArea = new ItemBlockController(new ItemBlock(276, 83, 200, 200));
@@ -131,13 +136,14 @@ public class MainController
         officeRoomWall = new ItemBlockController(new ItemBlock(10, 345, 450, 140));
         bed = new ItemBlockController(new ItemBlock(10, 15, 100, 100));
     }
-    
+
     public void setUpLockedAreaController()
     {
         dogHouseLock = new LockedAreaController(this, new LockedArea(630, 15, 150, 100, "DogHouseLock"));
         officeLock = new LockedAreaController(this, new LockedArea(10, 15, 200, 469, "OfficeLock"));
+        guessKillerCtrl = new GuessKillerController(this);
     }
-    
+
     public void setUpNPCController()
     {
         detectiveCtrl = new DetectiveController(detective);
@@ -148,26 +154,26 @@ public class MainController
         daughter = new NPCController(new NPC("Daughter", "D", 150, 150, 20, 20));
         victim = new NPCController(new NPC("Victim", "V", 300, 300, 20, 20));
     }
-    
+
     public void setUpKeyPasswordController() throws IOException
     {
         //House
-        headOfficeLock = new KeyPasswordController(this, new KeyPassword(700, 150, 20, 20, 
+        headOfficeLock = new KeyPasswordController(this, new KeyPassword(700, 150, 20, 20,
                 officeLock.getLockedArea(), "!", "HeadOffice", KeyPasswordType.KEYHEAD));
-        
+
         //Ground
-        tailOfficeLock = new KeyPasswordController(this, new KeyPassword(650, 300, 20, 20, 
+        tailOfficeLock = new KeyPasswordController(this, new KeyPassword(650, 300, 20, 20,
                 officeLock.getLockedArea(), "@", "TailOffice", KeyPasswordType.KEYTAIL));
-        
+
         //WorkingRoom
-        headDogHouse = new KeyPasswordController(this, new KeyPassword(30, 65, 20, 20, 
+        headDogHouse = new KeyPasswordController(this, new KeyPassword(30, 65, 20, 20,
                 dogHouseLock.getLockedArea(), "#", "HeadDogHouse", KeyPasswordType.KEYHEAD));
-        
+
         //Butler
-        tailDogHouse = new KeyPasswordController(this, new KeyPassword(150, 50, 20, 20, 
+        tailDogHouse = new KeyPasswordController(this, new KeyPassword(150, 50, 20, 20,
                 dogHouseLock.getLockedArea(), "%", "TailDogHouse", KeyPasswordType.KEYTAIL));
     }
-    
+
     public void setUpRoomController()
     {
         groundCtrl = new RoomGroundController(this, detectiveCtrl, butler);
@@ -175,29 +181,43 @@ public class MainController
         maidRoomCtrl = new RoomMaidController(this, detectiveCtrl, maid);
         butlerRoomCtrl = new RoomButlerController(this, detectiveCtrl, assistant);
         wifeRoomCtrl = new RoomWifeController(this, detectiveCtrl, wife, daughter);
-        workingRoomCtrl = new RoomWorkingController(this, detectiveCtrl, victim);        
+        workingRoomCtrl = new RoomWorkingController(this, detectiveCtrl, victim);
     }
 
     public void updateConversationLevel()
     {
-        if (butler.hasTalkedWithPlayer()
-                && wife.hasTalkedWithPlayer()
-                && daughter.hasTalkedWithPlayer()
-                && maid.hasTalkedWithPlayer())
+        if (detective.getConversationLevel() == 1)
         {
-            assistant.unlockLines();
-            NPC.conversationLevel = 2;
-        }
-        else if (NPC.conversationLevel == 2)
+            if (butler.hasTalkedWithPlayer()
+                    && wife.hasTalkedWithPlayer()
+                    && daughter.hasTalkedWithPlayer()
+                    && maid.hasTalkedWithPlayer())
+            {
+                assistant.unlockLines();
+                detective.setConversationLevel(2);
+            }
+        } else if (detective.getConversationLevel() == 2)
         {
             wife.unlockLines();
-            NPC.conversationLevel = 3;
-        } 
-        else if (NPC.conversationLevel == 3)
+            detective.setConversationLevel(3);
+        } else if (detective.getConversationLevel() == 3)
         {
             maid.unlockLines();
             daughter.unlockLines();
         }
+    }
+
+    public void checkDetectiveHintCount()
+    {
+        if (detective.getPickedUpHints() == 5)
+        {
+            guessKiller();
+        }
+    }
+
+    public MainView getView()
+    {
+        return view;
     }
 
     /**
@@ -209,5 +229,17 @@ public class MainController
     public void showPanel(String panelName)
     {
         view.showPanel(panelName);
+    }
+
+    private void guessKiller()
+    {
+        try
+        {
+            Thread.sleep(1500);
+            view.showPanel(guessKillerCtrl.getView().getName());
+        } catch (InterruptedException ex)
+        {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

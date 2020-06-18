@@ -38,6 +38,27 @@ public class KeyPasswordQuestionPanel extends javax.swing.JPanel implements Comp
         questionLabel.setText(keyPasswordCtrl.getKeyPassword().getQuestion());
     }
 
+      @Override
+    public void componentShown(ComponentEvent e) 
+    {
+        trivialLabel1.setVisible(false);
+        trivialLabel2.setVisible(false);
+        questionLabel.setVisible(false);
+        userInputText.setVisible(false);
+        returnButton.setVisible(false);
+        resultLabel.setVisible(false);
+        resultLabel.setText("Oops, you are wrong! TRY AGAIN!");
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent e)
+    {
+        welcomeLabel.setVisible(true);
+        introLabel1.setVisible(true);
+        introLabel2.setVisible(true);
+        startButton.setVisible(true);
+    }
+    
     @Override
     public void paintComponent(Graphics g)
     {
@@ -231,24 +252,5 @@ public class KeyPasswordQuestionPanel extends javax.swing.JPanel implements Comp
         
     }
 
-    @Override
-    public void componentShown(ComponentEvent e) 
-    {
-        trivialLabel1.setVisible(false);
-        trivialLabel2.setVisible(false);
-        questionLabel.setVisible(false);
-        userInputText.setVisible(false);
-        returnButton.setVisible(false);
-        resultLabel.setVisible(false);
-        resultLabel.setText("Oops, you are wrong! TRY AGAIN!");
-    }
-
-    @Override
-    public void componentHidden(ComponentEvent e)
-    {
-        welcomeLabel.setVisible(true);
-        introLabel1.setVisible(true);
-        introLabel2.setVisible(true);
-        startButton.setVisible(true);
-    }
+  
 }

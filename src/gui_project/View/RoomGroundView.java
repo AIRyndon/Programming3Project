@@ -88,18 +88,17 @@ public class RoomGroundView extends javax.swing.JPanel implements
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
+            mainCtrl.updateConversationLevel();
         } 
         else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
+            mainCtrl.checkDetectiveHintCount();
         }
         else if(model instanceof KeyPassword)
         {
             gameTextArea.setText(((KeyPassword) model).getMessage());
-        }
-        
-        //Can we move it to line 89?
-        mainCtrl.updateConversationLevel();
+        }      
     }
 
     @Override

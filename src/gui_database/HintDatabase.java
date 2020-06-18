@@ -38,7 +38,7 @@ public class HintDatabase extends DatabaseManager
         {
             connection = DriverManager.getConnection(getURL(),getUSER_NAME(),getPASSWORD());
             statement = connection.createStatement();
-                      
+                       
             statement.executeUpdate("TRUNCATE TABLE HINT");
             
             //HINT_ID++;

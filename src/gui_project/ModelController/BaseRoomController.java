@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class BaseRoomController
 {
+
     private ArrayList<ItemBlockController> itemBlockCtrls = new ArrayList<>();
 
     public void addItemBlock(ItemBlockController itemBlockContrl)
@@ -29,43 +30,43 @@ public class BaseRoomController
             //break out of the loop once you find a collision
             if (detectiveCtrl.getView().getBound()
                     .intersects(itemBlockCtrl.getItemBlock().getBound()))
-            {          
+            {
                 if (itemBlockCtrl instanceof NPCController)
                 {
                     NPCController npcCtrl = (NPCController) itemBlockCtrl;
                     npcCtrl.setSpeaking(true);
-                } 
-                else if (itemBlockCtrl instanceof HintController)
+                    npcCtrl.tryToPlaceHint();
+
+                } else if (itemBlockCtrl instanceof HintController)
                 {
                     HintController hintCtrl = (HintController) itemBlockCtrl;
-                    
+
                     if (!hintCtrl.getHint().isVisible())
                     {
                         //a special case for hints because you don't want to bump into
                         //them when they aren't visible
-                        break;                 
+                        break;
                     }
-                    
+
                     hintCtrl.pickup();
-                }
-                else if (itemBlockCtrl instanceof LockedAreaController)
+                    detectiveCtrl.increasePickedUpHint();
+                } else if (itemBlockCtrl instanceof LockedAreaController)
                 {
                     LockedAreaController lockedArea = (LockedAreaController) itemBlockCtrl;
-                    
+
                     if (lockedArea.getLockedArea().isUnLocked())
                     {
-                       break;
-                    } 
-                }
-                else if (itemBlockCtrl instanceof KeyPasswordController)
+                        break;
+                    }
+                } else if (itemBlockCtrl instanceof KeyPasswordController)
                 {
                     KeyPasswordController keyPassword = (KeyPasswordController) itemBlockCtrl;
-                    
+
                     if (keyPassword.getKeyPassword().isCorrect())
                     {
                         //If user's answer is correct, allow player to get the key.
                         keyPassword.pickup();
-                        
+
                         break;
                     }
                 }
@@ -73,26 +74,23 @@ public class BaseRoomController
                 itemBlockCollision = true;
                 boundaryCollision = itemBlockCtrl.getItemBlock().getBound();
                 break;
-            } 
-            else if (!roomBoundary.contains(detectiveCtrl.getView().getBound()))
+            } else if (!roomBoundary.contains(detectiveCtrl.getView().getBound()))
             {
                 groundCollision = true;
                 boundaryCollision = roomBoundary;
                 break;
-            } 
-            else
+            } else
             {
                 if (itemBlockCtrl instanceof NPCController)
                 {
                     ((NPCController) itemBlockCtrl).setSpeaking(false);
-                } 
-                else if (itemBlockCtrl instanceof HintController)
+                } else if (itemBlockCtrl instanceof HintController)
                 {
                     ((HintController) itemBlockCtrl).clearMessageArea();
                 }
             }
         }
-        
+
         detectiveCtrl.keyPressed(keyCode, boundaryCollision, itemBlockCollision, groundCollision);
     }
 }
