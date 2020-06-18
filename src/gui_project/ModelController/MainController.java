@@ -25,29 +25,33 @@ public class MainController
     private RoomButlerController butlerRoomCtrl;
     private RoomWifeController wifeRoomCtrl;
     private RoomWorkingController workingRoomCtrl;
-    private NPCController butler, maid, assistant, wife, daughter, victim;
+    private NPCController butler, maid, assistant, wife, daughter; 
+    private NPCVictimController victim;
     private HintController knife, gloves, cake, vial, picture;
     private KeyPasswordController headOfficeLock, tailOfficeLock, headDogHouse, tailDogHouse;
     private ItemBlockController houseArea, maidRoomWall, wifeRoomWall, butlerRoomWall,
             officeRoomWall, bed;
     private LockedAreaController dogHouseLock, officeLock;
     private GuessKillerController guessKillerCtrl;
+    private PlayerInforController playerInforCtrl;
+    private WelcomePanel welcomePanel;
 
     public MainController(Detective detective)
     {
         this.detective = detective;
         view = new MainView();
-
+        
         setUpNPCController();
         setUpLockedAreaController();
         setUpKeyPasswordController();
         setUpHint();
         setUpRoomController();
         setUpItemBlockController();
-
+        setUpPlayerInforController();
+        setUpInitialPanels();
         addItemBlockToRoom();
         addAllPanels();
-        showPanel("Ground");
+        showPanel("Welcome");
         view.renderView();
     }
 
@@ -100,6 +104,10 @@ public class MainController
         view.addPanel(headOfficeLock.getQuestionPanel(), headOfficeLock.getKeyPassword().getName());
         view.addPanel(tailOfficeLock.getQuestionPanel(), tailOfficeLock.getKeyPassword().getName());
         view.addPanel(guessKillerCtrl.getView(), guessKillerCtrl.getView().getName());
+        view.addPanel(playerInforCtrl.getView(), playerInforCtrl.getView().getName());
+        view.addPanel(welcomePanel, welcomePanel.getName());
+        view.addPanel(playerInforCtrl.getStoryPanel(), playerInforCtrl.getStoryPanel().getName());
+        view.addPanel(victim.getVictimView(), victim.getVictimView().getName());
     }
 
     public void assignHintToNPC()
@@ -129,7 +137,12 @@ public class MainController
 
         assignHintToNPC();
     }
-
+    
+    public void setUpInitialPanels()
+    {
+        welcomePanel = new WelcomePanel(this);
+    }
+    
     public void setUpItemBlockController()
     {
         houseArea = new ItemBlockController(new ItemBlock(276, 83, 200, 200));
@@ -150,12 +163,13 @@ public class MainController
     public void setUpNPCController()
     {
         detectiveCtrl = new DetectiveController(detective);
-        butler = new NPCController(this, new NPC("Butler", "B", 100, 100, 20, 20));
-        maid = new NPCController(this, new NPC("Maid", "M", 200, 200, 20, 20));
-        assistant = new NPCController(this, new NPC("Assistant", "A", 240, 240, 20, 20));
-        wife = new NPCController(this, new NPC("Wife", "W", 230, 230, 20, 20));
-        daughter = new NPCController(this, new NPC("Daughter", "D", 150, 150, 20, 20));
-        victim = new NPCController(this, new NPC("Victim", "V", 300, 300, 20, 20));
+        butler = new NPCController(new NPC("Butler", "B", 100, 100, 20, 20));
+        maid = new NPCController(new NPC("Maid", "M", 200, 200, 20, 20));
+        assistant = new NPCController(new NPC("Assistant", "A", 240, 240, 20, 20));
+        wife = new NPCController(new NPC("Wife", "W", 230, 230, 20, 20));
+        daughter = new NPCController(new NPC("Daughter", "D", 150, 150, 20, 20));
+        victim = new NPCVictimController(this, new NPCVictim("Victim", "V", 300, 300, 20, 20, 
+                "his working room", "Bosh", 53));
     }
 
     public void setUpKeyPasswordController()
@@ -176,7 +190,12 @@ public class MainController
         tailDogHouse = new KeyPasswordController(this, new KeyPassword(150, 50, 20, 20,
                 dogHouseLock.getLockedArea(), "%", "TailDogHouse", KeyPasswordType.KEYTAIL));
     }
-
+    
+    public void setUpPlayerInforController()
+    {
+        playerInforCtrl = new PlayerInforController(this, new PlayerInfor());
+    }
+            
     public void setUpRoomController()
     {
         groundCtrl = new RoomGroundController(this, detectiveCtrl, tailOfficeLock, dogHouseLock);
