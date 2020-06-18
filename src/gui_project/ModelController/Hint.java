@@ -44,11 +44,6 @@ public class Hint extends ItemBlock
     void setVisible(boolean visible)
     {
         this.visible = visible;
-        
-        if (!visible)
-        {
-            message = getName() + '\n' + getDescription();
-        }
     }
 
     void sendMessage()
@@ -75,5 +70,6 @@ public class Hint extends ItemBlock
     {
         pickedUp = true;
         visible = false;
+        message = getName() + '\n' + getDescription();
     }
 }

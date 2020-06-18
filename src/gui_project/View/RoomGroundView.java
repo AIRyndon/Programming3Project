@@ -30,7 +30,6 @@ import gui_project.ModelController.LockedAreaController;
 public class RoomGroundView extends javax.swing.JPanel implements
         ComponentListener, BaseObserver
 {
-
     private final DetectiveController detectiveCtrl;
     private final MainController mainCtrl;
     private final RoomGroundController roomCtrl;

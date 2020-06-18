@@ -7,7 +7,10 @@ package gui_project.View;
 
 import gui_project.ModelController.Detective;
 import gui_project.ModelController.MainController;
+import java.sql.SQLException;
 import java.util.Enumeration;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractButton;
 
 /**
@@ -142,7 +145,15 @@ public class GuessKillerView extends javax.swing.JPanel
             public void run()
             {
                 Detective detective = new Detective();
-                new MainController(detective);
+                
+                try 
+                {
+                    new MainController(detective);
+                } 
+                catch (SQLException ex) 
+                {
+                    Logger.getLogger(GuessKillerView.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         mainCtrl.getView().getWindow().dispose();

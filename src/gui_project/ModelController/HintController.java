@@ -88,6 +88,7 @@ public class HintController extends ItemBlockController
         
         detectiveCtrl.increasePickedUpHint();
         mainCtrl.checkDetectiveHintCount();
+        
         return true;
     }
 
