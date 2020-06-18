@@ -26,7 +26,6 @@ public class PlayerInforController
     public void savePlayerInfo() throws SQLException
     {
         playerDatabase.inputDataRow();
-        playerDatabase.printData();
     }
     
     //Getters and setters

@@ -45,17 +45,14 @@ public class RoomHouseView extends javax.swing.JPanel implements
     @Override
     public void update(BaseModel model)
     {
-        if (model instanceof NPC)
-        {
-            gameTextArea.setText(((NPC) model).getSpokenLine());
-        } else if (model instanceof Hint)
+        if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
-        } else if (model instanceof KeyPassword)
+        } 
+        else if (model instanceof KeyPassword)
         {
             gameTextArea.setText(((KeyPassword) model).getMessage());
         }
-
     }
 
     @Override
@@ -180,21 +177,24 @@ public class RoomHouseView extends javax.swing.JPanel implements
         {
             mainCtrl.showPanel("Ground");
             detectiveCtrl.updateGroundHouseLocation();
-            System.out.println("Print Ground");
-        } else if (detectiveCtrl.getView().getBound().intersects(maidRoomDoor.getBounds()))
+        } 
+        else if (detectiveCtrl.getView().getBound().intersects(maidRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("MaidRoom");
             detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
 
-        } else if (detectiveCtrl.getView().getBound().intersects(butlerRoomDoor.getBounds()))
+        } 
+        else if (detectiveCtrl.getView().getBound().intersects(butlerRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("ButlerRoom");
             detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
-        } else if (detectiveCtrl.getView().getBound().intersects(wifeRoomDoor.getBounds()))
+        }
+        else if (detectiveCtrl.getView().getBound().intersects(wifeRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("WifeRoom");
             detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
-        } else if (detectiveCtrl.getView().getBound().intersects(workingRoomDoor.getBounds()))
+        }
+        else if (detectiveCtrl.getView().getBound().intersects(workingRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("WorkingRoom");
             detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());

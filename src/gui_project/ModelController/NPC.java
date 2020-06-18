@@ -103,7 +103,8 @@ public class NPC extends ItemBlock
                     break;
                 }
             }
-        } catch (IOException ex)
+        }
+        catch (IOException ex)
         {
             ex.printStackTrace();
         }

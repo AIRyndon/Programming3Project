@@ -21,7 +21,6 @@ import java.util.logging.Logger;
  */
 public class HintController extends ItemBlockController
 {
-
     private static HintDatabase hintDatabase = new HintDatabase();
     private final Hint hint;
     private final HintView view;
@@ -44,7 +43,6 @@ public class HintController extends ItemBlockController
         hint.sendMessage();
 
         hintDatabase.inputDataRow(hint.getName(), hint.getDescription());
-        hintDatabase.printData();
     }
 
     public void reveal()

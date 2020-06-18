@@ -87,10 +87,12 @@ public class RoomGroundView extends javax.swing.JPanel implements
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
-        } else if (model instanceof Hint)
+        } 
+        else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
-        } else if (model instanceof KeyPassword)
+        }
+        else if (model instanceof KeyPassword)
         {
             gameTextArea.setText(((KeyPassword) model).getMessage());
         }
@@ -181,13 +183,13 @@ public class RoomGroundView extends javax.swing.JPanel implements
         {
             mainCtrl.showPanel("House");
             detectiveCtrl.updateGroundHouseLocation();
-            System.out.println("Print House");
         } //check lockedArea collision
         else if (detectiveCtrl.getView().getBound().intersects(dogHouseBound)
                 && !lockedAreaCtrl.getLockedArea().isUnLocked())
         {
             mainCtrl.showPanel("DogHouseLock");
-        } else if (detectiveCtrl.getView().getBound().intersects(keyPasswordBound)
+        } 
+        else if (detectiveCtrl.getView().getBound().intersects(keyPasswordBound)
                 && !keyPasswordCtrl.getKeyPassword().isCorrect())
         {
             mainCtrl.showPanel("TailOffice");

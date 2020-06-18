@@ -120,7 +120,8 @@ public class DetectiveController
                         || (roomBoundaryCollision && view.getBound().getMinY() <= itemBlock.getMinY()))
                 {
                     setVelY(0);
-                } else
+                } 
+                else
                 {
                     setVelY(-(detective.getSpeed()));
                 }
@@ -133,7 +134,8 @@ public class DetectiveController
                         || (roomBoundaryCollision && view.getBound().getMaxY() >= itemBlock.getMaxY()))
                 {
                     setVelY(0);
-                } else
+                } 
+                else
                 {
                     setVelY(detective.getSpeed());
                 }
@@ -146,7 +148,8 @@ public class DetectiveController
                         || (roomBoundaryCollision && view.getBound().getMinX() <= itemBlock.getMinX()))
                 {
                     setVelX(0);
-                } else
+                } 
+                else
                 {
                     setVelX(-(detective.getSpeed()));
                 }
@@ -159,7 +162,8 @@ public class DetectiveController
                         || (roomBoundaryCollision && view.getBound().getMaxX() >= itemBlock.getMaxX()))
                 {
                     setVelX(0);
-                } else
+                } 
+                else
                 {
                     setVelX(getDetective().getSpeed());
                 }

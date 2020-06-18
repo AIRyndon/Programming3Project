@@ -18,11 +18,6 @@ public class HintDatabase extends DatabaseManager
         tableName = "HINT";
     }
     
-    public int getNextID() throws SQLException
-    {
-        return 1;
-    }
-    
     public void inputDataRow(String hint_name, String description) throws SQLException
     {
         try

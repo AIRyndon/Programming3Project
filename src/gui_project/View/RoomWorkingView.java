@@ -72,7 +72,6 @@ public class RoomWorkingView extends javax.swing.JPanel implements
         {
             gameTextArea.setText(((KeyPassword) model).getMessage());
         }
-
     }
 
     @Override
@@ -171,8 +170,7 @@ public class RoomWorkingView extends javax.swing.JPanel implements
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        // TODO add your handling code here:
-
+       
         roomCtrl.checkCollisions(evt.getKeyCode(), mainCtrl,
                 detectiveCtrl, getBound());
 
@@ -180,7 +178,6 @@ public class RoomWorkingView extends javax.swing.JPanel implements
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
-        // TODO add your handling code here:
 
         detectiveCtrl.keyReleased(evt);
         Rectangle officeLockBound = lockedAreaCtrl.getView().getBound();
