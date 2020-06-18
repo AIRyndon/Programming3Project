@@ -18,7 +18,7 @@ public class BaseRoomController
         return itemBlockCtrls;
     }
 
-    public void checkCollisions(int keyCode, ArrayList<ItemBlockController> itemBlockCtrls,
+    public void checkCollisions(int keyCode, MainController mainCtrl,
             DetectiveController detectiveCtrl, Rectangle roomBoundary)
     {
         boolean itemBlockCollision = false;
@@ -35,7 +35,7 @@ public class BaseRoomController
                 {
                     NPCController npcCtrl = (NPCController) itemBlockCtrl;
                     npcCtrl.setSpeaking(true);
-                    npcCtrl.tryToPlaceHint();
+                    mainCtrl.updateConversationLevel();
 
                 } else if (itemBlockCtrl instanceof HintController)
                 {
@@ -47,9 +47,10 @@ public class BaseRoomController
                         //them when they aren't visible
                         break;
                     }
-
                     hintCtrl.pickup();
                     detectiveCtrl.increasePickedUpHint();
+                    mainCtrl.checkDetectiveHintCount();
+
                 } else if (itemBlockCtrl instanceof LockedAreaController)
                 {
                     LockedAreaController lockedArea = (LockedAreaController) itemBlockCtrl;
@@ -66,7 +67,6 @@ public class BaseRoomController
                     {
                         //If user's answer is correct, allow player to get the key.
                         keyPassword.pickup();
-
                         break;
                     }
                 }

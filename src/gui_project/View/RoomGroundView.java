@@ -88,12 +88,10 @@ public class RoomGroundView extends javax.swing.JPanel implements
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
-            mainCtrl.updateConversationLevel();
         } 
         else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
-            mainCtrl.checkDetectiveHintCount();
         }
         else if(model instanceof KeyPassword)
         {
@@ -202,7 +200,7 @@ public class RoomGroundView extends javax.swing.JPanel implements
     private void formKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyPressed
     {//GEN-HEADEREND:event_formKeyPressed
         //Collision check
-        roomCtrl.checkCollisions(evt.getKeyCode(), roomCtrl.getItemBlockCtrls(),
+        roomCtrl.checkCollisions(evt.getKeyCode(), mainCtrl,
                 detectiveCtrl, getBound());
 
         repaint();

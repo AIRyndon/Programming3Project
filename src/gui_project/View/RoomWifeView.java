@@ -62,7 +62,6 @@ public class RoomWifeView extends javax.swing.JPanel implements
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
-            mainCtrl.updateConversationLevel();
         } else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
@@ -188,7 +187,7 @@ public class RoomWifeView extends javax.swing.JPanel implements
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
 
-        roomCtrl.checkCollisions(evt.getKeyCode(), roomCtrl.getItemBlockCtrls(),
+        roomCtrl.checkCollisions(evt.getKeyCode(), mainCtrl,
                 detectiveCtrl, getBound());
 
         repaint();

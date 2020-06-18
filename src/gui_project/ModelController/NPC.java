@@ -63,9 +63,7 @@ public class NPC extends ItemBlock
             discovered = true;
             if (linesUnlocked)
             {
-                spokenLine += secondLine;
-                spokenLine += '\n';
-                spokenLine += firstLine;
+                spokenLine = secondLine + '\n' + firstLine;
             }
             else
             {
@@ -154,7 +152,8 @@ public class NPC extends ItemBlock
     }
 
     /**
-     * @return the discovered
+     * @return if the detective has spoken with the NPC for 
+     * the first time
      */
     public boolean isDiscovered()
     {
@@ -162,7 +161,7 @@ public class NPC extends ItemBlock
     }
 
     /**
-     * @return the linesUnlocked
+     * @return if the NPC's secondary lines are unlocked
      */
     public boolean isLinesUnlocked()
     {
@@ -170,7 +169,7 @@ public class NPC extends ItemBlock
     }
 
     /**
-     * @param linesUnlocked the linesUnlocked to set
+     * @param linesUnlocked unlocks an NPC's secondary line
      */
     public void unlockLines(boolean linesUnlocked)
     {

@@ -49,7 +49,6 @@ public class RoomHouseView extends javax.swing.JPanel implements
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
-            mainCtrl.updateConversationLevel();
         } else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
@@ -196,7 +195,7 @@ public class RoomHouseView extends javax.swing.JPanel implements
 
         //I think we can check for the boundaries here -- if going outside the bounds
         //we wont call the keyPress
-        roomCtrl.checkCollisions(evt.getKeyCode(), roomCtrl.getItemBlockCtrls(),
+        roomCtrl.checkCollisions(evt.getKeyCode(), mainCtrl,
                 detectiveCtrl, getBound());
 
         //check if the player wants to access a room
