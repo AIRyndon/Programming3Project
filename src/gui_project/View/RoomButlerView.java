@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui_project.View;
 
 import gui_project.ModelController.BaseModel;
@@ -20,14 +15,9 @@ import gui_project.ModelController.KeyPassword;
 import gui_project.ModelController.KeyPasswordController;
 import gui_project.ModelController.NPC;
 
-/**
- *
- * @author pc
- */
 public class RoomButlerView extends javax.swing.JPanel implements
         ComponentListener, BaseObserver
 {
-
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final RoomButlerController roomCtrl;
@@ -59,10 +49,12 @@ public class RoomButlerView extends javax.swing.JPanel implements
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
-        } else if (model instanceof Hint)
+        }
+        else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
-        } else if (model instanceof KeyPassword)
+        } 
+        else if (model instanceof KeyPassword)
         {
             gameTextArea.setText(((KeyPassword) model).getMessage());
         }
@@ -164,14 +156,13 @@ public class RoomButlerView extends javax.swing.JPanel implements
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(houseDoor)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 235, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                        .addComponent(houseDoor))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addComponent(bedLabel)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(bedLabel)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 215, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 

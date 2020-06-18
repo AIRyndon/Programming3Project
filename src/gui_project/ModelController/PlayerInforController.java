@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class PlayerInforController
 {
-    private static PlayerDatabase playerDatabase;
+    private static PlayerDatabase PLAYERDATABASE;
     private MainController mainCtrl;
     private PlayerInfor playerInfor;
     private PlayerInforView view;
@@ -17,7 +17,7 @@ public class PlayerInforController
     {
         this.mainCtrl = mainCtrl;
         this.playerInfor = playerInfor;
-        playerDatabase = new PlayerDatabase(playerInfor);
+        PLAYERDATABASE = new PlayerDatabase(playerInfor);
         System.out.println(playerInfor.getName());
         view = new PlayerInforView(mainCtrl, this);
         storyPanel = new StoryPanel(mainCtrl, this);
@@ -25,7 +25,7 @@ public class PlayerInforController
 
     public void savePlayerInfo() throws SQLException
     {
-        playerDatabase.inputDataRow();
+        PLAYERDATABASE.inputDataRow();
     }
     
     //Getters and setters

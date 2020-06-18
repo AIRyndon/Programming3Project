@@ -35,6 +35,9 @@ public class HintController extends ItemBlockController
         this.mainCtrl = mainCtrl;
         this.detectiveCtrl = detectiveCtrl;
         view = new HintView(hint, this);
+        
+        //todo: delete this line
+        hint.setVisible(true);
     }
 
     public void pickup() throws SQLException

@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 
 public class LockedAreaController extends ItemBlockController
 {
-
     private LockedArea lockedArea;
     private LockedAreaView view;
     private PasswordInputPanel passwordInputPanel;
@@ -37,6 +36,7 @@ public class LockedAreaController extends ItemBlockController
     public void disableLockedArea()
     {
         lockedArea.setUnLocked(true);
+//        removeLockedAreaView();
     }
 
     @Override
@@ -50,4 +50,9 @@ public class LockedAreaController extends ItemBlockController
     {
         view.draw(g2);
     }
+//    
+//    public void removeLockedAreaView()
+//    {
+//        
+//    }
 }

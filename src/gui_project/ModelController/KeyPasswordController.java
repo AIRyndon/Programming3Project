@@ -71,8 +71,10 @@ public class KeyPasswordController extends ItemBlockController
         {
             //If user's answer is correct, allow player to get the key.
             pickup();
+            
             return false;
         }
+        
         return true;
     }
 

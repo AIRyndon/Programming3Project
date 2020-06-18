@@ -26,7 +26,7 @@ public class BaseRoomController
 
         for (ItemBlockController itemBlockCtrl : itemBlockCtrls)
         {
-            //break out of the loop once you find a collision
+            //break out of the loop once a collision found
             if (detectiveCtrl.getView().getBound()
                     .intersects(itemBlockCtrl.getItemBlock().getBound()))
             {                             
@@ -34,8 +34,8 @@ public class BaseRoomController
                 
                 if (itemBlockCollision)
                 {
-                   boundaryCollision = itemBlockCtrl.getItemBlock().getBound(); 
-                }            
+                    boundaryCollision = itemBlockCtrl.getItemBlock().getBound();
+                }
                 
                 break;
             } 

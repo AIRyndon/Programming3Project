@@ -90,7 +90,7 @@ public class DatabaseManager
                 {
                     if (i > 1)
                     {
-                        System.out.print(",  ");
+                        System.out.println(",  ");
                     }
 
                     System.out.print(resultSet.getString(i));

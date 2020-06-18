@@ -16,7 +16,6 @@ import java.util.logging.Logger;
  */
 public class MainController
 {
-
     private final MainView view;
     private final Detective detective;
     private DetectiveController detectiveCtrl;
@@ -52,17 +51,18 @@ public class MainController
         setUpInitialPanels();
         addItemBlockToRoom();
         addAllPanels();
-        showPanel("Welcome");
+//        showPanel("Welcome");
+        showPanel("Ground");
         view.renderView();
     }
 
     public void addItemBlockToRoom()
     {
-        groundCtrl.addItemBlock(dogHouseLock);
         groundCtrl.addItemBlock(butler);
         groundCtrl.addItemBlock(cake);
         groundCtrl.addItemBlock(houseArea);
         groundCtrl.addItemBlock(tailOfficeLock);
+        groundCtrl.addItemBlock(dogHouseLock);
 
         houseCtrl.addItemBlock(maidRoomWall);
         houseCtrl.addItemBlock(wifeRoomWall);
@@ -84,10 +84,10 @@ public class MainController
         wifeRoomCtrl.addItemBlock(bed);
 
         workingRoomCtrl.addItemBlock(victim);
-        workingRoomCtrl.addItemBlock(officeLock);
+        workingRoomCtrl.addItemBlock(headDogHouse);
         workingRoomCtrl.addItemBlock(knife);
         workingRoomCtrl.addItemBlock(picture);
-        workingRoomCtrl.addItemBlock(headDogHouse);
+        workingRoomCtrl.addItemBlock(officeLock);
     }
 
     public void addAllPanels()
@@ -229,7 +229,6 @@ public class MainController
                 }
                 break;
             case 2:
-
                 //unlock wife's 2nd conversation 
                 //after talking with the assistant again
                 if (assistant.getNPC().isDiscovered())

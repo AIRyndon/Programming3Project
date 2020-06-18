@@ -28,7 +28,6 @@ import java.awt.event.ComponentListener;
 public class RoomWorkingView extends javax.swing.JPanel implements
         ComponentListener, BaseObserver
 {
-
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final RoomWorkingController roomCtrl;
@@ -188,7 +187,8 @@ public class RoomWorkingView extends javax.swing.JPanel implements
             mainCtrl.showPanel("House");
             detectiveCtrl.setLocationX(detectiveCtrl.getDetective().getRoomHouseLocationX());
             detectiveCtrl.setLocationY(detectiveCtrl.getDetective().getRoomHouseLocationY());
-        } else if (detectiveCtrl.getView().getBound().intersects(officeLockBound)
+        } 
+        else if (detectiveCtrl.getView().getBound().intersects(officeLockBound)
                 && !lockedAreaCtrl.getLockedArea().isUnLocked())
         {
             mainCtrl.showPanel("OfficeLock");

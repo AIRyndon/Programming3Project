@@ -40,6 +40,10 @@ public class PlayerInfor extends BaseModel
     
     void setGender(char gender)
     {
-        this.gender = gender;
+        //input gender as UPPERCASE
+        String upperCaseGender = gender + "";
+        upperCaseGender.toUpperCase();
+        
+        this.gender = upperCaseGender.charAt(0);
     }
 }
