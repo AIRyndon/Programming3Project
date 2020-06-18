@@ -30,7 +30,6 @@ public class RoomMaidView extends javax.swing.JPanel implements
 
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
-    private final NPCController maidCtrl;
     private final RoomMaidController roomCtrl;
 
     /**
@@ -38,12 +37,10 @@ public class RoomMaidView extends javax.swing.JPanel implements
      */
     public RoomMaidView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
-            NPCController maidCtrl,
             RoomMaidController roomCtrl)
     {
         this.mainCtrl = mainCtrl;
         this.detectiveCtrl = detectiveCtrl;
-        this.maidCtrl = maidCtrl;
         this.roomCtrl = roomCtrl;
 
         //our view should also implement Observer Interfaces if it needs data
@@ -70,10 +67,8 @@ public class RoomMaidView extends javax.swing.JPanel implements
     @Override
     public void componentShown(ComponentEvent e)
     {
-        roomCtrl.getItemBlockCtrls().forEach(i ->
-        {
-            i.getItemBlock().registerObserver(this);
-        });
+        roomCtrl.getItemBlockCtrls().forEach(i
+                -> i.getItemBlock().registerObserver(this));
 
         requestFocusInWindow();
     }
@@ -94,21 +89,7 @@ public class RoomMaidView extends javax.swing.JPanel implements
         detectiveCtrl.draw(g2);
         g2.draw(getBound());
 
-        roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
-        {
-            if (itemBlockCtrl instanceof NPCController)
-            {
-                NPCController npc = (NPCController) itemBlockCtrl;
-                npc.draw(g2);
-            } else if (itemBlockCtrl instanceof HintController)
-            {
-                HintController hint = (HintController) itemBlockCtrl;
-                hint.draw(g2);
-            } else
-            {
-                itemBlockCtrl.draw(g2);
-            }
-        });
+        roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl -> itemBlockCtrl.draw(g2));
     }
 
     /**

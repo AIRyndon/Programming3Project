@@ -32,7 +32,6 @@ public class RoomButlerView extends javax.swing.JPanel implements
 
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
-    private final NPCController assistantCtrl;
     private final RoomButlerController roomCtrl;
     private KeyPasswordController keyPasswordCtrl;
     private Rectangle keyPasswordBound;
@@ -42,12 +41,10 @@ public class RoomButlerView extends javax.swing.JPanel implements
      */
     public RoomButlerView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
-            NPCController assistantCtrl,
             RoomButlerController roomCtrl)
     {
         this.mainCtrl = mainCtrl;
         this.detectiveCtrl = detectiveCtrl;
-        this.assistantCtrl = assistantCtrl;
         this.roomCtrl = roomCtrl;
 
         initComponents();
@@ -101,15 +98,7 @@ public class RoomButlerView extends javax.swing.JPanel implements
 
         roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
         {
-            if (itemBlockCtrl instanceof NPCController)
-            {
-                NPCController npc = (NPCController) itemBlockCtrl;
-                npc.draw(g2);
-            } else if (itemBlockCtrl instanceof HintController)
-            {
-                HintController hint = (HintController) itemBlockCtrl;
-                hint.draw(g2);
-            } else if (itemBlockCtrl instanceof KeyPasswordController)
+            if (itemBlockCtrl instanceof KeyPasswordController)
             {
                 KeyPasswordController keyPassword = (KeyPasswordController) itemBlockCtrl;
                 keyPassword.draw(g2);

@@ -20,8 +20,7 @@ public class RoomMaidController extends BaseRoomController
             NPCController wifeCtrl)
     {
         view = new RoomMaidView(mainCtrl,
-                detectiveCtrl, 
-                wifeCtrl,this);
+                detectiveCtrl,this);
     }
 
     public RoomMaidView getView()

@@ -23,8 +23,7 @@ public class RoomGroundController extends BaseRoomController
             NPCController butlerCtrl)
     {
         view = new RoomGroundView(mainCtrl, 
-                detectiveCtrl, 
-                butlerCtrl, this);
+                detectiveCtrl, this);
     }
     
     public RoomGroundView getView()

@@ -23,8 +23,7 @@ public class RoomButlerController extends BaseRoomController
             NPCController assistantCtrl)
     {
         view = new RoomButlerView(mainCtrl, 
-                detectiveCtrl, 
-                assistantCtrl, this);
+                detectiveCtrl, this);
     }
 
     public RoomButlerView getView()

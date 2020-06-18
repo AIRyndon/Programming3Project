@@ -33,7 +33,6 @@ public class RoomWorkingView extends javax.swing.JPanel implements
 
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
-    private final NPCController victimCtrl;
     private LockedAreaController lockedAreaCtrl;
     private final RoomWorkingController roomCtrl;
     private Rectangle officeLockBound, keyPasswordBound;
@@ -44,12 +43,10 @@ public class RoomWorkingView extends javax.swing.JPanel implements
      */
     public RoomWorkingView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
-            NPCController victimCtrl,
             RoomWorkingController roomCtrl)
     {
         this.mainCtrl = mainCtrl;
         this.detectiveCtrl = detectiveCtrl;
-        this.victimCtrl = victimCtrl;
         this.roomCtrl = roomCtrl;
 
         initComponents();
@@ -67,7 +64,7 @@ public class RoomWorkingView extends javax.swing.JPanel implements
             gameTextArea.setText(((NPC) model).getSpokenLine());
         } else if (model instanceof Hint)
         {
-            gameTextArea.setText(((Hint) model).getMessage());          
+            gameTextArea.setText(((Hint) model).getMessage());
         } else if (model instanceof KeyPassword)
         {
             gameTextArea.setText(((KeyPassword) model).getMessage());
@@ -78,10 +75,8 @@ public class RoomWorkingView extends javax.swing.JPanel implements
     @Override
     public void componentShown(ComponentEvent e)
     {
-        roomCtrl.getItemBlockCtrls().forEach(i ->
-        {
-            i.getItemBlock().registerObserver(this);
-        });
+        roomCtrl.getItemBlockCtrls().forEach(i
+                -> i.getItemBlock().registerObserver(this));
 
         requestFocusInWindow();
     }
@@ -103,33 +98,12 @@ public class RoomWorkingView extends javax.swing.JPanel implements
 
         roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
         {
-            if (itemBlockCtrl instanceof NPCController)
-            {
-                NPCController npc = (NPCController) itemBlockCtrl;
-                npc.draw(g2);
-            } else if (itemBlockCtrl instanceof HintController)
-            {
-                HintController hint = (HintController) itemBlockCtrl;
-                hint.draw(g2);
-            } else if (itemBlockCtrl instanceof LockedAreaController)
+            if (itemBlockCtrl instanceof LockedAreaController)
             {
                 LockedAreaController areaLocked = (LockedAreaController) itemBlockCtrl;
                 areaLocked.draw(g2);
 
                 lockedAreaCtrl = areaLocked;
-                officeLockBound = areaLocked.getView().getBound();
-            } else if (itemBlockCtrl instanceof KeyPasswordController)
-            {
-                KeyPasswordController keyPassword = (KeyPasswordController) itemBlockCtrl;
-                keyPassword.draw(g2);
-            }
-        });
-
-        roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
-        {
-            if (itemBlockCtrl instanceof LockedAreaController)
-            {
-                LockedAreaController areaLocked = (LockedAreaController) itemBlockCtrl;
                 officeLockBound = areaLocked.getView().getBound();
             } else if (itemBlockCtrl instanceof KeyPasswordController)
             {

@@ -8,7 +8,6 @@ package gui_project.View;
 import gui_project.ModelController.BaseModel;
 import gui_project.ModelController.DetectiveController;
 import gui_project.ModelController.MainController;
-import gui_project.ModelController.NPCController;
 import gui_project.ModelController.RoomGroundController;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -20,7 +19,6 @@ import javax.swing.ImageIcon;
 import gui_project.ModelController.Hint;
 import gui_project.ModelController.NPC;
 import gui_project.ModelController.BaseObserver;
-import gui_project.ModelController.HintController;
 import gui_project.ModelController.KeyPassword;
 import gui_project.ModelController.KeyPasswordController;
 import gui_project.ModelController.LockedAreaController;
@@ -32,9 +30,9 @@ import gui_project.ModelController.LockedAreaController;
 public class RoomGroundView extends javax.swing.JPanel implements
         ComponentListener, BaseObserver
 {
+
     private final DetectiveController detectiveCtrl;
     private final MainController mainCtrl;
-    private final NPCController butlerCtrl;
     private final RoomGroundController roomCtrl;
     private LockedAreaController lockedAreaCtrl;
     private KeyPasswordController keyPasswordCtrl;
@@ -45,12 +43,10 @@ public class RoomGroundView extends javax.swing.JPanel implements
      */
     public RoomGroundView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
-            NPCController butlerCtrl,
             RoomGroundController roomCtrl)
     {
         this.mainCtrl = mainCtrl;
         this.detectiveCtrl = detectiveCtrl;
-        this.butlerCtrl = butlerCtrl;
         this.roomCtrl = roomCtrl;
 
         initComponents();
@@ -88,15 +84,13 @@ public class RoomGroundView extends javax.swing.JPanel implements
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
-        } 
-        else if (model instanceof Hint)
+        } else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
-        }
-        else if(model instanceof KeyPassword)
+        } else if (model instanceof KeyPassword)
         {
             gameTextArea.setText(((KeyPassword) model).getMessage());
-        }      
+        }
     }
 
     @Override
@@ -127,31 +121,23 @@ public class RoomGroundView extends javax.swing.JPanel implements
 
         roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
         {
-            if (itemBlockCtrl instanceof NPCController)
-            {
-                NPCController npc = (NPCController) itemBlockCtrl;
-                npc.draw(g2);
-            } 
-            else if (itemBlockCtrl instanceof HintController)
-            {
-                HintController hint = (HintController) itemBlockCtrl;
-                hint.draw(g2);
-            } 
-            else if (itemBlockCtrl instanceof LockedAreaController)
+            if (itemBlockCtrl instanceof LockedAreaController)
             {
                 LockedAreaController areaLocked = (LockedAreaController) itemBlockCtrl;
                 areaLocked.draw(g2);
 
                 lockedAreaCtrl = areaLocked;
                 dogHouseBound = lockedAreaCtrl.getView().getBound();
-            }
-            else if (itemBlockCtrl instanceof KeyPasswordController)
+            } else if (itemBlockCtrl instanceof KeyPasswordController)
             {
                 KeyPasswordController keyPassword = (KeyPasswordController) itemBlockCtrl;
                 keyPassword.draw(g2);
-                
+
                 keyPasswordCtrl = keyPassword;
                 keyPasswordBound = keyPassword.getView().getBound();
+            } else
+            {
+                itemBlockCtrl.draw(g2);
             }
         });
     }
@@ -217,13 +203,12 @@ public class RoomGroundView extends javax.swing.JPanel implements
             detectiveCtrl.updateGroundHouseLocation();
             System.out.println("Print House");
         } //check lockedArea collision
-        else if (detectiveCtrl.getView().getBound().intersects(dogHouseBound) && 
-                !lockedAreaCtrl.getLockedArea().isUnLocked())
+        else if (detectiveCtrl.getView().getBound().intersects(dogHouseBound)
+                && !lockedAreaCtrl.getLockedArea().isUnLocked())
         {
             mainCtrl.showPanel("DogHouseLock");
-        }
-        else if(detectiveCtrl.getView().getBound().intersects(keyPasswordBound) &&
-                !keyPasswordCtrl.getKeyPassword().isCorrect())
+        } else if (detectiveCtrl.getView().getBound().intersects(keyPasswordBound)
+                && !keyPasswordCtrl.getKeyPassword().isCorrect())
         {
             mainCtrl.showPanel("TailOffice");
         }

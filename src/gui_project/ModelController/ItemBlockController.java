@@ -45,6 +45,6 @@ public class ItemBlockController
 
     public boolean collisionAction()
     {
-        return false;
+        return true;
     }
 }

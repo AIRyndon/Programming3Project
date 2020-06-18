@@ -21,8 +21,7 @@ public class RoomWorkingController extends BaseRoomController
             NPCController wifeCtrl)
     {
         view = new RoomWorkingView(mainCtrl, 
-                detectiveCtrl, 
-                wifeCtrl, this);
+                detectiveCtrl,this);
     }
 
     public RoomWorkingView getView()

@@ -87,15 +87,7 @@ public class RoomHouseView extends javax.swing.JPanel implements
 
         roomCtrl.getItemBlockCtrls().forEach(itemBlockCtrl ->
         {
-            if (itemBlockCtrl instanceof NPCController)
-            {
-                NPCController npc = (NPCController) itemBlockCtrl;
-                npc.draw(g2);
-            } else if (itemBlockCtrl instanceof HintController)
-            {
-                HintController hint = (HintController) itemBlockCtrl;
-                hint.draw(g2);
-            } else if (itemBlockCtrl instanceof KeyPasswordController)
+            if (itemBlockCtrl instanceof KeyPasswordController)
             {
                 KeyPasswordController keyPassword = (KeyPasswordController) itemBlockCtrl;
                 keyPassword.draw(g2);

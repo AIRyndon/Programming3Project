@@ -30,8 +30,6 @@ public class RoomWifeView extends javax.swing.JPanel implements
 
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
-    private final NPCController wifeCtrl;
-    private final NPCController daughterCtrl;
     private final RoomWifeController roomCtrl;
 
     /**
@@ -39,14 +37,10 @@ public class RoomWifeView extends javax.swing.JPanel implements
      */
     public RoomWifeView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
-            NPCController wifeCtrl,
-            NPCController daughterCtrl,
             RoomWifeController roomCtrl)
     {
         this.mainCtrl = mainCtrl;
-        this.daughterCtrl = daughterCtrl;
         this.detectiveCtrl = detectiveCtrl;
-        this.wifeCtrl = wifeCtrl;
         this.roomCtrl = roomCtrl;
 
         initComponents();
@@ -72,10 +66,8 @@ public class RoomWifeView extends javax.swing.JPanel implements
     @Override
     public void componentShown(ComponentEvent e)
     {
-        roomCtrl.getItemBlockCtrls().forEach(i ->
-        {
-            i.getItemBlock().registerObserver(this);
-        });
+        roomCtrl.getItemBlockCtrls().forEach(i
+                -> i.getItemBlock().registerObserver(this));
         requestFocusInWindow();
     }
 
@@ -189,13 +181,11 @@ public class RoomWifeView extends javax.swing.JPanel implements
 
         roomCtrl.checkCollisions(evt.getKeyCode(), mainCtrl,
                 detectiveCtrl, getBound());
-
         repaint();
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
-        // TODO add your handling code here:
-
+       
         detectiveCtrl.keyReleased(evt);
 
         if (detectiveCtrl.getView().getBound().intersects(houseDoor.getBounds()))
@@ -204,7 +194,6 @@ public class RoomWifeView extends javax.swing.JPanel implements
             detectiveCtrl.setLocationX(detectiveCtrl.getDetective().getRoomHouseLocationX());
             detectiveCtrl.setLocationY(detectiveCtrl.getDetective().getRoomHouseLocationY());
         }
-
         repaint();
     }//GEN-LAST:event_formKeyReleased
 
