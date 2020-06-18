@@ -216,23 +216,23 @@ public class MainController
                 if (assistant.getNPC().isDiscovered())
                 {
                     wife.unlockLines();
-                }
-                if (wife.getNPC().isDiscovered())
-                {
-                    butler.resetIsDiscovered();
-                    maid.resetIsDiscovered();
-                    butler.unlockLines();
-                    detective.setConversationLevel(3);
+                    if (wife.getNPC().isDiscovered())
+                    {
+                        butler.resetIsDiscovered();
+                        maid.resetIsDiscovered();
+                        butler.unlockLines();
+                        detective.setConversationLevel(3);
+                    }
                 }
                 break;
             case 3:
                 if (butler.getNPC().isDiscovered())
                 {
                     maid.unlockLines();
-                }
-                if (maid.getNPC().isDiscovered())
-                {
-                    daughter.unlockLines();
+                    if (maid.getNPC().isDiscovered())
+                    {
+                        daughter.unlockLines();
+                    }
                 }
                 break;
             default:
