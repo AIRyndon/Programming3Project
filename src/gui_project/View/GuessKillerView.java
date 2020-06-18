@@ -7,11 +7,7 @@ package gui_project.View;
 
 import gui_project.ModelController.Detective;
 import gui_project.ModelController.MainController;
-import gui_project.RPGAppGUI;
-import java.io.IOException;
 import java.util.Enumeration;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.AbstractButton;
 
 /**
@@ -141,7 +137,6 @@ public class GuessKillerView extends javax.swing.JPanel
 
     private void yesBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_yesBtnActionPerformed
     {//GEN-HEADEREND:event_yesBtnActionPerformed
-
         java.awt.EventQueue.invokeLater(new Runnable()
         {
             public void run()
