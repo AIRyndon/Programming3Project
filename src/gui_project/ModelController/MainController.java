@@ -114,19 +114,19 @@ public class MainController
 
     public void setUpHint()
     {
-        knife = new HintController(this, detectiveCtrl, 
-                    new Hint("Knife", "The blade is bloody. . .", 500, 260, 10, 10));
+        knife = new HintController(this, detectiveCtrl,
+                new Hint("Knife", "The blade is bloody. . .", 500, 260, 10, 10));
         gloves = new HintController(this, detectiveCtrl,
-                    new Hint("Gloves", "A worn-out pair of gloves, there is a name on it - "
-                + "\nit is illegible, you only recognize the letters ATO", 250, 250, 10, 10));
+                new Hint("Gloves", "A worn-out pair of gloves, there is a name on it - "
+                        + "\nit is illegible, you only recognize the letters ATO", 250, 250, 10, 10));
         cake = new HintController(this, detectiveCtrl,
-                    new Hint("Cheescake", "An innocuous-looking cheesecake", 750, 30, 10, 10));
+                new Hint("Cheescake", "An innocuous-looking cheesecake", 750, 30, 10, 10));
         picture = new HintController(this, detectiveCtrl,
-                    new Hint("Old Picture", "A picture of a young girl - "
-                + "\nthe girl has a resemblance with the maid", 30, 30, 10, 10));
+                new Hint("Old Picture", "A picture of a young girl - "
+                        + "\nthe girl has a resemblance with the maid", 30, 30, 10, 10));
         vial = new HintController(this, detectiveCtrl,
-                    new Hint("Alprazolam", "A powerful sedative -"
-                + "\ncan have side-effects when taken regularly", 650, 30, 10, 10));
+                new Hint("Alprazolam", "A powerful sedative -"
+                        + "\ncan have side-effects when taken regularly", 650, 30, 10, 10));
 
         assignHintToNPC();
     }
@@ -192,23 +192,48 @@ public class MainController
     {
         switch (detective.getConversationLevel())
         {
+            //talk with every NPC to unlock the assistant's 2nd line
             case 1:
-                if (butler.hasTalkedWithPlayer()
-                        && wife.hasTalkedWithPlayer()
-                        && daughter.hasTalkedWithPlayer()
-                        && maid.hasTalkedWithPlayer())
+                if (assistant.getNPC().isDiscovered()
+                        && butler.getNPC().isDiscovered()
+                        && wife.getNPC().isDiscovered()
+                        && daughter.getNPC().isDiscovered()
+                        && maid.getNPC().isDiscovered())
                 {
+                    //reset the NPC's so the detective needs to talk 
+                    //with them again
+                    assistant.resetIsDiscovered();
+                    wife.resetIsDiscovered();
+
                     assistant.unlockLines();
                     detective.setConversationLevel(2);
                 }
                 break;
             case 2:
-                wife.unlockLines();
-                detective.setConversationLevel(3);
+
+                //unlock wife's 2nd conversation 
+                //after talking with the assistant again
+                if (assistant.getNPC().isDiscovered())
+                {
+                    wife.unlockLines();
+                }
+                if (wife.getNPC().isDiscovered())
+                {
+                    butler.resetIsDiscovered();
+                    maid.resetIsDiscovered();
+                    butler.unlockLines();
+                    detective.setConversationLevel(3);
+                }
                 break;
             case 3:
-                maid.unlockLines();
-                daughter.unlockLines();
+                if (butler.getNPC().isDiscovered())
+                {
+                    maid.unlockLines();
+                }
+                if (maid.getNPC().isDiscovered())
+                {
+                    daughter.unlockLines();
+                }
                 break;
             default:
                 break;

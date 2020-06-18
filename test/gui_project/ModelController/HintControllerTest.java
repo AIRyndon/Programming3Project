@@ -5,7 +5,6 @@
  */
 package gui_project.ModelController;
 
-import java.awt.Graphics2D;
 import java.io.IOException;
 import org.junit.After;
 import org.junit.Before;
@@ -38,11 +37,8 @@ public class HintControllerTest
     {
         System.out.println("Hint visibility test");
         //Arrange
-        Detective detective = new Detective();
-        MainController mainCtrl = new MainController(detective);
-        DetectiveController detectiveCtrl = new DetectiveController(detective);
         Hint hint = new Hint("Test", "Test", 500, 260, 10, 10);
-        HintController sut = new HintController(mainCtrl, detectiveCtrl, hint);
+        HintController sut = new HintController(null, null, hint);
 
         //Act
         //set hint visibility to true;

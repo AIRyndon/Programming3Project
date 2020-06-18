@@ -15,6 +15,7 @@ import java.io.IOException;
  */
 public class NPC extends ItemBlock
 {
+
     private boolean discovered = false;
     private boolean linesUnlocked = false;
     private boolean speaking;
@@ -64,17 +65,15 @@ public class NPC extends ItemBlock
             if (linesUnlocked)
             {
                 spokenLine = secondLine + '\n' + firstLine;
-            }
-            else
+            } else
             {
-                spokenLine = firstLine; 
+                spokenLine = firstLine;
             }
-        } 
-        else
+        } else
         {
             spokenLine = "";
         }
-        
+
         notifyObservers();
     }
 
@@ -104,8 +103,7 @@ public class NPC extends ItemBlock
                     break;
                 }
             }
-        } 
-        catch (IOException ex)
+        } catch (IOException ex)
         {
             ex.printStackTrace();
         }
@@ -152,12 +150,19 @@ public class NPC extends ItemBlock
     }
 
     /**
-     * @return if the detective has spoken with the NPC for 
-     * the first time
+     * @return if the detective has spoken with the NPC for the first time
      */
     public boolean isDiscovered()
     {
         return discovered;
+    }
+
+    /**
+     * reset an NPC to no first conversation
+     */
+    void resetDiscovered()
+    {
+        discovered = false;
     }
 
     /**
@@ -171,7 +176,7 @@ public class NPC extends ItemBlock
     /**
      * @param linesUnlocked unlocks an NPC's secondary line
      */
-    public void unlockLines(boolean linesUnlocked)
+    void unlockLines(boolean linesUnlocked)
     {
         this.linesUnlocked = linesUnlocked;
     }

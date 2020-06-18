@@ -49,7 +49,7 @@ public class NPCController extends ItemBlockController
         setSpeaking(true);
         tryToPlaceHint();
         mainCtrl.updateConversationLevel();
-        
+
         return true;
     }
 
@@ -85,12 +85,12 @@ public class NPCController extends ItemBlockController
         }
     }
 
-    boolean hasTalkedWithPlayer()
+    public void resetIsDiscovered()
     {
-        return npc.isDiscovered();
+        npc.resetDiscovered();
     }
 
-    void unlockLines()
+    public void unlockLines()
     {
         npc.unlockLines(true);
     }
