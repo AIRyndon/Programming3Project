@@ -117,23 +117,20 @@ public class RoomGroundView extends javax.swing.JPanel implements
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         roomName = new javax.swing.JLabel();
         doorHouse = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         gameTextArea = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
 
         setName("Ground"); // NOI18N
-        addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
             }
-            public void keyReleased(java.awt.event.KeyEvent evt)
-            {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
                 formKeyReleased(evt);
             }
         });
@@ -153,6 +150,9 @@ public class RoomGroundView extends javax.swing.JPanel implements
         jScrollPane1.setViewportView(gameTextArea);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 370, 330, -1));
+
+        jLabel1.setText("DogHouse");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 40, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyPressed
@@ -193,6 +193,7 @@ public class RoomGroundView extends javax.swing.JPanel implements
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel doorHouse;
     private javax.swing.JTextArea gameTextArea;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel roomName;
     // End of variables declaration//GEN-END:variables

@@ -16,7 +16,7 @@ You are able to move, get NPC talks, unlock keys, and save hints to figure out w
 4. To finish the game, player need to get 5 hints or press 'q' to quit
 ```
 
-### Step 2: Allow user to play the game
+### Step 2: Allow user to play the game (USING A, S, D, W to move)
 
 ```
 Initially, the game has
@@ -30,13 +30,13 @@ Initially, the game has
 
 To-do list to finish the game:
 -> Talk with 5 NPC
--> Talk with NPC 'A' again to get his secrect talk -> A hint appears and able to get (Hint get: 1)
--> Talk with NPC 'W' again to get her secrect talk -> A hint appears but inside the Locked Area
+-> Talk with NPC 'A' again to get his secret talk -> A hint appears and able to get (Hint get: 1)
+-> Talk with NPC 'W' again to get her secret talk -> A hint appears but inside the Locked Area
 -> Answer questions and get 2 key passwords -> Unlock the Locked Area and get the hint (Hint get: 2)
--> After getting the hint, talk with NPC 'B' again to get his secrect talk
+-> After getting the hint, talk with NPC 'B' again to get his secret talk
 -> A hint appears and able to get (Hint get: 3)
--> Talk with NPC 'M' again to get her secrect talk -> A hint appears inside the Dog House
--> Talk with NPC 'D' again to get her secrect talk -> A hint appears and able to get (Hint get: 4)
+-> Talk with NPC 'M' again to get her secret talk -> A hint appears inside the Dog House
+-> Talk with NPC 'D' again to get her secret talk -> A hint appears and able to get (Hint get: 4)
 -> Answer questions and get 2 key passwords -> Unlock the Dog House and get the hint (Hint get: 5)
 ```
 
@@ -52,6 +52,7 @@ To-do list to finish the game:
 ## Versioning
 
 - CUI
+- GUI version has the same content as the CUI version
 
 ## Authors
 

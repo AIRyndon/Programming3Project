@@ -17,7 +17,6 @@ public class PlayerInfoController
         this.mainCtrl = mainCtrl;
         this.playerInfo = playerInfo;
         PLAYERDATABASE = new PlayerDatabase(playerInfo);
-        System.out.println(playerInfo.getName());
         view = new PlayerInforView(mainCtrl, this);
         storyPanel = new StoryPanel(mainCtrl, this);
     }
