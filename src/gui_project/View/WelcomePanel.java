@@ -8,9 +8,8 @@ public class WelcomePanel extends javax.swing.JPanel
     
     public WelcomePanel(MainController mainCtrl)
     {
-        initComponents();
-        
         this.mainCtrl = mainCtrl;
+        initComponents();      
     }
 
     /**

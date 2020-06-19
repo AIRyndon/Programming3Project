@@ -2,11 +2,13 @@ package gui_project.ModelController;
 
 import gui_project.View.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MainController
 {
+
     private final MainView view;
     private final Detective detective;
     private DetectiveController detectiveCtrl;
@@ -36,52 +38,79 @@ public class MainController
         setUpLockedAreaController();
         setUpKeyPasswordController();
         setUpHint();
-        setUpRoomController();
         setUpItemBlockController();
         setUpPlayerInforController();
         addItemBlockToRoom();
         welcomePanel = new WelcomePanel(this);
-        
-        addAllPanels();        
+
+        addAllPanels();
         showPanel("Welcome");
         view.renderView();
     }
 
-    public void addItemBlockToRoom()
+    private void addItemBlockToRoom()
     {
-        groundCtrl.addItemBlock(butler);
-        groundCtrl.addItemBlock(cake);
-        groundCtrl.addItemBlock(houseArea);
-        groundCtrl.addItemBlock(tailOfficeLock);
-        groundCtrl.addItemBlock(dogHouseLock);
+        //add item blocks to ground area
+        ArrayList<ItemBlockController> groundItemBlocks = new ArrayList<>();       
+        groundItemBlocks.add(butler);
+        groundItemBlocks.add(cake);
+        groundItemBlocks.add(houseArea);
+        groundItemBlocks.add(tailOfficeLock);
+        groundItemBlocks.add(dogHouseLock);
+             
+        groundCtrl = new RoomGroundController(this, detectiveCtrl, 
+                    tailOfficeLock, dogHouseLock,groundItemBlocks);
+              
+        //add item blocks to house area
+        ArrayList<ItemBlockController> houseItemBlocks = new ArrayList<>();
+        houseItemBlocks.add(workingRoomWall);
+        houseItemBlocks.add(maidRoomWall);
+        houseItemBlocks.add(wifeRoomWall);
+        houseItemBlocks.add(butlerRoomWall);
+        houseItemBlocks.add(vial);
+        houseItemBlocks.add(headOfficeLock);
+        
+        houseCtrl = new RoomHouseController(this, detectiveCtrl, 
+                    headOfficeLock,houseItemBlocks);
 
-        houseCtrl.addItemBlock(workingRoomWall);
-        houseCtrl.addItemBlock(maidRoomWall);
-        houseCtrl.addItemBlock(wifeRoomWall);
-        houseCtrl.addItemBlock(butlerRoomWall);
-        houseCtrl.addItemBlock(vial);
-        houseCtrl.addItemBlock(headOfficeLock);
-
-        butlerRoomCtrl.addItemBlock(assistant);
-        butlerRoomCtrl.addItemBlock(bed);
-        butlerRoomCtrl.addItemBlock(tailDogHouse);
-
-        maidRoomCtrl.addItemBlock(maid);
-        maidRoomCtrl.addItemBlock(bed);
-        maidRoomCtrl.addItemBlock(gloves);
-
-        wifeRoomCtrl.addItemBlock(wife);
-        wifeRoomCtrl.addItemBlock(daughter);
-        wifeRoomCtrl.addItemBlock(bed);
-
-        workingRoomCtrl.addItemBlock(victim);
-        workingRoomCtrl.addItemBlock(headDogHouse);
-        workingRoomCtrl.addItemBlock(knife);
-        workingRoomCtrl.addItemBlock(picture);
-        workingRoomCtrl.addItemBlock(officeLock);
+        //add item blocks to butler's room
+        ArrayList<ItemBlockController> butlerRoomItemBlocks = new ArrayList<>();
+        butlerRoomItemBlocks.add(assistant);
+        butlerRoomItemBlocks.add(bed);
+        butlerRoomItemBlocks.add(tailDogHouse);
+        
+        butlerRoomCtrl = new RoomButlerController(this, detectiveCtrl, 
+                         tailDogHouse,butlerRoomItemBlocks);
+        
+        //add item blocks to maid's room
+        ArrayList<ItemBlockController> maidRoomItemBlocks = new ArrayList<>();
+        maidRoomItemBlocks.add(maid);
+        maidRoomItemBlocks.add(bed);
+        maidRoomItemBlocks.add(gloves);
+        
+        maidRoomCtrl = new RoomMaidController(this, detectiveCtrl, maidRoomItemBlocks);
+        
+        //add item blocks to wife's room
+        ArrayList<ItemBlockController> wifeRoomItemBlocks = new ArrayList<>();
+        wifeRoomItemBlocks.add(wife);
+        wifeRoomItemBlocks.add(daughter);
+        wifeRoomItemBlocks.add(bed);
+        
+        wifeRoomCtrl = new RoomWifeController(this, detectiveCtrl,wifeRoomItemBlocks);
+        
+        //add item blocks to working room
+        ArrayList<ItemBlockController> workRoomItemBlocks = new ArrayList<>();
+        workRoomItemBlocks.add(victim);
+        workRoomItemBlocks.add(headDogHouse);
+        workRoomItemBlocks.add(knife);
+        workRoomItemBlocks.add(picture);
+        workRoomItemBlocks.add(officeLock);
+        
+        workingRoomCtrl = new RoomWorkingController(this, detectiveCtrl, 
+                          headDogHouse, officeLock,workRoomItemBlocks);
     }
 
-    public void addAllPanels()
+    private void addAllPanels()
     {
         view.addPanel(houseCtrl.getView(), houseCtrl.getView().getName());
         view.addPanel(maidRoomCtrl.getView(), maidRoomCtrl.getView().getName());
@@ -102,7 +131,7 @@ public class MainController
         view.addPanel(victim.getVictimView(), victim.getVictimView().getName());
     }
 
-    public void assignHintToNPC()
+    private void assignHintToNPC()
     {
         butler.setOwnedHint(gloves);
         assistant.setOwnedHint(vial);
@@ -111,7 +140,7 @@ public class MainController
         daughter.setOwnedHint(knife);
     }
 
-    public void setUpHint()
+    private void setUpHint()
     {
         vial = new HintController(this, detectiveCtrl, new Hint(650, 30, 10, 10));
         cake = new HintController(this, detectiveCtrl, new Hint(750, 30, 10, 10));
@@ -122,7 +151,7 @@ public class MainController
         assignHintToNPC();
     }
 
-    public void setUpItemBlockController()
+    private void setUpItemBlockController()
     {
         houseArea = new ItemBlockController(new ItemBlock(276, 83, 200, 200));
         maidRoomWall = new ItemBlockController(new ItemBlock(10, 15, 200, 110));
@@ -132,14 +161,14 @@ public class MainController
         bed = new ItemBlockController(new ItemBlock(10, 15, 100, 100));
     }
 
-    public void setUpLockedAreaController()
+    private void setUpLockedAreaController()
     {
         dogHouseLock = new LockedAreaController(this, new LockedArea(630, 15, 150, 100, "DogHouseLock"));
         officeLock = new LockedAreaController(this, new LockedArea(10, 15, 200, 469, "OfficeLock"));
         guessKillerCtrl = new GuessKillerController(this);
     }
 
-    public void setUpNPCController()
+    private void setUpNPCController()
     {
         detectiveCtrl = new DetectiveController(detective);
         butler = new NPCController(this, new NPC("Butler", "B", 100, 100, 20, 20));
@@ -151,7 +180,7 @@ public class MainController
                 "his working room", "Bosh", 53));
     }
 
-    public void setUpKeyPasswordController()
+    private void setUpKeyPasswordController()
     {
         //House
         headOfficeLock = new KeyPasswordController(this, new KeyPassword(700, 150, 20, 20,
@@ -170,19 +199,9 @@ public class MainController
                 dogHouseLock.getLockedArea(), "%", "TailDogHouse", KeyPasswordType.KEYTAIL));
     }
 
-    public void setUpPlayerInforController()
+    private void setUpPlayerInforController()
     {
         playerInforCtrl = new PlayerInfoController(this, new PlayerInfo());
-    }
-
-    public void setUpRoomController()
-    {
-        groundCtrl = new RoomGroundController(this, detectiveCtrl, tailOfficeLock, dogHouseLock);
-        houseCtrl = new RoomHouseController(this, detectiveCtrl, headOfficeLock);
-        maidRoomCtrl = new RoomMaidController(this, detectiveCtrl, maid);
-        butlerRoomCtrl = new RoomButlerController(this, detectiveCtrl, tailDogHouse);
-        wifeRoomCtrl = new RoomWifeController(this, detectiveCtrl, wife, daughter);
-        workingRoomCtrl = new RoomWorkingController(this, detectiveCtrl, headDogHouse, officeLock);
     }
 
     public void updateConversationLevel()
@@ -264,7 +283,7 @@ public class MainController
     {
         try
         {
-            Thread.sleep(1500);
+            Thread.sleep(2500);
             view.showPanel(guessKillerCtrl.getView().getName());
         } catch (InterruptedException ex)
         {

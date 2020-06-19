@@ -21,6 +21,7 @@ import gui_project.ModelController.LockedAreaController;
 public class RoomGroundView extends javax.swing.JPanel implements
         ComponentListener, BaseObserver
 {
+
     private final DetectiveController detectiveCtrl;
     private final MainController mainCtrl;
     private final RoomGroundController roomCtrl;
@@ -43,6 +44,8 @@ public class RoomGroundView extends javax.swing.JPanel implements
         gameTextArea.setEditable(false);
         gameTextArea.setFocusable(false);
         addComponentListener(this);
+        roomCtrl.getItemBlockCtrls().forEach(i
+                -> i.getItemBlock().registerObserver(this));
         setFocusable(true);
     }
 
@@ -63,23 +66,16 @@ public class RoomGroundView extends javax.swing.JPanel implements
         return image;
     }
 
-    /*
-    
-    Wanted to put this method in a base view, but don't know how
-    to have a JLabel that's inherited - dunno if that is even possible
-     */
     @Override
     public void update(BaseModel model)
     {
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
-        }
-        else if (model instanceof Hint)
+        } else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
-        }
-        else if (model instanceof KeyPassword)
+        } else if (model instanceof KeyPassword)
         {
             gameTextArea.setText(((KeyPassword) model).getMessage());
         }
@@ -88,11 +84,6 @@ public class RoomGroundView extends javax.swing.JPanel implements
     @Override
     public void componentShown(ComponentEvent e)
     {
-        roomCtrl.getItemBlockCtrls().forEach(i ->
-        {
-            i.getItemBlock().registerObserver(this);
-        });
-        
         requestFocusInWindow();
     }
 
@@ -185,8 +176,7 @@ public class RoomGroundView extends javax.swing.JPanel implements
                 && !lockedAreaCtrl.getLockedArea().isUnlocked())
         {
             mainCtrl.showPanel("DogHouseLock");
-        } 
-        else if (detectiveCtrl.getView().getBound().intersects(keyPasswordBound)
+        } else if (detectiveCtrl.getView().getBound().intersects(keyPasswordBound)
                 && !keyPasswordCtrl.getKeyPassword().isCorrect())
         {
             mainCtrl.showPanel("TailOffice");

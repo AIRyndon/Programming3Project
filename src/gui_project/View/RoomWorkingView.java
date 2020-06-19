@@ -42,6 +42,8 @@ public class RoomWorkingView extends javax.swing.JPanel implements
         gameTextArea.setEditable(false);
         gameTextArea.setFocusable(false);
         addComponentListener(this);
+        roomCtrl.getItemBlockCtrls().forEach(i
+                -> i.getItemBlock().registerObserver(this));
         setFocusable(true);
     }
 
@@ -63,9 +65,6 @@ public class RoomWorkingView extends javax.swing.JPanel implements
     @Override
     public void componentShown(ComponentEvent e)
     {
-        roomCtrl.getItemBlockCtrls().forEach(i
-                -> i.getItemBlock().registerObserver(this));
-
         requestFocusInWindow();
     }
 

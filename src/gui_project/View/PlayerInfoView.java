@@ -245,7 +245,7 @@ public class PlayerInfoView extends javax.swing.JPanel
                 ageValid = true;
             }
         }
-        if (ageValid)
+        if (!ageValid)
         {
             ageChecked = false;
             invalidLabel.setText("Invalid age, please enter again");

@@ -30,6 +30,8 @@ public class RoomHouseView extends javax.swing.JPanel implements
         gameTextArea.setEditable(false);
         gameTextArea.setFocusable(false);
         addComponentListener(this);
+        roomCtrl.getItemBlockCtrls().forEach(i
+                -> i.getItemBlock().registerObserver(this));
         setFocusable(true);
     }
 
@@ -39,8 +41,7 @@ public class RoomHouseView extends javax.swing.JPanel implements
         if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
-        } 
-        else if (model instanceof KeyPassword)
+        } else if (model instanceof KeyPassword)
         {
             gameTextArea.setText(((KeyPassword) model).getMessage());
         }
@@ -49,9 +50,6 @@ public class RoomHouseView extends javax.swing.JPanel implements
     @Override
     public void componentShown(ComponentEvent e)
     {
-        roomCtrl.getItemBlockCtrls().forEach(i
-                -> i.getItemBlock().registerObserver(this));
-
         requestFocusInWindow();
     }
 
@@ -171,24 +169,20 @@ public class RoomHouseView extends javax.swing.JPanel implements
         {
             mainCtrl.showPanel("Ground");
             detectiveCtrl.updateGroundHouseLocation();
-        } 
-        else if (detectiveCtrl.getView().getBound().intersects(maidRoomDoor.getBounds()))
+        } else if (detectiveCtrl.getView().getBound().intersects(maidRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("MaidRoom");
             detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
 
-        } 
-        else if (detectiveCtrl.getView().getBound().intersects(butlerRoomDoor.getBounds()))
+        } else if (detectiveCtrl.getView().getBound().intersects(butlerRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("ButlerRoom");
             detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
-        }
-        else if (detectiveCtrl.getView().getBound().intersects(wifeRoomDoor.getBounds()))
+        } else if (detectiveCtrl.getView().getBound().intersects(wifeRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("WifeRoom");
             detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());
-        }
-        else if (detectiveCtrl.getView().getBound().intersects(workingRoomDoor.getBounds()))
+        } else if (detectiveCtrl.getView().getBound().intersects(workingRoomDoor.getBounds()))
         {
             mainCtrl.showPanel("WorkingRoom");
             detectiveCtrl.saveHouseLocation(groundDoor.getX() + 5, groundDoor.getY());

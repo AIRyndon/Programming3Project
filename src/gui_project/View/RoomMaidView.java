@@ -29,12 +29,12 @@ public class RoomMaidView extends javax.swing.JPanel implements
         this.detectiveCtrl = detectiveCtrl;
         this.roomCtrl = roomCtrl;
 
-        //our view should also implement Observer Interfaces if it needs data
-        //from a model
         initComponents();
         gameTextArea.setEditable(false);
         gameTextArea.setFocusable(false);
         addComponentListener(this);
+        roomCtrl.getItemBlockCtrls().forEach(i
+                -> i.getItemBlock().registerObserver(this));
         setFocusable(true);
     }
 
@@ -53,9 +53,6 @@ public class RoomMaidView extends javax.swing.JPanel implements
     @Override
     public void componentShown(ComponentEvent e)
     {
-        roomCtrl.getItemBlockCtrls().forEach(i
-                -> i.getItemBlock().registerObserver(this));
-
         requestFocusInWindow();
     }
 

@@ -1,6 +1,7 @@
 package gui_project.ModelController;
 
 import gui_project.View.RoomMaidView;
+import java.util.ArrayList;
 
 public class RoomMaidController extends BaseRoomController
 {
@@ -8,8 +9,9 @@ public class RoomMaidController extends BaseRoomController
 
     public RoomMaidController(MainController mainCtrl,
             DetectiveController detectiveCtrl,
-            NPCController wifeCtrl)
+            ArrayList<ItemBlockController> itemBlockCtrl)
     {
+        super(itemBlockCtrl);
         view = new RoomMaidView(mainCtrl,
                 detectiveCtrl,this);
     }

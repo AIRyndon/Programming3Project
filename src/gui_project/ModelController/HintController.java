@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 public class HintController extends ItemBlockController
 {
     public static int HINTCOUNT = 1;
-    private static HintDatabase hintDatabase = new HintDatabase();
+    private final static HintDatabase hintDatabase = new HintDatabase();
     private final Hint hint;
     private final HintView view;
     private final MainController mainCtrl;

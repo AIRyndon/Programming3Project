@@ -139,6 +139,7 @@ public class GuessKillerView extends javax.swing.JPanel
 
     private void yesBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_yesBtnActionPerformed
     {//GEN-HEADEREND:event_yesBtnActionPerformed
+        mainCtrl.getView().getWindow().dispose();
         java.awt.EventQueue.invokeLater(new Runnable()
         {
             public void run()
@@ -154,7 +155,7 @@ public class GuessKillerView extends javax.swing.JPanel
                 }
             }
         });
-        mainCtrl.getView().getWindow().dispose();
+        
     }//GEN-LAST:event_yesBtnActionPerformed
 
     private void noBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_noBtnActionPerformed

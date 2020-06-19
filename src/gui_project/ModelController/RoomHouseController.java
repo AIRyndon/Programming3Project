@@ -1,6 +1,7 @@
 package gui_project.ModelController;
 
 import gui_project.View.RoomHouseView;
+import java.util.ArrayList;
 
 public class RoomHouseController extends BaseRoomController
 {
@@ -9,8 +10,10 @@ public class RoomHouseController extends BaseRoomController
 
     public RoomHouseController(MainController mainCtrl,
             DetectiveController detectiveCtrl,
-            KeyPasswordController keyPasswordCtrl)
+            KeyPasswordController keyPasswordCtrl,
+            ArrayList<ItemBlockController> itemBlockCtrl)
     {
+        super(itemBlockCtrl);
         view = new RoomHouseView(mainCtrl,
                 detectiveCtrl, this,
                 keyPasswordCtrl);

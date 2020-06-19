@@ -1,6 +1,7 @@
 package gui_project.ModelController;
 
 import gui_project.View.RoomWorkingView;
+import java.util.ArrayList;
 
 public class RoomWorkingController extends BaseRoomController
 {
@@ -10,8 +11,10 @@ public class RoomWorkingController extends BaseRoomController
     public RoomWorkingController(MainController mainCtrl,
             DetectiveController detectiveCtrl,
             KeyPasswordController keyPasswordCtrl,
-            LockedAreaController lockedAreaCtrl)
+            LockedAreaController lockedAreaCtrl,
+            ArrayList<ItemBlockController> itemBlockCtrl)
     {
+        super(itemBlockCtrl);
         view = new RoomWorkingView(mainCtrl,
                 detectiveCtrl, this,
                 keyPasswordCtrl, lockedAreaCtrl);
