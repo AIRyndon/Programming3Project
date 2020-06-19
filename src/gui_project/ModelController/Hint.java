@@ -1,32 +1,16 @@
 package gui_project.ModelController;
 
-/**
- *
- * @author Angelo
- */
 public class Hint extends ItemBlock
 {
     private boolean pickedUp = false;
     private boolean visible = false;
     private String message = "";
-    private final String name;
-    private final String description;
+    private String name;
+    private String description;
 
-    /**
-     *
-     * @param name
-     * @param description
-     * @param locationX
-     * @param locationY
-     * @param width
-     * @param height
-     */
-    public Hint(String name, String description,
-            int locationX, int locationY, int width, int height)
+    public Hint(int locationX, int locationY, int width, int height)
     {
         super(locationX, locationY, width, height);
-        this.name = name;
-        this.description = description;
     }
     
     /**
@@ -90,5 +74,11 @@ public class Hint extends ItemBlock
         pickedUp = true;
         visible = false;
         setMessage(name + '\n' + description);
+    }
+    
+    void setNameAndDescription(String name, String description)
+    {
+        this.name = name;
+        this.description = description;
     }
 }

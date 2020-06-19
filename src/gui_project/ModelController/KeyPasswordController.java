@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 
 public class KeyPasswordController extends ItemBlockController
 {
-
     private final KeyPasswordView view;
     private final KeyPassword keyPassword;
     private final KeyPasswordQuestionPanel questionPanel;
@@ -65,6 +64,7 @@ public class KeyPasswordController extends ItemBlockController
         {
             //If user's answer is correct, allow player to get the key.
             pickup();
+            clearMessageArea();
 
             return false;
         }

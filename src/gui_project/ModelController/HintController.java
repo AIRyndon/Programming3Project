@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 
 public class HintController extends ItemBlockController
 {
-
+    public static int HINTCOUNT = 1;
     private static HintDatabase hintDatabase = new HintDatabase();
     private final Hint hint;
     private final HintView view;
@@ -21,6 +21,8 @@ public class HintController extends ItemBlockController
         this.mainCtrl = mainCtrl;
         this.detectiveCtrl = detectiveCtrl;
         view = new HintView(hint);
+        
+        setupHintNameAndDescription();
     }
 
     /**
@@ -79,5 +81,14 @@ public class HintController extends ItemBlockController
     public void draw(Graphics2D g2)
     {
         view.draw(g2);
+    }
+    
+    public void setupHintNameAndDescription()
+    {
+        String hintResult = hintDatabase.getDataRow(HINTCOUNT);
+        HINTCOUNT++;
+        
+        String[] hintData = hintResult.split("/");
+        hint.setNameAndDescription(hintData[0], hintData[1]);        
     }
 }

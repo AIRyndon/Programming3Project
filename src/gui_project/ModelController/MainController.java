@@ -113,19 +113,11 @@ public class MainController
 
     public void setUpHint()
     {
-        knife = new HintController(this, detectiveCtrl,
-                new Hint("Knife", "The blade is bloody. . .", 500, 260, 10, 10));
-        gloves = new HintController(this, detectiveCtrl,
-                new Hint("Gloves", "A worn-out pair of gloves, there is a name on it - "
-                        + "\nit is illegible, you only recognize the letters ATO", 250, 250, 10, 10));
-        cake = new HintController(this, detectiveCtrl,
-                new Hint("Cheescake", "An innocuous-looking cheesecake", 750, 30, 10, 10));
-        picture = new HintController(this, detectiveCtrl,
-                new Hint("Old Picture", "A picture of a young girl - "
-                        + "\nthe girl has a resemblance with the maid", 30, 30, 10, 10));
-        vial = new HintController(this, detectiveCtrl,
-                new Hint("Alprazolam", "A powerful sedative -"
-                        + "\ncan have side-effects when taken regularly", 650, 30, 10, 10));
+        vial = new HintController(this, detectiveCtrl, new Hint(650, 30, 10, 10));
+        cake = new HintController(this, detectiveCtrl, new Hint(750, 30, 10, 10));
+        gloves = new HintController(this, detectiveCtrl, new Hint(250, 250, 10, 10));
+        knife = new HintController(this, detectiveCtrl, new Hint(500, 260, 10, 10));
+        picture = new HintController(this, detectiveCtrl, new Hint(30, 30, 10, 10));
 
         assignHintToNPC();
     }

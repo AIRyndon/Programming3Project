@@ -63,7 +63,7 @@ public class DatabaseManager
             } 
             catch (SQLException ex)
             {
-                System.out.println("SQL exception");
+                System.out.println("SQL exception establishConnection");
             }
         }
     }
@@ -99,10 +99,10 @@ public class DatabaseManager
                 {
                     if (i > 1)
                     {
-                        System.out.println(",  ");
+                        System.out.print(",  ");
                     }
 
-                    System.out.print(resultSet.getString(i));
+                    System.out.println(resultSet.getString(i));
                 }
             }
         }

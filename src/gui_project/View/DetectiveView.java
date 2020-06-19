@@ -31,7 +31,6 @@ public class DetectiveView implements BaseObserver
 
     public void draw(Graphics2D graphics2D)
     {
-        graphics2D.draw(getBound());
         graphics2D.drawImage(getPlayerImage(), detective.getLocationX(), detective.getLocationY(), null);
     }
 
