@@ -1,7 +1,7 @@
 package gui_project.ModelController;
 
 import gui_database.PlayerDatabase;
-import gui_project.View.PlayerInforView;
+import gui_project.View.PlayerInfoView;
 import gui_project.View.StoryPanel;
 
 public class PlayerInfoController
@@ -9,7 +9,7 @@ public class PlayerInfoController
     private static PlayerDatabase PLAYERDATABASE;
     private MainController mainCtrl;
     private PlayerInfo playerInfo;
-    private PlayerInforView view;
+    private PlayerInfoView view;
     private StoryPanel storyPanel;
     
     public PlayerInfoController(MainController mainCtrl, PlayerInfo playerInfo) 
@@ -17,7 +17,7 @@ public class PlayerInfoController
         this.mainCtrl = mainCtrl;
         this.playerInfo = playerInfo;
         PLAYERDATABASE = new PlayerDatabase(playerInfo);
-        view = new PlayerInforView(mainCtrl, this);
+        view = new PlayerInfoView(mainCtrl, this);
         storyPanel = new StoryPanel(mainCtrl, this);
     }
 
@@ -27,7 +27,7 @@ public class PlayerInfoController
     }
     
     //Getters and setters
-    public PlayerInforView getView() 
+    public PlayerInfoView getView() 
     {
         return view;
     }

@@ -143,6 +143,7 @@ public class RoomHouseView extends javax.swing.JPanel implements
         gameTextArea.setColumns(20);
         gameTextArea.setRows(5);
         jScrollPanel.setViewportView(gameTextArea);
+        gameTextArea.setFont(new java.awt.Font("Monospaced", 0, 14));
 
         add(jScrollPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 366, 310, 110));
 

@@ -3,17 +3,17 @@ package gui_project.View;
 import gui_project.ModelController.MainController;
 import gui_project.ModelController.PlayerInfoController;
 
-public class PlayerInforView extends javax.swing.JPanel
+public class PlayerInfoView extends javax.swing.JPanel
 {
 
     MainController mainCtrl;
-    PlayerInfoController playerInforCtrl;
+    PlayerInfoController playerInfoCtrl;
     boolean nameChecked, ageChecked, genderChecked;
 
-    public PlayerInforView(MainController mainCtrl, PlayerInfoController playerInforCtrl)
+    public PlayerInfoView(MainController mainCtrl, PlayerInfoController playerInforCtrl)
     {
         this.mainCtrl = mainCtrl;
-        this.playerInforCtrl = playerInforCtrl;
+        this.playerInfoCtrl = playerInforCtrl;
 
         initComponents();
         invalidLabel.setVisible(false);
@@ -29,7 +29,8 @@ public class PlayerInforView extends javax.swing.JPanel
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jLabel1 = new javax.swing.JLabel();
         Note = new javax.swing.JLabel();
@@ -53,22 +54,28 @@ public class PlayerInforView extends javax.swing.JPanel
         Note.setText("*Press enter to save your information");
 
         nameTextField.setName(""); // NOI18N
-        nameTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        nameTextField.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 nameTextFieldActionPerformed(evt);
             }
         });
 
         genderTextField.setToolTipText("");
-        genderTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        genderTextField.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 genderTextFieldActionPerformed(evt);
             }
         });
 
         ageTextField.setToolTipText("");
-        ageTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        ageTextField.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 ageTextFieldActionPerformed(evt);
             }
         });
@@ -80,8 +87,10 @@ public class PlayerInforView extends javax.swing.JPanel
         askAgeLabel.setText("Please enter an age");
 
         continueButton.setText("Continue");
-        continueButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        continueButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 continueButtonActionPerformed(evt);
             }
         });
@@ -171,17 +180,16 @@ public class PlayerInforView extends javax.swing.JPanel
 
         //Check if the input is valid
         if (genderTextField.getText().equalsIgnoreCase("M")
-            || genderTextField.getText().equalsIgnoreCase("F"))
+                || genderTextField.getText().equalsIgnoreCase("F"))
         {
-            playerInforCtrl.setPlayerGender(genderTextField.getText().charAt(0));
+            playerInfoCtrl.setPlayerGender(genderTextField.getText().charAt(0));
             invalidLabel.setVisible(false);
             yesLabel2.setVisible(true);
             genderChecked = true;
-        } 
-        else
+        } else
         {
             genderChecked = false;
-            invalidLabel.setText("Invalid input, please enter again");
+            invalidLabel.setText("Invalid gender, please enter M/F");
             invalidLabel.setVisible(true);
             yesLabel2.setVisible(false);
         }
@@ -191,17 +199,16 @@ public class PlayerInforView extends javax.swing.JPanel
 
         //Check if the input is valid
         if (!nameTextField.getText().equals("") && nameTextField.getText() != null
-            && nameTextField.getText().matches("^[a-zA-Z]*$"))
+                && nameTextField.getText().matches("^[ a-zA-Z]*$"))
         {
-            playerInforCtrl.setPlayerName(nameTextField.getText());
+            playerInfoCtrl.setPlayerName(nameTextField.getText());
             invalidLabel.setVisible(false);
             yesLabel1.setVisible(true);
             nameChecked = true;
-        } 
-        else
+        } else
         {
             nameChecked = false;
-            invalidLabel.setText("Invalid input, please enter again");
+            invalidLabel.setText("Invalid name, please enter characters only");
             invalidLabel.setVisible(true);
             yesLabel1.setVisible(false);
         }
@@ -212,7 +219,7 @@ public class PlayerInforView extends javax.swing.JPanel
         {
             mainCtrl.showPanel("Story");
             invalidLabel.setVisible(false);
-            playerInforCtrl.savePlayerInfo();
+            playerInfoCtrl.savePlayerInfo();
 
         } else
         {
@@ -224,19 +231,24 @@ public class PlayerInforView extends javax.swing.JPanel
     private void ageTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ageTextFieldActionPerformed
 
         //Check if the input is valid
+        boolean ageValid = false;
         if (!ageTextField.getText().equals("") && ageTextField.getText() != null
-            && ageTextField.getText().matches("[0-9]+"))
+                && ageTextField.getText().matches("[0-9]+"))
         {
             int age = Integer.parseInt(ageTextField.getText());
-            playerInforCtrl.setPlayerAge(age);
-            invalidLabel.setVisible(false);
-            yesLabel3.setVisible(true);
-            ageChecked = true;
-        } 
-        else
+            if (age >= 1 && age <= 150)
+            {
+                playerInfoCtrl.setPlayerAge(age);
+                invalidLabel.setVisible(false);
+                yesLabel3.setVisible(true);
+                ageChecked = true;
+                ageValid = true;
+            }
+        }
+        if (ageValid)
         {
             ageChecked = false;
-            invalidLabel.setText("Invalid input, please enter again");
+            invalidLabel.setText("Invalid age, please enter again");
             invalidLabel.setVisible(true);
             yesLabel3.setVisible(false);
         }
