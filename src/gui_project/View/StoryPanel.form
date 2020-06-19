@@ -28,7 +28,7 @@
                   <Component id="playerNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="theStoryLabel" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="363" max="32767" attributes="0"/>
+              <EmptySpace pref="365" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -70,7 +70,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="storyLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="to investigate the dealth of a billionaire."/>
+        <Property name="text" type="java.lang.String" value="to investigate the death of a billionaire."/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="getInfoButton">

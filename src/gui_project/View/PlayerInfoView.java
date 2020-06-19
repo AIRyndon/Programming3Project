@@ -248,7 +248,7 @@ public class PlayerInfoView extends javax.swing.JPanel
         if (!ageValid)
         {
             ageChecked = false;
-            invalidLabel.setText("Invalid age, please enter again");
+            invalidLabel.setText("Invalid age, the correct range is from 1 to 150");
             invalidLabel.setVisible(true);
             yesLabel3.setVisible(false);
         }

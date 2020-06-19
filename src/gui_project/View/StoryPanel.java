@@ -52,7 +52,7 @@ public class StoryPanel extends javax.swing.JPanel implements BaseObserver
 
         storyLabel1.setText("You are a very famous detective asked");
 
-        storyLabel2.setText("to investigate the dealth of a billionaire.");
+        storyLabel2.setText("to investigate the death of a billionaire.");
 
         getInfoButton.setText("Get information");
         getInfoButton.addActionListener(new java.awt.event.ActionListener()
@@ -75,7 +75,7 @@ public class StoryPanel extends javax.swing.JPanel implements BaseObserver
                     .addComponent(storyLabel1)
                     .addComponent(playerNameLabel)
                     .addComponent(theStoryLabel))
-                .addContainerGap(363, Short.MAX_VALUE))
+                .addContainerGap(365, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

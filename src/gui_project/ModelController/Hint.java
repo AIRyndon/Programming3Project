@@ -3,7 +3,7 @@ package gui_project.ModelController;
 public class Hint extends ItemBlock
 {
     private boolean pickedUp = false;
-    private boolean visible = true;
+    private boolean visible = false;
     private String message = "";
     private String name;
     private String description;

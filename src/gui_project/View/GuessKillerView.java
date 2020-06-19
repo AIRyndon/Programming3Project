@@ -1,11 +1,7 @@
 package gui_project.View;
 
-import gui_project.ModelController.Detective;
 import gui_project.ModelController.MainController;
-import java.sql.SQLException;
 import java.util.Enumeration;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.AbstractButton;
 
 public class GuessKillerView extends javax.swing.JPanel
@@ -18,16 +14,13 @@ public class GuessKillerView extends javax.swing.JPanel
         this.mainCtrl = mainCtrl;
         initComponents();
         textField.setEditable(false);
-        toggleReplayButtons(false);
+        toggleEndGameBtn(false);
     }
 
-    private void toggleReplayButtons(boolean state)
+    private void toggleEndGameBtn(boolean state)
     {
-        replayLabel.setVisible(state);
-        yesBtn.setVisible(state);
-        yesBtn.setEnabled(state);
-        noBtn.setVisible(state);
-        noBtn.setEnabled(state);
+        endGame.setVisible(state);
+        endGame.setEnabled(state);
     }
 
     private void disableSelectionButtonGroup()
@@ -56,9 +49,7 @@ public class GuessKillerView extends javax.swing.JPanel
         daughterRadioBtn = new javax.swing.JRadioButton();
         butlerRadioBtn = new javax.swing.JRadioButton();
         guessBtn = new javax.swing.JButton();
-        replayLabel = new javax.swing.JLabel();
-        yesBtn = new javax.swing.JButton();
-        noBtn = new javax.swing.JButton();
+        endGame = new javax.swing.JButton();
         textField = new javax.swing.JTextField();
 
         setName("GuessKiller"); // NOI18N
@@ -95,28 +86,16 @@ public class GuessKillerView extends javax.swing.JPanel
         });
         add(guessBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 320, 242, -1));
 
-        replayLabel.setText(" Wanna play again?");
-        add(replayLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 230, 110, 70));
-
-        yesBtn.setText("Yes");
-        yesBtn.addActionListener(new java.awt.event.ActionListener()
+        endGame.setText("End Game");
+        endGame.setToolTipText("");
+        endGame.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                yesBtnActionPerformed(evt);
+                endGameActionPerformed(evt);
             }
         });
-        add(yesBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 310, 94, 30));
-
-        noBtn.setText("No");
-        noBtn.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                noBtnActionPerformed(evt);
-            }
-        });
-        add(noBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 310, 110, 30));
+        add(endGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, 110, 30));
 
         textField.setText("So who do you think murdered our victim?");
         textField.setFocusable(false);
@@ -134,34 +113,13 @@ public class GuessKillerView extends javax.swing.JPanel
         }
 
         disableSelectionButtonGroup();
-        toggleReplayButtons(true);
+        toggleEndGameBtn(true);
     }//GEN-LAST:event_guessBtnActionPerformed
 
-    private void yesBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_yesBtnActionPerformed
-    {//GEN-HEADEREND:event_yesBtnActionPerformed
+    private void endGameActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_endGameActionPerformed
+    {//GEN-HEADEREND:event_endGameActionPerformed
         mainCtrl.getView().getWindow().dispose();
-        java.awt.EventQueue.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                Detective detective = new Detective();
-
-                try
-                {
-                    new MainController(detective);
-                } catch (SQLException ex)
-                {
-                    Logger.getLogger(GuessKillerView.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-        
-    }//GEN-LAST:event_yesBtnActionPerformed
-
-    private void noBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_noBtnActionPerformed
-    {//GEN-HEADEREND:event_noBtnActionPerformed
-        mainCtrl.getView().getWindow().dispose();
-    }//GEN-LAST:event_noBtnActionPerformed
+    }//GEN-LAST:event_endGameActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -169,13 +127,10 @@ public class GuessKillerView extends javax.swing.JPanel
     private javax.swing.JRadioButton butlerRadioBtn;
     private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JRadioButton daughterRadioBtn;
+    private javax.swing.JButton endGame;
     private javax.swing.JButton guessBtn;
     private javax.swing.JRadioButton maidRadioBtn;
-    private javax.swing.JButton noBtn;
-    private javax.swing.JLabel replayLabel;
     private javax.swing.JTextField textField;
     private javax.swing.JRadioButton wifeRadioBtn;
-    private javax.swing.JButton yesBtn;
     // End of variables declaration//GEN-END:variables
-
 }

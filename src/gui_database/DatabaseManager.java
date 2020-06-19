@@ -79,41 +79,6 @@ public class DatabaseManager
 
     /**
      *
-     */
-    public void printData()
-    {
-        statement = null;
-        resultSet = null;
-
-        try
-        {
-            statement = connection.createStatement();
-
-            resultSet = statement.executeQuery("SELECT * FROM " + tableName);
-            resultSetMetaData = resultSet.getMetaData();
-            int columnsNumber = resultSetMetaData.getColumnCount();
-
-            while (resultSet.next())
-            {
-                for (int i = 1; i <= columnsNumber; i++)
-                {
-                    if (i > 1)
-                    {
-                        System.out.print(",  ");
-                    }
-
-                    System.out.println(resultSet.getString(i));
-                }
-            }
-        }
-        catch (SQLException ex)
-        {
-            System.err.println("SQL Exception in PRINTDATA - " + ex.getMessage());
-        }
-    }
-
-    /**
-     *
      * @return the database Username
      */
     public static String getUsername()
