@@ -8,15 +8,16 @@ import java.util.logging.Logger;
 
 public class PlayerInforView extends javax.swing.JPanel
 {
+
     MainController mainCtrl;
     PlayerInfoController playerInforCtrl;
     boolean nameChecked, ageChecked, genderChecked;
-    
-    public PlayerInforView(MainController mainCtrl, PlayerInfoController playerInforCtrl) 
+
+    public PlayerInforView(MainController mainCtrl, PlayerInfoController playerInforCtrl)
     {
         this.mainCtrl = mainCtrl;
         this.playerInforCtrl = playerInforCtrl;
-        
+
         initComponents();
         invalidLabel.setVisible(false);
         yesLabel1.setVisible(false);
@@ -163,17 +164,16 @@ public class PlayerInforView extends javax.swing.JPanel
     }// </editor-fold>//GEN-END:initComponents
 
     private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
-        
+
         //Check if the input is valid
-        if(!nameTextField.getText().equals("") && nameTextField.getText() != null && 
-                nameTextField.getText().matches("^[a-zA-Z]*$") )
+        if (!nameTextField.getText().equals("") && nameTextField.getText() != null
+                && nameTextField.getText().matches("^[a-zA-Z]*$"))
         {
             playerInforCtrl.setPlayerName(nameTextField.getText());
             invalidLabel.setVisible(false);
             yesLabel1.setVisible(true);
             nameChecked = true;
-        }
-        else
+        } else
         {
             nameChecked = false;
             invalidLabel.setText("Invalid input, please enter again");
@@ -183,38 +183,36 @@ public class PlayerInforView extends javax.swing.JPanel
     }//GEN-LAST:event_nameTextFieldActionPerformed
 
     private void genderTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genderTextFieldActionPerformed
-        
+
         //Check if the input is valid
-        if(genderTextField.getText().equalsIgnoreCase("M") || 
-                genderTextField.getText().equalsIgnoreCase("F"))
+        if (genderTextField.getText().equalsIgnoreCase("M")
+                || genderTextField.getText().equalsIgnoreCase("F"))
         {
             playerInforCtrl.setPlayerGender(genderTextField.getText().charAt(0));
             invalidLabel.setVisible(false);
             yesLabel2.setVisible(true);
             genderChecked = true;
-        }
-        else
+        } else
         {
             genderChecked = false;
             invalidLabel.setText("Invalid input, please enter again");
             invalidLabel.setVisible(true);
             yesLabel2.setVisible(false);
-        }        
+        }
     }//GEN-LAST:event_genderTextFieldActionPerformed
 
     private void ageTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ageTextFieldActionPerformed
-        
+
         //Check if the input is valid
-        if(!ageTextField.getText().equals("") && ageTextField.getText() != null && 
-                ageTextField.getText().matches("[0-9]+"))
+        if (!ageTextField.getText().equals("") && ageTextField.getText() != null
+                && ageTextField.getText().matches("[0-9]+"))
         {
             int age = Integer.parseInt(ageTextField.getText());
             playerInforCtrl.setPlayerAge(age);
             invalidLabel.setVisible(false);
             yesLabel3.setVisible(true);
             ageChecked = true;
-        }
-        else
+        } else
         {
             ageChecked = false;
             invalidLabel.setText("Invalid input, please enter again");
@@ -224,21 +222,13 @@ public class PlayerInforView extends javax.swing.JPanel
     }//GEN-LAST:event_ageTextFieldActionPerformed
 
     private void continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButtonActionPerformed
-        if(nameChecked && genderChecked && ageChecked)
+        if (nameChecked && genderChecked && ageChecked)
         {
-            mainCtrl.showPanel("Story");            
+            mainCtrl.showPanel("Story");
             invalidLabel.setVisible(false);
-            
-            try 
-            {
-                playerInforCtrl.savePlayerInfo();
-            } 
-            catch (SQLException ex) 
-            {
-                Logger.getLogger(PlayerInforView.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        else
+            playerInforCtrl.savePlayerInfo();
+
+        } else
         {
             invalidLabel.setText("Please make sure that name, gender, and age has been filled/valid");
             invalidLabel.setVisible(true);
