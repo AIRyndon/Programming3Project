@@ -7,8 +7,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /*
     Here, database is used to store player information and hints that the player grabbed.
@@ -32,7 +30,7 @@ public class DatabaseManager
         establishConnection();
     }
     
-    public int getNextID() throws SQLException
+    public int getNextID()
     {
         int lastID = 0;
         
@@ -42,7 +40,7 @@ public class DatabaseManager
             lastID = resultSet.getRow();
             resultSet.beforeFirst();
         }
-        catch(Exception ex)
+        catch(SQLException ex)
         {
             System.err.println("SQL Exception at GETNEXTID - " + ex.getMessage());
         }
@@ -100,7 +98,6 @@ public class DatabaseManager
         catch (SQLException ex)
         {
             System.err.println("SQL Exception in PRINTDATA - " + ex.getMessage());
-//            Logger.getLogger(HintDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

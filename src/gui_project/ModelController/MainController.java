@@ -48,11 +48,11 @@ public class MainController
         setUpRoomController();
         setUpItemBlockController();
         setUpPlayerInforController();
-        setUpInitialPanels();
         addItemBlockToRoom();
-        addAllPanels();
+        welcomePanel = new WelcomePanel(this);
+        
+        addAllPanels();        
         showPanel("Welcome");
-        //showPanel("House");
         view.renderView();
     }
 
@@ -139,11 +139,6 @@ public class MainController
         assignHintToNPC();
     }
 
-    public void setUpInitialPanels()
-    {
-        welcomePanel = new WelcomePanel(this);
-    }
-
     public void setUpItemBlockController()
     {
         houseArea = new ItemBlockController(new ItemBlock(276, 83, 200, 200));
@@ -192,7 +187,7 @@ public class MainController
                 dogHouseLock.getLockedArea(), "%", "TailDogHouse", KeyPasswordType.KEYTAIL));
     }
 
-    public void setUpPlayerInforController() throws SQLException
+    public void setUpPlayerInforController()
     {
         playerInforCtrl = new PlayerInfoController(this, new PlayerInfo());
     }

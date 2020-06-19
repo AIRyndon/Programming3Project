@@ -23,7 +23,7 @@ public class PlayerInfoController
         storyPanel = new StoryPanel(mainCtrl, this);
     }
 
-    public void savePlayerInfo() throws SQLException
+    public void savePlayerInfo()
     {
         PLAYERDATABASE.inputDataRow();
     }
