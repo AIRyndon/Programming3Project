@@ -13,7 +13,7 @@ public class PlayerInforController
     private PlayerInforView view;
     private StoryPanel storyPanel;
     
-    PlayerInforController(MainController mainCtrl, PlayerInfor playerInfor) throws SQLException 
+    public PlayerInforController(MainController mainCtrl, PlayerInfor playerInfor) throws SQLException 
     {
         this.mainCtrl = mainCtrl;
         this.playerInfor = playerInfor;

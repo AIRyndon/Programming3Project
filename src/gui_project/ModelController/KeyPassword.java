@@ -6,7 +6,6 @@ import java.io.IOException;
 
 public class KeyPassword extends ItemBlock
 {
-
     private final LockedArea lockedArea;
     private final String name;
     private final KeyPasswordType keyType;
@@ -33,14 +32,15 @@ public class KeyPassword extends ItemBlock
         setupTrivia();
     }
 
-    private void setupKeyPassword()
+    public void setupKeyPassword()
     {
-        if (keyType == KeyPasswordType.KEYHEAD)
+        if (keyType == KeyPasswordType.KEYTAIL)
         {
-            setPassword("XX" + lockedArea.getPassword().substring(2));
-        } else
+            password = "XX" + lockedArea.getPassword().substring(2);
+        } 
+        else
         {
-            setPassword(lockedArea.getPassword().substring(0, 2) + "XX");
+            password = lockedArea.getPassword().substring(0, 2) + "XX";
         }
 
         System.out.println(password);
@@ -66,7 +66,8 @@ public class KeyPassword extends ItemBlock
                     break;
                 }
             }
-        } catch (IOException ex)
+        }
+        catch (IOException ex)
         {
             ex.printStackTrace();
         }
@@ -150,12 +151,7 @@ public class KeyPassword extends ItemBlock
         correct = true;
         notifyObservers();
     }
-
-    void setPassword(String password)
-    {
-        this.password = password;
-    }
-
+    
     public String getMessage()
     {
         return message;

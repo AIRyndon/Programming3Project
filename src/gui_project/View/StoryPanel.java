@@ -9,8 +9,7 @@ public class StoryPanel extends javax.swing.JPanel implements BaseObserver
 {
     private MainController mainCtrl;
     private PlayerInforController playerInfoCtrl;
-    
-    
+    private String playerName;
     
     //todo: update player database to Player name
     public StoryPanel(MainController mainCtrl, PlayerInforController playerInfoCtrl) 
@@ -25,7 +24,8 @@ public class StoryPanel extends javax.swing.JPanel implements BaseObserver
     @Override
     public void update(BaseModel model) 
     {
-        jLabel2.setText("Hi " + playerInfoCtrl.getPlayerInfor().getName() + ",");
+        playerName = playerInfoCtrl.getPlayerInfor().getName();
+        playerNameLabel.setText("Hi " + getPlayerName() + ",");
     }
 
     /**
@@ -37,26 +37,26 @@ public class StoryPanel extends javax.swing.JPanel implements BaseObserver
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        theStoryLabel = new javax.swing.JLabel();
+        playerNameLabel = new javax.swing.JLabel();
+        storyLabel1 = new javax.swing.JLabel();
+        storyLabel2 = new javax.swing.JLabel();
+        getInfoButton = new javax.swing.JButton();
 
         setName("Story"); // NOI18N
 
-        jLabel1.setText("THE STORY");
+        theStoryLabel.setText("THE STORY");
 
-        jLabel2.setText("Hi " + playerInfoCtrl.getPlayerInfor().getName() + ",");
+        playerNameLabel.setText("Hi " + playerInfoCtrl.getPlayerInfor().getName() + ",");
 
-        jLabel3.setText("You are currently a very famous detective and being asked");
+        storyLabel1.setText("You are currently a very famous detective and being asked");
 
-        jLabel5.setText("for investigating the dealth of a billionaire.");
+        storyLabel2.setText("for investigating the dealth of a billionaire.");
 
-        jButton1.setText("Get information");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        getInfoButton.setText("Get information");
+        getInfoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                getInfoButtonActionPerformed(evt);
             }
         });
 
@@ -68,50 +68,56 @@ public class StoryPanel extends javax.swing.JPanel implements BaseObserver
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(261, 261, 261)
-                        .addComponent(jLabel1))
+                        .addComponent(theStoryLabel))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(117, 117, 117)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))))
+                            .addComponent(storyLabel1)
+                            .addComponent(playerNameLabel))))
                 .addContainerGap(57, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(getInfoButton)
                         .addGap(249, 249, 249))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addComponent(storyLabel2)
                         .addGap(153, 153, 153))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(56, 56, 56)
-                .addComponent(jLabel1)
+                .addComponent(theStoryLabel)
                 .addGap(34, 34, 34)
-                .addComponent(jLabel2)
+                .addComponent(playerNameLabel)
                 .addGap(43, 43, 43)
-                .addComponent(jLabel3)
+                .addComponent(storyLabel1)
                 .addGap(47, 47, 47)
-                .addComponent(jLabel5)
+                .addComponent(storyLabel2)
                 .addGap(71, 71, 71)
-                .addComponent(jButton1)
+                .addComponent(getInfoButton)
                 .addContainerGap(52, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void getInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getInfoButtonActionPerformed
         mainCtrl.showPanel("Victim");
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_getInfoButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JButton getInfoButton;
+    private javax.swing.JLabel playerNameLabel;
+    private javax.swing.JLabel storyLabel1;
+    private javax.swing.JLabel storyLabel2;
+    private javax.swing.JLabel theStoryLabel;
     // End of variables declaration//GEN-END:variables
 
+    //Getter
+    public String getPlayerName()
+    {
+        return playerName;
+    }
+    
 }

@@ -6,6 +6,7 @@
 package gui_project.ModelController;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,23 +18,25 @@ import static org.junit.Assert.*;
  */
 public class HintControllerTest
 {
-
     public HintControllerTest()
     {
+        
     }
 
     @Before
     public void setUp()
     {
+        
     }
 
     @After
     public void tearDown()
     {
+        
     }
 
     @Test
-    public void hintVisible_ShouldAlwaysBeFalse_AfterPickup() throws IOException
+    public void hintVisible_ShouldAlwaysBeFalse_AfterPickup() throws IOException, SQLException
     {
         System.out.println("Hint visibility test");
         //Arrange
@@ -47,7 +50,6 @@ public class HintControllerTest
 
         sut.pickup();
         //try to reveal the hint again
-        sut.reveal();
         sut.reveal();
 
         //Assert
