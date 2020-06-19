@@ -129,7 +129,8 @@ public class RoomGroundView extends javax.swing.JPanel implements
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         roomName = new javax.swing.JLabel();
         doorHouse = new javax.swing.JLabel();
@@ -137,11 +138,14 @@ public class RoomGroundView extends javax.swing.JPanel implements
         gameTextArea = new javax.swing.JTextArea();
 
         setName("Ground"); // NOI18N
-        addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
+        addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt)
+            {
                 formKeyPressed(evt);
             }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
+            public void keyReleased(java.awt.event.KeyEvent evt)
+            {
                 formKeyReleased(evt);
             }
         });
@@ -160,7 +164,7 @@ public class RoomGroundView extends javax.swing.JPanel implements
         gameTextArea.setWrapStyleWord(true);
         jScrollPane1.setViewportView(gameTextArea);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 740, 120));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 370, 330, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyPressed

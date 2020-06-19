@@ -29,7 +29,8 @@ public class PasswordInputPanel extends javax.swing.JPanel
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         lockStatus = new javax.swing.JLabel();
         enterPassword = new javax.swing.JLabel();
@@ -39,7 +40,7 @@ public class PasswordInputPanel extends javax.swing.JPanel
 
         setName("EnterKeyPassword"); // NOI18N
 
-        lockStatus.setText("This door is locked!");
+        lockStatus.setText("THIS DOOR IS LOCKED");
         lockStatus.setName("lockStatus"); // NOI18N
 
         enterPassword.setText("Enter a password to unlock the door");
@@ -47,15 +48,19 @@ public class PasswordInputPanel extends javax.swing.JPanel
 
         backButton.setText("Back");
         backButton.setName("submitPasswordButton"); // NOI18N
-        backButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        backButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 backButtonActionPerformed(evt);
             }
         });
 
         userInputText.setName("UserInputText"); // NOI18N
-        userInputText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        userInputText.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 userInputTextActionPerformed(evt);
             }
         });
@@ -67,41 +72,29 @@ public class PasswordInputPanel extends javax.swing.JPanel
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(257, 257, 257)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(245, 245, 245)
-                        .addComponent(enterPassword))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(256, 256, 256)
-                        .addComponent(userInputText, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(374, 374, 374)
-                        .addComponent(resultLabel)))
-                .addContainerGap(247, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(313, 313, 313)
-                        .addComponent(lockStatus))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(363, 363, 363)
-                        .addComponent(backButton)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(backButton)
+                    .addComponent(resultLabel)
+                    .addComponent(lockStatus)
+                    .addComponent(enterPassword)
+                    .addComponent(userInputText, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(261, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addGap(149, 149, 149)
                 .addComponent(lockStatus)
-                .addGap(35, 35, 35)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(enterPassword)
-                .addGap(41, 41, 41)
+                .addGap(26, 26, 26)
                 .addComponent(userInputText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(resultLabel)
-                .addGap(54, 54, 54)
+                .addGap(11, 11, 11)
                 .addComponent(backButton)
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addContainerGap(212, Short.MAX_VALUE))
         );
 
         lockStatus.getAccessibleContext().setAccessibleName("");

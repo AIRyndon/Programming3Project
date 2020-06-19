@@ -30,14 +30,24 @@ public class GuessKillerView extends javax.swing.JPanel
         this.mainCtrl = mainCtrl;
         initComponents();
         textField.setEditable(false);
+        toggleReplayButtons(false);
     }
 
-    private void setButtonGroupEnabled(boolean state)
+    private void toggleReplayButtons(boolean state)
+    {
+        replayLabel.setVisible(state);
+        yesBtn.setVisible(state);
+        yesBtn.setEnabled(state);
+        noBtn.setVisible(state);
+        noBtn.setEnabled(state);
+    }
+
+    private void disableSelectionButtonGroup()
     {
         Enumeration<AbstractButton> buttons = buttonGroup.getElements();
         while (buttons.hasMoreElements())
         {
-            buttons.nextElement().setEnabled(state);
+            buttons.nextElement().setEnabled(false);
         }
     }
 
@@ -68,23 +78,23 @@ public class GuessKillerView extends javax.swing.JPanel
 
         buttonGroup.add(maidRadioBtn);
         maidRadioBtn.setText("Maid");
-        add(maidRadioBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 78, 250, 30));
+        add(maidRadioBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 250, 30));
 
         buttonGroup.add(wifeRadioBtn);
         wifeRadioBtn.setText("Wife");
-        add(wifeRadioBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 108, 250, 24));
+        add(wifeRadioBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 180, 250, 24));
 
         buttonGroup.add(assistantRadioBtn);
         assistantRadioBtn.setText("Assistant");
-        add(assistantRadioBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 135, 251, -1));
+        add(assistantRadioBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, 251, -1));
 
         buttonGroup.add(daughterRadioBtn);
         daughterRadioBtn.setText("Daughter");
-        add(daughterRadioBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 165, 240, -1));
+        add(daughterRadioBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, 240, -1));
 
         buttonGroup.add(butlerRadioBtn);
         butlerRadioBtn.setText("Butler");
-        add(butlerRadioBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 250, -1));
+        add(butlerRadioBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, 250, -1));
 
         guessBtn.setText("Confirm Guess");
         buttonGroup.add(guessBtn);
@@ -95,10 +105,10 @@ public class GuessKillerView extends javax.swing.JPanel
                 guessBtnActionPerformed(evt);
             }
         });
-        add(guessBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 251, 242, -1));
+        add(guessBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 320, 242, -1));
 
         replayLabel.setText(" Wanna play again?");
-        add(replayLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 70, 177, 70));
+        add(replayLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 230, 110, 70));
 
         yesBtn.setText("Yes");
         yesBtn.addActionListener(new java.awt.event.ActionListener()
@@ -108,7 +118,7 @@ public class GuessKillerView extends javax.swing.JPanel
                 yesBtnActionPerformed(evt);
             }
         });
-        add(yesBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 150, 94, 30));
+        add(yesBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 310, 94, 30));
 
         noBtn.setText("No");
         noBtn.addActionListener(new java.awt.event.ActionListener()
@@ -118,11 +128,11 @@ public class GuessKillerView extends javax.swing.JPanel
                 noBtnActionPerformed(evt);
             }
         });
-        add(noBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 150, 110, 30));
+        add(noBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 310, 110, 30));
 
         textField.setText("So who do you think murdered our victim?");
         textField.setFocusable(false);
-        add(textField, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 17, 251, 36));
+        add(textField, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 251, 36));
     }// </editor-fold>//GEN-END:initComponents
 
     private void guessBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_guessBtnActionPerformed
@@ -135,7 +145,8 @@ public class GuessKillerView extends javax.swing.JPanel
             textField.setText("Too bad you got it wrong");
         }
 
-        setButtonGroupEnabled(false);
+        disableSelectionButtonGroup();
+        toggleReplayButtons(true);
     }//GEN-LAST:event_guessBtnActionPerformed
 
     private void yesBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_yesBtnActionPerformed

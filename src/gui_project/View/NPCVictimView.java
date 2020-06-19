@@ -24,7 +24,8 @@ public class NPCVictimView extends javax.swing.JPanel
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         victimName = new javax.swing.JLabel();
         victimRole = new javax.swing.JLabel();
@@ -47,8 +48,10 @@ public class NPCVictimView extends javax.swing.JPanel
         victimInjury.setText(victimCtrl.getVictim().getInjuries());
 
         enterCcompound.setText("Enter the house");
-        enterCcompound.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        enterCcompound.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 enterCcompoundActionPerformed(evt);
             }
         });
@@ -61,30 +64,25 @@ public class NPCVictimView extends javax.swing.JPanel
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(143, 143, 143)
+                .addGap(250, 250, 250)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(enterCcompound)
                     .addComponent(victimName)
                     .addComponent(victimInjury)
                     .addComponent(victimRole)
                     .addComponent(victimAge)
-                    .addComponent(victimScene))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(239, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(enterCcompound)
-                        .addGap(44, 44, 44))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(victimInforLabel)
-                        .addGap(237, 237, 237))))
+                    .addComponent(victimScene)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(89, 89, 89)
+                        .addComponent(victimInforLabel)))
+                .addContainerGap(351, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(78, 78, 78)
                 .addComponent(victimInforLabel)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(victimName)
                 .addGap(41, 41, 41)
                 .addComponent(victimRole)
@@ -94,9 +92,9 @@ public class NPCVictimView extends javax.swing.JPanel
                 .addComponent(victimScene)
                 .addGap(46, 46, 46)
                 .addComponent(victimInjury)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(enterCcompound)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
 
         victimInforLabel.setFont(new Font("Serif", Font.BOLD, 16));

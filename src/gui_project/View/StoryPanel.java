@@ -50,9 +50,9 @@ public class StoryPanel extends javax.swing.JPanel implements BaseObserver
 
         playerNameLabel.setText("Hi " + playerInfoCtrl.getPlayerInfo().getName() + ",");
 
-        storyLabel1.setText("You are currently a very famous detective and being asked");
+        storyLabel1.setText("You are a very famous detective asked");
 
-        storyLabel2.setText("for investigating the dealth of a billionaire.");
+        storyLabel2.setText("to investigate the dealth of a billionaire.");
 
         getInfoButton.setText("Get information");
         getInfoButton.addActionListener(new java.awt.event.ActionListener()
@@ -68,40 +68,29 @@ public class StoryPanel extends javax.swing.JPanel implements BaseObserver
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(246, 246, 246)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(261, 261, 261)
-                        .addComponent(theStoryLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(117, 117, 117)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(storyLabel1)
-                            .addComponent(playerNameLabel))))
-                .addContainerGap(57, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(getInfoButton)
-                        .addGap(249, 249, 249))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(storyLabel2)
-                        .addGap(153, 153, 153))))
+                    .addComponent(getInfoButton)
+                    .addComponent(storyLabel2)
+                    .addComponent(storyLabel1)
+                    .addComponent(playerNameLabel)
+                    .addComponent(theStoryLabel))
+                .addContainerGap(363, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(56, 56, 56)
+                .addGap(138, 138, 138)
                 .addComponent(theStoryLabel)
-                .addGap(34, 34, 34)
+                .addGap(29, 29, 29)
                 .addComponent(playerNameLabel)
                 .addGap(43, 43, 43)
                 .addComponent(storyLabel1)
-                .addGap(47, 47, 47)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(storyLabel2)
-                .addGap(71, 71, 71)
+                .addGap(18, 18, 18)
                 .addComponent(getInfoButton)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(187, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

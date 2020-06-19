@@ -22,11 +22,11 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="welcomeText" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="play" alignment="1" min="-2" pref="513" max="-2" attributes="0"/>
-                  <Component id="quit" alignment="1" min="-2" pref="513" max="-2" attributes="0"/>
+                  <Component id="welcomeText" alignment="1" max="32767" attributes="0"/>
+                  <Component id="play" alignment="1" max="32767" attributes="0"/>
+                  <Component id="quit" alignment="1" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="90" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -66,7 +66,8 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Rockwell" size="24" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="WELCOME TO THE GAME OF DETECTIVE"/>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="WELCOME TO OUR DETECTIVE GAME"/>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
           <Color id="Default Cursor"/>
         </Property>

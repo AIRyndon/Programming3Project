@@ -23,6 +23,7 @@ public class MainView
         frame.add(mainPanel);
         frame.pack();
         frame.setVisible(true);
+        frame.setResizable(false);
     }
 
     public void addPanel(JPanel panel, String name)

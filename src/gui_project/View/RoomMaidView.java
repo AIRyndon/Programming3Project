@@ -97,7 +97,8 @@ public class RoomMaidView extends javax.swing.JPanel implements
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jLabel1 = new javax.swing.JLabel();
         houseDoor = new javax.swing.JLabel();
@@ -106,23 +107,26 @@ public class RoomMaidView extends javax.swing.JPanel implements
         gameTextArea = new javax.swing.JTextArea();
 
         setName("MaidRoom"); // NOI18N
-        addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
+        addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt)
+            {
                 formKeyPressed(evt);
             }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
+            public void keyReleased(java.awt.event.KeyEvent evt)
+            {
                 formKeyReleased(evt);
             }
         });
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("MaidRoom");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 0, -1, 30));
+        jLabel1.setText("Maid's Room");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, -1, 30));
 
         houseDoor.setText("*");
         houseDoor.setFocusCycleRoot(true);
         houseDoor.setName("MaidRoomDoor"); // NOI18N
-        add(houseDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 40, 10, 20));
+        add(houseDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, 10, 20));
 
         bedLabel.setText("BED");
         add(bedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
@@ -131,7 +135,7 @@ public class RoomMaidView extends javax.swing.JPanel implements
         gameTextArea.setRows(5);
         jScrollPane1.setViewportView(gameTextArea);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(396, 386, 400, 110));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 370, 330, 110));
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed

@@ -90,7 +90,8 @@ public class RoomHouseView extends javax.swing.JPanel implements
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jLabel1 = new javax.swing.JLabel();
         groundDoor = new javax.swing.JLabel();
@@ -107,11 +108,14 @@ public class RoomHouseView extends javax.swing.JPanel implements
         butlerRoomLabel = new javax.swing.JLabel();
 
         setName("House"); // NOI18N
-        addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
+        addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt)
+            {
                 formKeyPressed(evt);
             }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
+            public void keyReleased(java.awt.event.KeyEvent evt)
+            {
                 formKeyReleased(evt);
             }
         });
@@ -119,7 +123,7 @@ public class RoomHouseView extends javax.swing.JPanel implements
 
         jLabel1.setText("House");
         jLabel1.setName("HouseLabel"); // NOI18N
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 60, 40));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 0, 60, 40));
 
         groundDoor.setText("*");
         groundDoor.setFocusCycleRoot(true);
@@ -149,7 +153,7 @@ public class RoomHouseView extends javax.swing.JPanel implements
         gameTextArea.setRows(5);
         jScrollPanel.setViewportView(gameTextArea);
 
-        add(jScrollPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(506, 380, 270, -1));
+        add(jScrollPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 366, 310, 110));
 
         workingRoomLabel.setText("Working Room");
         add(workingRoomLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 410, -1, -1));
