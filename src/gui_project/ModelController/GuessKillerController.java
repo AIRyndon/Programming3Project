@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui_project.ModelController;
 
 import gui_project.View.GuessKillerView;
 
-/**
- *
- * @author Angelo
- */
 public class GuessKillerController
 {
 
@@ -20,7 +11,11 @@ public class GuessKillerController
     {
         view = new GuessKillerView(mainCtrl);
     }
-
+    
+    /**
+     * 
+     * @return the View
+     */
     public GuessKillerView getView()
     {
         return view;

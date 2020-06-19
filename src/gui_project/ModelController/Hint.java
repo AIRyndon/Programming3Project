@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui_project.ModelController;
 
 /**
@@ -17,6 +12,15 @@ public class Hint extends ItemBlock
     private final String name;
     private final String description;
 
+    /**
+     *
+     * @param name
+     * @param description
+     * @param locationX
+     * @param locationY
+     * @param width
+     * @param height
+     */
     public Hint(String name, String description,
             int locationX, int locationY, int width, int height)
     {
@@ -25,17 +29,28 @@ public class Hint extends ItemBlock
         this.description = description;
     }
     
-    //Getters and setters
+    /**
+     *
+     * @return the hint's name
+     */
     public String getName()
     {
         return name;
     }
 
+    /**
+     *
+     * @return the hint's description
+     */
     public String getDescription() 
     {
         return description;
     }
     
+    /**
+     *
+     * @return the hint's visibility status
+     */
     public boolean isVisible()
     {
         return visible;
@@ -46,6 +61,10 @@ public class Hint extends ItemBlock
         this.visible = visible;
     }
     
+    /**
+     *
+     * @return the hint's message
+     */
     public String getMessage()
     {
         return message;
@@ -57,6 +76,10 @@ public class Hint extends ItemBlock
         notifyObservers();
     }
 
+    /**
+     *
+     * @return the hint being picked up
+     */
     public boolean isPickedUp()
     {
         return pickedUp;

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui_project.View;
 
 import gui_project.ModelController.BaseModel;
@@ -23,10 +18,6 @@ import gui_project.ModelController.KeyPassword;
 import gui_project.ModelController.KeyPasswordController;
 import gui_project.ModelController.LockedAreaController;
 
-/**
- *
- * @author Angelo
- */
 public class RoomGroundView extends javax.swing.JPanel implements
         ComponentListener, BaseObserver
 {
@@ -36,9 +27,6 @@ public class RoomGroundView extends javax.swing.JPanel implements
     private final LockedAreaController lockedAreaCtrl;
     private final KeyPasswordController keyPasswordCtrl;
 
-    /**
-     * Creates new form RoomView
-     */
     public RoomGroundView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
             RoomGroundController roomCtrl,

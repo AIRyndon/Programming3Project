@@ -1,7 +1,6 @@
 package gui_project.View;
 
 import gui_project.ModelController.KeyPassword;
-import gui_project.ModelController.KeyPasswordController;
 import java.awt.Graphics2D;
 
 public class KeyPasswordView extends ItemBlockView
@@ -9,9 +8,9 @@ public class KeyPasswordView extends ItemBlockView
     private final KeyPassword keyPassword;
     private final String symbol = "$$";
 
-    public KeyPasswordView(KeyPassword keyPassword, KeyPasswordController keyPasswordCtrl)
+    public KeyPasswordView(KeyPassword keyPassword)
     {
-        super(keyPassword, keyPasswordCtrl);
+        super(keyPassword);
         this.keyPassword = keyPassword;
     }
 

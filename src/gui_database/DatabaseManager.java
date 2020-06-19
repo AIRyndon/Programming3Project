@@ -8,9 +8,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/*
-    Here, database is used to store player information and hints that the player grabbed.
-*/
 public class DatabaseManager 
 {
     public Connection connection;
@@ -30,6 +27,10 @@ public class DatabaseManager
         establishConnection();
     }
     
+    /**
+     *
+     * @return
+     */
     public int getNextID()
     {
         int lastID = 0;
@@ -48,13 +49,16 @@ public class DatabaseManager
         return lastID + 1;
     }
     
+    /**
+     * starts a connection to the embedded database
+     */
     public void establishConnection()
     {
         if (connection == null)
         {
             try
             {
-                connection = DriverManager.getConnection(getURL(),getUSER_NAME(),getPASSWORD());
+                connection = DriverManager.getConnection(getUrl(),getUsername(),getPassword());
                 
             } 
             catch (SQLException ex)
@@ -64,11 +68,18 @@ public class DatabaseManager
         }
     }
     
+    /**
+     * 
+     * @return a Connection object from the embedded database
+     */
     public Connection getConnection()
     {
         return this.connection;
     }
 
+    /**
+     *
+     */
     public void printData()
     {
         statement = null;
@@ -101,18 +112,29 @@ public class DatabaseManager
         }
     }
 
-    //Getters
-    public static String getUSER_NAME()
+    /**
+     *
+     * @return the database Username
+     */
+    public static String getUsername()
     {
         return USER_NAME;
     }
 
-    public static String getPASSWORD()
+    /**
+     *
+     * @return the database password
+     */
+    public static String getPassword()
     {
         return PASSWORD;
     }
 
-    public static String getURL()
+    /**
+     *
+     * @return the database URL
+     */
+    public static String getUrl()
     {
         return URL;
     }

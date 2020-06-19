@@ -1,18 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui_project.View;
 
 import gui_project.ModelController.BaseModel;
 import gui_project.ModelController.BaseObserver;
 import gui_project.ModelController.DetectiveController;
 import gui_project.ModelController.Hint;
-import gui_project.ModelController.HintController;
 import gui_project.ModelController.MainController;
 import gui_project.ModelController.NPC;
-import gui_project.ModelController.NPCController;
 import gui_project.ModelController.RoomWifeController;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -20,10 +13,6 @@ import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
-/**
- *
- * @author pc
- */
 public class RoomWifeView extends javax.swing.JPanel implements
         ComponentListener, BaseObserver
 {
@@ -32,9 +21,6 @@ public class RoomWifeView extends javax.swing.JPanel implements
     private final DetectiveController detectiveCtrl;
     private final RoomWifeController roomCtrl;
 
-    /**
-     * Creates new form RoomView
-     */
     public RoomWifeView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
             RoomWifeController roomCtrl)
@@ -122,12 +108,12 @@ public class RoomWifeView extends javax.swing.JPanel implements
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Wife's Room");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, 60, 20));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 90, 20));
 
         houseDoor.setText("*");
         houseDoor.setFocusCycleRoot(true);
         houseDoor.setName("MaidRoomDoor"); // NOI18N
-        add(houseDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, 10, -1));
+        add(houseDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 40, 10, 10));
 
         bedLabel.setText("BED");
         add(bedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(51, 49, -1, -1));

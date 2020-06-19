@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui_project.ModelController;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-/**
- *
- * @author Angelo
- */
 public class NPC extends ItemBlock
 {
 
@@ -41,14 +32,10 @@ public class NPC extends ItemBlock
         return symbol;
     }
 
-    /**
-     * @param speaking the speaking to set
-     */
     void isSpeaking(boolean speaking)
     {
         //discovered will be set when the detective has spoken with
         //an NPC
-
         if (speaking)
         {
             discovered = true;

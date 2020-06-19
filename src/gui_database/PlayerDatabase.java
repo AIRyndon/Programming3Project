@@ -16,6 +16,9 @@ public class PlayerDatabase extends DatabaseManager
         this.playerInfo = playerInfo;
     }
     
+    /**
+     * method to insert a row into the Player table in the database
+     */
     public void inputDataRow()
     {        
         try
@@ -36,10 +39,5 @@ public class PlayerDatabase extends DatabaseManager
         {
             System.err.println("SQL INSERT exception at " + player_id + " - " + e.getMessage());
         }
-    }
-    
-    public void createPlayerTable()
-    {
-        
     }
 }

@@ -1,25 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui_project.ModelController;
 
 import gui_database.HintDatabase;
 import gui_project.View.HintView;
 import java.awt.Graphics2D;
 
-/**
- *
- * @author Angelo
- */
-/**
- * I am not sure if we should put the Database in the Controller
- */
 public class HintController extends ItemBlockController
 {
 
-    //does this field need to be static??
     private static HintDatabase hintDatabase = new HintDatabase();
     private final Hint hint;
     private final HintView view;
@@ -33,15 +20,20 @@ public class HintController extends ItemBlockController
         this.hint = hint;
         this.mainCtrl = mainCtrl;
         this.detectiveCtrl = detectiveCtrl;
-        view = new HintView(hint, this);
+        view = new HintView(hint);
     }
 
+    /**
+     * pickup a hint
+     */
     public void pickup()
     {
         hint.setPickedUp();
-        hintDatabase.inputDataRow(hint.getName(), hint.getDescription());
     }
 
+    /**
+     * reveal a hint
+     */
     public void reveal()
     {
         if (!hint.isPickedUp())
@@ -50,11 +42,18 @@ public class HintController extends ItemBlockController
         }
     }
 
+    /**
+     * clear the game message area
+     */
     public void clearMessageArea()
     {
         hint.setMessage("");
     }
 
+    /**
+     *
+     * @return true if the detective should collide with the hint
+     */
     @Override
     public boolean collisionAction()
     {
@@ -72,6 +71,10 @@ public class HintController extends ItemBlockController
         return true;
     }
 
+    /**
+     *
+     * @param g2
+     */
     @Override
     public void draw(Graphics2D g2)
     {

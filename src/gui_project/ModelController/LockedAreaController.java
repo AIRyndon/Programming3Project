@@ -14,7 +14,7 @@ public class LockedAreaController extends ItemBlockController
     {
         super(lockedArea);
         this.lockedArea = lockedArea;
-        view = new LockedAreaView(lockedArea, this);
+        view = new LockedAreaView(lockedArea);
         passwordInputPanel = new PasswordInputPanel(mainCtrl, this);
     }
 

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui_project.View;
 
 import gui_project.ModelController.*;
@@ -12,10 +7,6 @@ import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
-/**
- *
- * @author Angelo
- */
 public class RoomHouseView extends javax.swing.JPanel implements
         ComponentListener, BaseObserver
 {
@@ -123,7 +114,7 @@ public class RoomHouseView extends javax.swing.JPanel implements
 
         jLabel1.setText("House");
         jLabel1.setName("HouseLabel"); // NOI18N
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 0, 60, 40));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, 40, 20));
 
         groundDoor.setText("*");
         groundDoor.setFocusCycleRoot(true);
@@ -144,7 +135,7 @@ public class RoomHouseView extends javax.swing.JPanel implements
         add(wifeRoomDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 290, 10, -1));
 
         workingRoomDoor.setText("*");
-        add(workingRoomDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 330, 10, -1));
+        add(workingRoomDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 330, 10, 10));
 
         jLabel2.setText("Kitchen");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, -1, -1));

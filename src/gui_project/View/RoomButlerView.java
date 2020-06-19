@@ -18,14 +18,12 @@ import gui_project.ModelController.NPC;
 public class RoomButlerView extends javax.swing.JPanel implements
         ComponentListener, BaseObserver
 {
+
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final RoomButlerController roomCtrl;
     private final KeyPasswordController keyPasswordCtrl;
 
-    /**
-     * Creates new form RoomView
-     */
     public RoomButlerView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
             RoomButlerController roomCtrl,
@@ -49,16 +47,13 @@ public class RoomButlerView extends javax.swing.JPanel implements
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
-        }
-        else if (model instanceof Hint)
+        } else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
-        } 
-        else if (model instanceof KeyPassword)
+        } else if (model instanceof KeyPassword)
         {
             gameTextArea.setText(((KeyPassword) model).getMessage());
         }
-
     }
 
     @Override
@@ -120,12 +115,12 @@ public class RoomButlerView extends javax.swing.JPanel implements
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Butler's Room");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 30, -1, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, -1, -1));
 
         houseDoor.setText("*");
         houseDoor.setFocusCycleRoot(true);
         houseDoor.setName("MaidRoomDoor"); // NOI18N
-        add(houseDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 50, 10, -1));
+        add(houseDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 50, 10, -1));
 
         gameTextArea.setColumns(20);
         gameTextArea.setRows(5);
@@ -160,7 +155,6 @@ public class RoomButlerView extends javax.swing.JPanel implements
         {
             mainCtrl.showPanel("TailDogHouse");
         }
-
         repaint();
     }//GEN-LAST:event_formKeyReleased
 

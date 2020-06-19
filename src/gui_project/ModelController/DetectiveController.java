@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui_project.ModelController;
 
 import gui_project.View.DetectiveView;
@@ -26,71 +21,125 @@ public class DetectiveController
         view = new DetectiveView(detective, this);
     }
 
+    /**
+     * increments the number of hints picked up
+     */
     public void increasePickedUpHint()
     {
         detective.increasePickedUpHints();
     }
 
+    /**
+     *
+     * @param level
+     */
     public void setConversationLevel(int level)
     {
         detective.setConversationLevel(level);
     }
 
+    /**
+     *
+     * @param velX
+     */
     public void setVelX(int velX)
     {
         getDetective().setVelX(velX);
     }
 
+    /**
+     *
+     * @param velY
+     */
     public void setVelY(int velY)
     {
         getDetective().setVelY(velY);
     }
 
+    /**
+     *
+     * @param locationX
+     */
     public void setLocationX(int locationX)
     {
         getDetective().setLocationX(locationX);
     }
 
+    /**
+     *
+     * @param locationY
+     */
     public void setLocationY(int locationY)
     {
         getDetective().setLocationY(locationY);
     }
 
+    /**
+     *
+     * @param previousLocationX
+     */
     public void setGroundHouseLocationX(int previousLocationX)
     {
         getDetective().setGroundHouseLocationX(previousLocationX);
     }
 
+    /**
+     *
+     * @param previousLocationY
+     */
     public void setGroundHouseLocationY(int previousLocationY)
     {
         getDetective().setGroundHouseLocationY(previousLocationY);
     }
 
+    /**
+     *
+     * @param previousLocationX
+     */
     public void setRoomHouseLocationX(int previousLocationX)
     {
         getDetective().setRoomHouseLocationX(previousLocationX);
     }
 
+    /**
+     *
+     * @param previousLocationY
+     */
     public void setRoomHouseLocationY(int previousLocationY)
     {
         getDetective().setRoomHouseLocationY(previousLocationY);
     }
 
+    /**
+     *
+     * @return the Detective model
+     */
     public Detective getDetective()
     {
         return detective;
     }
 
+    /**
+     *
+     * @return the DetectiveView
+     */
     public DetectiveView getView()
     {
         return view;
     }
 
+    /**
+     *
+     * @param graphics2D
+     */
     public void draw(Graphics2D graphics2D)
     {
         getView().draw(graphics2D);
     }
 
+    /**
+     * Saves the detective's location in the ground area
+     */
     public void updateGroundHouseLocation()
     {
         int previousX = getDetective().getGroundHouseLocationX();
@@ -101,6 +150,9 @@ public class DetectiveController
         setLocationY(previousY + 15);
     }
 
+    /**
+     * Saves the detective's location in the house
+     */
     public void saveHouseLocation(int newLocationX, int newLocationY)
     {
         setRoomHouseLocationX(getDetective().getLocationX() + 5);
@@ -109,6 +161,10 @@ public class DetectiveController
         setLocationY(newLocationY);
     }
 
+    /**
+     *
+     * this method moves the detective in the game world
+     */
     public void keyPressed(int keyCode, Rectangle itemBlock,
             boolean houseCollision, boolean roomBoundaryCollision)
     {
@@ -175,6 +231,10 @@ public class DetectiveController
         }
     }
 
+    /**
+     * this method stops the detective's movement when the key is released
+     * @param e
+     */
     public void keyReleased(KeyEvent e)
     {
         setVelY(0);

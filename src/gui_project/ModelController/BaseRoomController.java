@@ -17,6 +17,11 @@ public class BaseRoomController
         return itemBlockCtrls;
     }
 
+    /**
+     * 
+     *used by the detective to detect if it is colliding with objects in the 
+     * game world
+     */
     public void checkCollisions(int keyCode, MainController mainCtrl,
             DetectiveController detectiveCtrl, Rectangle roomBoundary)
     {
@@ -48,6 +53,7 @@ public class BaseRoomController
             }
             else
             {
+                //clear the gameText area if there is no collision
                 if (itemBlockCtrl instanceof NPCController)
                 {
                     ((NPCController) itemBlockCtrl).setSpeaking(false);

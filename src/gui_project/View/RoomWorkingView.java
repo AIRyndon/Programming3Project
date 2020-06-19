@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui_project.View;
 
 import gui_project.ModelController.BaseModel;
@@ -21,22 +16,16 @@ import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
-/**
- *
- * @author pc
- */
 public class RoomWorkingView extends javax.swing.JPanel implements
         ComponentListener, BaseObserver
 {
+
     private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
     private final RoomWorkingController roomCtrl;
     private final KeyPasswordController keyPasswordCtrl;
     private final LockedAreaController lockedAreaCtrl;
 
-    /**
-     * Creates new form RoomView
-     */
     public RoomWorkingView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
             RoomWorkingController roomCtrl,
@@ -62,12 +51,10 @@ public class RoomWorkingView extends javax.swing.JPanel implements
         if (model instanceof NPC)
         {
             gameTextArea.setText(((NPC) model).getSpokenLine());
-        }
-        else if (model instanceof Hint)
+        } else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
-        } 
-        else if (model instanceof KeyPassword)
+        } else if (model instanceof KeyPassword)
         {
             gameTextArea.setText(((KeyPassword) model).getMessage());
         }
@@ -131,12 +118,12 @@ public class RoomWorkingView extends javax.swing.JPanel implements
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Working Room");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 30, -1, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 30, -1, -1));
 
         houseDoor.setText("*");
         houseDoor.setFocusCycleRoot(true);
         houseDoor.setName("MaidRoomDoor"); // NOI18N
-        add(houseDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, 10, 20));
+        add(houseDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 50, -1, 10));
 
         gameTextArea.setColumns(20);
         gameTextArea.setRows(5);
@@ -146,7 +133,7 @@ public class RoomWorkingView extends javax.swing.JPanel implements
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-       
+
         roomCtrl.checkCollisions(evt.getKeyCode(), mainCtrl,
                 detectiveCtrl, getBound());
 
@@ -164,8 +151,7 @@ public class RoomWorkingView extends javax.swing.JPanel implements
             mainCtrl.showPanel("House");
             detectiveCtrl.setLocationX(detectiveCtrl.getDetective().getRoomHouseLocationX());
             detectiveCtrl.setLocationY(detectiveCtrl.getDetective().getRoomHouseLocationY());
-        } 
-        else if (detectiveCtrl.getView().getBound().intersects(officeLockBound)
+        } else if (detectiveCtrl.getView().getBound().intersects(officeLockBound)
                 && !lockedAreaCtrl.getLockedArea().isUnlocked())
         {
             mainCtrl.showPanel("OfficeLock");

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui_project.View;
 
 import gui_project.ModelController.Detective;
@@ -13,18 +8,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractButton;
 
-/**
- *
- * @author Angelo
- */
 public class GuessKillerView extends javax.swing.JPanel
 {
 
     private final MainController mainCtrl;
 
-    /**
-     * Creates new form GuessKillerPanel
-     */
     public GuessKillerView(MainController mainCtrl)
     {
         this.mainCtrl = mainCtrl;
@@ -156,12 +144,11 @@ public class GuessKillerView extends javax.swing.JPanel
             public void run()
             {
                 Detective detective = new Detective();
-                
-                try 
+
+                try
                 {
                     new MainController(detective);
-                } 
-                catch (SQLException ex) 
+                } catch (SQLException ex)
                 {
                     Logger.getLogger(GuessKillerView.class.getName()).log(Level.SEVERE, null, ex);
                 }

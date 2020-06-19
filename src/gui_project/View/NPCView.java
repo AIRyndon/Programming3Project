@@ -7,13 +7,11 @@ import java.awt.Graphics2D;
 public class NPCView extends ItemBlockView
 {
     private final NPC npc;
-    private final NPCController npcController;
     
-    public NPCView(NPC npc, NPCController controller) 
+    public NPCView(NPC npc) 
     {
-        super(npc,controller);
+        super(npc);
         this.npc = npc;
-        npcController = controller;
     }
     
     public void draw(Graphics2D graphics2D, String symbol) 

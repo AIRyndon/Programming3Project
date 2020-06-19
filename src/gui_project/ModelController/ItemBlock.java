@@ -2,6 +2,10 @@ package gui_project.ModelController;
 
 import java.awt.Rectangle;
 
+/**
+ * ItemBlocks are items in the game world that the NPC can hit
+ * 
+ */
 public class ItemBlock extends BaseModel
 {
     private final int width;
@@ -15,6 +19,10 @@ public class ItemBlock extends BaseModel
         this.height = height;
     }
 
+    /**
+     * 
+     * @return the itemBlock's rectangle bound, used for collision detection 
+     */
     public Rectangle getBound()
     {
         return new Rectangle(getLocationX(), getLocationY(), width, height);

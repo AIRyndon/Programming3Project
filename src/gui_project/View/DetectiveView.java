@@ -11,6 +11,7 @@ import gui_project.ModelController.BaseObserver;
 
 public class DetectiveView implements BaseObserver
 {
+
     private Detective detective;
     private DetectiveController controller;
 
@@ -30,7 +31,7 @@ public class DetectiveView implements BaseObserver
 
     public void draw(Graphics2D graphics2D)
     {
-        graphics2D.draw(getBound());       
+        graphics2D.draw(getBound());
         graphics2D.drawImage(getPlayerImage(), detective.getLocationX(), detective.getLocationY(), null);
     }
 

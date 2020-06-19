@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui_project.ModelController;
 
-/**
- *
- * @author Angelo
- */
 public class Detective extends BaseModel
 {
     private int velX = 0;
@@ -35,6 +26,10 @@ public class Detective extends BaseModel
         return speed;
     }
 
+    /**
+     *
+     * @return the horizontal direction of the detective
+     */
     public int getVelX()
     {
         return velX;
@@ -46,6 +41,10 @@ public class Detective extends BaseModel
         notifyObservers();
     }
 
+    /**
+     *
+     * @return the vertical direction of the detective
+     */
     public int getVelY()
     {
         return velY;
@@ -57,6 +56,10 @@ public class Detective extends BaseModel
         notifyObservers();
     }
 
+    /**
+     *
+     * @return the X location of the detective in the ground area
+     */
     public int getGroundHouseLocationX()
     {
         return groundHouseLocationX;
@@ -67,6 +70,10 @@ public class Detective extends BaseModel
         this.groundHouseLocationX = groundHouseLocationX;
     }
 
+    /**
+     *
+     * @return the Y location of the detective in the Ground area
+     */
     public int getGroundHouseLocationY()
     {
         return groundHouseLocationY;
@@ -77,6 +84,10 @@ public class Detective extends BaseModel
         this.groundHouseLocationY = groundHouseLocationY;
     }
 
+    /**
+     *
+     * @return the X location of the detective in the House area
+     */
     public int getRoomHouseLocationX()
     {
         return roomHouseLocationX;
@@ -87,6 +98,10 @@ public class Detective extends BaseModel
         this.roomHouseLocationX = roomHouseLocationX;
     }
 
+    /**
+     *
+     * @return the Y location of the detective in the House area
+     */
     public int getRoomHouseLocationY()
     {
         return roomHouseLocationY;

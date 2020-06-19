@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui_project.View;
 
 import gui_project.ModelController.BaseModel;
@@ -18,10 +13,6 @@ import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
-/**
- *
- * @author pc
- */
 public class RoomMaidView extends javax.swing.JPanel implements
         ComponentListener, BaseObserver
 {
@@ -30,9 +21,6 @@ public class RoomMaidView extends javax.swing.JPanel implements
     private final DetectiveController detectiveCtrl;
     private final RoomMaidController roomCtrl;
 
-    /**
-     * Creates new form RoomTwoView
-     */
     public RoomMaidView(MainController mainCtrl,
             DetectiveController detectiveCtrl,
             RoomMaidController roomCtrl)
@@ -121,12 +109,12 @@ public class RoomMaidView extends javax.swing.JPanel implements
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Maid's Room");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, -1, 30));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, -1, 30));
 
         houseDoor.setText("*");
         houseDoor.setFocusCycleRoot(true);
         houseDoor.setName("MaidRoomDoor"); // NOI18N
-        add(houseDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, 10, 20));
+        add(houseDoor, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 50, -1, 10));
 
         bedLabel.setText("BED");
         add(bedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));

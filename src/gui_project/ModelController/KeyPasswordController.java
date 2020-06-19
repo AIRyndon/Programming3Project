@@ -15,7 +15,7 @@ public class KeyPasswordController extends ItemBlockController
     {
         super(keyPassword);
         this.keyPassword = keyPassword;
-        view = new KeyPasswordView(keyPassword, this);
+        view = new KeyPasswordView(keyPassword);
         questionPanel = new KeyPasswordQuestionPanel(mainCtrl, this);
     }
 

@@ -3,7 +3,6 @@ package gui_project.ModelController;
 import gui_database.PlayerDatabase;
 import gui_project.View.PlayerInforView;
 import gui_project.View.StoryPanel;
-import java.sql.SQLException;
 
 public class PlayerInfoController
 {
