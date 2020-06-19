@@ -35,18 +35,6 @@ public class Detective extends BaseModel
         return speed;
     }
 
-    /**
-     * make sure our setters have default accessibility so they are only visible
-     * within the same package. Outside the package - only the Controller should
-     * be able to set a model's state
-     *
-     * @param speed the speed to set
-     */
-    void setSpeed(int speed)
-    {
-        this.speed = speed;
-    }
-
     public int getVelX()
     {
         return velX;

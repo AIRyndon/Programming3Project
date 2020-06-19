@@ -70,7 +70,7 @@ public class NPCController extends ItemBlockController
 
     public void setSpeaking(boolean status)
     {
-        npc.setSpeaking(status);
+        npc.isSpeaking(status);
     }
 
     private void tryToPlaceHint()

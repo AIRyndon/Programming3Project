@@ -33,8 +33,7 @@ public class KeyPasswordController extends ItemBlockController
 
     public void clearMessageArea()
     {
-        keyPassword.clearMessage();
-        keyPassword.sendMessage();
+        keyPassword.setMessage("");
     }
 
     //Getters and setters
@@ -53,15 +52,10 @@ public class KeyPasswordController extends ItemBlockController
         return keyPassword;
     }
 
-    public String getMessage()
-    {
-        return keyPassword.getMessage();
-    }
-
-    public void pickup()
+    private void pickup()
     {
         keyPassword.hasPickup();
-        keyPassword.updateMessage();
+        keyPassword.setMessage(keyPassword.getPassword());
     }
 
     @Override
@@ -71,10 +65,10 @@ public class KeyPasswordController extends ItemBlockController
         {
             //If user's answer is correct, allow player to get the key.
             pickup();
-            
+
             return false;
         }
-        
+
         return true;
     }
 

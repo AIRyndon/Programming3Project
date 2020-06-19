@@ -18,7 +18,7 @@ public class KeyPasswordView extends ItemBlockView
     @Override
     public void draw(Graphics2D graphics2D) 
     {
-        if(!keyPassword.isPickup())
+        if(!keyPassword.isPickedUp())
         {
             graphics2D.drawString(symbol, keyPassword.getLocationX(), keyPassword.getLocationY());           
         }

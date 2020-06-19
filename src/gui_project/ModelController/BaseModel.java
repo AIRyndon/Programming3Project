@@ -42,16 +42,6 @@ public class BaseModel
     {
         observers.add(obs);
     }
-
-    public void removeObserver(BaseObserver obs)
-    {
-        int idx = observers.indexOf(obs);
-
-        if (idx >= 0)
-        {
-            observers.remove(idx);
-        }
-    }
    
     public void notifyObservers()
     {

@@ -78,7 +78,7 @@ public class WelcomePanel extends javax.swing.JPanel
 
     private void quitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitActionPerformed
         //TODO add your handling code here:
-        System.exit(0);
+        mainCtrl.getView().getWindow().dispose();
     }//GEN-LAST:event_quitActionPerformed
 
 

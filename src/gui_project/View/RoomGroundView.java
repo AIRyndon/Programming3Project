@@ -185,7 +185,7 @@ public class RoomGroundView extends javax.swing.JPanel implements
             detectiveCtrl.updateGroundHouseLocation();
         } //check lockedArea collision
         else if (detectiveCtrl.getView().getBound().intersects(dogHouseBound)
-                && !lockedAreaCtrl.getLockedArea().isUnLocked())
+                && !lockedAreaCtrl.getLockedArea().isUnlocked())
         {
             mainCtrl.showPanel("DogHouseLock");
         } 

@@ -1,22 +1,22 @@
 package gui_database;
 
-import gui_project.ModelController.PlayerInfor;
+import gui_project.ModelController.PlayerInfo;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class PlayerDatabase extends DatabaseManager
 {
     private int player_id = 1;
-    PlayerInfor playerInfo;
+    PlayerInfo playerInfo;
     
-    public PlayerDatabase(PlayerInfor playerInfo) throws SQLException
+    public PlayerDatabase(PlayerInfo playerInfo)
     {
         super();
         tableName = "PLAYER";
         this.playerInfo = playerInfo;
     }
     
-    public void inputDataRow() throws SQLException
+    public void inputDataRow()
     {        
         try
         {
@@ -32,7 +32,7 @@ public class PlayerDatabase extends DatabaseManager
             statement.executeUpdate("INSERT INTO PLAYER VALUES (" + player_id + ", \'" + 
                     playerInfo.getName() + "\', " + playerInfo.getAge() + ", \'" + playerInfo.getGender() + "\')");            
         }
-        catch (Throwable e)
+        catch (SQLException e)
         {
             System.err.println("SQL INSERT exception at " + player_id + " - " + e.getMessage());
         }

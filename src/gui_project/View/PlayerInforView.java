@@ -1,7 +1,7 @@
 package gui_project.View;
 
 import gui_project.ModelController.MainController;
-import gui_project.ModelController.PlayerInforController;
+import gui_project.ModelController.PlayerInfoController;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,10 +9,10 @@ import java.util.logging.Logger;
 public class PlayerInforView extends javax.swing.JPanel
 {
     MainController mainCtrl;
-    PlayerInforController playerInforCtrl;
+    PlayerInfoController playerInforCtrl;
     boolean nameChecked, ageChecked, genderChecked;
     
-    public PlayerInforView(MainController mainCtrl, PlayerInforController playerInforCtrl) 
+    public PlayerInforView(MainController mainCtrl, PlayerInfoController playerInforCtrl) 
     {
         this.mainCtrl = mainCtrl;
         this.playerInforCtrl = playerInforCtrl;

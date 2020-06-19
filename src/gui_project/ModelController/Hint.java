@@ -14,8 +14,8 @@ public class Hint extends ItemBlock
     private boolean pickedUp = false;
     private boolean visible = false;
     private String message = "";
-    private String name;
-    private String description;
+    private final String name;
+    private final String description;
 
     public Hint(String name, String description,
             int locationX, int locationY, int width, int height)
@@ -45,12 +45,7 @@ public class Hint extends ItemBlock
     {
         this.visible = visible;
     }
-
-    void sendMessage()
-    {
-        notifyObservers();
-    }
-
+    
     public String getMessage()
     {
         return message;
@@ -59,6 +54,7 @@ public class Hint extends ItemBlock
     void setMessage(String message)
     {
         this.message = message;
+        notifyObservers();
     }
 
     public boolean isPickedUp()
@@ -70,6 +66,6 @@ public class Hint extends ItemBlock
     {
         pickedUp = true;
         visible = false;
-        message = getName() + '\n' + getDescription();
+        setMessage(name + '\n' + description);
     }
 }

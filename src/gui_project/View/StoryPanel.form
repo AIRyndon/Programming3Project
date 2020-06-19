@@ -77,7 +77,7 @@
     <Component class="javax.swing.JLabel" name="playerNameLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="&quot;Hi &quot; + playerInfoCtrl.getPlayerInfor().getName() + &quot;,&quot;" type="code"/>
+          <Connection code="&quot;Hi &quot; + playerInfoCtrl.getPlayerInfo().getName() + &quot;,&quot;" type="code"/>
         </Property>
       </Properties>
     </Component>

@@ -18,7 +18,6 @@ public class NPC extends ItemBlock
 
     private boolean discovered = false;
     private boolean linesUnlocked = false;
-    private boolean speaking;
     private final String symbol;
     private String role;
     private String firstLine = "";
@@ -43,21 +42,12 @@ public class NPC extends ItemBlock
     }
 
     /**
-     * @return the speaking
-     */
-    public boolean isSpeaking()
-    {
-        return speaking;
-    }
-
-    /**
      * @param speaking the speaking to set
      */
-    void setSpeaking(boolean speaking)
+    void isSpeaking(boolean speaking)
     {
         //discovered will be set when the detective has spoken with
         //an NPC
-        this.speaking = speaking;
 
         if (speaking)
         {
@@ -65,8 +55,7 @@ public class NPC extends ItemBlock
             if (linesUnlocked)
             {
                 spokenLine = secondLine;
-            } 
-            else
+            } else
             {
                 spokenLine = firstLine;
             }
@@ -78,6 +67,9 @@ public class NPC extends ItemBlock
         notifyObservers();
     }
 
+    /**
+     * Helper method to save NPC lines from a file
+     */
     private void readNPCLines()
     {
         try
@@ -104,8 +96,7 @@ public class NPC extends ItemBlock
                     break;
                 }
             }
-        }
-        catch (IOException ex)
+        } catch (IOException ex)
         {
             ex.printStackTrace();
         }
@@ -133,14 +124,6 @@ public class NPC extends ItemBlock
     public String getRole()
     {
         return role;
-    }
-
-    /**
-     * @param role the role to set
-     */
-    void setRole(String role)
-    {
-        this.role = role;
     }
 
     /**

@@ -8,9 +8,6 @@ package gui_project.ModelController;
 import gui_database.HintDatabase;
 import gui_project.View.HintView;
 import java.awt.Graphics2D;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -21,6 +18,8 @@ import java.util.logging.Logger;
  */
 public class HintController extends ItemBlockController
 {
+
+    //does this field need to be static??
     private static HintDatabase hintDatabase = new HintDatabase();
     private final Hint hint;
     private final HintView view;
@@ -35,16 +34,11 @@ public class HintController extends ItemBlockController
         this.mainCtrl = mainCtrl;
         this.detectiveCtrl = detectiveCtrl;
         view = new HintView(hint, this);
-        
-        //todo: delete this line
-        hint.setVisible(true);
     }
 
-    public void pickup() throws SQLException
+    public void pickup()
     {
         hint.setPickedUp();
-        hint.sendMessage();
-
         hintDatabase.inputDataRow(hint.getName(), hint.getDescription());
     }
 
@@ -59,12 +53,6 @@ public class HintController extends ItemBlockController
     public void clearMessageArea()
     {
         hint.setMessage("");
-        hint.sendMessage();
-    }
-
-    public Hint getHint()
-    {
-        return hint;
     }
 
     @Override
@@ -76,19 +64,11 @@ public class HintController extends ItemBlockController
             //them when they aren't visible
             return false;
         }
-        
-        try 
-        {
-            pickup();
-        } 
-        catch (SQLException ex) 
-        {
-            Logger.getLogger(HintController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+
+        pickup();
         detectiveCtrl.increasePickedUpHint();
         mainCtrl.checkDetectiveHintCount();
-        
+
         return true;
     }
 

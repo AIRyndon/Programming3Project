@@ -33,7 +33,7 @@ public class MainController
             workingRoomWall, bed;
     private LockedAreaController dogHouseLock, officeLock;
     private GuessKillerController guessKillerCtrl;
-    private PlayerInforController playerInforCtrl;
+    private PlayerInfoController playerInforCtrl;
     private WelcomePanel welcomePanel;
 
     public MainController(Detective detective) throws SQLException
@@ -51,8 +51,8 @@ public class MainController
         setUpInitialPanels();
         addItemBlockToRoom();
         addAllPanels();
-//        showPanel("Welcome");
-        showPanel("House");
+        showPanel("Welcome");
+        //showPanel("House");
         view.renderView();
     }
 
@@ -194,7 +194,7 @@ public class MainController
 
     public void setUpPlayerInforController() throws SQLException
     {
-        playerInforCtrl = new PlayerInforController(this, new PlayerInfor());
+        playerInforCtrl = new PlayerInfoController(this, new PlayerInfo());
     }
 
     public void setUpRoomController()
@@ -286,7 +286,7 @@ public class MainController
     {
         try
         {
-            Thread.sleep(1000);
+            Thread.sleep(1500);
             view.showPanel(guessKillerCtrl.getView().getName());
         } catch (InterruptedException ex)
         {

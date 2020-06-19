@@ -189,7 +189,7 @@ public class RoomWorkingView extends javax.swing.JPanel implements
             detectiveCtrl.setLocationY(detectiveCtrl.getDetective().getRoomHouseLocationY());
         } 
         else if (detectiveCtrl.getView().getBound().intersects(officeLockBound)
-                && !lockedAreaCtrl.getLockedArea().isUnLocked())
+                && !lockedAreaCtrl.getLockedArea().isUnlocked())
         {
             mainCtrl.showPanel("OfficeLock");
         }

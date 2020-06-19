@@ -18,7 +18,7 @@ public class HintDatabase extends DatabaseManager
         tableName = "HINT";
     }
     
-    public void inputDataRow(String hint_name, String description) throws SQLException
+    public void inputDataRow(String hint_name, String description)
     {
         try
         {
@@ -34,7 +34,7 @@ public class HintDatabase extends DatabaseManager
             statement.executeUpdate("INSERT INTO HINT VALUES (" + hint_id + ", '" +
                     hint_name + "', '" + description + "')");            
         }
-        catch (Throwable e)
+        catch (SQLException e)
         {
             System.err.println("SQL INSERT exception at " + hint_id + " - " + e.getMessage());
         }
@@ -49,7 +49,7 @@ public class HintDatabase extends DatabaseManager
                        
             statement.executeUpdate("TRUNCATE TABLE HINT");            
         }
-        catch (Throwable e)
+        catch (SQLException e)
         {
             System.err.println("SQL DELETE exception at " + hint_id + " - " + e.getMessage());
         }

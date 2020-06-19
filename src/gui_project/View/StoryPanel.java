@@ -3,28 +3,28 @@ package gui_project.View;
 import gui_project.ModelController.BaseModel;
 import gui_project.ModelController.BaseObserver;
 import gui_project.ModelController.MainController;
-import gui_project.ModelController.PlayerInforController;
+import gui_project.ModelController.PlayerInfoController;
 
 public class StoryPanel extends javax.swing.JPanel implements BaseObserver
 {
     private MainController mainCtrl;
-    private PlayerInforController playerInfoCtrl;
+    private PlayerInfoController playerInfoCtrl;
     private String playerName;
     
     //todo: update player database to Player name
-    public StoryPanel(MainController mainCtrl, PlayerInforController playerInfoCtrl) 
+    public StoryPanel(MainController mainCtrl, PlayerInfoController playerInfoCtrl) 
     {
         this.playerInfoCtrl = playerInfoCtrl;
         this.mainCtrl = mainCtrl;
         initComponents();
         
-        playerInfoCtrl.getPlayerInfor().registerObserver(this);
+        playerInfoCtrl.getPlayerInfo().registerObserver(this);
     }
     
     @Override
     public void update(BaseModel model) 
     {
-        playerName = playerInfoCtrl.getPlayerInfor().getName();
+        playerName = playerInfoCtrl.getPlayerInfo().getName();
         playerNameLabel.setText("Hi " + getPlayerName() + ",");
     }
 
@@ -35,7 +35,8 @@ public class StoryPanel extends javax.swing.JPanel implements BaseObserver
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         theStoryLabel = new javax.swing.JLabel();
         playerNameLabel = new javax.swing.JLabel();
@@ -47,15 +48,17 @@ public class StoryPanel extends javax.swing.JPanel implements BaseObserver
 
         theStoryLabel.setText("THE STORY");
 
-        playerNameLabel.setText("Hi " + playerInfoCtrl.getPlayerInfor().getName() + ",");
+        playerNameLabel.setText("Hi " + playerInfoCtrl.getPlayerInfo().getName() + ",");
 
         storyLabel1.setText("You are currently a very famous detective and being asked");
 
         storyLabel2.setText("for investigating the dealth of a billionaire.");
 
         getInfoButton.setText("Get information");
-        getInfoButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        getInfoButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 getInfoButtonActionPerformed(evt);
             }
         });
@@ -118,6 +121,5 @@ public class StoryPanel extends javax.swing.JPanel implements BaseObserver
     public String getPlayerName()
     {
         return playerName;
-    }
-    
+    }  
 }

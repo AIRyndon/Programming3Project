@@ -2,8 +2,8 @@ package gui_project.View;
 
 import gui_project.ModelController.Detective;
 import gui_project.ModelController.MainController;
-import gui_project.ModelController.PlayerInfor;
-import gui_project.ModelController.PlayerInforController;
+import gui_project.ModelController.PlayerInfo;
+import gui_project.ModelController.PlayerInfoController;
 import java.sql.SQLException;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -52,14 +52,16 @@ public class StoryPanelTest
     public void testUpdate_UpdateShouldBeTriggered_AfterPlayerInforChanged() throws SQLException
     {
         System.out.println("Update player name");
-        
+        //Arrange
         MainController mainCtrl = new MainController(new Detective());
-        PlayerInfor baseModel = new PlayerInfor();
-        PlayerInforController playerInforCtrl = new PlayerInforController(mainCtrl, baseModel);
+        PlayerInfo baseModel = new PlayerInfo();
+        PlayerInfoController playerInforCtrl = new PlayerInfoController(mainCtrl, baseModel);
         StoryPanel baseObserver = new StoryPanel(mainCtrl, playerInforCtrl);
         
+        //Act
         playerInforCtrl.setPlayerName("Tester");      
         
+        //Assert
         assertEquals("Tester", baseObserver.getPlayerName());
     }
 }

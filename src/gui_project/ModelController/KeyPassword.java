@@ -133,7 +133,7 @@ public class KeyPassword extends ItemBlock
         return correct;
     }
 
-    public boolean isPickup()
+    public boolean isPickedUp()
     {
         return pickup;
     }
@@ -157,19 +157,9 @@ public class KeyPassword extends ItemBlock
         return message;
     }
 
-    void updateMessage()
+    void setMessage(String message)
     {
-        this.message = password;
-        sendMessage();
-    }
-
-    void clearMessage()
-    {
-        this.message = "";
-    }
-
-    void sendMessage()
-    {
+        this.message = message;
         notifyObservers();
     }
 }

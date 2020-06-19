@@ -5,20 +5,20 @@ import gui_project.View.PlayerInforView;
 import gui_project.View.StoryPanel;
 import java.sql.SQLException;
 
-public class PlayerInforController
+public class PlayerInfoController
 {
     private static PlayerDatabase PLAYERDATABASE;
     private MainController mainCtrl;
-    private PlayerInfor playerInfor;
+    private PlayerInfo playerInfo;
     private PlayerInforView view;
     private StoryPanel storyPanel;
     
-    public PlayerInforController(MainController mainCtrl, PlayerInfor playerInfor) throws SQLException 
+    public PlayerInfoController(MainController mainCtrl, PlayerInfo playerInfo) 
     {
         this.mainCtrl = mainCtrl;
-        this.playerInfor = playerInfor;
-        PLAYERDATABASE = new PlayerDatabase(playerInfor);
-        System.out.println(playerInfor.getName());
+        this.playerInfo = playerInfo;
+        PLAYERDATABASE = new PlayerDatabase(playerInfo);
+        System.out.println(playerInfo.getName());
         view = new PlayerInforView(mainCtrl, this);
         storyPanel = new StoryPanel(mainCtrl, this);
     }
@@ -34,9 +34,9 @@ public class PlayerInforController
         return view;
     }
 
-    public PlayerInfor getPlayerInfor() 
+    public PlayerInfo getPlayerInfo() 
     {
-        return playerInfor;
+        return playerInfo;
     }
     
     public StoryPanel getStoryPanel()
@@ -46,16 +46,16 @@ public class PlayerInforController
     
     public void setPlayerName(String name)
     {
-        this.getPlayerInfor().setName(name);
+        playerInfo.setName(name);
     }
     
     public void setPlayerAge(int age)
     {
-        this.getPlayerInfor().setAge(age);
+        playerInfo.setAge(age);
     }
     
     public void setPlayerGender(char gender)
     {
-        this.getPlayerInfor().setGender(gender);
+        playerInfo.setGender(gender);
     }
 }

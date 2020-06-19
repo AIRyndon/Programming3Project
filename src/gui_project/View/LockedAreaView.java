@@ -17,7 +17,7 @@ public class LockedAreaView extends ItemBlockView
     @Override
     public void draw(Graphics2D graphics2D) 
     {   
-        if(!lockedArea.isUnLocked())
+        if(!lockedArea.isUnlocked())
         {
             graphics2D.draw(super.getBound());
         }

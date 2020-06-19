@@ -1,12 +1,12 @@
 package gui_project.ModelController;
 
-public class PlayerInfor extends BaseModel
+public class PlayerInfo extends BaseModel
 {
     private int age;
     private String name;
     private char gender;
     
-    public PlayerInfor()
+    public PlayerInfo()
     {
         
     }

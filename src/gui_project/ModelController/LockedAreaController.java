@@ -41,7 +41,7 @@ public class LockedAreaController extends ItemBlockController
     @Override
     public boolean collisionAction()
     {
-        return !lockedArea.isUnLocked();
+        return !lockedArea.isUnlocked();
     }
 
     @Override

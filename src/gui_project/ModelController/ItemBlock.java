@@ -4,34 +4,14 @@ import java.awt.Rectangle;
 
 public class ItemBlock extends BaseModel
 {
-    private int width;
-    private int height;
+    private final int width;
+    private final int height;
 
     public ItemBlock(int locationX, int locationY, int width, int height)
     {
         setLocationX(locationX);
         setLocationY(locationY);
         this.width = width;
-        this.height = height;
-    }
-
-    public int getWidth()
-    {
-        return width;
-    }
-
-    void setWidth(int width)
-    {
-        this.width = width;
-    }
-
-    public int getHeight()
-    {
-        return height;
-    }
-
-    void setHeight(int height)
-    {
         this.height = height;
     }
 

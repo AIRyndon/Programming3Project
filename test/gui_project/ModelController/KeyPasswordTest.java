@@ -48,17 +48,17 @@ public class KeyPasswordTest
     public void testSetupKeyPassword_PasswordHead_FormatAndValueShouldBeCorrect() 
     {
         System.out.println("Setup Password Head: __XX");
-        
+        //Arrange
         lockedArea = new LockedArea(0, 0, 5, 5, "LockedAreaTest");
-        lockedArea.setPassword("2613");
-        
-        KeyPassword headKeyPassword = new KeyPassword(0, 0, 5, 5, lockedArea, "~", 
+        lockedArea.setPassword("2613");      
+        KeyPassword sut = new KeyPassword(0, 0, 5, 5, lockedArea, "~", 
                 "KeyPasswordTest", KeyPasswordType.KEYHEAD);
-        
-        headKeyPassword.setupKeyPassword();
+        //Act
+        sut.setupKeyPassword();
         String expectedResult = "26XX";
         
-        assertEquals(expectedResult, headKeyPassword.getPassword());
+        //Assert
+        assertEquals(expectedResult, sut.getPassword());
     }
     
     /**
@@ -69,16 +69,15 @@ public class KeyPasswordTest
     public void testSetupKeyPassword_PasswordTail_FormatAndValueShouldBeCorrect() 
     {
         System.out.println("Setup Password Tail: XX__");
-
+        //Arrange
         lockedArea = new LockedArea(0, 0, 5, 5, "LockedAreaTest");
-        lockedArea.setPassword("9781");
-        
-        KeyPassword headKeyPassword = new KeyPassword(0, 0, 5, 5, lockedArea, "~", 
+        lockedArea.setPassword("9781");        
+        KeyPassword sut = new KeyPassword(0, 0, 5, 5, lockedArea, "~", 
                 "KeyPasswordTest", KeyPasswordType.KEYTAIL);
-        
-        headKeyPassword.setupKeyPassword();
+        //Act
+        sut.setupKeyPassword();
         String expectedResult = "XX81";
-        
-        assertEquals(expectedResult, headKeyPassword.getPassword());
+        //Assert
+        assertEquals(expectedResult, sut.getPassword());
     }
 }
