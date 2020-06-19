@@ -7,10 +7,6 @@ package gui_project.ModelController;
 
 import gui_project.View.RoomMaidView;
 
-/**
- *
- * @author pc
- */
 public class RoomMaidController extends BaseRoomController
 {
     private RoomMaidView view;

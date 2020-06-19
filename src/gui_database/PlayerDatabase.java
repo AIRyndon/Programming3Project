@@ -37,9 +37,4 @@ public class PlayerDatabase extends DatabaseManager
             System.err.println("SQL INSERT exception at " + player_id + " - " + e.getMessage());
         }
     }
-    
-    public void createPlayerTable()
-    {
-        
-    }
 }

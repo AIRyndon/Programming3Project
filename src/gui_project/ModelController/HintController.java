@@ -1,25 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui_project.ModelController;
 
 import gui_database.HintDatabase;
 import gui_project.View.HintView;
 import java.awt.Graphics2D;
 
-/**
- *
- * @author Angelo
- */
-/**
- * I am not sure if we should put the Database in the Controller
- */
 public class HintController extends ItemBlockController
 {
-
-    //does this field need to be static??
+    public static int HINTCOUNT = 1;
     private static HintDatabase hintDatabase = new HintDatabase();
     private final Hint hint;
     private final HintView view;
@@ -34,12 +21,13 @@ public class HintController extends ItemBlockController
         this.mainCtrl = mainCtrl;
         this.detectiveCtrl = detectiveCtrl;
         view = new HintView(hint, this);
+        
+        setupHintNameAndDescription();
     }
 
     public void pickup()
     {
         hint.setPickedUp();
-        hintDatabase.inputDataRow(hint.getName(), hint.getDescription());
     }
 
     public void reveal()
@@ -76,5 +64,14 @@ public class HintController extends ItemBlockController
     public void draw(Graphics2D g2)
     {
         view.draw(g2);
+    }
+    
+    public void setupHintNameAndDescription()
+    {
+        String hintResult = hintDatabase.getDataRow(HINTCOUNT);
+        HINTCOUNT++;
+        
+        String[] hintData = hintResult.split("/");
+        hint.setNameAndDescription(hintData[0], hintData[1]);        
     }
 }

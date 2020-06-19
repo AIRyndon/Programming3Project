@@ -40,7 +40,7 @@ public class HintControllerTest
     {
         System.out.println("Hint visibility test");
         //Arrange
-        Hint hint = new Hint("Test", "Test", 500, 260, 10, 10);
+        Hint hint = new Hint(500, 260, 10, 10);
         HintController sut = new HintController(null, null, hint);
 
         //Act

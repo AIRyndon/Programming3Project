@@ -98,8 +98,7 @@ public class RoomWifeView extends javax.swing.JPanel implements
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
         houseDoor = new javax.swing.JLabel();
@@ -108,21 +107,18 @@ public class RoomWifeView extends javax.swing.JPanel implements
         gameTextArea = new javax.swing.JTextArea();
 
         setName("WifeRoom"); // NOI18N
-        addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
             }
-            public void keyReleased(java.awt.event.KeyEvent evt)
-            {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
                 formKeyReleased(evt);
             }
         });
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Wife's Room");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, 60, 20));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, 110, 20));
 
         houseDoor.setText("*");
         houseDoor.setFocusCycleRoot(true);
@@ -135,6 +131,7 @@ public class RoomWifeView extends javax.swing.JPanel implements
         gameTextArea.setColumns(20);
         gameTextArea.setRows(5);
         jScrollPane1.setViewportView(gameTextArea);
+        gameTextArea.setFont(new java.awt.Font("Monospaced", 0, 14));
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 370, 330, 110));
     }// </editor-fold>//GEN-END:initComponents
