@@ -3,7 +3,7 @@ package gui_database;
 import java.sql.SQLException;
 
 /**
-    HINT table is used to store information of 5 hints
+    HINT table is used to store the information of 5 hints
 */
 public class HintDatabase extends DatabaseManager 
 {    

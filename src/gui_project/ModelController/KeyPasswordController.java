@@ -53,8 +53,11 @@ public class KeyPasswordController extends ItemBlockController
 
     private void pickup()
     {
-        keyPassword.hasPickup();
-        keyPassword.setMessage(keyPassword.getPassword());
+        if(!keyPassword.isPickedUp())
+        {
+            keyPassword.hasPickup();
+            keyPassword.setMessage(keyPassword.getPassword());
+        }
     }
 
     @Override
@@ -63,10 +66,14 @@ public class KeyPasswordController extends ItemBlockController
         if (keyPassword.isCorrect())
         {
             //If user's answer is correct, allow player to get the key.
+            
             pickup();
-            clearMessageArea();
 
             return false;
+        }
+        else
+        {
+            clearMessageArea();
         }
 
         return true;
