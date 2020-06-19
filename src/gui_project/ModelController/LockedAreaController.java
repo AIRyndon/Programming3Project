@@ -36,7 +36,6 @@ public class LockedAreaController extends ItemBlockController
     public void disableLockedArea()
     {
         lockedArea.setUnLocked(true);
-//        removeLockedAreaView();
     }
 
     @Override
@@ -50,9 +49,4 @@ public class LockedAreaController extends ItemBlockController
     {
         view.draw(g2);
     }
-//    
-//    public void removeLockedAreaView()
-//    {
-//        
-//    }
 }

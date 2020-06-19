@@ -40,12 +40,12 @@ public class BaseRoomController
                 break;
             } 
             else if (!roomBoundary.contains(detectiveCtrl.getView().getBound()))
-            {
+            {                
                 groundCollision = true;
                 boundaryCollision = roomBoundary;
                 
                 break;
-            } 
+            }
             else
             {
                 if (itemBlockCtrl instanceof NPCController)

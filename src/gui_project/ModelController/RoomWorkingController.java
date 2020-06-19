@@ -13,7 +13,6 @@ import gui_project.View.RoomWorkingView;
  */
 public class RoomWorkingController extends BaseRoomController
 {
-
     private final RoomWorkingView view;
 
     public RoomWorkingController(MainController mainCtrl,
@@ -30,4 +29,6 @@ public class RoomWorkingController extends BaseRoomController
     {
         return view;
     }
+    
+    
 }

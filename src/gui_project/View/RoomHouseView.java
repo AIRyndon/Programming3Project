@@ -167,8 +167,6 @@ public class RoomHouseView extends javax.swing.JPanel implements
     private void formKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyPressed
     {//GEN-HEADEREND:event_formKeyPressed
 
-        //I think we can check for the boundaries here -- if going outside the bounds
-        //we wont call the keyPress
         roomCtrl.checkCollisions(evt.getKeyCode(), mainCtrl,
                 detectiveCtrl, getBound());
 

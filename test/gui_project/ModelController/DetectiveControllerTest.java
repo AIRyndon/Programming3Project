@@ -25,6 +25,7 @@ public class DetectiveControllerTest
 
     public DetectiveControllerTest()
     {
+        
     }
 
     @BeforeClass

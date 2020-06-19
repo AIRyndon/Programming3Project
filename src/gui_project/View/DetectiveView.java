@@ -10,16 +10,7 @@ import javax.swing.ImageIcon;
 import gui_project.ModelController.BaseObserver;
 
 public class DetectiveView implements BaseObserver
-{   
-    /*
-     *   Hi why did you declare Dective class here 
-     *   although DetectiveController already contains it?
-     
-        Cuz we are using it directly here. too lazy to call get<Model> from
-        the Controller :D. Any method is fine cuz the reference all point
-        to the same object in the end
-     */
-    
+{
     private Detective detective;
     private DetectiveController controller;
 
@@ -39,6 +30,9 @@ public class DetectiveView implements BaseObserver
 
     public void draw(Graphics2D graphics2D)
     {
+        //todo - delete the following line
+        graphics2D.draw(getBound());
+        
         graphics2D.drawImage(getPlayerImage(), detective.getLocationX(), detective.getLocationY(), null);
     }
 

@@ -36,11 +36,6 @@ public class ItemBlockController
         return itemBlockCtrls;
     }
 
-//    public void removeItemBlock(ItemBlockController itemBlockContrl)
-//    {
-//        itemBlockCtrls.remove(itemBlockContrl);
-//    }
-
     public boolean collisionAction()
     {
         return true;

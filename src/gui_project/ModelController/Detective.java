@@ -11,7 +11,6 @@ package gui_project.ModelController;
  */
 public class Detective extends BaseModel
 {
-
     private int velX = 0;
     private int velY = 0;
     private int speed = 5;

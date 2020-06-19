@@ -30,7 +30,7 @@ public class MainController
     private HintController knife, gloves, cake, vial, picture;
     private KeyPasswordController headOfficeLock, tailOfficeLock, headDogHouse, tailDogHouse;
     private ItemBlockController houseArea, maidRoomWall, wifeRoomWall, butlerRoomWall,
-            officeRoomWall, bed;
+            workingRoomWall, bed;
     private LockedAreaController dogHouseLock, officeLock;
     private GuessKillerController guessKillerCtrl;
     private PlayerInforController playerInforCtrl;
@@ -52,7 +52,7 @@ public class MainController
         addItemBlockToRoom();
         addAllPanels();
 //        showPanel("Welcome");
-        showPanel("Ground");
+        showPanel("House");
         view.renderView();
     }
 
@@ -64,10 +64,10 @@ public class MainController
         groundCtrl.addItemBlock(tailOfficeLock);
         groundCtrl.addItemBlock(dogHouseLock);
 
+        houseCtrl.addItemBlock(workingRoomWall);
         houseCtrl.addItemBlock(maidRoomWall);
         houseCtrl.addItemBlock(wifeRoomWall);
         houseCtrl.addItemBlock(butlerRoomWall);
-        houseCtrl.addItemBlock(officeRoomWall);
         houseCtrl.addItemBlock(vial);
         houseCtrl.addItemBlock(headOfficeLock);
 
@@ -150,7 +150,7 @@ public class MainController
         maidRoomWall = new ItemBlockController(new ItemBlock(10, 15, 200, 110));
         wifeRoomWall = new ItemBlockController(new ItemBlock(10, 125, 200, 110));
         butlerRoomWall = new ItemBlockController(new ItemBlock(10, 235, 200, 110));
-        officeRoomWall = new ItemBlockController(new ItemBlock(10, 345, 450, 140));
+        workingRoomWall = new ItemBlockController(new ItemBlock(10, 345, 450, 140));
         bed = new ItemBlockController(new ItemBlock(10, 15, 100, 100));
     }
 
