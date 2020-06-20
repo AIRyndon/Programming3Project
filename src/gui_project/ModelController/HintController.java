@@ -7,18 +7,15 @@ import java.awt.Graphics2D;
 public class HintController extends ItemBlockController
 {
     public static int HINTCOUNT = 1;
-    private final static HintDatabase hintDatabase = new HintDatabase();
+    private final static HintDatabase HINTDATABASE = new HintDatabase();
     private final Hint hint;
     private final HintView view;
-    private final MainController mainCtrl;
     private final DetectiveController detectiveCtrl;
 
-    public HintController(MainController mainCtrl,
-            DetectiveController detectiveCtrl, Hint hint)
+    public HintController(DetectiveController detectiveCtrl, Hint hint)
     {
         super(hint);
         this.hint = hint;
-        this.mainCtrl = mainCtrl;
         this.detectiveCtrl = detectiveCtrl;
         view = new HintView(hint);
         
@@ -68,8 +65,6 @@ public class HintController extends ItemBlockController
 
         pickup();
         detectiveCtrl.increasePickedUpHint();
-        mainCtrl.checkDetectiveHintCount();
-
         return true;
     }
 
@@ -85,7 +80,7 @@ public class HintController extends ItemBlockController
     
     public void setupHintNameAndDescription()
     {
-        String hintResult = hintDatabase.getDataRow(HINTCOUNT);
+        String hintResult = HINTDATABASE.getDataRow(HINTCOUNT);
         HINTCOUNT++;
         
         String[] hintData = hintResult.split("/");

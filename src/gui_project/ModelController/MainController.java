@@ -142,11 +142,11 @@ public class MainController
 
     private void setUpHint()
     {
-        vial = new HintController(this, detectiveCtrl, new Hint(650, 30, 10, 10));
-        cake = new HintController(this, detectiveCtrl, new Hint(750, 30, 10, 10));
-        gloves = new HintController(this, detectiveCtrl, new Hint(250, 250, 10, 10));
-        knife = new HintController(this, detectiveCtrl, new Hint(500, 260, 10, 10));
-        picture = new HintController(this, detectiveCtrl, new Hint(30, 30, 10, 10));
+        vial = new HintController(detectiveCtrl, new Hint(650, 30, 10, 10));
+        cake = new HintController(detectiveCtrl, new Hint(750, 30, 10, 10));
+        gloves = new HintController(detectiveCtrl, new Hint(250, 250, 10, 10));
+        knife = new HintController(detectiveCtrl, new Hint(500, 260, 10, 10));
+        picture = new HintController(detectiveCtrl, new Hint(30, 30, 10, 10));
 
         assignHintToNPC();
     }
@@ -283,7 +283,7 @@ public class MainController
     {
         try
         {
-            Thread.sleep(2500);
+            Thread.sleep(2000);
             view.showPanel(guessKillerCtrl.getView().getName());
         } catch (InterruptedException ex)
         {
