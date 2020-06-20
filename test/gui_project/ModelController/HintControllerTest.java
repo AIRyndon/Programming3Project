@@ -32,7 +32,7 @@ public class HintControllerTest
         System.out.println("Hint visibility test");
         //Arrange
         Hint hint = new Hint(500, 260, 10, 10);
-        HintController sut = new HintController(null, null, hint);
+        HintController sut = new HintController(null, hint);
 
         //Act
         //set hint visibility to true;
