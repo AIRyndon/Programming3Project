@@ -47,6 +47,7 @@ public class RoomMaidView extends javax.swing.JPanel implements
         } else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
+            mainCtrl.checkDetectiveHintCount();
         }
     }
 

@@ -52,6 +52,7 @@ public class RoomButlerView extends javax.swing.JPanel implements
         } else if (model instanceof Hint)
         {
             gameTextArea.setText(((Hint) model).getMessage());
+            mainCtrl.checkDetectiveHintCount();
         } else if (model instanceof KeyPassword)
         {
             gameTextArea.setText(((KeyPassword) model).getMessage());
