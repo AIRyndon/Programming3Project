@@ -49,6 +49,19 @@ To-do list to finish the game:
 -> Ask if player wants to play again or quit.
 ```
 
+## Database
+
+```
+HINT: Save HINT_ID, HINT_NAME, and HINT_DESCRIPTION (5 rows)
+PLAYER: PLAYER_ID, PLAYER_NAME, PLAYER_AGE, and PLAYER_GENDER (keep inserting row when player plays game)
+```
+
+## Unit Test
+
+```
+There are two packages and 6 tests in total.
+```
+
 ## Versioning
 
 - CUI

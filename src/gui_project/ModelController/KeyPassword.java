@@ -42,8 +42,6 @@ public class KeyPassword extends ItemBlock
         {
             password = lockedArea.getPassword().substring(0, 2) + "XX";
         }
-
-        System.out.println(password);
     }
 
     private void setupQuestionAndAnswer()
@@ -66,6 +64,10 @@ public class KeyPassword extends ItemBlock
                     break;
                 }
             }
+            
+            System.out.println(question);
+            System.out.println(answer);
+                    
         }
         catch (IOException ex)
         {
@@ -96,7 +98,8 @@ public class KeyPassword extends ItemBlock
             }
 
             trivia = triviaResult.split("\n");
-        } catch (IOException ex)
+        }
+        catch (IOException ex)
         {
             ex.printStackTrace();
         }
