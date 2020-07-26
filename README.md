@@ -4,6 +4,10 @@ THAT IS TAYLOR
 
 
 # Detective Game
+
+Angelo00
+Hohoho hihihi
+
 Angelo Changeshasdfhashfsahh
 asdfahash
 gjgjgjgasfj
